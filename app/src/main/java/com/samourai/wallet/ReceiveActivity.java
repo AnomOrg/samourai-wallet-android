@@ -199,6 +199,7 @@ public class ReceiveActivity extends AppCompatActivity {
         } else {
             addr = addr44;
         }
+
         addressTypesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

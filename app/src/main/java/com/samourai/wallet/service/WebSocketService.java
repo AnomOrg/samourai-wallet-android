@@ -73,7 +73,6 @@ public class WebSocketService extends Service {
 
         webSocketHandler = new WebSocketHandler(WebSocketService.this, addrs);
         connectToWebsocketIfNotConnected();
-
     }
 
     @Override

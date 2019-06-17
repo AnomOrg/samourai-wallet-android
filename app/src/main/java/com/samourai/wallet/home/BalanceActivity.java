@@ -360,8 +360,6 @@ public class BalanceActivity extends AppCompatActivity {
                     Intent intent = new Intent(BalanceActivity.this, ReceiveActivity.class);
                     startActivity(intent);
                 }
-
-
             } catch (IOException | MnemonicException.MnemonicLengthException e) {
             }
         });

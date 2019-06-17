@@ -47,17 +47,16 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".network.NetworkDashboard"
-            android:theme="@style/ui_2_theme"
             android:exported="true"
+            android:label="@string/title_activity_network_dashboard"
             android:parentActivityName=".home.BalanceActivity"
-            android:label="@string/title_activity_network_dashboard">
+            android:theme="@style/ui_2_theme">
 
         </activity>
         <activity
             android:name=".paynym.paynymDetails.PayNymDetailsActivity"
-            android:theme="@style/ui_2_theme"
             android:label=""
-            />
+            android:theme="@style/ui_2_theme" />
         <activity
             android:name=".paynym.addPaynym.AddPaynymActivity"
             android:exported="true"
@@ -126,8 +125,8 @@
         <activity
             android:name=".PinEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/ui_2_theme_dark_status"
-            android:label="" />
+            android:label=""
+            android:theme="@style/ui_2_theme_dark_status" />
         <activity
             android:name=".bip47.BIP47Add"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -187,8 +186,13 @@
             android:name=".tor.TorService"
             android:enabled="true"
             android:stopWithTask="true" />
-        <!--
-                <receiver
+
+        <service
+            android:name=".service.AnomRequestService"
+            android:enabled="true"
+            android:exported="true" />
+
+        <!--     <receiver
                     android:name=".receivers.BootIntentReceiver"
                     android:enabled="true"
                     android:exported="true">
@@ -215,11 +219,10 @@
                     android:exported="true">
                     <intent-filter android:priority="999">
                         <action android:name="android.provider.Telephony.SMS_RECEIVED" />
-
                         <category android:name="android.intent.category.DEFAULT" />
                     </intent-filter>
-                </receiver>
-        -->
+                </receiver> -->
+
         <activity android:name=".CreateWalletActivity" />
         <activity android:name=".RestoreSeedWalletActivity" />
         <activity

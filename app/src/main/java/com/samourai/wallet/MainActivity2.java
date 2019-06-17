@@ -131,7 +131,10 @@ public class MainActivity2 extends Activity {
             AppUtil.getInstance(MainActivity2.this).setPRNG_FIXED(true);
         }
 
-        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) && !TorManager.getInstance(getApplicationContext()).isConnected() && ConnectivityStatus.hasConnectivity(getApplicationContext())) {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) &&
+                !TorManager.getInstance(getApplicationContext()).isConnected() &&
+                ConnectivityStatus.hasConnectivity(getApplicationContext())) {
+
             loaderTxView.setText(getText(R.string.initializing_tor));
             ((SamouraiApplication) getApplication()).startService();
             Disposable disposable = TorManager.getInstance(this)
@@ -372,9 +375,8 @@ public class MainActivity2 extends Activity {
         if (bundle == null) {
             return null;
         }
-        if (Intent.ACTION_VIEW.equals(getIntent().getAction()) && getIntent().getScheme() != null &&
-                getIntent().getScheme().equals("bitcoin")) {
-
+        if (Intent.ACTION_VIEW.equals(getIntent().getAction()) && getIntent().getScheme() != null
+                && getIntent().getScheme().equals("bitcoin")) {
             bundle.putString("uri", getIntent().getData().toString());
         } else {
             if (bundle.containsKey("uri")) {
@@ -393,20 +395,35 @@ public class MainActivity2 extends Activity {
 
     private void doAppInit1(boolean isDial, final String strUri, final String strPCode) {
 
-        if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
+        if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 ||
+                !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
+
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             if (AppUtil.getInstance(MainActivity2.this).isSideLoaded()) {
                 doSelectNet();
             } else {
                 initDialog();
             }
-        } else if (isDial && AccessFactory.getInstance(MainActivity2.this).validateHash(PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.ACCESS_HASH, ""), AccessFactory.getInstance(MainActivity2.this).getGUID(), new CharSequenceX(AccessFactory.getInstance(MainActivity2.this).getPIN()), AESUtil.DefaultPBKDF2Iterations)) {
+        } else if (isDial && AccessFactory.getInstance(MainActivity2.this).validateHash(
+                PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.ACCESS_HASH, ""),
+                AccessFactory.getInstance(MainActivity2.this).getGUID(),
+                new CharSequenceX(AccessFactory.getInstance(MainActivity2.this).getPIN()),
+                AESUtil.DefaultPBKDF2Iterations)) {
+
+            Toast.makeText(this, "isDial", Toast.LENGTH_SHORT).show();
+
             TimeOutUtil.getInstance().updatePin();
             launchFromDialer(AccessFactory.getInstance(MainActivity2.this).getPIN());
         } else if (TimeOutUtil.getInstance().isTimedOut()) {
+
+            Toast.makeText(this, "Timed Out", Toast.LENGTH_SHORT).show();
+
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
-        } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() && !TimeOutUtil.getInstance().isTimedOut()) {
+        } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() &&
+                !TimeOutUtil.getInstance().isTimedOut()) {
+
+            Toast.makeText(this, "Logged In", Toast.LENGTH_SHORT).show();
 
             TimeOutUtil.getInstance().updatePin();
 
@@ -418,6 +435,9 @@ public class MainActivity2 extends Activity {
             }
             startActivity(intent);
         } else {
+
+            Toast.makeText(this, "Set Logged In as false", Toast.LENGTH_SHORT).show();
+
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
         }

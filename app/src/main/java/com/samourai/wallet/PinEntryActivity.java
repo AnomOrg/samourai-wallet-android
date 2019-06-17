@@ -80,7 +80,6 @@ public class PinEntryActivity extends AppCompatActivity {
     private String strPassphrase = "";
     private boolean isOpenDime = false;
 
-
     private String strUri = null;
 
     private static int failures = 0;
@@ -117,6 +116,7 @@ public class PinEntryActivity extends AppCompatActivity {
                 setPinMaskView();
             }
         });
+
         pinEntryView.setClearListener(clearType -> {
             if (clearType == PinEntryView.KeyClearTypes.CLEAR) {
                 if (userInput.length() != 0)
@@ -134,7 +134,6 @@ public class PinEntryActivity extends AppCompatActivity {
             }
         });
 
-
         boolean scramble = PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.SCRAMBLE_PIN, false);
 
         strUri = PrefsUtil.getInstance(PinEntryActivity.this).getValue("SCHEMED_URI", "");
@@ -146,7 +145,6 @@ public class PinEntryActivity extends AppCompatActivity {
         if (scramble) {
             pinEntryView.setScramble(true);
         }
-
 
         Bundle extras = getIntent().getExtras();
 
@@ -180,9 +178,11 @@ public class PinEntryActivity extends AppCompatActivity {
         if (strPassphrase == null) {
             strPassphrase = "";
         }
+
         if (!PrefsUtil.getInstance(PinEntryActivity.this).getValue(PrefsUtil.HAPTIC_PIN, true)) {
             pinEntryView.disableHapticFeedBack();
         }
+
         pinEntryView.setConfirmClickListner(view -> {
 
             if (create && strPassphrase.length() >= AccessFactory.MIN_PIN_LENGTH && userInput.toString().length() <= AccessFactory.MAX_PIN_LENGTH) {
@@ -200,9 +200,13 @@ public class PinEntryActivity extends AppCompatActivity {
 
                     progressBar.setVisibility(View.VISIBLE);
 
+                    Toast.makeText(this, "initThread", Toast.LENGTH_SHORT).show();
                     initThread(strSeed == null, userInput.toString(), strPassphrase, strSeed == null ? null : strSeed);
-
                 } else {
+
+                    Toast.makeText(this, "create in confirm",
+                            Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(PinEntryActivity.this, PinEntryActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     intent.putExtra("create", true);
@@ -210,16 +214,16 @@ public class PinEntryActivity extends AppCompatActivity {
                     intent.putExtra("passphrase", strPassphrase);
                     startActivity(intent);
                 }
-
             } else {
-                if (userInput.toString().length() >= AccessFactory.MIN_PIN_LENGTH && userInput.toString().length() <= AccessFactory.MAX_PIN_LENGTH) {
+                if (userInput.toString().length() >= AccessFactory.MIN_PIN_LENGTH &&
+                        userInput.toString().length() <= AccessFactory.MAX_PIN_LENGTH) {
+
+                    Toast.makeText(this, "validate thread", Toast.LENGTH_SHORT).show();
                     validateThread(userInput.toString(), strUri);
                 }
             }
         });
-
 //
-
     }
 
     private void setPinMaskView() {
@@ -271,7 +275,6 @@ public class PinEntryActivity extends AppCompatActivity {
         } else {
             tsend.setVisibility(View.INVISIBLE);
         }
-
     }
 
     private void validateThread(final String pin, final String uri) {
@@ -310,7 +313,6 @@ public class PinEntryActivity extends AppCompatActivity {
 
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.INVISIBLE);
-
                     });
 
                     if (hdw == null) {
@@ -323,28 +325,34 @@ public class PinEntryActivity extends AppCompatActivity {
                                 failures = 0;
                                 doBackupRestore();
                             } else {
+                                Toast.makeText(PinEntryActivity.this, "Start PinEntryActvity class",
+                                        Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(PinEntryActivity.this, PinEntryActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(intent);
                             }
                         });
-
-
                     }
 
                     AccessFactory.getInstance(PinEntryActivity.this).setIsLoggedIn(true);
                     TimeOutUtil.getInstance().updatePin();
                     if (isOpenDime) {
                         runOnUiThread(() -> {
+
+                            Toast.makeText(PinEntryActivity.this, "Start OpenDime",
+                                    Toast.LENGTH_SHORT).show();
+
                             Intent intent = new Intent(PinEntryActivity.this, OpenDimeActivity.class);
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                         });
-
-                    }  else {
+                    } else {
+                        runOnUiThread(() -> {
+                            Toast.makeText(PinEntryActivity.this, "ReStart app",
+                                    Toast.LENGTH_SHORT).show();
+                        });
                         AppUtil.getInstance(PinEntryActivity.this).restartApp(getIntent().getExtras());
                     }
-
                 } catch (MnemonicException.MnemonicLengthException mle) {
                     mle.printStackTrace();
                 } catch (DecoderException de) {
@@ -355,13 +363,11 @@ public class PinEntryActivity extends AppCompatActivity {
 
                     });
                 }
-
             } else {
                 runOnUiThread(() -> {
                     progressBar.setVisibility(View.INVISIBLE);
                     failures++;
                     Toast.makeText(PinEntryActivity.this, PinEntryActivity.this.getText(R.string.login_error) + ":" + failures + "/3", Toast.LENGTH_SHORT).show();
-
 
                     if (failures == 3) {
                         failures = 0;
@@ -369,20 +375,18 @@ public class PinEntryActivity extends AppCompatActivity {
                     } else {
                         Intent intent = new Intent(PinEntryActivity.this, PinEntryActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        if (getIntent().getExtras() != null)
+                        if (getIntent().getExtras() != null) {
                             intent.putExtras(getIntent().getExtras());
+                        }
                         startActivity(intent);
                     }
                 });
-
             }
 
             runOnUiThread(() -> {
                 progressBar.setVisibility(View.INVISIBLE);
 
             });
-
-
         }).start();
 
     }
