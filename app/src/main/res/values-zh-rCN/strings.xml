@@ -198,7 +198,7 @@
     <string name="custom_fee">自定手续费</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">钱包</string>
+    <string name="account_Anom">钱包</string>
     <string name="account_shuffling">已兑换</string>
 
     <string name="max_available">最多可发送:</string>

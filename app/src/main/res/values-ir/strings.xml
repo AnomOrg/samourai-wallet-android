@@ -198,7 +198,7 @@
     <string name="custom_fee">تنظیم دستی</string>
     <string name="sat_b">ساتوشی/بایت</string>
 
-    <string name="account_Samourai">کیف پول</string>
+    <string name="account_Anom">کیف پول</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">:بیشترین مقدارِ موجود</string>
@@ -376,7 +376,7 @@
     <string name="opendime_topup">بالا بردن</string>
 
     <string name="select_app">اپلیکیشن را انتخاب کنید</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">محافظت نشده</string>

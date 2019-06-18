@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/windowDark"
     android:orientation="vertical"
-    tools:context="com.samourai.wallet.whirlpool.CycleDetail">
+    tools:context="com.samourai.wallet.one.samourai.wallet.whirlpool.CycleDetail">
 
 
     <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,12 +31,12 @@
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways" />
 
-        <com.samourai.wallet.whirlpool.views.CycleDetailHeader
+        <one.anom.wallet.whirlpool.views.CycleDetailHeader
             android:id="@+id/cycleProgressHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        </com.samourai.wallet.whirlpool.views.CycleDetailHeader>
+        </one.anom.wallet.whirlpool.views.CycleDetailHeader>
 
 
     </android.support.design.widget.AppBarLayout>

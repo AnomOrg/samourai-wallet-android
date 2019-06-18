@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.paynym.fragments.PaynymListFragment">
+    tools:context="com.samourai.wallet.one.samourai.wallet.paynym.fragments.PaynymListFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/paynym_accounts_rv"
