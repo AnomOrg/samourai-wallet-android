@@ -895,7 +895,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                 });
 
                 Preference aboutPref = (Preference) findPreference("about");
-                aboutPref.setSummary("Samourai," + " " + getResources().getString(R.string.version_name));
+                aboutPref.setSummary("Anom," + " " + getResources().getString(R.string.version_name));
                 aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
                         Intent intent = new Intent(SettingsActivity2.this, AboutActivity.class);
