@@ -25,7 +25,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static one.anom.wallet.SamouraiApplication.TOR_CHANNEL_ID;
+import static one.anom.wallet.WalletApplication.TOR_CHANNEL_ID;
 
 
 public class TorService extends Service {
