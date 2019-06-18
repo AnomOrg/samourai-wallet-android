@@ -123,7 +123,7 @@
     <string name="no">Не</string>
     <string name="close">Затвори</string>
 
-    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Samourai portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
+    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Anom portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
 
     <string name="pin_5_8">Създайте PIN код с дължина между 5 и 8 цифри</string>
     <string name="pin_5_8_confirm">Потвърдете PIN кода</string>
@@ -199,7 +199,7 @@
     <string name="custom_fee">По избор</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">Портфейл</string>
+    <string name="account_Anom">Портфейл</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">Макс. налични:</string>
@@ -375,7 +375,7 @@
     <string name="opendime_topup">TOP UP</string>
 
     <string name="select_app">Избор на приложение:</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay защита</string>
     <string name="replay_unprotected">Незащитен</string>

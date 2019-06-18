@@ -6,11 +6,11 @@ android {
     useLibrary 'org.apache.http.legacy'
     flavorDimensions "versionCode"
     defaultConfig {
-        applicationId 'com.samourai.wallet'
+        applicationId 'one.anom.wallet'
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 148
-        versionName "0.99.73"
+        versionName "1.0.0"
         // Enabling multidex support.
         multiDexEnabled true
     }
@@ -48,22 +48,22 @@ android {
     }
     productFlavors {
         production {
-            applicationId 'com.samourai.wallet'
+            applicationId 'one.anom.wallet'
             minSdkVersion 21
             targetSdkVersion 26
             versionCode 148
-            versionName "0.99.73"
-            resValue "string", "app_name", "Samourai"
-            resValue "string", "version_name", "0.99.73"
+            versionName "1.0.0"
+            resValue "string", "app_name", "Anom"
+            resValue "string", "version_name", "1.0.0"
         }
         staging {
-            applicationId 'com.samourai.wallet.staging'
+            applicationId 'one.anom.wallet.staging'
             minSdkVersion 21
             targetSdkVersion 26
             versionCode 148
-            versionName "0.99.73"
-            resValue "string", "app_name", "Samourai Staging"
-            resValue "string", "version_name", "0.99.73"
+            versionName "1.0.0"
+            resValue "string", "app_name", "Anom Staging"
+            resValue "string", "version_name", "1.0.0"
         }
     }
     testOptions {

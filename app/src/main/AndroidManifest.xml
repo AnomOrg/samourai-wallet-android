@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.samourai.wallet">
+    package="one.anom.wallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -40,36 +40,37 @@
         tools:node="replace" />
 
     <application
-        android:name=".SamouraiApplication"
+        android:name="one.anom.wallet.WalletApplication"
         android:allowBackup="false"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".network.NetworkDashboard"
+            android:name="one.anom.wallet.network.NetworkDashboard"
             android:theme="@style/ui_2_theme"
             android:exported="true"
-            android:parentActivityName=".home.BalanceActivity"
+            android:parentActivityName="one.anom.wallet.home.BalanceActivity"
             android:label="@string/title_activity_network_dashboard">
 
         </activity>
         <activity
-            android:name=".paynym.paynymDetails.PayNymDetailsActivity"
+            android:name="one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity"
             android:theme="@style/ui_2_theme"
             android:label=""
             />
         <activity
-            android:name=".paynym.addPaynym.AddPaynymActivity"
+            android:name="one.anom.wallet.paynym.addPaynym.AddPaynymActivity"
             android:exported="true"
             android:label="@string/add_new"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".paynym.PayNymHome"
+            android:name="one.anom.wallet.paynym.PayNymHome"
             android:exported="true"
             android:label="@string/paynyms"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".MainActivity2"
+            android:name="one.anom.wallet.MainActivity2"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -89,59 +90,59 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.BalanceActivity"
+            android:name="one.anom.wallet.home.BalanceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTask"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".ReceiveActivity"
+            android:name="one.anom.wallet.ReceiveActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/ui_2_theme"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name=".UTXOActivity"
+            android:name="one.anom.wallet.UTXOActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".BatchSendActivity"
+            android:name="one.anom.wallet.BatchSendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".FeeActivity"
+            android:name="one.anom.wallet.FeeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".SettingsActivity"
+            android:name="one.anom.wallet.SettingsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".SettingsActivity2"
+            android:name="one.anom.wallet.SettingsActivity2"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".AboutActivity"
+            android:name="one.anom.wallet.AboutActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PinEntryActivity"
+            android:name="one.anom.wallet.PinEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/ui_2_theme_dark_status"
             android:label="" />
         <activity
-            android:name=".bip47.BIP47Add"
+            android:name="one.anom.wallet.bip47.BIP47Add"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".bip47.BIP47ShowQR"
+            android:name="one.anom.wallet.bip47.BIP47ShowQR"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".ricochet.RicochetActivity"
+            android:name="one.anom.wallet.ricochet.RicochetActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".OpenDimeActivity"
+            android:name="one.anom.wallet.OpenDimeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
             <intent-filter>
@@ -155,36 +156,36 @@
                 android:resource="@xml/device_filter" />
         </activity>
         <activity
-            android:name=".paynym.ClaimPayNymActivity"
+            android:name="one.anom.wallet.paynym.ClaimPayNymActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".ExodusActivity"
+            android:name="one.anom.wallet.ExodusActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".PayNymCalcActivity"
+            android:name="one.anom.wallet.PayNymCalcActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
 
-        <receiver android:name=".tor.TorBroadCastReceiver" />
+        <receiver android:name="one.anom.wallet.tor.TorBroadCastReceiver" />
 
         <activity
-            android:name=".AddressCalcActivity"
+            android:name="one.anom.wallet.AddressCalcActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name="com.dm.zbar.android.scanner.ZBarScannerActivity"
+            android:name="one.dm.zbar.android.scanner.ZBarScannerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
 
         <service
-            android:name=".service.WebSocketService"
+            android:name="one.anom.wallet.service.WebSocketService"
             android:enabled="true" />
         <service
-            android:name=".service.RefreshService"
+            android:name="one.anom.wallet.service.RefreshService"
             android:enabled="true" />
         <service
-            android:name=".tor.TorService"
+            android:name="one.anom.wallet.tor.TorService"
             android:enabled="true"
             android:stopWithTask="true" />
         <!--
@@ -220,20 +221,20 @@
                     </intent-filter>
                 </receiver>
         -->
-        <activity android:name=".CreateWalletActivity" />
-        <activity android:name=".RestoreSeedWalletActivity" />
+        <activity android:name="one.anom.wallet.CreateWalletActivity" />
+        <activity android:name="one.anom.wallet.RestoreSeedWalletActivity" />
         <activity
-            android:name=".LandingActivity"
+            android:name="one.anom.wallet.LandingActivity"
             android:label=""
             android:theme="@style/ui_2_theme_dark_status" />
-        <activity android:name=".RecoveryWordsActivity" />
+        <activity android:name="one.anom.wallet.RecoveryWordsActivity" />
         <activity
-            android:name=".TxAnimUIActivity"
+            android:name="one.anom.wallet.TxAnimUIActivity"
             android:exported="true"
             android:theme="@style/AppThemeLanding" />
 
         <provider
-            android:name=".util.GenericFileProvider"
+            android:name="one.anom.wallet.util.GenericFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -243,49 +244,49 @@
         </provider>
 
         <activity
-            android:name=".SendActivity"
+            android:name="one.anom.wallet.SendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:theme="@style/ui_2_theme"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".whirlpool.WhirlPoolActivity"
+            android:name="one.anom.wallet.whirlpool.WhirlPoolActivity"
             android:exported="true"
             android:label=""
-            android:parentActivityName=".whirlpool.ChooseCycleType"
+            android:parentActivityName="one.anom.wallet.whirlpool.ChooseCycleType"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".whirlpool.EmptyWhirlPool"
+            android:name="one.anom.wallet.whirlpool.EmptyWhirlPool"
             android:exported="true"
             android:label="@string/title_activity_empty_whirl_pool"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".whirlpool.NewWhirlpoolCycle"
+            android:name="one.anom.wallet.whirlpool.NewWhirlpoolCycle"
             android:exported="true"
             android:label="New Cycle"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".whirlpool.ChooseCycleType"
+            android:name="one.anom.wallet.whirlpool.ChooseCycleType"
             android:exported="true"
             android:label="New Cycle"
-            android:parentActivityName=".whirlpool.EmptyWhirlPool"
+            android:parentActivityName="one.anom.wallet.whirlpool.EmptyWhirlPool"
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".whirlpool.WhirlpoolMain"
+            android:name="one.anom.wallet.whirlpool.WhirlpoolMain"
             android:exported="true"
             android:label=""
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".whirlpool.CycleDetail"
+            android:name="one.anom.wallet.whirlpool.CycleDetail"
             android:label=""
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".tx.TxDetailsActivity"
+            android:name="one.anom.wallet.tx.TxDetailsActivity"
             android:exported="true"
             android:label=" "
             android:theme="@style/ui_2_theme" />
         <activity
-            android:name=".tx.TxPrivacyDetailsActivity"
+            android:name="one.anom.wallet.tx.TxPrivacyDetailsActivity"
             android:exported="true"
             android:label=""
             android:theme="@style/ui_2_theme" />
@@ -299,7 +300,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.samourai.wallet.util.ConnectionChangeReceiver"
+            android:name="one.anom.wallet.util.ConnectionChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
