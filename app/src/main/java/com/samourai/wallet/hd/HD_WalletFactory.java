@@ -200,7 +200,6 @@ public class HD_WalletFactory	{
     public boolean holding()	{
         return (wallets.size() > 0);
     }
-
     public List<HD_Wallet> getWallets()    {
         return wallets;
     }

@@ -76,5 +76,4 @@ public class SamouraiWallet {
     public boolean isTestNet()  {
         return (networkParams == null) ? false : !(getCurrentNetworkParams() instanceof MainNetParams);
     }
-
 }

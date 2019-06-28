@@ -93,7 +93,6 @@ public class RefreshService extends IntentService {
             if (AddressFactory.getInstance().getHighestBIP84ChangeIdx() > BIP84Util.getInstance(RefreshService.this).getWallet().getAccount(0).getChange().getAddrIdx()) {
                 BIP84Util.getInstance(RefreshService.this).getWallet().getAccount(0).getChange().setAddrIdx(AddressFactory.getInstance().getHighestBIP84ChangeIdx());
             }
-
         } catch (IOException ioe) {
             ioe.printStackTrace();
         } catch (MnemonicException.MnemonicLengthException mle) {
@@ -206,5 +205,4 @@ public class RefreshService extends IntentService {
         LocalBroadcastManager.getInstance(RefreshService.this).sendBroadcast(_intent);
 
     }
-
 }

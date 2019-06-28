@@ -309,7 +309,8 @@ public class PinEntryActivity extends AppCompatActivity {
                 AccessFactory.getInstance(PinEntryActivity.this).setPIN(pin);
 
                 try {
-                    HD_Wallet hdw = PayloadUtil.getInstance(PinEntryActivity.this).restoreWalletfromJSON(new CharSequenceX(AccessFactory.getInstance(PinEntryActivity.this).getGUID() + pin));
+                    HD_Wallet hdw = PayloadUtil.getInstance(PinEntryActivity.this).
+                            restoreWalletfromJSON(new CharSequenceX(AccessFactory.getInstance(PinEntryActivity.this).getGUID() + pin));
 
                     runOnUiThread(() -> {
                         progressBar.setVisibility(View.INVISIBLE);

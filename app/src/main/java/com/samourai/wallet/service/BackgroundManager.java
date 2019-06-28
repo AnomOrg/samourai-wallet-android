@@ -19,7 +19,6 @@ public class BackgroundManager implements Application.ActivityLifecycleCallbacks
         public void onBecameForeground();
 
         public void onBecameBackground();
-
     }
 
     private static BackgroundManager instance = null;
