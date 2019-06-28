@@ -41,10 +41,9 @@ public class AnomRequestService extends Service {
      * the client as previously given with MSG_REGISTER_CLIENT.
      */
     static final int MSG_UNREGISTER_CLIENT = 2;
-    static final int MSG_SAY_HELLO = 3;
-    static final int MSG_GET_ADDRESS = 4;
-    static final int MSG_GET_PAYNYM = 5;
-    static final int MSG_GET_PIN = 6;
+    static final int MSG_GET_ADDRESS = 3;
+    static final int MSG_GET_PAYNYM = 4;
+    static final int MSG_GET_PIN = 5;
 
     static final String BITCOIN_ADDRESS = "address";
     static final String PAY_NUM_CODE = "pcode";
@@ -90,22 +89,6 @@ public class AnomRequestService extends Service {
                     anomRequestService.mClients.remove(msg.replyTo);
                     if (anomRequestService.mClients.size() == 0) {
                         HD_WalletFactory.getInstance(anomRequestService).clear();
-                    }
-                    break;
-                case MSG_SAY_HELLO:
-
-                    for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
-                        try {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("hello_world", "Hello World");
-                            anomRequestService.mClients.get(i).send(
-                                    Message.obtain(null, MSG_SAY_HELLO, bundle));
-                        } catch (RemoteException e) {
-                            // The client is dead.  Remove it from the list;
-                            // we are going through the list from back to front
-                            // so this is safe to do inside the loop.
-                            anomRequestService.mClients.remove(i);
-                        }
                     }
                     break;
                 case MSG_GET_ADDRESS:
@@ -228,6 +211,7 @@ public class AnomRequestService extends Service {
                     }
                     break;
                 default:
+
                     super.handleMessage(msg);
                     break;
             }
