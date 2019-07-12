@@ -596,9 +596,9 @@ public class BalanceActivity extends AppCompatActivity {
         }
         if (id == R.id.action_settings) {
             doSettings();
-        } else if (id == R.id.action_support) {
+        } /*else if (id == R.id.action_support) {
             doSupport();
-        } else if (id == R.id.action_sweep) {
+        }*/ else if (id == R.id.action_sweep) {
             if (!AppUtil.getInstance(BalanceActivity.this).isOfflineMode()) {
                 doSweep();
             } else {

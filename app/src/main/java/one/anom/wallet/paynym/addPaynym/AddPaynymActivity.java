@@ -72,13 +72,13 @@ public class AddPaynymActivity extends AppCompatActivity {
 
         });
 
-        findViewById(R.id.dev_fund_button).setOnClickListener(view -> {
+        /*findViewById(R.id.dev_fund_button).setOnClickListener(view -> {
 
             Intent intent = new Intent(this, PayNymDetailsActivity.class);
             intent.putExtra("pcode", strSamouraiDonationPCode);
             intent.putExtra("label", BIP47Meta.getInstance().getDisplayLabel(strSamouraiDonationPCode));
             startActivityForResult(intent, EDIT_PCODE);
-        });
+        });*/
     }
 
     private void pastePcode() {
