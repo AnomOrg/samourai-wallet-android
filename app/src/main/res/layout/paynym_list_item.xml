@@ -9,7 +9,7 @@
     android:orientation="vertical">
 
 
-    <com.anom.wallet.widgets.CircleImageView
+    <one.anom.wallet.widgets.CircleImageView
         android:id="@+id/paynym_avatar"
         android:layout_width="54dp"
         android:layout_height="54dp"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.samourai.wallet.com.anom.wallet.TxAnimUIActivity">
 
-    <com.anom.wallet.widgets.TransactionProgressView
+    <one.anom.wallet.widgets.TransactionProgressView
         android:id="@+id/transactionProgressView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

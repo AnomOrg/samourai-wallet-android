@@ -71,7 +71,7 @@
                         android:layout_marginTop="10dp"
                         android:text="@string/mnemonic" />
 
-                    <com.anom.wallet.widgets.MnemonicSeedEditText
+                    <one.anom.wallet.widgets.MnemonicSeedEditText
                         android:id="@+id/mnemonic_code_edittext"
                         android:layout_width="match_parent"
                         android:layout_height="140dp"

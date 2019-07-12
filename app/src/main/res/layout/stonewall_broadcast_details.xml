@@ -87,7 +87,7 @@
             app:layout_constraintStart_toStartOf="@+id/textView29"
             app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
-        <com.anom.wallet.widgets.EntropyBar
+        <one.anom.wallet.widgets.EntropyBar
             android:id="@+id/manual_stonewall_entropy"
             android:layout_width="22dp"
             android:layout_height="0dp"

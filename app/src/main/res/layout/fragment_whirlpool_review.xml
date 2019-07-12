@@ -130,7 +130,7 @@
         app:layout_constraintStart_toStartOf="@+id/textView57"
         app:layout_constraintTop_toBottomOf="@+id/textView57" />
 
-    <com.anom.wallet.widgets.EntropyBar
+    <one.anom.wallet.widgets.EntropyBar
         android:id="@+id/pool_review_entropy_bar"
         android:layout_width="24dp"
         android:layout_height="0dp"
