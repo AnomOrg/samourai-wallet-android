@@ -9,5 +9,5 @@
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
     app:layoutManager="LinearLayoutManager"
-    tools:context="com.samourai.wallet.whirlpool.fragments.WhirlpoolCyclesFragment"
+    tools:context="com.samourai.wallet.com.anom.wallet.whirlpool.fragments.WhirlpoolCyclesFragment"
     tools:listitem="@layout/cycle_item" />

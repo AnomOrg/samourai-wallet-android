@@ -3,15 +3,15 @@ package whirlpool;
 import android.content.Context;
 import android.test.mock.MockContext;
 
-import com.samourai.http.client.AndroidHttpClient;
-import com.samourai.stomp.client.AndroidStompClient;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.bip47.BIP47Util;
+import com.anom.http.client.AndroidHttpClient;
+import com.anom.stomp.client.AndroidStompClient;
+import com.anom.wallet.SamouraiWallet;
+import com.anom.wallet.bip47.BIP47Util;
 import com.samourai.wallet.client.Bip84Wallet;
 import com.samourai.wallet.client.indexHandler.MemoryIndexHandler;
 import com.samourai.wallet.hd.HD_Wallet;
-import com.samourai.wallet.hd.HD_WalletFactory;
-import com.samourai.wallet.util.WebUtil;
+import com.anom.wallet.hd.HD_WalletFactory;
+import com.anom.wallet.util.WebUtil;
 
 import org.bitcoinj.core.DumpedPrivateKey;
 import org.bitcoinj.core.ECKey;
