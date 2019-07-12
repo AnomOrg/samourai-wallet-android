@@ -159,7 +159,7 @@ public class OpenDimeActivity extends Activity {
 
         setContentView(R.layout.activity_opendime);
 
-        setTitle(R.string.samourai_opendime);
+        setTitle(R.string.Anom_opendime);
 
         if(!AccessFactory.getInstance(OpenDimeActivity.this).isLoggedIn())    {
             Intent _intent = new Intent(OpenDimeActivity.this, PinEntryActivity.class);

@@ -63,7 +63,7 @@ public class CreateWalletActivity extends FragmentActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_wallet);
         wallet_create_viewpager = (ViewPager) findViewById(R.id.wallet_create_viewpager);
-        pagerIndicatorContainer = (LinearLayout) findViewById(dots);
+        pagerIndicatorContainer = (LinearLayout) findViewById(R.id.dots);
         forwardButton = (LinearLayout) findViewById(R.id.wizard_forward);
         if (getActionBar() != null)
             getActionBar().hide();

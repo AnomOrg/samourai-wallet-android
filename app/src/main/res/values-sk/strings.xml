@@ -15,7 +15,7 @@
     <string name="action_unarchive">Aktivovať všetky archivované platobné kódy</string>
     <string name="action_sync_all">Synchronizovať všetky platobné kódy</string>
 
-    <string name="about_us">O Samourai peňaženke</string>
+    <string name="about_us">O Anom peňaženke</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Zrušiť</string>
@@ -38,7 +38,7 @@
     <string name="options_wipe">Bezpečne odstrániť peňaženku</string>
     <string name="options_wipe2">Bezpečne odstráň túto peňaženku z tohoto zariadenia.</string>
     <string name="options_stealth_display">Utajni aplikáciu</string>
-    <string name="options_stealth_display2">Vymaž Samourai z domovskej obtazovky a zo zoznamu aplikácii. Musíš vytočiť **TVOJ_PIN_KÓD# z aplikacie pre volanie pre spustenie Samourai.</string>
+    <string name="options_stealth_display2">Vymaž Anom z domovskej obtazovky a zo zoznamu aplikácii. Musíš vytočiť **TVOJ_PIN_KÓD# z aplikacie pre volanie pre spustenie Anom.</string>
     <string name="options_remote_commands">Povoľ vzdialané príkazy</string>
     <string name="options_remote_commands2">Povoľ vzdialané príkazy cez SMS.</string>
     <string name="options_currency">Street cena</string>
@@ -117,12 +117,12 @@
     <string name="copied_to_clipboard">Skopírované do schránky</string>
     <string name="send_payment_code">Odošlite kód platby</string>
 
-    <string name="ask_you_sure_exit">Ste si istý že chcete ukončit Samourai?</string>
+    <string name="ask_you_sure_exit">Ste si istý že chcete ukončit Anom?</string>
     <string name="yes">Áno</string>
     <string name="no">Nie</string>
     <string name="close">Zavri</string>
 
-    <string name="sim_warning">Zariadenie vašej peňaženky Samourai má teraz inú SIM kartu zodpovedajúcu prichádzajúcemu číslu tejto textovej správy.</string>
+    <string name="sim_warning">Zariadenie vašej peňaženky Anom má teraz inú SIM kartu zodpovedajúcu prichádzajúcemu číslu tejto textovej správy.</string>
 
     <string name="pin_5_8">Zvoľ si PIN kód medzi 5 až 8 znakov.</string>
     <string name="pin_5_8_confirm">Potvrď PIN kód</string>
@@ -166,7 +166,7 @@
     <string name="destination">Adresa alebo platobný kanál</string>
 
     <string name="insufficient_funds">Nedostatočné prostriedky</string>
-    <string name="tx_length_error">Samourai nezabezpečuje transakcie vačšie ako 100KB. Skúste prosím rozdeliť vašu transakciu.</string>
+    <string name="tx_length_error">Anom nezabezpečuje transakcie vačšie ako 100KB. Skúste prosím rozdeliť vašu transakciu.</string>
     <string name="invalid_amount">Nesprávna suma</string>
     <string name="amount">Suma</string>
 
@@ -198,7 +198,7 @@
     <string name="custom_fee">Vlastný</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">Peňaženka</string>
+    <string name="account_Anom">Peňaženka</string>
     <string name="account_shuffling">Premiestnené</string>
 
     <string name="max_available">Max. dostupné:</string>
@@ -220,7 +220,7 @@
 
     <string name="choose_email_client">Vyber emailového klienta:</string>
 
-    <string name="cannot_launch_app">Samourai peňaženka nemôže byť spustená na tomto zariadení</string>
+    <string name="cannot_launch_app">Anom peňaženka nemôže byť spustená na tomto zariadení</string>
     <string name="confirm_change_pin">Ste si istý že chcete zmeniť PIN?</string>
     <string name="success_change_pin">PIN zmenený</string>
     <string name="alternative_pin_create">Ste si istý že chcete vytvoriť alternatívny PIN ktorý bude použitý pre spustenie v prípade ukradnutia a pre vzdialané príkazy?</string>
@@ -262,11 +262,11 @@
 
     <string name="invalid_passphrase">Nesprávne prístupové heslo</string>
     <string name="passphrase">Prístupové heslo</string>
-    <string name="passphrase_needed_for_backup">Vaša peňaženka nie je chránená prístupovým heslom. Zálohy peňaženky su enkryptované prístupovým heslom. Ak si prajete využívať enkryptované zálohy peňaženky a ostatné výhody Samourai peňaženky vytvorte si vlastnú peňaženku Samourai a presunte do nej vaše prostriedky.</string>
+    <string name="passphrase_needed_for_backup">Vaša peňaženka nie je chránená prístupovým heslom. Zálohy peňaženky su enkryptované prístupovým heslom. Ak si prajete využívať enkryptované zálohy peňaženky a ostatné výhody Anom peňaženky vytvorte si vlastnú peňaženku Anom a presunte do nej vaše prostriedky.</string>
     <string name="passphrase_required">Pristupové heslo je vyžadované pre túto funkciu. Prosím zvážte vytvorenie novej peňaženky ktorá bude automaticky obsahovať prístupové heslo.</string>
 
-    <string name="cannot_reach_api">Samourai APIs nie je možné nájsť. Prosím skontrolujte pripojenie a zopakujte znovu..</string>
-    <string name="api_error">Samourai APIs sa vracia s chybou. Prosím skuste znova alebo skúste neskôr.</string>
+    <string name="cannot_reach_api">Anom APIs nie je možné nájsť. Prosím skontrolujte pripojenie a zopakujte znovu..</string>
+    <string name="api_error">Anom APIs sa vracia s chybou. Prosím skuste znova alebo skúste neskôr.</string>
     <string name="api_key_error">Nesprávny API klúč.</string>
     <string name="api_token_error">Nesprávny API token.</string>
 
@@ -277,9 +277,9 @@
 
     <string name="change_is_dust">Zmena z tejto transakcie predstavuje množstvo prachu. Skúste to znova a buď upravte sumu výdavkov alebo zadajte celý zostatok.</string>
 
-    <string name="tor_routing_on">Samourai je smerovaný cez Tor.</string>
-    <string name="tor_routing_off">Samourai nie je smerovaný cez Tor. Stlačte pre aktiváciu.</string>
-    <string name="tor_install">Stlačte pre nainštalovanie aplikácie Orbot a smeruj Samourai cez Tor.</string>
+    <string name="tor_routing_on">Anom je smerovaný cez Tor.</string>
+    <string name="tor_routing_off">Anom nie je smerovaný cez Tor. Stlačte pre aktiváciu.</string>
+    <string name="tor_install">Stlačte pre nainštalovanie aplikácie Orbot a smeruj Anom cez Tor.</string>
 
     <string name="premium_addons">Prémium Doplnky</string>
 
@@ -287,7 +287,7 @@
     <string name="ricochet_hopping">Ricocheted do</string>
     <string name="ricochet_spend1">Ricochet minúť do</string>
     <string name="ricochet_spend2">pre celkovú sumu z</string>
-    <string name="ricochet_spend3">(zahrňuje 0.002 BTC poplatok pre Samourai a ťažiarom\' poplatky)?</string>
+    <string name="ricochet_spend3">(zahrňuje 0.002 BTC poplatok pre Anom a ťažiarom\' poplatky)?</string>
 
     <string name="action_ricochet">Opakuj Ricochet</string>
     <string name="action_empty_ricochet">Prázdna Ricochet fronta</string>
@@ -314,7 +314,7 @@
     <string name="trusted_node_ko">Dôveryhodný uzol nerozpoznaný. Prosím skontrolujte inštaláciu.</string>
     <string name="trusted_node_error">Chyba pri dosiahnutí dôveryhodného uzla.</string>
     <string name="trusted_node_tx_error">Transakcia sa nepodarila na dôveryhodnom uzle.</string>
-    <string name="trusted_node_not_core_131">Dôveryhodný uzol je nastavený. Pre informáciu Samourai Wallet podporuje Bitcoin Core 0.13.1 a vyššiu.</string>
+    <string name="trusted_node_not_core_131">Dôveryhodný uzol je nastavený. Pre informáciu Anom Wallet podporuje Bitcoin Core 0.13.1 a vyššiu.</string>
     <string name="trusted_node_tx_sent">Transakciua poslaná cez dôveryhodný uzol.</string>
     <string name="trusted_node_not_responding">Dôveryhodný uzol neodpovedá. Prosím skontrolujte inštaláciu.</string>
     <string name="trusted_node_breaks_consensus">Dôveryhodný uzol nemôže byť nastavený na a bitcoin klientovi ktorý porušuje konsenzus.</string>
@@ -376,7 +376,7 @@
     <string name="opendime_topup">DOPLNIŤ</string>
 
     <string name="select_app">Vyberte aplikáciu</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="Anom_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Ochrana pred odpoveďou</string>
     <string name="replay_unprotected">Nezabezpečené</string>
@@ -393,7 +393,7 @@
     <string name="replay_waiting_for_confirmations">čakám na konfirmácie</string>
     <string name="replay_confirmed">potrdené</string>
     <string name="replay_confirmations">konfirmácie:</string>
-    <string name="replay_samourai_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
+    <string name="replay_Anom_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
     <string name="replay_bcc_user_agent">Bitcoin Cash (Bitcoin ABC)</string>
 
     <string name="replay_awaiting_confirmation">Ochrana prehrávania čaká na potvrdenie</string>
@@ -444,7 +444,7 @@
 
     <string name="copy_to_clipboard">Kopírovať do schánky</string>
 
-    <string name="no_bitpay">CHYBA: toto nie je platná Bitcoin požiadavka. Samourai podporuje posielanie iba na platné Bitcoin adresy.</string>
+    <string name="no_bitpay">CHYBA: toto nie je platná Bitcoin požiadavka. Anom podporuje posielanie iba na platné Bitcoin adresy.</string>
     <string name="learn_more">Dozvedieť sa viac</string>
 
     <string name="paynym">PayNym</string>
@@ -465,7 +465,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC do peňaženky a skúsiť znova.</string>
     <string name="help">Pomoc</string>
 
-    <string name="passphrase_disclaimer">Porozumel som že Samourai nenesie žiadnu zodpovednosť za stratu vaších prístupových hesiel . Samourai nemá žiadnu vedomosť o Vašom prístupovom hesle.</string>
+    <string name="passphrase_disclaimer">Porozumel som že Anom nenesie žiadnu zodpovednosť za stratu vaších prístupových hesiel . Anom nemá žiadnu vedomosť o Vašom prístupovom hesle.</string>
     <string name="confirm_pin_code">Potvrď PIN kód</string>
     <string name="re_enter_your_pin_code">Znovu zadaj PIN kód</string>
     <string name="re_enter_a_passphrase">Znovu zadaj prístupvé heslo</string>
@@ -474,9 +474,9 @@
     <string name="set_pin_code">Nastav PIN kód</string>
     <string name="accept_disclaimer_error">Je potrené akceptovať podmienky používania</string>
     <string name="import_external_wallet">Importuj externú peňaženku</string>
-    <string name="import_samourai_wallet">Importuj samourai zálohu</string>
+    <string name="import_Anom_wallet">Importuj Anom zálohu</string>
     <string name="backup_file">Zálohovací súbor</string>
-    <string name="import_an_encrypted_samourai_wallet">importovať šifrovanú zálohu Samourai, aby ste obnovili peňaženku so všetkými neporušenými meta-dátami</string>
+    <string name="import_an_encrypted_Anom_wallet">importovať šifrovanú zálohu Anom, aby ste obnovili peňaženku so všetkými neporušenými meta-dátami</string>
     <string name="back">SPAŤ</string>
     <string name="finish">skončiť</string>
     <string name="choose_file">zvoľ súbor</string>
@@ -489,8 +489,8 @@
     <string name="last_updated">Naposledy aktualizované</string>
     <string name="get_help">Získaj pomoc</string>
     <string name="offline_mode">Offline mód</string>
-    <string name="import_samourai_backup">Importuj Samourai zálohu</string>
-    <string name="samourai_bitcoin_wallet">Samourai Bitcoin Peňaženka</string>
+    <string name="import_Anom_backup">Importuj Anom zálohu</string>
+    <string name="Anom_bitcoin_wallet">Anom Bitcoin Peňaženka</string>
     <string name="enter_your_wallet_passphrase">Zadaj tvoje prístupové heslo k peňaženke</string>
     <string name="start_new_wallet">Spusti novú peňaženku</string>
     <string name="get_help_create">Vytvor peňaženku: Získaj pomoc</string>
@@ -560,8 +560,8 @@
         <item>Legacy (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">Samourai Wallet je v off line móde.</string>
-    <string name="broadcast_off">V tvojej Samourai peňaženke je zasielanie vypnuté.</string>
+    <string name="in_offline_mode">Anom Wallet je v off line móde.</string>
+    <string name="broadcast_off">V tvojej Anom peňaženke je zasielanie vypnuté.</string>
     <string name="tx_standby">Transakcia v pohotovostnom režime</string>
     <string name="show_hex">Zobraz Hex kód</string>
     <string name="tx_tenna_coming_soon">txTenna na Android čoskoro</string>

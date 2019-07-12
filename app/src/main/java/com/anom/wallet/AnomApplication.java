@@ -12,7 +12,7 @@ import com.anom.wallet.tor.TorService;
 import com.anom.wallet.util.ConnectivityStatus;
 import com.anom.wallet.util.PrefsUtil;
 
-public class SamouraiApplication extends Application {
+public class AnomApplication extends Application {
 
     public static String TOR_CHANNEL_ID = "TOR_CHANNEL";
 

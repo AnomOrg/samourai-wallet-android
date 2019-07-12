@@ -15,7 +15,7 @@
     <string name="action_unarchive">Alle gearchiveerde betalingscodes activeren</string>
     <string name="action_sync_all">Alle betalingscodes synchroniseren</string>
 
-    <string name="about_us">Over Samourai Wallet</string>
+    <string name="about_us">Over Anom Wallet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Annuleren</string>
@@ -38,7 +38,7 @@
     <string name="options_wipe">Portemonnee veilig wissen</string>
     <string name="options_wipe2">Wis deze portemonnee veilig van dit apparaat.</string>
     <string name="options_stealth_display">Onzichtbaar starten</string>
-    <string name="options_stealth_display2">Verberg Samourai op het startscherm. Je moet **JOUW_PINCODE# intoetsen op het belscherm om Samourai te starten.</string>
+    <string name="options_stealth_display2">Verberg Anom op het startscherm. Je moet **JOUW_PINCODE# intoetsen op het belscherm om Anom te starten.</string>
     <string name="options_remote_commands">Commando\'s op afstand toestaan</string>
     <string name="options_remote_commands2">Commando\'s via sms toestaan.</string>
     <string name="options_currency">Straatprijs</string>
@@ -117,12 +117,12 @@
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="send_payment_code">Betalingscode verzenden</string>
 
-    <string name="ask_you_sure_exit">Weet je zeker dat je Samourai wilt sluiten?</string>
+    <string name="ask_you_sure_exit">Weet je zeker dat je Anom wilt sluiten?</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <string name="close">Sluiten</string>
 
-    <string name="sim_warning">Jouw Samourai Wallet-apparaat heeft nu een andere simkaart, overeenkomend met het nummer van de afzender van dit sms-bericht.</string>
+    <string name="sim_warning">Jouw Anom Wallet-apparaat heeft nu een andere simkaart, overeenkomend met het nummer van de afzender van dit sms-bericht.</string>
 
     <string name="pin_5_8">Bedenk een pincode tussen de 5 en 8 tekens.</string>
     <string name="pin_5_8_confirm">Pincode bevestigen</string>
@@ -166,7 +166,7 @@
     <string name="destination">Adres of betalingskanaal</string>
 
     <string name="insufficient_funds">Saldo ontoereikend</string>
-    <string name="tx_length_error">Samourai ondersteunt geen transacties groter dan 100KB. Probeer je transactie te splitsen.</string>
+    <string name="tx_length_error">Anom ondersteunt geen transacties groter dan 100KB. Probeer je transactie te splitsen.</string>
     <string name="invalid_amount">Ongeldig bedrag</string>
     <string name="amount">Bedrag</string>
 
@@ -198,7 +198,7 @@
     <string name="custom_fee">Aangepast</string>
     <string name="sat_b">sat/B</string>
 
-    <string name="account_Samourai">Portemonnee</string>
+    <string name="account_Anom">Portemonnee</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">Max. beschikbaar:</string>
@@ -220,7 +220,7 @@
 
     <string name="choose_email_client">Kies een e-mailclient:</string>
 
-    <string name="cannot_launch_app">Samourai Wallet kan niet worden uitgevoerd op dit apparaat</string>
+    <string name="cannot_launch_app">Anom Wallet kan niet worden uitgevoerd op dit apparaat</string>
     <string name="confirm_change_pin">Weet je zeker dat je je PIN wilt wijzigen?</string>
     <string name="success_change_pin">PIN gewijzigd</string>
     <string name="alternative_pin_create">Weet je zeker dat je een alternatieve PIN wilt aanmaken voor onzichtbaar starten en commando\'s op afstand?</string>
@@ -262,11 +262,11 @@
 
     <string name="invalid_passphrase">Ongeldige wachtwoordzin</string>
     <string name="passphrase">Wachtwoordzin</string>
-    <string name="passphrase_needed_for_backup">Je portemonnee is niet beveiligd met een wachtwoordzin. Portemonneeback-ups worden met een wachtwoordzin versleuteld. Als je deze en andere Samourai Wallet-functies wilt gebruiken, maak je portemonnee dan aan met Samourai Wallet en maak je saldo ernaar over.</string>
+    <string name="passphrase_needed_for_backup">Je portemonnee is niet beveiligd met een wachtwoordzin. Portemonneeback-ups worden met een wachtwoordzin versleuteld. Als je deze en andere Anom Wallet-functies wilt gebruiken, maak je portemonnee dan aan met Anom Wallet en maak je saldo ernaar over.</string>
     <string name="passphrase_required">Een wachtwoordzin is vereist om deze functie te gebruiken. Overweeg om een nieuwe portemonnee aan te maken, die automatisch een wachtwoordzin zal bevatten.</string>
 
-    <string name="cannot_reach_api">Samourai-API\'s kunnen niet worden bereikt. Zorg dat je verbinding hebt en probeer het later opnieuw.</string>
-    <string name="api_error">De Samourai-API\'s geven een foutmelding. Probeer het later opnieuw.</string>
+    <string name="cannot_reach_api">Anom-API\'s kunnen niet worden bereikt. Zorg dat je verbinding hebt en probeer het later opnieuw.</string>
+    <string name="api_error">De Anom-API\'s geven een foutmelding. Probeer het later opnieuw.</string>
 
     <string name="cannot_recognize_privkey">Kan privésleutel niet herkennen</string>
     <string name="cannot_sweep_privkey">Fout bij legen privésleutel</string>
@@ -275,9 +275,9 @@
 
     <string name="change_is_dust">Het wisselgeld van deze transactie is een zeer klein \'dust\'-bedrag. Probeer het opnieuw en wijzig het te besteden bedrag of besteed het gehele saldo.</string>
 
-    <string name="tor_routing_on">Samourai wordt omgeleid via Tor.</string>
-    <string name="tor_routing_off">Samourai wordt niet omgeleid via Tor. Tik om te activeren.</string>
-    <string name="tor_install">Tik om Orbot te installeren en Samourai via Tor om te leiden.</string>
+    <string name="tor_routing_on">Anom wordt omgeleid via Tor.</string>
+    <string name="tor_routing_off">Anom wordt niet omgeleid via Tor. Tik om te activeren.</string>
+    <string name="tor_install">Tik om Orbot te installeren en Anom via Tor om te leiden.</string>
 
     <string name="premium_addons">Betaalde extra\'s</string>
 
@@ -285,7 +285,7 @@
     <string name="ricochet_hopping">Gericochet naar</string>
     <string name="ricochet_spend1">Ricochet-uitgave naar</string>
     <string name="ricochet_spend2">van in totaal</string>
-    <string name="ricochet_spend3">(inclusief 0,002 BTC aan transactiekosten voor Samourai en miners)?</string>
+    <string name="ricochet_spend3">(inclusief 0,002 BTC aan transactiekosten voor Anom en miners)?</string>
 
     <string name="action_ricochet">Ricochet opnieuw spelen</string>
     <string name="action_empty_ricochet">Ricochet-wachtrij legen</string>
@@ -312,7 +312,7 @@
     <string name="trusted_node_ko">Vertrouwde node niet herkend. Controleer de installatie.</string>
     <string name="trusted_node_error">Fout bij het bereiken van de vertrouwde node.</string>
     <string name="trusted_node_tx_error">Transactie via vertrouwde node mislukt.</string>
-    <string name="trusted_node_not_core_131">Vertrouwde node is ingesteld. Samourai Wallet ondersteunt Bitcoin Core 0.13.1 en hoger.</string>
+    <string name="trusted_node_not_core_131">Vertrouwde node is ingesteld. Anom Wallet ondersteunt Bitcoin Core 0.13.1 en hoger.</string>
     <string name="trusted_node_tx_sent">Transactie verzonden via vertrouwde node.</string>
     <string name="trusted_node_not_responding">Vertrouwde node reageert niet. Controleer de installatie.</string>
     <string name="trusted_node_breaks_consensus">Vertrouwde node kan geen bitcoin-client zijn die consensus negeert.</string>
@@ -374,7 +374,7 @@
     <string name="opendime_topup">OPLADEN</string>
 
     <string name="select_app">Applicatie selecteren</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="Anom_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">Onbeschermd</string>
@@ -391,7 +391,7 @@
     <string name="replay_waiting_for_confirmations">wachten op bevestigingen</string>
     <string name="replay_confirmed">bevestigd</string>
     <string name="replay_confirmations">bevestigingen:</string>
-    <string name="replay_samourai_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
+    <string name="replay_Anom_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
     <string name="replay_bcc_user_agent">Bitcoin Cash (Bitcoin ABC)</string>
 
     <string name="replay_awaiting_confirmation">Replay protection wacht op bevestiging</string>
@@ -442,7 +442,7 @@
 
     <string name="copy_to_clipboard">Kopiëren naar klembord</string>
 
-    <string name="no_bitpay">Fout: dit is geen geldig bitcoinverzoek. Samourai ondersteunt alleen verzenden naar geldige bitcoin-adressen.</string>
+    <string name="no_bitpay">Fout: dit is geen geldig bitcoinverzoek. Anom ondersteunt alleen verzenden naar geldige bitcoin-adressen.</string>
     <string name="learn_more">Meer weten</string>
 
     <string name="paynym">PayNym</string>
@@ -463,7 +463,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC in je portemonnee en probeer het opnieuw.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">Ik begrijp dat Samourai geen ondersteuning kan bieden bij een verloren of vergeten wachtwoordzin. Samourai komt mijn wachtwoordzin nooit te weten.</string>
+    <string name="passphrase_disclaimer">Ik begrijp dat Anom geen ondersteuning kan bieden bij een verloren of vergeten wachtwoordzin. Anom komt mijn wachtwoordzin nooit te weten.</string>
     <string name="confirm_pin_code">Pincode bevestigen</string>
     <string name="re_enter_your_pin_code">Voer je pincode opnieuw in</string>
     <string name="re_enter_a_passphrase">Wachtwoordzin opnieuw invoeren</string>
@@ -472,9 +472,9 @@
     <string name="set_pin_code">Pincode instellen</string>
     <string name="accept_disclaimer_error">Je dient de disclaimer te accepteren</string>
     <string name="import_external_wallet">Externe portemonnee importeren</string>
-    <string name="import_samourai_wallet">Samourai-back-up importeren</string>
+    <string name="import_Anom_wallet">Anom-back-up importeren</string>
     <string name="backup_file">Back-upbestand</string>
-    <string name="import_an_encrypted_samourai_wallet">Importeer een versleutelde Samourai-back-up om een portemonnee te herstellen met alle metadata intact</string>
+    <string name="import_an_encrypted_Anom_wallet">Importeer een versleutelde Anom-back-up om een portemonnee te herstellen met alle metadata intact</string>
     <string name="back">TERUG</string>
     <string name="finish">gereed</string>
     <string name="choose_file">bestand kiezen</string>
@@ -487,8 +487,8 @@
     <string name="last_updated">Laatst bijgewerkt</string>
     <string name="get_help">Hulp verkrijgen</string>
     <string name="offline_mode">Offline-modus</string>
-    <string name="import_samourai_backup">Samourai-back-up importeren</string>
-    <string name="samourai_bitcoin_wallet">Samourai Bitcoin Wallet</string>
+    <string name="import_Anom_backup">Anom-back-up importeren</string>
+    <string name="Anom_bitcoin_wallet">Anom Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Voer de wachtwoordzin voor je portemonnee in</string>
     <string name="start_new_wallet">Nieuwe portemonnee starten</string>
     <string name="get_help_create">Portemonnee aanmaken: hulp verkrijgen</string>
@@ -558,7 +558,7 @@
         <item>Oud formaat (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">Samourai Wallet is in offline-modus.</string>
+    <string name="in_offline_mode">Anom Wallet is in offline-modus.</string>
     <string name="tx_standby">Transactie in stand-by</string>
     <string name="show_hex">Hex-code tonen</string>
     <string name="tx_tenna_coming_soon">txTenna binnenkort beschikbaar op Android</string>

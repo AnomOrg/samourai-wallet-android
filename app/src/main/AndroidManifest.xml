@@ -40,7 +40,7 @@
         tools:node="replace" />
 
     <application
-        android:name="com.anom.wallet.SamouraiApplication"
+        android:name="com.anom.wallet.AnomApplication"
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"

@@ -77,7 +77,7 @@ public class RestoreSeedWalletActivity extends FragmentActivity implements
         setContentView(R.layout.activity_restore_wallet_activity);
         wallet_create_viewpager = (ViewPager) findViewById(R.id.wallet_create_viewpager);
         wallet_create_viewpager.enableSwipe(false);
-        pagerIndicatorContainer = (LinearLayout) findViewById(dots);
+        pagerIndicatorContainer = (LinearLayout) findViewById(R.id.dots);
         forwardButton = (LinearLayout) findViewById(R.id.wizard_forward);
         backwardButton = (LinearLayout) findViewById(R.id.wizard_backward);
         if (getActionBar() != null)

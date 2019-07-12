@@ -15,7 +15,7 @@
     <string name="action_unarchive">Minden archivált fizetési kód aktiválása</string>
     <string name="action_sync_all">Minden fizetési kód szinkronizálása</string>
 
-    <string name="about_us">A Samourai Wallet-ről</string>
+    <string name="about_us">A Anom Wallet-ről</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Mégse</string>
@@ -38,7 +38,7 @@
     <string name="options_wipe">Pénztárca biztonságos törlése</string>
     <string name="options_wipe2">Pénztárca biztonságos törlése erről az eszközről.</string>
     <string name="options_stealth_display">Rejtőzködő mód</string>
-    <string name="options_stealth_display2">A Samourai alkalmazás el lesz rejtve a kezdőképernyőről és az alkalmazások közül. Az alábbi szám tárcsázásával indítható a Samourai alkalmazás: **SAJÁT_PIN_KÓD#</string>
+    <string name="options_stealth_display2">A Anom alkalmazás el lesz rejtve a kezdőképernyőről és az alkalmazások közül. Az alábbi szám tárcsázásával indítható a Anom alkalmazás: **SAJÁT_PIN_KÓD#</string>
     <string name="options_remote_commands">Távoli utasítások engedélyezése</string>
     <string name="options_remote_commands2">Távoli utasítások engedélyezése SMS-en keresztül</string>
     <string name="options_currency">Utcai árfolyam</string>
@@ -117,12 +117,12 @@
     <string name="copied_to_clipboard">Vágólapra másolva</string>
     <string name="send_payment_code">Fizetési kód küldése</string>
 
-    <string name="ask_you_sure_exit">Biztosan kilépsz a Samourai-ból?</string>
+    <string name="ask_you_sure_exit">Biztosan kilépsz a Anom-ból?</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
     <string name="close">Bezár</string>
 
-    <string name="sim_warning">Kicsérélték a SIM kártyáját annak az eszköznek, amelyre a Samourai-t telepítetted. Ez az SMS az új SIM kártya számáról érkezett.</string>
+    <string name="sim_warning">Kicsérélték a SIM kártyáját annak az eszköznek, amelyre a Anom-t telepítetted. Ez az SMS az új SIM kártya számáról érkezett.</string>
 
     <string name="pin_5_8">Adj meg egy 5-8 számjegy hosszú PIN kódot.</string>
     <string name="pin_5_8_confirm">PIN kód megerősítése</string>
@@ -166,7 +166,7 @@
     <string name="destination">Cím vagy fizetési csatorna</string>
 
     <string name="insufficient_funds">Nem áll rendelkezésre elegendő összeg</string>
-    <string name="tx_length_error">A Samourai nem kezel 100KB-nál nagyobb tranzakciókat. Próbáld meg kisebb részekre osztani a tranzakciót.</string>
+    <string name="tx_length_error">A Anom nem kezel 100KB-nál nagyobb tranzakciókat. Próbáld meg kisebb részekre osztani a tranzakciót.</string>
     <string name="invalid_amount">Nem megfelelő mennyiség</string>
     <string name="amount">Mennyiség</string>
 
@@ -198,7 +198,7 @@
     <string name="custom_fee">Egyéni</string>
     <string name="sat_b">sat/bájt</string>
 
-    <string name="account_Samourai">Pénztárca</string>
+    <string name="account_Anom">Pénztárca</string>
     <string name="account_shuffling">Shifted pénztárca</string>
 
     <string name="max_available">Rendelkezésre áll:</string>
@@ -220,7 +220,7 @@
 
     <string name="choose_email_client">Válassz egy e-mail klienst:</string>
 
-    <string name="cannot_launch_app">A Samourai Pénztárca nem kompatibilis ezzel az eszközzel</string>
+    <string name="cannot_launch_app">A Anom Pénztárca nem kompatibilis ezzel az eszközzel</string>
     <string name="confirm_change_pin">Biztosan megváltoztatod a PIN kódodat?</string>
     <string name="success_change_pin">PIN kód megváltoztatva</string>
     <string name="alternative_pin_create">Biztosan létrehozol egy alternatív PIN kódot? Ezt a PIN kódot kell használnod az alkalmazás elindításához rejtőzködő üzemmódban, illetve távoli utasítások használatához.</string>
@@ -262,11 +262,11 @@
 
     <string name="invalid_passphrase">Hibás jelszó</string>
     <string name="passphrase">Jelszó</string>
-    <string name="passphrase_needed_for_backup">A pénztárcádhoz nem tartozik jelszó. Viszont a biztonsági mentések a pénztárca jelszavával vannak titkosítva. Ha szeretnéd, hogy a biztonsági mentés titkosítva legyen, vagy ha szeretnéd a Samourai pénztárca többi funkcióját is használni, csinálj egy új pénztárcát a Samourai-ban, és küldd át a pénzedet ebbe az új pénztárcába.</string>
-    <string name="passphrase_required">Ennek a funkciónak a használatához egy jelszóval védett pénztárcára van szükség. Fontold meg egy új pénztárca készítését a Samourai-ban, ami automatikusan tartalmazni fog egy jelszót.</string>
+    <string name="passphrase_needed_for_backup">A pénztárcádhoz nem tartozik jelszó. Viszont a biztonsági mentések a pénztárca jelszavával vannak titkosítva. Ha szeretnéd, hogy a biztonsági mentés titkosítva legyen, vagy ha szeretnéd a Anom pénztárca többi funkcióját is használni, csinálj egy új pénztárcát a Anom-ban, és küldd át a pénzedet ebbe az új pénztárcába.</string>
+    <string name="passphrase_required">Ennek a funkciónak a használatához egy jelszóval védett pénztárcára van szükség. Fontold meg egy új pénztárca készítését a Anom-ban, ami automatikusan tartalmazni fog egy jelszót.</string>
 
-    <string name="cannot_reach_api">A Samourai API-k jelenleg nem elérhetőek. Ellenőrizd az internetkapcsolatot és próbáld újra.</string>
-    <string name="api_error">A Samourai API-k hibát jeleznek. Próbáld újra később.</string>
+    <string name="cannot_reach_api">A Anom API-k jelenleg nem elérhetőek. Ellenőrizd az internetkapcsolatot és próbáld újra.</string>
+    <string name="api_error">A Anom API-k hibát jeleznek. Próbáld újra később.</string>
 
     <string name="cannot_recognize_privkey">A privát kulcs nem ismerhető fel</string>
     <string name="cannot_sweep_privkey">Hiba a privát kulcs begyűjtése közben</string>
@@ -285,7 +285,7 @@
     <string name="ricochet_hopping">Ricochet továbbítva ide:</string>
     <string name="ricochet_spend1">Biztosan szeretnél Ricochet-küldeni a(z)</string>
     <string name="ricochet_spend2">címre, összesen</string>
-    <string name="ricochet_spend3">BTC-t? Ez tartalmaz 0.002 BTC-nyi fix díjat, ami fedezi a bányász díjakat, és a Samourai költségeit.</string>
+    <string name="ricochet_spend3">BTC-t? Ez tartalmaz 0.002 BTC-nyi fix díjat, ami fedezi a bányász díjakat, és a Anom költségeit.</string>
 
     <string name="action_ricochet">Ricochet újraküldése</string>
     <string name="action_empty_ricochet">Ricochet sor kiürítése</string>
@@ -312,7 +312,7 @@
     <string name="trusted_node_ko">A megbízható node nem ismerhető fel.</string>
     <string name="trusted_node_error">A megbízható node nem érhető el.</string>
     <string name="trusted_node_tx_error">A megbízható node nem tudta elküldeni a tranzakciót.</string>
-    <string name="trusted_node_not_core_131">Megbízható node beállítva. Ne feledd, hogy a Samourai csak a Bitcoin Core 0.13.1, vagy újabb verzióit támogatja.</string>
+    <string name="trusted_node_not_core_131">Megbízható node beállítva. Ne feledd, hogy a Anom csak a Bitcoin Core 0.13.1, vagy újabb verzióit támogatja.</string>
     <string name="trusted_node_tx_sent">Tranzakció sikeresen elküldve, a megbízható node-on keresztül.</string>
     <string name="trusted_node_not_responding">A megbízható node nem válaszol.</string>
     <string name="trusted_node_breaks_consensus">A megbízható node csak olyan kliens lehet, ami betartja a Bitcoin szabályait.</string>
@@ -374,7 +374,7 @@
     <string name="opendime_topup">FELTÖLT</string>
 
     <string name="select_app">Alkalmazás kiválasztása</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="Anom_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay elleni védelem</string>
     <string name="replay_unprotected">Nincs védelem</string>
@@ -391,7 +391,7 @@
     <string name="replay_waiting_for_confirmations">megerősítésre várakozás</string>
     <string name="replay_confirmed">megerősítve</string>
     <string name="replay_confirmations">megerősítések száma:</string>
-    <string name="replay_samourai_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
+    <string name="replay_Anom_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
     <string name="replay_bcc_user_agent">Bitcoin Cash (Bitcoin ABC)</string>
 
     <string name="replay_awaiting_confirmation">A replay védelem megerősítésre várakozik</string>
@@ -442,7 +442,7 @@
 
     <string name="copy_to_clipboard">Vágólapra másolás</string>
 
-    <string name="no_bitpay">Hiba: Ez egy érvénytelen bitcoin kérelem. A Samourai kizárólag az érvényes bitcoin címekre való küldést támogatja. </string>
+    <string name="no_bitpay">Hiba: Ez egy érvénytelen bitcoin kérelem. A Anom kizárólag az érvényes bitcoin címekre való küldést támogatja. </string>
     <string name="learn_more">További információ</string>
 
     <string name="paynym">PayNym</string>
@@ -463,7 +463,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC-t a pénztárcádba, majd próbáld újra.</string>
     <string name="help">Súgó</string>
 
-    <string name="passphrase_disclaimer">Megértettem és elfogadom, hogy a Samourai nem tud segítséget nyújtani elvesztett vagy elfelejtett jelszavak esetén. A Samourai-nak nincs semmiféle tudomása a jelszavaimról.</string>
+    <string name="passphrase_disclaimer">Megértettem és elfogadom, hogy a Anom nem tud segítséget nyújtani elvesztett vagy elfelejtett jelszavak esetén. A Anom-nak nincs semmiféle tudomása a jelszavaimról.</string>
     <string name="confirm_pin_code">PIN kód megerősítése</string>
     <string name="re_enter_your_pin_code">Add meg újra a PIN kódodat</string>
     <string name="re_enter_a_passphrase">Írd be újra a jelszót</string>
@@ -472,9 +472,9 @@
     <string name="set_pin_code">PIN kód létrehozása</string>
     <string name="accept_disclaimer_error">El kell fogadnod a feltételeket</string>
     <string name="import_external_wallet">Külső pénztárca importálása</string>
-    <string name="import_samourai_wallet">Samourai mentés visszaállítása</string>
+    <string name="import_Anom_wallet">Anom mentés visszaállítása</string>
     <string name="backup_file">Biztonsági mentés fájl</string>
-    <string name="import_an_encrypted_samourai_wallet">Samourai pénztárca által készített, titkosított biztonsági mentés visszaállítása.</string>
+    <string name="import_an_encrypted_Anom_wallet">Anom pénztárca által készített, titkosított biztonsági mentés visszaállítása.</string>
     <string name="back">VISSZA</string>
     <string name="finish">BEFEJEZÉS</string>
     <string name="choose_file">fájl kiválasztása</string>
@@ -487,8 +487,8 @@
     <string name="last_updated">Legutóbb módosítva</string>
     <string name="get_help">Segítség kérése</string>
     <string name="offline_mode">Offline mód</string>
-    <string name="import_samourai_backup">Samourai mentés visszaállítása</string>
-    <string name="samourai_bitcoin_wallet">Samourai Bitcoin Pénztárca</string>
+    <string name="import_Anom_backup">Anom mentés visszaállítása</string>
+    <string name="Anom_bitcoin_wallet">Anom Bitcoin Pénztárca</string>
     <string name="enter_your_wallet_passphrase">Add meg a pénztárcád jelszavát</string>
     <string name="start_new_wallet">Új pénztárca készítése</string>
     <string name="get_help_create">Segítség kérése pénztárca készítéshez</string>
@@ -558,7 +558,7 @@
         <item>Legacy (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">A Samourai pénztárca offline módban van.</string>
+    <string name="in_offline_mode">A Anom pénztárca offline módban van.</string>
     <string name="tx_standby">Tranzakció várakozik</string>
     <string name="show_hex">Hex Kód Megjelenítése</string>
     <string name="tx_tenna_coming_soon">TxTenna hamarosan érkezik Androidra</string>
