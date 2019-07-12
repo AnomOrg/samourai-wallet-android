@@ -53,7 +53,7 @@ android {
             targetSdkVersion 26
             versionCode 148
             versionName "1.0.0"
-            resValue "string", "app_name", "Anom"
+            resValue "string", "app_name", "Wallet"
             resValue "string", "version_name", "1.0.0"
         }
         staging {
