@@ -306,6 +306,10 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+        <service
+            android:name=".anom.AnomRequestService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>
