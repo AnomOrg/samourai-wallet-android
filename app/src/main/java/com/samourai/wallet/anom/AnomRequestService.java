@@ -55,6 +55,8 @@ public class AnomRequestService extends Service {
      */
     ArrayList<Messenger> mClients = new ArrayList<>();
 
+    private static int mLastMessageRequest = -1;
+
     /**
      * Handler of incoming messages from clients.
      */
@@ -99,28 +101,11 @@ public class AnomRequestService extends Service {
                                 e.printStackTrace();
                             }
                         }
+                        mLastMessageRequest = MSG_GET_PAYNYM;
                         break;
                     }
 
-                    for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
-                        try {
-                            if (mhdWallet != null) {
-
-                                String pcode = BIP47Util.getInstance(anomRequestService).
-                                        getPaymentCode().toString();
-
-                                Bundle bundle = new Bundle();
-                                bundle.putString(PAY_NUM_CODE, pcode);
-                                anomRequestService.mClients.get(i).send(
-                                        Message.obtain(null, MSG_GET_PAYNYM, bundle));
-                            }
-                        } catch (RemoteException e) {
-                            // The client is dead.  Remove it from the list;
-                            // we are going through the list from back to front
-                            // so this is safe to do inside the loop.
-                            anomRequestService.mClients.remove(i);
-                        }
-                    }
+                    sendPaynymCode(anomRequestService);
                     break;
                 case MSG_GET_PIN:
 
@@ -147,11 +132,45 @@ public class AnomRequestService extends Service {
                             e.printStackTrace();
                         }
                     }
+
+                    switch (mLastMessageRequest) {
+
+                        case MSG_GET_PAYNYM:
+                            sendPaynymCode(anomRequestService);
+                            break;
+                        default:
+                            mLastMessageRequest = -1;
+                            break;
+                    }
+
                     break;
                 default:
 
                     super.handleMessage(msg);
                     break;
+            }
+        }
+
+        private void sendPaynymCode(AnomRequestService anomRequestService) {
+
+            for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
+                try {
+                    if (mhdWallet != null) {
+
+                        String pCode = BIP47Util.getInstance(anomRequestService).
+                                getPaymentCode().toString();
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(PAY_NUM_CODE, pCode);
+                        anomRequestService.mClients.get(i).send(
+                                Message.obtain(null, MSG_GET_PAYNYM, bundle));
+                    }
+                } catch (RemoteException e) {
+                    // The client is dead.  Remove it from the list;
+                    // we are going through the list from back to front
+                    // so this is safe to do inside the loop.
+                    anomRequestService.mClients.remove(i);
+                }
             }
         }
     }
