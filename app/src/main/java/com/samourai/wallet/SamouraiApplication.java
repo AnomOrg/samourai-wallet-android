@@ -3,16 +3,10 @@ package com.samourai.wallet;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.multidex.MultiDex;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.samourai.wallet.tor.TorService;
 import com.samourai.wallet.util.ConnectivityStatus;
@@ -29,7 +23,6 @@ public class SamouraiApplication extends Application {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false)) {
             startService();
         }
-
     }
 
     public void startService() {

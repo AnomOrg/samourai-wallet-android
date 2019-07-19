@@ -11,12 +11,14 @@ import android.os.RemoteException;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.samourai.wallet.MainActivity2;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.hd.HD_WalletFactory;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.util.CharSequenceX;
+import com.samourai.wallet.util.PrefsUtil;
 
 import org.apache.commons.codec.DecoderException;
 import org.bitcoinj.crypto.MnemonicException;
@@ -41,6 +43,7 @@ public class AnomRequestService extends Service {
     static final int MSG_UNREGISTER_CLIENT = 2;
     static final int MSG_GET_PAYNYM = 3;
     static final int MSG_GET_PIN = 4;
+    static final int MSG_INITIATE_PAYMENT = 5;
 
     static final String PAY_NUM_CODE = "pcode";
     static final String PIN = "pin";
@@ -95,8 +98,8 @@ public class AnomRequestService extends Service {
                         for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
 
                             try {
-                                anomRequestService.mClients.get(i).send(Message.obtain(
-                                        null, MSG_GET_PIN, bundle));
+                                anomRequestService.mClients.get(i).send(Message.obtain(null,
+                                        MSG_GET_PIN, bundle));
                             } catch (RemoteException e) {
                                 e.printStackTrace();
                             }
@@ -133,16 +136,51 @@ public class AnomRequestService extends Service {
                         }
                     }
 
-                    switch (mLastMessageRequest) {
-
-                        case MSG_GET_PAYNYM:
-                            sendPaynymCode(anomRequestService);
-                            break;
-                        default:
-                            mLastMessageRequest = -1;
-                            break;
+                    if (mLastMessageRequest == MSG_GET_PAYNYM) {
+                        sendPaynymCode(anomRequestService);
                     }
 
+                    // reset last message request
+                    mLastMessageRequest = -1;
+                    break;
+                case MSG_INITIATE_PAYMENT:
+
+                    String paynymCode = null;
+                    if (msg.obj != null) {
+
+                        Bundle bundle = (Bundle) msg.obj;
+                        final String data = bundle.getString(PAY_NUM_CODE);
+
+                        if (!TextUtils.isEmpty(data)) {
+                            paynymCode = data;
+                        }
+                    }
+
+                    if (paynymCode != null) {
+
+                        AccessFactory.getInstance(anomRequestService).setIsLoggedIn(false);
+                        Intent intent = new Intent(anomRequestService, MainActivity2.class);
+
+                        if (PrefsUtil.getInstance(anomRequestService).getValue(
+                                PrefsUtil.ICON_HIDDEN, false)) {
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                    Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS |
+                                    Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        } else {
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                                    Intent.FLAG_ACTIVITY_NEW_TASK |
+                                    Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        }
+
+                        Bundle bundle = new Bundle();
+                        bundle.putString(PAY_NUM_CODE, paynymCode);
+                        intent.putExtras(bundle);
+
+                        anomRequestService.startActivity(intent);
+                    }
                     break;
                 default:
 
@@ -154,6 +192,7 @@ public class AnomRequestService extends Service {
         private void sendPaynymCode(AnomRequestService anomRequestService) {
 
             for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
+
                 try {
                     if (mhdWallet != null) {
 
@@ -162,10 +201,11 @@ public class AnomRequestService extends Service {
 
                         Bundle bundle = new Bundle();
                         bundle.putString(PAY_NUM_CODE, pCode);
-                        anomRequestService.mClients.get(i).send(
-                                Message.obtain(null, MSG_GET_PAYNYM, bundle));
+                        anomRequestService.mClients.get(i).send(Message.obtain(null,
+                                MSG_GET_PAYNYM, bundle));
                     }
                 } catch (RemoteException e) {
+
                     // The client is dead.  Remove it from the list;
                     // we are going through the list from back to front
                     // so this is safe to do inside the loop.
