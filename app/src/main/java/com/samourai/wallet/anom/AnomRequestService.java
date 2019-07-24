@@ -137,6 +137,7 @@ public class AnomRequestService extends Service {
                     }
 
                     if (mLastMessageRequest == MSG_GET_PAYNYM) {
+
                         sendPaynymCode(anomRequestService);
                     }
 
@@ -145,18 +146,21 @@ public class AnomRequestService extends Service {
                     break;
                 case MSG_INITIATE_PAYMENT:
 
-                    String paynymCode = null;
+                    double amount = 0.00;
+                    String pCode = null;
                     if (msg.obj != null) {
 
                         Bundle bundle = (Bundle) msg.obj;
-                        final String data = bundle.getString(PAY_NUM_CODE);
 
+                        amount = bundle.getDouble("amount");
+                        final String data = bundle.getString(PAY_NUM_CODE);
                         if (!TextUtils.isEmpty(data)) {
-                            paynymCode = data;
+
+                            pCode = data;
                         }
                     }
 
-                    if (paynymCode != null) {
+                    if (pCode != null) {
 
                         AccessFactory.getInstance(anomRequestService).setIsLoggedIn(false);
                         Intent intent = new Intent(anomRequestService, MainActivity2.class);
@@ -176,7 +180,9 @@ public class AnomRequestService extends Service {
                         }
 
                         Bundle bundle = new Bundle();
-                        bundle.putString(PAY_NUM_CODE, paynymCode);
+                        bundle.putString(PAY_NUM_CODE, pCode);
+                        bundle.putDouble("amount", amount);
+
                         intent.putExtras(bundle);
 
                         anomRequestService.startActivity(intent);
@@ -191,13 +197,14 @@ public class AnomRequestService extends Service {
 
         private void sendPaynymCode(AnomRequestService anomRequestService) {
 
+            String pCode;
             for (int i = anomRequestService.mClients.size() - 1; i >= 0; i--) {
 
                 try {
                     if (mhdWallet != null) {
 
-                        String pCode = BIP47Util.getInstance(anomRequestService).
-                                getPaymentCode().toString();
+                        pCode = BIP47Util.getInstance(anomRequestService).getPaymentCode().
+                                toString();
 
                         Bundle bundle = new Bundle();
                         bundle.putString(PAY_NUM_CODE, pCode);

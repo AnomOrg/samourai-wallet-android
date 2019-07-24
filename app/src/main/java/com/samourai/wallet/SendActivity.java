@@ -634,7 +634,6 @@ public class SendActivity extends AppCompatActivity {
                 Snackbar.make(tvMaxAmount.getRootView(), "Please wait... your wallet is still loading ", Snackbar.LENGTH_LONG).show();
                 shownWalletLoadingMessage = true;
             }
-
         }
     }
 
@@ -658,8 +657,8 @@ public class SendActivity extends AppCompatActivity {
             }
             new Handler().postDelayed(this::validateSpend, 800);
         } else {
-            validateSpend();
 
+            validateSpend();
         }
     }
 
@@ -728,16 +727,12 @@ public class SendActivity extends AppCompatActivity {
                     satEditText.setText(formattedSatValue(sats));
                     checkRicochetPossibility();
                 }
-
-//
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
             satEditText.addTextChangedListener(satWatcher);
             btcEditText.addTextChangedListener(this);
             validateSpend();
-
-
         }
     };
 
@@ -767,7 +762,6 @@ public class SendActivity extends AppCompatActivity {
                 else
                     setToAddress("");
             }
-
         }
     };
 
@@ -806,7 +800,6 @@ public class SendActivity extends AppCompatActivity {
                 Double btc = getBtcValue(sats);
                 String formatted = formattedSatValue(sats);
 
-
                 satEditText.setText(formatted);
                 satEditText.setSelection(formatted.length());
                 btcEditText.setText(String.format(Locale.ENGLISH, "%.8f", btc));
@@ -825,7 +818,6 @@ public class SendActivity extends AppCompatActivity {
             btcEditText.addTextChangedListener(BTCWatcher);
             checkRicochetPossibility();
             validateSpend();
-
         }
     };
 

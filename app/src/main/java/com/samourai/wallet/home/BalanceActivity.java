@@ -129,7 +129,6 @@ public class BalanceActivity extends AppCompatActivity {
     private final static int SCAN_QR = 2012;
     private static final String TAG = "BalanceActivity";
 
-
     private List<Tx> txs = null;
     private RecyclerView TxRecyclerView;
     private ProgressBar progressBar;
@@ -345,8 +344,6 @@ public class BalanceActivity extends AppCompatActivity {
                     Intent intent = new Intent(BalanceActivity.this, ReceiveActivity.class);
                     startActivity(intent);
                 }
-
-
             } catch (IOException | MnemonicException.MnemonicLengthException e) {
             }
         });
