@@ -28,6 +28,8 @@ import java.util.ArrayList;
 
 public class AnomRequestService extends Service {
 
+    public static String sConversationUuid;
+
     /**
      * Command to the service to register a client, receiving callbacks
      * from the service. The Message's replyTo field must be a Messenger of
@@ -47,11 +49,8 @@ public class AnomRequestService extends Service {
 
     static final String PAY_NUM_CODE = "pcode";
     static final String PIN = "pin";
-
-    /**
-     * Target we publish for clients to send messages to IncomingHandler.
-     */
-    Messenger mMessenger;
+    static final String AMOUNT = "amount";
+    static final String UUID = "uuid";
 
     /**
      * Keeps track of all current registered clients.
@@ -152,11 +151,20 @@ public class AnomRequestService extends Service {
 
                         Bundle bundle = (Bundle) msg.obj;
 
-                        amount = bundle.getDouble("amount");
+                        amount = bundle.getDouble(AMOUNT);
                         final String data = bundle.getString(PAY_NUM_CODE);
                         if (!TextUtils.isEmpty(data)) {
 
                             pCode = data;
+                        }
+
+                        final String uuid = bundle.getString(UUID);
+                        if (!TextUtils.isEmpty(uuid)) {
+
+                            sConversationUuid = uuid;
+                        } else {
+
+                            sConversationUuid = null;
                         }
                     }
 
@@ -181,10 +189,10 @@ public class AnomRequestService extends Service {
 
                         Bundle bundle = new Bundle();
                         bundle.putString(PAY_NUM_CODE, pCode);
-                        bundle.putDouble("amount", amount);
+                        bundle.putString(UUID, sConversationUuid);
+                        bundle.putDouble(AMOUNT, amount);
 
                         intent.putExtras(bundle);
-
                         anomRequestService.startActivity(intent);
                     }
                     break;
@@ -230,7 +238,10 @@ public class AnomRequestService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
 
-        mMessenger = new Messenger(new IncomingHandler(this));
+        /**
+         * Target we publish for clients to send messages to IncomingHandler.
+         */
+        Messenger mMessenger = new Messenger(new IncomingHandler(this));
         return mMessenger.getBinder();
     }
 }

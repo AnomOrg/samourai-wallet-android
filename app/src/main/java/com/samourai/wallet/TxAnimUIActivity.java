@@ -1,6 +1,7 @@
 package com.samourai.wallet;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -28,6 +29,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
 import com.samourai.wallet.JSONRPC.TrustedNodeUtil;
+import com.samourai.wallet.anom.AnomRequestService;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.hd.HD_WalletFactory;
@@ -235,12 +237,14 @@ public class TxAnimUIActivity extends AppCompatActivity {
                                             if (_isOK) {
                                                 progressView.showCheck();
                                                 progressView.setTxStatusMessage(R.string.tx_sent_ok);
+
+                                                new Handler().postDelayed(TxAnimUIActivity.this::
+                                                        sendNotificationToAnom, 2000);
                                             } else {
                                                 failTx(R.string.tx_sent_ko);
                                             }
 
                                             handleResult(_isOK, rbf, strTxHash, hexTx, _tx);
-
                                         }
 
                                     }, resultDelay);
@@ -261,6 +265,20 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    private void sendNotificationToAnom() {
+
+        final Intent intent = new Intent();
+        intent.setAction("one.anom.transactions");
+        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+        intent.setComponent(new ComponentName("one.anom.ent",
+                "one.anom.broadcasts.SWBroadcastReceiver"));
+
+        intent.putExtra("uuid", AnomRequestService.sConversationUuid);
+        sendBroadcast(intent);
+
+        this.finishAndRemoveTask();
     }
 
     private void failTx(int id) {
@@ -333,10 +351,9 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                 if (SendParams.getInstance().getChangeAmount() > 0L && SendParams.getInstance().getSpendType() == SendActivity.SPEND_SIMPLE) {
 
-                    if(SendParams.getInstance().getAccount() != 0)    {
+                    if (SendParams.getInstance().getAccount() != 0) {
                         BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccountAt(SendParams.getInstance().getAccount()).getChange().incAddrIdx();
-                    }
-                    else if (SendParams.getInstance().getChangeType() == 84) {
+                    } else if (SendParams.getInstance().getChangeType() == 84) {
                         BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().incAddrIdx();
                     } else if (SendParams.getInstance().getChangeType() == 49) {
                         BIP49Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().incAddrIdx();
@@ -443,10 +460,9 @@ public class TxAnimUIActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(TxAnimUIActivity.this, R.string.tx_failed, Toast.LENGTH_SHORT).show();
                 // reset change index upon tx fail
-                if(SendParams.getInstance().getAccount() != 0)    {
+                if (SendParams.getInstance().getAccount() != 0) {
                     BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccountAt(SendParams.getInstance().getAccount()).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());
-                }
-                else if (SendParams.getInstance().getChangeType() == 84) {
+                } else if (SendParams.getInstance().getChangeType() == 84) {
                     BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());
                 } else if (SendParams.getInstance().getChangeType() == 49) {
                     BIP49Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());
