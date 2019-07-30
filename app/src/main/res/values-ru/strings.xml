@@ -20,7 +20,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Отмена</string>
 
-    <string name="options_cat_prefs">Проводник блоков</string>
+    <string name="options_cat_prefs">Проводник блоков, валюты</string>
     <string name="options_cat_stealth">Маскировка</string>
     <string name="options_cat_remote">Удалённое управление</string>
     <string name="options_cat_wallet">Кошелёк</string>

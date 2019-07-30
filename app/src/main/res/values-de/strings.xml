@@ -21,7 +21,7 @@
     <string name="ok">OK</string>
     <string name="cancel">Abbrechen</string>
 
-    <string name="options_cat_prefs">Block-Explorer</string>
+    <string name="options_cat_prefs">Währung, Block-Explorer</string>
     <string name="options_cat_stealth">Unsichtbar-Modus</string>
     <string name="options_cat_remote">Fernzugriff</string>
     <string name="options_cat_wallet">Wallet</string>

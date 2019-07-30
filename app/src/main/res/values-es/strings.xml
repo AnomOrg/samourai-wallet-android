@@ -20,7 +20,7 @@
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
 
-    <string name="options_cat_prefs">Explorador de bloques</string>
+    <string name="options_cat_prefs">Moneda, Explorador de bloques</string>
     <string name="options_cat_stealth">Invisibilidad</string>
     <string name="options_cat_remote">Control remoto</string>
     <string name="options_cat_wallet">Billetera</string>
@@ -45,6 +45,8 @@
     <string name="options_stealth_display2">Quitar accesos a Samourai de la pantalla principal y menú de aplicaciones. Deberás marcar  **TU_CODIGO_PIN# desde la aplicación teléfono para iniciar Samourai.</string>
     <string name="options_remote_commands">Habilitar comandos remotos.</string>
     <string name="options_remote_commands2">Permitir comandos remotos mediante SMS.</string>
+    <string name="options_currency">Precio de mercado</string>
+    <string name="options_currency2">Elije tu exchange y moneda local.</string>
     <string name="options_blockexplorer">Explorador de bloques</string>
     <string name="options_blockexplorer2">Elije el explorador de bloques usado para ver los detalles de las transacciones.</string>
     <string name="options_sim_switch">Protección al cambio de SIM</string>

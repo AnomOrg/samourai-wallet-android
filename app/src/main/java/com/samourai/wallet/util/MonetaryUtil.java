@@ -48,5 +48,4 @@ public class MonetaryUtil {
 	public String getSatoshiUnits() {
 		return "sat";
 	}
-
 }
