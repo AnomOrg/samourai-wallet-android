@@ -8,7 +8,8 @@
     <item android:drawable="@color/window" />
 
     <!-- Your product logo - 144dp color version of your app icon -->
-    <item>
+    <item
+        android:left="6dp">
 
         <bitmap
             android:gravity="center"
