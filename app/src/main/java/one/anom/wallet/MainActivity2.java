@@ -168,6 +168,8 @@ public class MainActivity2 extends Activity {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
 
+            com.anom.wallet.util.ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
+
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
             String strUri = null;

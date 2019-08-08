@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.R;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.payload.PayloadUtil;
@@ -122,6 +123,7 @@ public class AppUtil {
         SentToFromBIP47Util.getInstance().reset();
         BatchSendUtil.getInstance().clear();
         AccessFactory.getInstance(context).setIsLoggedIn(false);
+        TrustedNodeUtil.getInstance().reset();
 	}
 
 	public void restartApp() {
