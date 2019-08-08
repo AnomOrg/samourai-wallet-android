@@ -26,9 +26,7 @@ import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.send.RBFUtil;
 import com.samourai.wallet.send.boost.CPFPTask;
 import com.samourai.wallet.send.SendActivity;
-import com.samourai.wallet.util.BlockExplorerUtil;
 import com.samourai.wallet.util.DateUtil;
-import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.widgets.CircleImageView;
 import com.squareup.picasso.Picasso;
 
@@ -330,12 +328,7 @@ public class TxDetailsActivity extends AppCompatActivity {
      */
     private void doExplorerView() {
 
-        int sel = PrefsUtil.getInstance(TxDetailsActivity.this).getValue(PrefsUtil.BLOCK_EXPLORER, 0);
-        if (sel >= BlockExplorerUtil.getInstance().getBlockExplorerTxUrls().length) {
-            sel = 0;
-        }
-
-        CharSequence blockExplorer = BlockExplorerUtil.getInstance().getBlockExplorerTxUrls()[sel];
+        String blockExplorer = "https://m.oxt.me/transaction/";
         if (SamouraiWallet.getInstance().isTestNet()) {
             blockExplorer = "https://blockstream.info/testnet/";
         }
