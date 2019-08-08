@@ -2,16 +2,31 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <Preference
+        android:title="@string/options_cat_wallet"
         android:key="wallet"
-        android:title="@string/options_cat_wallet" />
+        />
 
     <Preference
         android:key="prefs"
         android:title="@string/options_cat_prefs" />
 
     <Preference
+        android:title="@string/options_txs"
         android:key="txs"
-        android:title="@string/options_txs" />
+        />
+
+    <!--<Preference
+        android:title="@string/options_cat_remote"
+        android:key="remote"
+        />
+-->
+    <!--<Preference
+        android:title="@string/options_cat_networking"
+        android:key="networking"
+        />-->
+
+     <!--   android:key="txs"
+        android:title="@string/options_txs" />-->
     <!--
         <Preference
             android:title="@string/options_cat_stealth"
@@ -23,9 +38,9 @@
             android:key="remote"
             />
     -->
-    <Preference
+   <!-- <Preference
         android:key="networking"
-        android:title="@string/options_cat_networking" />
+        android:title="@string/options_cat_networking" />-->
 
     <Preference
         android:key="troubleshoot"

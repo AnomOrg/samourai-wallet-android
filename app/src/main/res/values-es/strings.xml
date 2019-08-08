@@ -15,7 +15,7 @@
     <string name="action_unarchive">Activar todos los códigos de pago archivados.</string>
     <string name="action_sync_all">Sincronizar todos los códigos de pago.</string>
 
-    <string name="about_us">Acerca de Samourai Wallet</string>
+    <string name="about_us">Acerca de Anom Wallet</string>
 
     <string name="ok">Aceptar</string>
     <string name="cancel">Cancelar</string>
@@ -25,7 +25,7 @@
     <string name="options_cat_remote">Control remoto</string>
     <string name="options_cat_wallet">Billetera</string>
     <string name="options_cat_networking">Red</string>
-    <string name="options_cat_other">Acerca de Samourai</string>
+    <string name="options_cat_other">Acerca de Anom</string>
 
     <string name="options_mnemonic">Mostrar mnemotécnico</string>
     <string name="options_mnemonic2">Mostrar la semilla de 12 palabras para esta billetera.</string>
@@ -42,7 +42,7 @@
     <string name="options_wipe">Borrar billetera de manera segura</string>
     <string name="options_wipe2">Borrar billetera de este dispositivo de manera segura.</string>
     <string name="options_stealth_display">Modo invisible</string>
-    <string name="options_stealth_display2">Quitar accesos a Samourai de la pantalla principal y menú de aplicaciones. Deberás marcar  **TU_CODIGO_PIN# desde la aplicación teléfono para iniciar Samourai.</string>
+    <string name="options_stealth_display2">Quitar accesos a Anom de la pantalla principal y menú de aplicaciones. Deberás marcar  **TU_CODIGO_PIN# desde la aplicación teléfono para iniciar Anom.</string>
     <string name="options_remote_commands">Habilitar comandos remotos.</string>
     <string name="options_remote_commands2">Permitir comandos remotos mediante SMS.</string>
     <string name="options_blockexplorer">Explorador de bloques</string>
@@ -124,12 +124,12 @@
     <string name="copied_to_clipboard">Copiado al portapapeles</string>
     <string name="send_payment_code">Enviar código de pago</string>
 
-    <string name="ask_you_sure_exit">Confirmas que quieres salir de Samourai?</string>
+    <string name="ask_you_sure_exit">Confirmas que quieres salir de Anom?</string>
     <string name="yes">Sí</string>
     <string name="no">No</string>
     <string name="close">Cerrar</string>
 
-    <string name="sim_warning">Tu billetera Samourai ahora tiene una tarjeta SIM diferente al número indicado en en este mensaje de texto.</string>
+    <string name="sim_warning">Tu billetera Anom ahora tiene una tarjeta SIM diferente al número indicado en en este mensaje de texto.</string>
 
     <string name="pin_5_8">Crear un código PIN de entre 5 y 8 caracteres.</string>
     <string name="pin_5_8_confirm">Confirmar código PIN</string>
@@ -173,7 +173,7 @@
     <string name="destination">Dirección o canal de pago</string>
 
     <string name="insufficient_funds">Fondos insuficientes</string>
-    <string name="tx_length_error">Samourai no soporta transacciones de más de 100KB de tamaño. Por favor intenta dividiendo tu transacción.</string>
+    <string name="tx_length_error">Anom no soporta transacciones de más de 100KB de tamaño. Por favor intenta dividiendo tu transacción.</string>
     <string name="invalid_amount">Cantidad no válida</string>
     <string name="invalid_address">Dirección no válida</string>
     <string name="amount">Cantidad</string>
@@ -207,7 +207,7 @@
     <string name="custom_fee">Personalizada</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">Wallet</string>
+    <string name="account_Anom">Wallet</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">Máximo disponible</string>
@@ -229,7 +229,7 @@
 
     <string name="choose_email_client">Elije un cliente de email:</string>
 
-    <string name="cannot_launch_app">Samourai Wallet no puede ejecutarse en este dispositivo</string>
+    <string name="cannot_launch_app">Anom Wallet no puede ejecutarse en este dispositivo</string>
     <string name="confirm_change_pin">Confirmas que quieres cambiar tu PIN?</string>
     <string name="success_change_pin">PIN cambiado</string>
     <string name="alternative_pin_create">Confirmas que quieres crear un PIN alternativo para ser utilizado por el modo invisible y control remoto?</string>
@@ -271,11 +271,11 @@
 
     <string name="invalid_passphrase">Contraseña no válida</string>
     <string name="passphrase">Contraseña</string>
-    <string name="passphrase_needed_for_backup">Tu billetera no esta protegida por una contraseña. Las copias de seguridad de tu billetera se cifran utilizando la contraseña de tu billetera. Si quieres usar las copias de seguridad cifradas de la billetera crea tu billetera Samourai y transfiere tus fondos a ella.</string>
+    <string name="passphrase_needed_for_backup">Tu billetera no esta protegida por una contraseña. Las copias de seguridad de tu billetera se cifran utilizando la contraseña de tu billetera. Si quieres usar las copias de seguridad cifradas de la billetera crea tu billetera Anom y transfiere tus fondos a ella.</string>
     <string name="passphrase_required">Una contraseña es necesaria para utilizar esta funcionalidad. Por favor considera crear una billetera que automáticamente incluirá una contraseña.</string>
 
-    <string name="cannot_reach_api">No se pueden contactar las APIs de Samourai. Por favor verifica tu conexión e inténtalo nuevamente luego.</string>
-    <string name="api_error">Las APIs de Samourai estan retornando errores. Por favor reintenta más tarde.</string>
+    <string name="cannot_reach_api">No se pueden contactar las APIs de Anom. Por favor verifica tu conexión e inténtalo nuevamente luego.</string>
+    <string name="api_error">Las APIs de Anom estan retornando errores. Por favor reintenta más tarde.</string>
     <string name="api_key_error">API key no válida.</string>
     <string name="api_token_error">Token del API no válido</string>
 
@@ -286,9 +286,9 @@
 
     <string name="change_is_dust">El vuelto de esta transacción es ínfimo y será agregado a la comisión para el minero.</string>
 
-    <string name="tor_routing_on">Samourai esta enrutando mediante Tor.</string>
-    <string name="tor_routing_off">Samourai no esta enrutando mediante Tor. Presiona para activar.</string>
-    <string name="tor_install">Presiona para instalar Orbot y enrutar Samourai mediante Tor.</string>
+    <string name="tor_routing_on">Anom esta enrutando mediante Tor.</string>
+    <string name="tor_routing_off">Anom no esta enrutando mediante Tor. Presiona para activar.</string>
+    <string name="tor_install">Presiona para instalar Orbot y enrutar Anom mediante Tor.</string>
 
     <string name="premium_addons">Agregados Premium</string>
 
@@ -296,7 +296,7 @@
     <string name="ricochet_hopping">Ricochet para</string>
     <string name="ricochet_spend1">Ricochet enviado para</string>
     <string name="ricochet_spend2">por una cantidad total de</string>
-    <string name="ricochet_spend3">(incluye 0.001 BTC de comisión a Samourai y mineros)?</string>
+    <string name="ricochet_spend3">(incluye 0.001 BTC de comisión a Anom y mineros)?</string>
 
     <string name="action_ricochet">Repetir Ricochet</string>
     <string name="action_empty_ricochet">Vaciar lista de espera Ricochet</string>
@@ -323,7 +323,7 @@
     <string name="trusted_node_ko">Nodo de confianza no reconocido. Por favor revisa la instalación.</string>
     <string name="trusted_node_error">Error tratando de contactar el nodo de confianza propuesto.</string>
     <string name="trusted_node_tx_error">La transacción falló en el nodo de confianza.</string>
-    <string name="trusted_node_not_core_131">Nodo de confianza configurado. Recuerda que Samourai soporta nodos Bitcoin Core 0.13.1 y superiores.</string>
+    <string name="trusted_node_not_core_131">Nodo de confianza configurado. Recuerda que Anom soporta nodos Bitcoin Core 0.13.1 y superiores.</string>
     <string name="trusted_node_tx_sent">Transacción enviada mediante un nodo de confianza.</string>
     <string name="trusted_node_not_responding">El nodo de confianza no responde. Por favor revisa su instalación y status.</string>
     <string name="trusted_node_breaks_consensus">El nodo de confianza no puede establecerse con un cliente bitcoin que rompe el consenso.</string>
@@ -385,7 +385,7 @@
     <string name="opendime_topup">MÁXIMO</string>
 
     <string name="select_app">Elegir aplicación</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="Anom_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">Sin protección</string>
@@ -402,7 +402,7 @@
     <string name="replay_waiting_for_confirmations">esperando confirmaciones</string>
     <string name="replay_confirmed">confirmada</string>
     <string name="replay_confirmations">confirmaciones:</string>
-    <string name="replay_samourai_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
+    <string name="replay_Anom_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
     <string name="replay_bcc_user_agent">Bitcoin Cash (Bitcoin ABC)</string>
 
     <string name="replay_awaiting_confirmation">Replay protection esperando confirmación</string>
@@ -453,7 +453,7 @@
 
     <string name="copy_to_clipboard">Copiar al portapapeles</string>
 
-    <string name="no_bitpay">Error: No es una solicitud bitcoin válida. Samourai sólo soporta enviar a direcciones bitcoin válidas.</string>
+    <string name="no_bitpay">Error: No es una solicitud bitcoin válida. Anom sólo soporta enviar a direcciones bitcoin válidas.</string>
     <string name="learn_more">Saber más...</string>
 
     <string name="paynym">PayNym</string>
@@ -474,7 +474,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC en tu billetera e inténtalo nuevamente.</string>
     <string name="help">Ayuda</string>
 
-    <string name="passphrase_disclaimer">Entiendo que Samourai no puede darme soporte en caso de perder las contraseñas. Samourai nunca tiene conocimiento de tus contraseñas.</string>
+    <string name="passphrase_disclaimer">Entiendo que Anom no puede darme soporte en caso de perder las contraseñas. Anom nunca tiene conocimiento de tus contraseñas.</string>
     <string name="confirm_pin_code">Confirmar código PIN</string>
     <string name="re_enter_your_pin_code">Reinserta tu código PIN</string>
     <string name="re_enter_a_passphrase">Reinserta tu contraseña</string>
@@ -483,9 +483,9 @@
     <string name="set_pin_code">Establecer código PIN</string>
     <string name="accept_disclaimer_error">Es necesario que aceptes el aviso legal</string>
     <string name="import_external_wallet">Importar billetera externa</string>
-    <string name="import_samourai_wallet">Importar copia de seguridad Samourai</string>
+    <string name="import_Anom_wallet">Importar copia de seguridad Anom</string>
     <string name="backup_file">Hacer copia de seguridad del fichero</string>
-    <string name="import_an_encrypted_samourai_wallet">importa una copia de seguridad Samourai para recuperar una billetera con todos los metadatos intactos</string>
+    <string name="import_an_encrypted_Anom_wallet">importa una copia de seguridad Anom para recuperar una billetera con todos los metadatos intactos</string>
     <string name="back">ATRÁS</string>
     <string name="finish">terminar</string>
     <string name="choose_file">escoger fichero</string>
@@ -498,8 +498,8 @@
     <string name="last_updated">Última actualización</string>
     <string name="get_help">Obtener ayuda</string>
     <string name="offline_mode">Modo sin conexión</string>
-    <string name="import_samourai_backup">Importar copia de seguridad Samourai</string>
-    <!-- <string name="samourai_bitcoin_wallet">Samourai Bitcoin Wallet</string> -->
+    <string name="import_Anom_backup">Importar copia de seguridad Anom</string>
+    <!-- <string name="Anom_bitcoin_wallet">Anom Bitcoin Wallet</string> -->
     <string name="enter_your_wallet_passphrase">Introduce la contraseña de tu billetera</string>
     <string name="start_new_wallet">Crear billetera nueva</string>
     <string name="get_help_create">Crear billetera nueva: Obtener ayuda</string>
@@ -569,8 +569,8 @@
         <item>Legacy (P2PKH)</item>
     </string-array> -->
 
-    <string name="in_offline_mode">Samourai está en modo sin conexión.</string>
-    <string name="broadcast_off">La emisión de Samourai está apagada.</string>
+    <string name="in_offline_mode">Anom está en modo sin conexión.</string>
+    <string name="broadcast_off">La emisión de Anom está apagada.</string>
     <string name="tx_standby">Transacción en stand-by</string>
     <string name="show_hex">Mostrar código Hex</string>
     <string name="tx_tenna_coming_soon">txTenna en Android próximamente</string>
@@ -685,10 +685,10 @@
     <!-- <string name="title_activity_network_dashboard">
         Networking
     </string> -->
-    <string name="powering_samourai_wallet_">Complementar tu billetera Samourai con tu propio nodo personal ofrece el mejor nivel de privacidad e independencia al interactuar con la red Bitcoin. Dojo hace que la ejecución de un nodo completo sea fácil y simple.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Enchufar, conectar y usar un nodo completo\n\n - Configurar servicios Tor automáticamente\n\n- Independencia de los servidores de Samourai</string>
+    <string name="powering_Anom_wallet_">Complementar tu billetera Anom con tu propio nodo personal ofrece el mejor nivel de privacidad e independencia al interactuar con la red Bitcoin. Dojo hace que la ejecución de un nodo completo sea fácil y simple.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Enchufar, conectar y usar un nodo completo\n\n - Configurar servicios Tor automáticamente\n\n- Independencia de los servidores de Anom</string>
     <string name="dojo_connect_instruction">Si ya tienes un nodo completo Dojo o \nestás usando el Software libre y open source de Dojo\nen tu propio hardware, escanea el código QR\nlocalizado en el panel de control de Mantenimiento de Dojo</string>
-    <string name="dojo_headline">Conecta Samourai con tu propio nodo DOJO completo</string>
+    <string name="dojo_headline">Conecta Anom con tu propio nodo DOJO completo</string>
     <string name="connect_to_existing_dojo">Conectar con Dojo existente</string>
     <string name="preorder">pedido</string>
     <string name="add_new">Añadir Nuevo</string>
@@ -697,7 +697,7 @@
     <string name="wallet_locked">Billetera Bloqueada</string>
     <string name="address">Dirección</string>
 
-    <string name="is_offline">Samourai sin conexión</string>
+    <string name="is_offline">Anom sin conexión</string>
     <string name="history_will_be_updated">El saldo y el historial de transacciones no se actualizarán hasta que se establezca una conexión de datos.</string>
     <string name="you_received_s">Recibes</string>
     <string name="paynym_follow_message"> Esta comisión cubre los costes de crear una transacción especial en la blockchain. Sirve para mantener PayNym descentralizado</string>

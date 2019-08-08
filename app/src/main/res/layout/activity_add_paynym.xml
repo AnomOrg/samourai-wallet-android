@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.paynym.addPaynym.AddPaynymActivity">
+    tools:context="com.samourai.wallet.com.anom.wallet.paynym.addPaynym.AddPaynymActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:layout_marginTop="18dp"
                 android:text="Featured PayNym" />
 
-            <android.support.constraint.ConstraintLayout
+            <!--<android.support.constraint.ConstraintLayout
                 android:id="@+id/dev_fund_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -119,7 +119,7 @@
                     app:srcCompat="@drawable/ic_chevron_right_white_24dp" />
 
             </android.support.constraint.ConstraintLayout>
-
+-->
             <android.support.constraint.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

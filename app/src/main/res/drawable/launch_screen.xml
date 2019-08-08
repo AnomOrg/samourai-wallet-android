@@ -12,8 +12,9 @@
 
         <bitmap
             android:gravity="center"
-            android:src="@drawable/ic_samourai_logo_trans2x" />
-
+            android:src="@drawable/ic_samourai_logo_trans2x"
+            android:tint="@color/white"
+            />
     </item>
 
 </layer-list>

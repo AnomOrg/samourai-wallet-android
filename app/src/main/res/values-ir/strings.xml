@@ -198,7 +198,7 @@
     <string name="custom_fee">تنظیم دستی</string>
     <string name="sat_b">ساتوشی/بایت</string>
 
-    <string name="account_Samourai">کیف پول</string>
+    <string name="account_Anom">کیف پول</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">:بیشترین مقدارِ موجود</string>
@@ -376,7 +376,7 @@
     <string name="opendime_topup">بالا بردن</string>
 
     <string name="select_app">اپلیکیشن را انتخاب کنید</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="Anom_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">محافظت نشده</string>
@@ -393,7 +393,7 @@
     <string name="replay_waiting_for_confirmations">منتظر تأییدها</string>
     <string name="replay_confirmed">تایید شده</string>
     <string name="replay_confirmations">:تایید‌ها</string>
-    <string name="replay_samourai_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
+    <string name="replay_Anom_user_agent">Bitcoin (Satoshi:0.14.2/UASF-BIP148)</string>
     <string name="replay_bcc_user_agent">Bitcoin Cash(Bcash) (Bitcoin ABC(BAB)</string>
 
     <string name="replay_awaiting_confirmation">در انتظار تأیید است Replay protection</string>
@@ -474,9 +474,9 @@
     <string name="set_pin_code">تعیین پین‌کد</string>
     <string name="accept_disclaimer_error">نیاز است رفع مسئولیتِ سامورائی را بپذیرید</string>
     <string name="import_external_wallet">وارد کردن از کیف پول خارجی</string>
-    <string name="import_samourai_wallet">وارد کردن بک‌آپِ سامورائی</string>
+    <string name="import_Anom_wallet">وارد کردن بک‌آپِ سامورائی</string>
     <string name="backup_file">فایل بک‌آپ</string>
-    <string name="import_an_encrypted_samourai_wallet">بک‌آپِ رمزگذاری شده‌ی سامورائی را وارد کرده تا کیف پول و تمام داده‌های دیگرتان را بازیابی کنید</string>
+    <string name="import_an_encrypted_Anom_wallet">بک‌آپِ رمزگذاری شده‌ی سامورائی را وارد کرده تا کیف پول و تمام داده‌های دیگرتان را بازیابی کنید</string>
     <string name="back">عقب</string>
     <string name="finish">پایان</string>
     <string name="choose_file">انتخاب فایل</string>
@@ -489,8 +489,8 @@
     <string name="last_updated">آخرین آپدیت</string>
     <string name="get_help">دریافت کمک</string>
     <string name="offline_mode">حالتِ آفلاین</string>
-    <string name="import_samourai_backup">وارد کردن بک‌آپِ سامورائی</string>
-    <string name="samourai_bitcoin_wallet">کیف پول بیت‌کوینِ سامورائی</string>
+    <string name="import_Anom_backup">وارد کردن بک‌آپِ سامورائی</string>
+    <string name="Anom_bitcoin_wallet">کیف پول بیت‌کوینِ سامورائی</string>
     <string name="enter_your_wallet_passphrase">عبارت عبورِ کیف پول را وارد کنید</string>
     <string name="start_new_wallet">ساخت کیف پول جدید</string>
     <string name="get_help_create">ایجاد کیف پول: دریافت کمک</string>
