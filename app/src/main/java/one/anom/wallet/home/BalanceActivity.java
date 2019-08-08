@@ -355,7 +355,6 @@ public class BalanceActivity extends AppCompatActivity {
             Intent intent = new Intent(BalanceActivity.this, PayNymHome.class);
             startActivity(intent);
         });
-        getSupportActionBar().setIcon(R.drawable.ic_samourai_logo_toolbar);
         txSwipeLayout.setOnRefreshListener(() -> {
             refreshTx(false, true, false);
             txSwipeLayout.setRefreshing(false);
@@ -1049,9 +1048,9 @@ public class BalanceActivity extends AppCompatActivity {
         try {
             final String passphrase = HD_WalletFactory.getInstance(BalanceActivity.this).get().getPassphrase();
 
-            final String[] export_methods = new String[2];
+            final String[] export_methods = new String[1];
             export_methods[0] = getString(R.string.export_to_clipboard);
-            export_methods[1] = getString(R.string.export_to_email);
+           // export_methods[1] = getString(R.string.export_to_email);
 
             new AlertDialog.Builder(BalanceActivity.this)
                     .setTitle(R.string.options_export)

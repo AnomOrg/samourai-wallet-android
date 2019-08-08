@@ -892,7 +892,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                     }
                 });
 
-                Preference aboutPref = (Preference) findPreference("about");
+             /*   Preference aboutPref = (Preference) findPreference("about");
                 aboutPref.setSummary("Anom Wallet," + " " + getResources().getString(R.string.version_name));
                 aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
@@ -900,7 +900,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                         startActivity(intent);
                         return true;
                     }
-                });
+                });*/
 
             }
             else    {
