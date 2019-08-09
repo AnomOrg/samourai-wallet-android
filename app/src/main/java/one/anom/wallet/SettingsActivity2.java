@@ -8,6 +8,7 @@ import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -873,15 +874,8 @@ public class SettingsActivity2 extends PreferenceActivity {
                     }
                 });
 
-             /*   Preference aboutPref = (Preference) findPreference("about");
-                aboutPref.setSummary("Anom Wallet," + " " + getResources().getString(R.string.version_name));
-                aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-                    public boolean onPreferenceClick(Preference preference) {
-                        Intent intent = new Intent(SettingsActivity2.this, AboutActivity.class);
-                        startActivity(intent);
-                        return true;
-                    }
-                });*/
+                Preference aboutPref = (Preference) findPreference("about");
+                aboutPref.setSummary("Anom Wallet" + " " + getResources().getString(R.string.version_name));
 
             } else {
                 finish();
