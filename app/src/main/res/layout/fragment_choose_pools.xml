@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.whirlpool.newPool.fragments.SelectPoolFragment">
-
+    tools:context="one.anom.wallet.whirlpool.newPool.fragments.SelectPoolFragment">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pool_recycler_view"
@@ -15,7 +14,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pool_fee_txt" />
-
 
     <TextView
         android:id="@+id/textView22"

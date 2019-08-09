@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="false">
-
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -30,7 +28,7 @@
                 android:layout_marginTop="?attr/actionBarSize">
 
 
-                <com.samourai.wallet.widgets.CircleImageView
+                <one.anom.wallet.widgets.CircleImageView
                     android:id="@+id/paybyn_user_avatar"
                     android:layout_width="90dp"
                     android:layout_height="90dp"
@@ -111,8 +109,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:animateLayoutChanges="true"
+        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <android.support.constraint.ConstraintLayout
@@ -121,8 +119,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
             android:background="#32363C"
-            android:visibility="gone"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/payment_code_sync_message"
@@ -165,11 +163,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <com.samourai.wallet.widgets.ViewPager
-                android:id="@+id/paynym_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                <one.anom.wallet.widgets.ViewPager
+                    android:id="@+id/paynym_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
         </FrameLayout>

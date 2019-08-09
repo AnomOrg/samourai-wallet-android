@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/windowDark"
     android:orientation="vertical"
-    tools:context="com.samourai.wallet.fragments.PaynymSelectModalFragment">
+    tools:context="one.anom.wallet.fragments.PaynymSelectModalFragment">
 
     <TextView
         android:layout_width="match_parent"
@@ -17,18 +17,18 @@
         android:textColor="@color/white" />
 
     <android.support.v7.widget.RecyclerView
-    android:id="@+id/list"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipToPadding="false"
-    android:paddingTop="@dimen/list_item_spacing_half"
-    android:paddingBottom="@dimen/list_item_spacing_half"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.51"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    tools:listitem="@layout/fragment_paynymselectmodal_list_item">
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="@dimen/list_item_spacing_half"
+        android:paddingBottom="@dimen/list_item_spacing_half"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.51"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/fragment_paynymselectmodal_list_item">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -52,12 +52,11 @@
             android:id="@+id/paynym_add_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="12dp"
             android:layout_marginTop="12dp"
+            android:paddingLeft="12dp"
             android:paddingRight="12dp"
             android:text="@string/bip47_setup4_title"
-            android:textAllCaps="false"
-      />
+            android:textAllCaps="false" />
 
     </LinearLayout>
 

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/windowDark"
     android:orientation="vertical"
-    tools:context="com.samourai.wallet.tx.TxPrivacyDetailsActivity">
-
+    tools:context="one.anom.wallet.tx.TxPrivacyDetailsActivity">
 
     <android.support.design.widget.AppBarLayout xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/appBarLayout4"
@@ -173,10 +172,10 @@
         android:layout_height="0dp"
         android:layout_margin="12dp"
         android:layout_marginStart="4dp"
-        android:background="@color/darkgrey"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
+        android:background="@color/darkgrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
