@@ -24,15 +24,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.R;
-import one.anom.wallet.bip47.paynym.WebUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
-import one.anom.wallet.util.AppUtil;
-
 import com.squareup.picasso.Picasso;
 
 import org.bitcoinj.core.AddressFormatException;
@@ -43,6 +36,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import one.anom.wallet.R;
+import one.anom.wallet.bip47.paynym.WebUtil;
+import one.anom.wallet.util.AppUtil;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class BIP47ShowQR extends Activity {
 
@@ -64,17 +63,15 @@ public class BIP47ShowQR extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
-        if(extras != null && extras.containsKey("label") && extras.containsKey("pcode"))	{
+        if (extras != null && extras.containsKey("label") && extras.containsKey("pcode")) {
             setTitle(extras.getString("label"));
             addr = extras.getString("pcode");
-        }
-        else    {
+        } else {
             setTitle(getText(R.string.bip47_setup1_title));
 
             try {
                 addr = BIP47Util.getInstance(BIP47ShowQR.this).getPaymentCode().toString();
-            }
-            catch(AddressFormatException afe) {
+            } catch (AddressFormatException afe) {
                 ;
             }
         }
@@ -84,7 +81,7 @@ public class BIP47ShowQR extends Activity {
         display.getSize(size);
         imgWidth = Math.max(size.x - 360, 150);
 
-        addressLayout = (LinearLayout)findViewById(R.id.receive_address_layout);
+        addressLayout = (LinearLayout) findViewById(R.id.receive_address_layout);
         addressLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -96,7 +93,7 @@ public class BIP47ShowQR extends Activity {
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             public void onClick(DialogInterface dialog, int whichButton) {
-                                android.content.ClipboardManager clipboard = (android.content.ClipboardManager)getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
                                 android.content.ClipData clip = null;
                                 clip = android.content.ClipData.newPlainText("Receive address", addr);
                                 clipboard.setPrimaryClip(clip);
@@ -114,9 +111,9 @@ public class BIP47ShowQR extends Activity {
             }
         });
 
-        tvAddress = (TextView)findViewById(R.id.show_text);
+        tvAddress = (TextView) findViewById(R.id.show_text);
 
-        ivQR = (ImageView)findViewById(R.id.qr);
+        ivQR = (ImageView) findViewById(R.id.qr);
         ivQR.setMaxWidth(imgWidth);
 
         displayQRCode();
@@ -136,10 +133,9 @@ public class BIP47ShowQR extends Activity {
 
         int id = item.getItemId();
 
-        if(id == android.R.id.home) {
+        if (id == android.R.id.home) {
             finish();
-        }
-        else if(id == R.id.action_share_receive) {
+        } else if (id == R.id.action_share_receive) {
 
             new AlertDialog.Builder(BIP47ShowQR.this)
                     .setTitle(R.string.app_name)
@@ -151,11 +147,10 @@ public class BIP47ShowQR extends Activity {
 
                             String strFileName = AppUtil.getInstance(BIP47ShowQR.this).getReceiveQRFilename();
                             File file = new File(strFileName);
-                            if(!file.exists()) {
+                            if (!file.exists()) {
                                 try {
                                     file.createNewFile();
-                                }
-                                catch(Exception e) {
+                                } catch (Exception e) {
                                     Toast.makeText(BIP47ShowQR.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -164,24 +159,22 @@ public class BIP47ShowQR extends Activity {
                             FileOutputStream fos = null;
                             try {
                                 fos = new FileOutputStream(file);
-                            }
-                            catch(FileNotFoundException fnfe) {
+                            } catch (FileNotFoundException fnfe) {
                                 ;
                             }
 
-                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager)getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                            android.content.ClipboardManager clipboard = (android.content.ClipboardManager) getSystemService(android.content.Context.CLIPBOARD_SERVICE);
                             android.content.ClipData clip = null;
                             clip = android.content.ClipData.newPlainText("Receive address", addr);
                             clipboard.setPrimaryClip(clip);
 
-                            if(file != null && fos != null) {
-                                Bitmap bitmap = ((BitmapDrawable)ivQR.getDrawable()).getBitmap();
+                            if (file != null && fos != null) {
+                                Bitmap bitmap = ((BitmapDrawable) ivQR.getDrawable()).getBitmap();
                                 bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
 
                                 try {
                                     fos.close();
-                                }
-                                catch(IOException ioe) {
+                                } catch (IOException ioe) {
                                     ;
                                 }
 
@@ -197,7 +190,7 @@ public class BIP47ShowQR extends Activity {
                                 } else {
                                     intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
                                 }
-                                 startActivity(Intent.createChooser(intent, BIP47ShowQR.this.getText(R.string.send_payment_code)));
+                                startActivity(Intent.createChooser(intent, BIP47ShowQR.this.getText(R.string.send_payment_code)));
                             }
 
                         }
@@ -209,8 +202,7 @@ public class BIP47ShowQR extends Activity {
                 }
             }).show();
 
-        }
-        else {
+        } else {
             ;
         }
 
@@ -259,9 +251,9 @@ public class BIP47ShowQR extends Activity {
                     Log.d("BIP47Activity", res);
 
                     JSONObject responseObj = new JSONObject(res);
-                    if(responseObj.has("codes"))    {
+                    if (responseObj.has("codes")) {
                         JSONArray array = responseObj.getJSONArray("codes");
-                        if(array.getJSONObject(0).has("claimed") && array.getJSONObject(0).getBoolean("claimed") == true)    {
+                        if (array.getJSONObject(0).has("claimed") && array.getJSONObject(0).getBoolean("claimed") == true) {
                             final String strNymName = responseObj.getString("nymName");
                             handler.post(new Runnable() {
                                 public void run() {
@@ -270,31 +262,28 @@ public class BIP47ShowQR extends Activity {
                                     final ImageView ivAvatar = (ImageView) findViewById(R.id.avatar);
                                     Picasso.with(BIP47ShowQR.this).load(WebUtil.PAYNYM_API + strPaymentCode + "/avatar").into(ivAvatar);
 
-                                    ((TextView)findViewById(R.id.nymName)).setText(strNymName);
+                                    ((TextView) findViewById(R.id.nymName)).setText(strNymName);
 
                                 }
                             });
-                        }
-                        else    {
+                        } else {
                             handler.post(new Runnable() {
                                 public void run() {
-                                    ((TextView)findViewById(R.id.nymName)).setVisibility(View.GONE);
-                                    ((ImageView)findViewById(R.id.avatar)).setVisibility(View.GONE);
+                                    ((TextView) findViewById(R.id.nymName)).setVisibility(View.GONE);
+                                    ((ImageView) findViewById(R.id.avatar)).setVisibility(View.GONE);
                                 }
                             });
                         }
-                    }
-                    else    {
+                    } else {
                         handler.post(new Runnable() {
                             public void run() {
-                                ((TextView)findViewById(R.id.nymName)).setVisibility(View.GONE);
-                                ((ImageView)findViewById(R.id.avatar)).setVisibility(View.GONE);
+                                ((TextView) findViewById(R.id.nymName)).setVisibility(View.GONE);
+                                ((ImageView) findViewById(R.id.avatar)).setVisibility(View.GONE);
                             }
                         });
                     }
 
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

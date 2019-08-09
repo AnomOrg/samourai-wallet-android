@@ -8,14 +8,16 @@ import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 
+import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.bip47.BIP47Util;
+
+import com.samourai.wallet.bip47.rpc.BIP47Wallet;
+import com.samourai.wallet.hd.HD_Wallet;
+
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.SamouraiWallet;
-import com.samourai.wallet.bip47.rpc.BIP47Wallet;
-import com.samourai.wallet.hd.HD_Wallet;
 
 import org.apache.commons.codec.DecoderException;
 import org.apache.commons.codec.binary.Hex;
@@ -29,7 +31,7 @@ import java.util.List;
 
 //import org.apache.commons.lang.ArrayUtils;
 
-public class HD_WalletFactory	{
+public class HD_WalletFactory {
 
     public static final String BIP39_ENGLISH_SHA256 = "ad90bf3beb7b0eb7e5acd74727dc0da96e0a280a258354e7293fb7e211ac03db";
 
@@ -39,7 +41,9 @@ public class HD_WalletFactory	{
     private static Context context = null;
     private MnemonicCode mc;
 
-    private HD_WalletFactory()	{ ; }
+    private HD_WalletFactory() {
+        ;
+    }
 
     public static HD_WalletFactory getInstance(Context ctx) {
 
@@ -53,18 +57,18 @@ public class HD_WalletFactory	{
         return instance;
     }
 
-    public HD_Wallet newWallet(int nbWords, String passphrase, int nbAccounts) throws IOException, MnemonicException.MnemonicLengthException   {
+    public HD_Wallet newWallet(int nbWords, String passphrase, int nbAccounts) throws IOException, MnemonicException.MnemonicLengthException {
 
         HD_Wallet hdw = null;
 
-        if((nbWords % 3 != 0) || (nbWords < 12 || nbWords > 24)) {
+        if ((nbWords % 3 != 0) || (nbWords < 12 || nbWords > 24)) {
             nbWords = 12;
         }
 
         // len == 16 (12 words), len == 24 (18 words), len == 32 (24 words)
         int len = (nbWords / 3) * 4;
 
-        if(passphrase == null) {
+        if (passphrase == null) {
             passphrase = "";
         }
 
@@ -89,30 +93,28 @@ public class HD_WalletFactory	{
         return hdw;
     }
 
-    public HD_Wallet restoreWallet(String data, String passphrase, int nbAccounts) throws AddressFormatException, IOException, DecoderException, MnemonicException.MnemonicLengthException, MnemonicException.MnemonicWordException, MnemonicException.MnemonicChecksumException  {
+    public HD_Wallet restoreWallet(String data, String passphrase, int nbAccounts) throws AddressFormatException, IOException, DecoderException, MnemonicException.MnemonicLengthException, MnemonicException.MnemonicWordException, MnemonicException.MnemonicChecksumException {
 
         HD_Wallet hdw = null;
 
-        if(passphrase == null) {
+        if (passphrase == null) {
             passphrase = "";
         }
 
         NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
 
         MnemonicCode mc = computeMnemonicCode();
-        if(mc != null) {
+        if (mc != null) {
             List<String> words = null;
 
             byte[] seed = null;
-            if(data.matches(FormatsUtil.XPUB)) {
+            if (data.matches(FormatsUtil.XPUB)) {
                 String[] xpub = data.split(":");
                 hdw = new HD_Wallet(params, xpub);
-            }
-            else if(data.matches(FormatsUtil.HEX) && data.length() % 4 == 0) {
+            } else if (data.matches(FormatsUtil.HEX) && data.length() % 4 == 0) {
                 seed = Hex.decodeHex(data.toCharArray());
                 hdw = new HD_Wallet(44, mc, params, seed, passphrase, nbAccounts);
-            }
-            else {
+            } else {
                 data = data.toLowerCase().replaceAll("[^a-z]+", " ");             // only use for BIP39 English
                 words = Arrays.asList(data.trim().split("\\s+"));
                 seed = mc.toEntropy(words);
@@ -131,7 +133,7 @@ public class HD_WalletFactory	{
 
     public HD_Wallet get() throws IOException, MnemonicException.MnemonicLengthException {
 
-        if(wallets == null || wallets.size() < 1) {
+        if (wallets == null || wallets.size() < 1) {
             return null;
         }
 
@@ -140,7 +142,7 @@ public class HD_WalletFactory	{
 
     public BIP47Wallet getBIP47() throws IOException, MnemonicException.MnemonicLengthException {
 
-        if(wallets == null || wallets.size() < 1) {
+        if (wallets == null || wallets.size() < 1) {
             return null;
         }
 
@@ -157,7 +159,7 @@ public class HD_WalletFactory	{
 
     public HD_Wallet getBIP49() throws IOException, MnemonicException.MnemonicLengthException {
 
-        if(wallets == null || wallets.size() < 1) {
+        if (wallets == null || wallets.size() < 1) {
             return null;
         }
 
@@ -174,7 +176,7 @@ public class HD_WalletFactory	{
 
     public HD_Wallet getBIP84() throws IOException, MnemonicException.MnemonicLengthException {
 
-        if(wallets == null || wallets.size() < 1) {
+        if (wallets == null || wallets.size() < 1) {
             return null;
         }
 
@@ -189,20 +191,20 @@ public class HD_WalletFactory	{
         return hdw84;
     }
 
-    public void set(HD_Wallet wallet)	{
+    public void set(HD_Wallet wallet) {
 
-        if(wallet != null)	{
+        if (wallet != null) {
             wallets.clear();
             wallets.add(wallet);
         }
 
     }
 
-    public boolean holding()	{
+    public boolean holding() {
         return (wallets.size() > 0);
     }
 
-    public List<HD_Wallet> getWallets()    {
+    public List<HD_Wallet> getWallets() {
         return wallets;
     }
 

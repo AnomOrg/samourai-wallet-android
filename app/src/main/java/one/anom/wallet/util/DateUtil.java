@@ -4,7 +4,6 @@ import android.content.Context;
 
 import one.anom.wallet.R;
 
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,14 +15,16 @@ public class DateUtil {
     private static Date now = null;
     private static Context context = null;
 
-    private DateUtil() { ; }
+    private DateUtil() {
+        ;
+    }
 
     public static DateUtil getInstance(Context ctx) {
 
         now = new Date();
         context = ctx;
 
-        if(instance == null) {
+        if (instance == null) {
             instance = new DateUtil();
         }
 
@@ -49,26 +50,23 @@ public class DateUtil {
         int thenDay = cal.get(Calendar.DAY_OF_MONTH);
 
         // within 24h
-        if(now - date < hours24) {
-            if(thenDay < nowDay) {
+        if (now - date < hours24) {
+            if (thenDay < nowDay) {
                 SimpleDateFormat sd = new SimpleDateFormat("E dd MMM HH:mm");
                 sd.setTimeZone(TimeZone.getDefault());
                 ret = sd.format(date * 1000L);
-            }
-            else {
+            } else {
                 SimpleDateFormat sd = new SimpleDateFormat("HH:mm");
                 sd.setTimeZone(TimeZone.getDefault());
                 ret = group(date) + " " + sd.format(date * 1000L);
             }
 
-        }
-        else {
-            if(thenYear < nowYear) {
+        } else {
+            if (thenYear < nowYear) {
                 SimpleDateFormat sd = new SimpleDateFormat("dd MMM yyyy");
                 sd.setTimeZone(TimeZone.getDefault());
                 ret = sd.format(date * 1000L);
-            }
-            else {
+            } else {
                 SimpleDateFormat sd = new SimpleDateFormat("E dd MMM HH:mm");
                 sd.setTimeZone(TimeZone.getDefault());
                 ret = sd.format(date * 1000L);
@@ -97,15 +95,13 @@ public class DateUtil {
         int thenDay = cal.get(Calendar.DAY_OF_MONTH);
 
         // within 24h
-        if(now - date < hours24) {
-            if(thenDay < nowDay) {
+        if (now - date < hours24) {
+            if (thenDay < nowDay) {
                 ret = context.getString(R.string.timeline_older);
-            }
-            else {
+            } else {
                 ret = context.getString(R.string.timeline_today);
             }
-        }
-        else {
+        } else {
             ret = context.getString(R.string.timeline_older);
         }
 

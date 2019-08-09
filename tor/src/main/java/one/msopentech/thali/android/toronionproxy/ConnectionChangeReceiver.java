@@ -1,4 +1,4 @@
-package com.msopentech.thali.android.toronionproxy;
+package one.msopentech.thali.android.toronionproxy;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

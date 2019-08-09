@@ -16,8 +16,6 @@ import android.widget.TextView;
 import one.anom.wallet.R;
 import one.anom.wallet.widgets.PinEntryView;
 
-
-
 public class PinEntryFragment extends Fragment {
     private static String ARG_TITLE = "TITLE";
     private static String ARG_DESC = "DESC";
@@ -32,7 +30,6 @@ public class PinEntryFragment extends Fragment {
     public PinEntryFragment() {
         // Required empty public constructor
     }
-
 
     public static PinEntryFragment newInstance(String title, String description) {
         PinEntryFragment fragment = new PinEntryFragment();

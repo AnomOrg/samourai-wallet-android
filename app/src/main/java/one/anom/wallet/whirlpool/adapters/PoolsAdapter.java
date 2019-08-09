@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.whirlpool.models.Pool;
 

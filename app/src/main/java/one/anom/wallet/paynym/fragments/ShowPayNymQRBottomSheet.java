@@ -16,15 +16,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.util.AppUtil;
-
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,6 +27,11 @@ import java.io.IOException;
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import one.anom.wallet.R;
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.util.AppUtil;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class ShowPayNymQRBottomSheet extends BottomSheetDialogFragment {
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.com.anom.wallet.send.cahoots.ManualStoneWall">
+    tools:context="one.anom.wallet.send.cahoots.ManualStoneWall">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout2"
@@ -21,7 +21,6 @@
             android:layout_height="?attr/actionBarSize">
 
         </android.support.v7.widget.Toolbar>
-
 
         <one.anom.wallet.widgets.HorizontalStepsViewIndicator
             android:id="@+id/step_view"
@@ -45,8 +44,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout2">
 
-
-
     </one.anom.wallet.widgets.ViewPager>
 
     <Button
@@ -60,7 +57,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </android.support.constraint.ConstraintLayout>

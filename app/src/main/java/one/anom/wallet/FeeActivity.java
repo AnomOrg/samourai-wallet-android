@@ -16,7 +16,6 @@ import one.anom.wallet.send.SuggestedFee;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.PrefsUtil;
 
-
 import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;

@@ -14,21 +14,24 @@ import android.widget.TextView;
 import android.widget.Toast;
 //import android.util.Log;
 
+import one.anom.wallet.home.BalanceActivity;
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.send.PushTx;
 
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
+
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+
 import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.send.PushTx;
 
 import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
@@ -56,11 +59,11 @@ public class RicochetActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ricochet);
 
-        if(RicochetMeta.getInstance(RicochetActivity.this).size() > 0)    {
+        if (RicochetMeta.getInstance(RicochetActivity.this).size() > 0) {
 
 //            new QueueTask().execute(new String[]{ null });
             QueueTask qt = new QueueTask();
-            qt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new String[]{ null });
+            qt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new String[]{null});
         }
 
     }
@@ -94,11 +97,9 @@ public class RicochetActivity extends Activity {
         // noinspection SimplifiableIfStatement
         if (id == R.id.action_show_script) {
             doShowScript();
-        }
-        else if (id == R.id.action_replay_script) {
+        } else if (id == R.id.action_replay_script) {
             doReplayScript();
-        }
-        else {
+        } else {
             ;
         }
 
@@ -115,55 +116,53 @@ public class RicochetActivity extends Activity {
                 PayloadUtil.getInstance(RicochetActivity.this).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(RicochetActivity.this).getGUID() + AccessFactory.getInstance(RicochetActivity.this).getPIN()));
 
                 final Iterator<JSONObject> itr = RicochetMeta.getInstance(RicochetActivity.this).getIterator();
-                while(itr.hasNext()){
+                while (itr.hasNext()) {
 
                     boolean hasConfirmation = false;
                     boolean txSeen = false;
                     JSONObject jObj = itr.next();
                     JSONArray jHops = jObj.getJSONArray("hops");
-                    if(jHops.length() > 0)    {
+                    if (jHops.length() > 0) {
 
                         JSONObject jHop = jHops.getJSONObject(jHops.length() - 1);
                         String txHash = jHop.getString("hash");
 
                         JSONObject txObj = APIFactory.getInstance(RicochetActivity.this).getTxInfo(txHash);
-                        if(txObj != null && txObj.has("block_height") && txObj.getInt("block_height") != -1)    {
+                        if (txObj != null && txObj.has("block_height") && txObj.getInt("block_height") != -1) {
                             hasConfirmation = true;
-                        }
-                        else if(txObj != null && txObj.has("txid"))    {
+                        } else if (txObj != null && txObj.has("txid")) {
                             txSeen = true;
                         }
                         // not broadcast, not seen
-                        else if(txObj != null && txObj.has("status") && txObj.getString("status").equals("error"))    {
+                        else if (txObj != null && txObj.has("status") && txObj.getString("status").equals("error")) {
                             txSeen = false;
-                        }
-                        else    {
+                        } else {
                             ;
                         }
 
-                        if(hasConfirmation)    {
+                        if (hasConfirmation) {
                             itr.remove();
                             continue;
                         }
 
                     }
 
-                    if(!txSeen)    {
+                    if (!txSeen) {
 
-                        if(jObj.has("pcode") && jObj.getString("pcode").length() > 0)    {
+                        if (jObj.has("pcode") && jObj.getString("pcode").length() > 0) {
                             strPCode = jObj.getString("pcode");
                         }
 
-                        if(jObj.has("samouraiFeeViaBIP47"))    {
+                        if (jObj.has("samouraiFeeViaBIP47")) {
                             samouraiFeeViaBIP47 = jObj.getBoolean("samouraiFeeViaBIP47");
                         }
 
                         String[] txs = new String[jHops.length()];
                         String[] dests = new String[jHops.length()];
-                        for(int i = 0; i < jHops.length(); i++)   {
+                        for (int i = 0; i < jHops.length(); i++) {
                             JSONObject jSeq = jHops.getJSONObject(i);
                             int seq = jSeq.getInt("seq");
-                            assert(seq == i);
+                            assert (seq == i);
                             String tx = jSeq.getString("tx");
 //                            Log.d("RicochetActivity", "seq:" + seq + ":" + tx);
                             txs[i] = tx;
@@ -172,27 +171,27 @@ public class RicochetActivity extends Activity {
                             dests[i] = dest;
                         }
 
-                        if(txs.length >= 5 && dests.length >= 5)    {
+                        if (txs.length >= 5 && dests.length >= 5) {
 
                             boolean isOK = false;
                             int i = 0;
-                            while(i < txs.length)   {
+                            while (i < txs.length) {
 
                                 isOK = false;
 
                                 String response = PushTx.getInstance(RicochetActivity.this).samourai(txs[i]);
                                 Log.d("RicochetActivity", "pushTx:" + response);
                                 JSONObject jsonObject = new JSONObject(response);
-                                if(jsonObject.has("status") && jsonObject.getString("status").equals("ok"))    {
+                                if (jsonObject.has("status") && jsonObject.getString("status").equals("ok")) {
                                     isOK = true;
                                 }
 
-                                if(isOK)    {
+                                if (isOK) {
                                     strProgressTitle = RicochetActivity.this.getText(R.string.ricochet_hop).toString() + " " + i;
                                     strProgressMessage = RicochetActivity.this.getText(R.string.ricochet_hopping).toString() + " " + dests[i];
                                     publishProgress();
 
-                                    if(i == (txs.length - 1))    {
+                                    if (i == (txs.length - 1)) {
 
                                         broadcastOK = true;
 
@@ -203,18 +202,16 @@ public class RicochetActivity extends Activity {
                                         //
                                         try {
                                             HD_WalletFactory.getInstance(RicochetActivity.this).get().getAccount(0).getChange().incAddrIdx();
-                                        }
-                                        catch(IOException ioe) {
+                                        } catch (IOException ioe) {
                                             ;
-                                        }
-                                        catch(MnemonicException.MnemonicLengthException mle) {
+                                        } catch (MnemonicException.MnemonicLengthException mle) {
                                             ;
                                         }
 
                                         //
                                         // increment BIP47 receive if send to BIP47
                                         //
-                                        if(strPCode != null && strPCode.length() > 0)    {
+                                        if (strPCode != null && strPCode.length() > 0) {
                                             BIP47Meta.getInstance().getPCode4AddrLookup().put(dests[i], strPCode);
                                             BIP47Meta.getInstance().incOutgoingIdx(strPCode);
                                         }
@@ -222,8 +219,8 @@ public class RicochetActivity extends Activity {
                                         //
                                         // increment BIP47 donation if fee to BIP47 donation
                                         //
-                                        if(samouraiFeeViaBIP47)    {
-                                            for(int j = 0; j < 4; j++)   {
+                                        if (samouraiFeeViaBIP47) {
+                                            for (int j = 0; j < 4; j++) {
                                                 PaymentCode pcode = new PaymentCode(BIP47Meta.strSamouraiDonationPCode);
                                                 PaymentAddress paymentAddress = BIP47Util.getInstance(RicochetActivity.this).getSendAddress(pcode, BIP47Meta.getInstance().getOutgoingIdx(BIP47Meta.strSamouraiDonationPCode));
                                                 String strAddress = paymentAddress.getSendECKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
@@ -235,12 +232,11 @@ public class RicochetActivity extends Activity {
                                     }
 
                                     i++;
-                                    if(i < txs.length)    {
+                                    if (i < txs.length) {
                                         Thread.sleep(SLEEP_DELAY);
                                     }
 
-                                }
-                                else    {
+                                } else {
 
                                     Thread.sleep(SLEEP_DELAY);
                                     continue;
@@ -249,8 +245,7 @@ public class RicochetActivity extends Activity {
 
                             }
 
-                        }
-                        else    {
+                        } else {
                             // badly formed error
                         }
 
@@ -258,17 +253,13 @@ public class RicochetActivity extends Activity {
 
                 }
 
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
-            }
-            catch (InterruptedException ie) {
+            } catch (InterruptedException ie) {
                 ie.printStackTrace();
-            }
-            catch (NotSecp256k1Exception nse) {
+            } catch (NotSecp256k1Exception nse) {
                 nse.printStackTrace();
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -278,11 +269,11 @@ public class RicochetActivity extends Activity {
         @Override
         protected void onPostExecute(String result) {
 
-            if(progress != null && progress.isShowing())    {
+            if (progress != null && progress.isShowing()) {
                 progress.dismiss();
             }
 
-            if(broadcastOK)    {
+            if (broadcastOK) {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(RicochetActivity.this)
                         .setTitle(R.string.app_name)
                         .setMessage(R.string.ricochet_broadcast)
@@ -296,11 +287,10 @@ public class RicochetActivity extends Activity {
 
                             }
                         });
-                if(!isFinishing())    {
+                if (!isFinishing()) {
                     dlg.show();
                 }
-            }
-            else    {
+            } else {
                 AlertDialog.Builder dlg = new AlertDialog.Builder(RicochetActivity.this)
                         .setTitle(R.string.app_name)
                         .setMessage(R.string.ricochet_not_broadcast_replay)
@@ -316,7 +306,7 @@ public class RicochetActivity extends Activity {
                                 ;
                             }
                         });
-                if(!isFinishing())    {
+                if (!isFinishing()) {
                     dlg.show();
                 }
             }
@@ -345,7 +335,7 @@ public class RicochetActivity extends Activity {
 
     private void doReplayScript() {
 
-        if(RicochetMeta.getInstance(RicochetActivity.this).size() > 0)    {
+        if (RicochetMeta.getInstance(RicochetActivity.this).size() > 0) {
 
             new AlertDialog.Builder(RicochetActivity.this)
                     .setTitle(R.string.app_name)
@@ -355,7 +345,7 @@ public class RicochetActivity extends Activity {
                         public void onClick(DialogInterface dialog, int whichButton) {
 
                             QueueTask qt = new QueueTask();
-                            qt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new String[]{ null });
+                            qt.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, new String[]{null});
 
                         }
                     }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -364,8 +354,7 @@ public class RicochetActivity extends Activity {
                 }
             }).show();
 
-        }
-        else    {
+        } else {
             Toast.makeText(RicochetActivity.this, R.string.no_ricochet_replay, Toast.LENGTH_SHORT).show();
         }
 
@@ -373,7 +362,7 @@ public class RicochetActivity extends Activity {
 
     private void doShowScript() {
 
-        if(RicochetMeta.getInstance(RicochetActivity.this).getLastRicochet() != null)    {
+        if (RicochetMeta.getInstance(RicochetActivity.this).getLastRicochet() != null) {
 
             TextView showText = new TextView(RicochetActivity.this);
             showText.setText(RicochetMeta.getInstance(RicochetActivity.this).getLastRicochet().toString());
@@ -390,8 +379,7 @@ public class RicochetActivity extends Activity {
                         }
                     }).show();
 
-        }
-        else    {
+        } else {
             Toast.makeText(RicochetActivity.this, R.string.no_ricochet_display, Toast.LENGTH_SHORT).show();
         }
 

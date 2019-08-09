@@ -1,64 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/sendLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/sendLayout"
-    >
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/toField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="16dp"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:id="@+id/toField"
-        >
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_light"
-            android:text="@string/to" />
+            android:text="@string/to"
+            android:textColor="@color/primary_light" />
 
         <EditText
+            android:id="@+id/destination"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/destination"
             android:layout_gravity="center_horizontal"
+            android:drawableEnd="@android:drawable/ic_menu_search"
             android:hint="@string/destination"
             android:imeOptions="flagNoPersonalizedLearning"
-            android:textColorHint="@color/primary_light"
-            android:drawableEnd="@android:drawable/ic_menu_search"
             android:textColor="@color/primary_light"
-            />
+            android:textColorHint="@color/primary_light" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingRight="16dp"
+        android:layout_below="@+id/toField"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        android:layout_below="@+id/toField"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:paddingRight="16dp"
+        android:paddingBottom="8dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/primary_light"
-            android:text="@string/amount" />
+            android:text="@string/amount"
+            android:textColor="@color/primary_light" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -67,20 +64,19 @@
                 android:layout_weight="50">
 
                 <EditText
+                    android:id="@+id/amountBTC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number|numberDecimal"
+                    android:layout_marginEnd="8dp"
                     android:digits="0123456789."
                     android:ems="10"
-                    android:id="@+id/amountBTC"
                     android:hint="0.0000"
                     android:imeOptions="flagNoPersonalizedLearning"
-                    android:textColorHint="@color/primary_light"
-                    android:layout_marginEnd="8dp"
-                    android:textColor="@color/primary_light"
+                    android:inputType="number|numberDecimal"
                     android:maxLength="17"
-                    android:textSize="16sp"
-                    />
+                    android:textColor="@color/primary_light"
+                    android:textColorHint="@color/primary_light"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -93,58 +89,56 @@
                     android:typeface="monospace" />
             </RelativeLayout>
 
-<!--
-            <TextView
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textColor="@color/primary_light"
-                android:text="BTC-USD"
-                android:textSize="14sp"
-                android:gravity="center_horizontal"
-                android:textAlignment="gravity"
-                android:id="@+id/fiatSymbol" />
+            <!--
+                        <TextView
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/primary_light"
+                            android:text="BTC-USD"
+                            android:textSize="14sp"
+                            android:gravity="center_horizontal"
+                            android:textAlignment="gravity"
+                            android:id="@+id/fiatSymbol" />
 
-            <EditText
-                android:layout_weight="3"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="number|numberDecimal"
-                android:digits="0123456789."
-                android:ems="10"
-                android:id="@+id/amountFiat"
-                android:hint="0.00"
-                android:textColorHint="@color/primary_light"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/primary_light"
-                android:maxLength="17"
-                android:textSize="16sp"
-                />
--->
+                        <EditText
+                            android:layout_weight="3"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="number|numberDecimal"
+                            android:digits="0123456789."
+                            android:ems="10"
+                            android:id="@+id/amountFiat"
+                            android:hint="0.00"
+                            android:textColorHint="@color/primary_light"
+                            android:layout_marginStart="8dp"
+                            android:textColor="@color/primary_light"
+                            android:maxLength="17"
+                            android:textSize="16sp"
+                            />
+            -->
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="horizontal"
             android:paddingTop="8dp"
-            android:paddingBottom="8dp"
-            >
+            android:paddingBottom="8dp">
 
             <TextView
+                android:id="@+id/max_prompt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary_light"
                 android:layout_marginRight="5dp"
                 android:text="@string/max_available"
-                android:id="@+id/max_prompt"
-                />
+                android:textColor="@color/primary_light" />
 
             <TextView
+                android:id="@+id/max"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/primary_light"
-                android:id="@+id/max" />
+                android:textColor="@color/primary_light" />
 
         </LinearLayout>
 

@@ -19,7 +19,6 @@ import one.anom.wallet.whirlpool.models.Cycle;
 import one.anom.wallet.whirlpool.newPool.NewPoolActivity;
 import one.anom.wallet.widgets.ViewPager;
 
-
 import java.util.ArrayList;
 
 public class WhirlpoolMain extends AppCompatActivity {
@@ -54,7 +53,7 @@ public class WhirlpoolMain extends AppCompatActivity {
         CyclesViewPagerAdapter adapter = new CyclesViewPagerAdapter(getSupportFragmentManager());
         cyclesViewPager.setAdapter(adapter);
         cyclesViewPager.setCurrentItem(1);
-        findViewById(R.id.whirlpool_fab).setOnClickListener( view -> startActivity(new Intent( this, NewPoolActivity.class)));
+        findViewById(R.id.whirlpool_fab).setOnClickListener(view -> startActivity(new Intent(this, NewPoolActivity.class)));
     }
 
     @Override
@@ -62,7 +61,6 @@ public class WhirlpoolMain extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_whirl_pool_main, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     @Override

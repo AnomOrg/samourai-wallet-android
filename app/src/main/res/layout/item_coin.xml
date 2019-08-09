@@ -101,6 +101,6 @@
         android:id="@+id/coinbase_tx_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="imageView16,textView41"
-        android:visibility="visible" />
+        android:visibility="visible"
+        app:constraint_referenced_ids="imageView16,textView41" />
 </android.support.constraint.ConstraintLayout>

@@ -9,10 +9,43 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.auth0.android.jwt.JWT;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.hd.HD_Wallet;
+import com.samourai.wallet.segwit.SegwitAddress;
+
+import org.apache.commons.lang3.StringUtils;
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.AddressFormatException;
+import org.bitcoinj.core.ECKey;
+import org.bitcoinj.core.Sha256Hash;
+import org.bitcoinj.core.TransactionOutPoint;
+import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.script.Script;
+import org.bouncycastle.util.encoders.Base64;
+import org.bouncycastle.util.encoders.Hex;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.math.BigInteger;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+
+import io.reactivex.subjects.BehaviorSubject;
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.JSONRPC.JSONRPC;
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.hd.HD_WalletFactory;
@@ -36,45 +69,9 @@ import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
 import one.anom.wallet.util.UTXOUtil;
 import one.anom.wallet.util.WebUtil;
-import com.auth0.android.jwt.JWT;
-import one.anom.wallet.SamouraiWallet;
-import com.samourai.wallet.crypto.DecryptionException;
-import com.samourai.wallet.hd.HD_Address;
-import com.samourai.wallet.hd.HD_Wallet;
-import com.samourai.wallet.segwit.SegwitAddress;
-import com.samourai.wallet.bip47.rpc.PaymentCode;
-
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
-import org.apache.commons.lang3.StringUtils;
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.AddressFormatException;
-import org.bitcoinj.core.ECKey;
-import org.bitcoinj.core.Sha256Hash;
-import org.bitcoinj.core.TransactionOutPoint;
-import org.bitcoinj.crypto.MnemonicException;
-import org.bitcoinj.script.Script;
-
-import org.bouncycastle.util.encoders.Base64;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import org.bouncycastle.util.encoders.Hex;
-
-import java.io.IOException;
-import java.math.BigInteger;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-
-import io.reactivex.subjects.BehaviorSubject;
-
-public class APIFactory	{
+public class APIFactory {
 
     private static String APP_TOKEN = null;         // API app token
     private static String ACCESS_TOKEN = null;      // API access token
@@ -83,14 +80,15 @@ public class APIFactory	{
     private static long xpub_balance = 0L;
     private static long xpub_postmix_balance = 0L;
     private static HashMap<String, Long> xpub_amounts = null;
-    private static HashMap<String,List<Tx>> xpub_txs = null;
-    private static HashMap<String,Integer> unspentAccounts = null;
-    private static HashMap<String,Integer> unspentBIP49 = null;
-    private static HashMap<String,Integer> unspentBIP84 = null;
-    private static HashMap<String,Integer> unspentBIP84PostMix = null;
-    private static HashMap<String,String> unspentPaths = null;
+
+    private static HashMap<String, List<Tx>> xpub_txs = null;
+    private static HashMap<String, Integer> unspentAccounts = null;
+    private static HashMap<String, Integer> unspentBIP49 = null;
+    private static HashMap<String, Integer> unspentBIP84 = null;
+    private static HashMap<String, Integer> unspentBIP84PostMix = null;
+    private static HashMap<String, String> unspentPaths = null;
     private static HashMap<String, UTXO> utxos = null;
-    private static HashMap<String,UTXO> utxosPostMix = null;
+    private static HashMap<String, UTXO> utxosPostMix = null;
 
     private static JSONObject utxoObj0 = null;
     private static JSONObject utxoObj1 = null;
@@ -107,7 +105,7 @@ public class APIFactory	{
 
     private static AlertDialog alertDialog = null;
 
-    private APIFactory()	{
+    private APIFactory() {
         walletBalanceObserver.onNext(0L);
     }
 
@@ -115,9 +113,9 @@ public class APIFactory	{
 
         context = ctx;
 
-        if(instance == null) {
+        if (instance == null) {
             xpub_amounts = new HashMap<String, Long>();
-            xpub_txs = new HashMap<String,List<Tx>>();
+            xpub_txs = new HashMap<String, List<Tx>>();
             xpub_balance = 0L;
             bip47_amounts = new HashMap<String, Long>();
             unspentPaths = new HashMap<String, String>();
@@ -150,7 +148,7 @@ public class APIFactory	{
     }
 
     public String getAccessToken() {
-        if(ACCESS_TOKEN == null && APIFactory.getInstance(context).APITokenRequired())    {
+        if (ACCESS_TOKEN == null && APIFactory.getInstance(context).APITokenRequired()) {
             getToken(true);
         }
         return DojoUtil.getInstance(context).getDojoParams() == null ? "" : ACCESS_TOKEN;
@@ -160,16 +158,15 @@ public class APIFactory	{
         ACCESS_TOKEN = accessToken;
     }
 
-    public void setAppToken(String token)   {
+    public void setAppToken(String token) {
         APP_TOKEN = token;
     }
 
-    public String getAppToken()  {
+    public String getAppToken() {
 
-        if(APP_TOKEN != null)    {
+        if (APP_TOKEN != null) {
             return APP_TOKEN;
-        }
-        else    {
+        } else {
             return new String(getXORKey());
         }
 
@@ -177,16 +174,15 @@ public class APIFactory	{
 
     public byte[] getXORKey() {
 
-        if(APP_TOKEN != null)    {
+        if (APP_TOKEN != null) {
             return APP_TOKEN.getBytes();
         }
 
-        if(BuildConfig.XOR_1.length() > 0 && BuildConfig.XOR_2.length() > 0)    {
+        if (BuildConfig.XOR_1.length() > 0 && BuildConfig.XOR_2.length() > 0) {
             byte[] xorSegments0 = Base64.decode(BuildConfig.XOR_1);
             byte[] xorSegments1 = Base64.decode(BuildConfig.XOR_2);
             return xor(xorSegments0, xorSegments1);
-        }
-        else    {
+        } else {
             return null;
         }
     }
@@ -195,8 +191,8 @@ public class APIFactory	{
 
         byte[] ret = new byte[b0.length];
 
-        for(int i = 0; i < b0.length; i++){
-            ret[i] = (byte)(b0[i] ^ b1[i]);
+        for (int i = 0; i < b0.length; i++) {
+            ret[i] = (byte) (b0[i] ^ b1[i]);
         }
 
         return ret;
@@ -207,21 +203,20 @@ public class APIFactory	{
         return ACCESS_TOKEN_REFRESH;
     }
 
-    public boolean stayingAlive()   {
+    public boolean stayingAlive() {
 
-        if(!AppUtil.getInstance(context).isOfflineMode() && APITokenRequired())    {
+        if (!AppUtil.getInstance(context).isOfflineMode() && APITokenRequired()) {
 
-            if(APIFactory.getInstance(context).getAccessToken() == null)    {
+            if (APIFactory.getInstance(context).getAccessToken() == null) {
                 APIFactory.getInstance(context).getToken(false);
             }
 
-            if(APIFactory.getInstance(context).getAccessToken() != null)    {
+            if (APIFactory.getInstance(context).getAccessToken() != null) {
                 JWT jwt = new JWT(APIFactory.getInstance(context).getAccessToken());
-                if(jwt != null && jwt.isExpired(APIFactory.getInstance(context).getAccessTokenRefresh()))    {
-                    if(APIFactory.getInstance(context).getToken(false))  {
+                if (jwt != null && jwt.isExpired(APIFactory.getInstance(context).getAccessTokenRefresh())) {
+                    if (APIFactory.getInstance(context).getToken(false)) {
                         return true;
-                    }
-                    else    {
+                    } else {
                         return false;
                     }
                 }
@@ -229,50 +224,47 @@ public class APIFactory	{
 
             return false;
 
-        }
-        else    {
+        } else {
             return true;
         }
 
     }
 
-    public synchronized boolean APITokenRequired()  {
+    public synchronized boolean APITokenRequired() {
         return DojoUtil.getInstance(context).getDojoParams() == null ? false : true;
     }
 
     public synchronized boolean getToken(boolean setupDojo) {
 
-        if(!APITokenRequired())    {
+        if (!APITokenRequired()) {
             return true;
         }
 
         String _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : WebUtil.SAMOURAI_API2;
 
-        if(DojoUtil.getInstance(context).getDojoParams() != null || setupDojo)    {
-            _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR :  WebUtil.SAMOURAI_API2_TOR;
+        if (DojoUtil.getInstance(context).getDojoParams() != null || setupDojo) {
+            _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR : WebUtil.SAMOURAI_API2_TOR;
         }
 
         Log.d("APIFactory", "getToken() url:" + _url);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
 
             String response = null;
 
-            if(AppUtil.getInstance(context).isOfflineMode())    {
+            if (AppUtil.getInstance(context).isOfflineMode()) {
                 return true;
-            }
-            else if(!TorManager.getInstance(context).isRequired())    {
+            } else if (!TorManager.getInstance(context).isRequired()) {
                 // use POST
                 StringBuilder args = new StringBuilder();
                 args.append("apikey=");
                 args.append(new String(getXORKey()));
                 response = WebUtil.getInstance(context).postURL(_url + "auth/login?", args.toString());
                 Log.i("APIFactory", "API token response:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("apikey", new String(getXORKey()));
                 Log.i("APIFactory", "API key (XOR):" + new String(getXORKey()));
                 Log.i("APIFactory", "API key url:" + _url);
@@ -282,22 +274,20 @@ public class APIFactory	{
 
             try {
                 jsonObject = new JSONObject(response);
-                if(jsonObject != null && jsonObject.has("authorizations"))    {
+                if (jsonObject != null && jsonObject.has("authorizations")) {
                     JSONObject authObj = jsonObject.getJSONObject("authorizations");
-                    if(authObj.has("access_token"))    {
+                    if (authObj.has("access_token")) {
                         Log.i("APIFactory", "setting access token:" + authObj.getString("access_token"));
                         setAccessToken(authObj.getString("access_token"));
                         return true;
                     }
                 }
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
                 return false;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
             return false;
@@ -310,16 +300,15 @@ public class APIFactory	{
 
         String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
 
             String response = null;
 
-            if(AppUtil.getInstance(context).isOfflineMode())    {
+            if (AppUtil.getInstance(context).isOfflineMode()) {
                 response = PayloadUtil.getInstance(context).deserializeMultiAddr().toString();
-            }
-            else if(!TorManager.getInstance(context).isRequired())    {
+            } else if (!TorManager.getInstance(context).isRequired()) {
                 // use POST
                 StringBuilder args = new StringBuilder();
                 args.append("active=");
@@ -329,9 +318,8 @@ public class APIFactory	{
                 args.append(getAccessToken());
                 response = WebUtil.getInstance(context).postURL(_url + "multiaddr?", args.toString());
                 Log.i("APIFactory", "XPUB response:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("active", StringUtils.join(xpubs, "|"));
                 Log.i("APIFactory", "XPUB:" + args.toString());
                 args.put("at", getAccessToken());
@@ -342,20 +330,18 @@ public class APIFactory	{
 
             try {
                 jsonObject = new JSONObject(response);
-                if(!parse)    {
+                if (!parse) {
                     return jsonObject;
                 }
                 xpub_txs.put(xpubs[0], new ArrayList<Tx>());
                 parseXPUB(jsonObject);
                 xpub_amounts.put(HD_WalletFactory.getInstance(context).get().getAccount(0).xpubstr(), xpub_balance - BlockedUTXO.getInstance().getTotalValueBlocked0());
-                walletBalanceObserver.onNext( xpub_balance - BlockedUTXO.getInstance().getTotalValueBlocked0());
-            }
-            catch(JSONException je) {
+                walletBalanceObserver.onNext(xpub_balance - BlockedUTXO.getInstance().getTotalValueBlocked0());
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -367,33 +353,30 @@ public class APIFactory	{
 
         String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
 
             String response = null;
 
-            if(!TorManager.getInstance(context).isRequired())    {
+            if (!TorManager.getInstance(context).isRequired()) {
                 // use POST
                 StringBuilder args = new StringBuilder();
                 args.append("xpub=");
                 args.append(xpub);
                 args.append("&type=");
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if (PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true) {
                     args.append("restore");
-                }
-                else    {
+                } else {
                     args.append("new");
                 }
-                if(purpose == 49)    {
+                if (purpose == 49) {
                     args.append("&segwit=");
                     args.append("bip49");
-                }
-                else if(purpose == 84)   {
+                } else if (purpose == 84) {
                     args.append("&segwit=");
                     args.append("bip84");
-                }
-                else    {
+                } else {
                     ;
                 }
                 Log.i("APIFactory", "XPUB:" + args.toString());
@@ -401,23 +384,19 @@ public class APIFactory	{
                 args.append(getAccessToken());
                 response = WebUtil.getInstance(context).postURL(_url + "xpub?", args.toString());
                 Log.i("APIFactory", "XPUB response:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("xpub", xpub);
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if (PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true) {
                     args.put("type", "restore");
-                }
-                else    {
+                } else {
                     args.put("type", "new");
                 }
-                if(purpose == 49)    {
+                if (purpose == 49) {
                     args.put("segwit", "bip49");
-                }
-                else if(purpose == 84)   {
+                } else if (purpose == 84) {
                     args.put("segwit", "bip84");
-                }
-                else    {
+                } else {
                     ;
                 }
                 Log.i("APIFactory", "XPUB:" + args.toString());
@@ -429,34 +408,28 @@ public class APIFactory	{
             try {
                 jsonObject = new JSONObject(response);
                 Log.i("APIFactory", "XPUB response:" + jsonObject.toString());
-                if(jsonObject.has("status") && jsonObject.getString("status").equals("ok"))    {
-                    if(tag != null)    {
+                if (jsonObject.has("status") && jsonObject.getString("status").equals("ok")) {
+                    if (tag != null) {
                         PrefsUtil.getInstance(context).setValue(tag, true);
-                        if(tag.equals(PrefsUtil.XPUBPOSTREG))    {
+                        if (tag.equals(PrefsUtil.XPUBPOSTREG)) {
                             PrefsUtil.getInstance(context).removeValue(PrefsUtil.IS_RESTORE);
                         }
-                    }
-                    else if(purpose == 44)    {
+                    } else if (purpose == 44) {
                         PrefsUtil.getInstance(context).setValue(PrefsUtil.XPUB44REG, true);
-                    }
-                    else if(purpose == 49)    {
+                    } else if (purpose == 49) {
                         PrefsUtil.getInstance(context).setValue(PrefsUtil.XPUB49REG, true);
-                    }
-                    else if(purpose == 84)    {
+                    } else if (purpose == 84) {
                         PrefsUtil.getInstance(context).setValue(PrefsUtil.XPUB84REG, true);
-                    }
-                    else    {
+                    } else {
                         ;
                     }
 
                 }
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -464,109 +437,100 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    private synchronized boolean parseXPUB(JSONObject jsonObject) throws JSONException  {
+    private synchronized boolean parseXPUB(JSONObject jsonObject) throws JSONException {
 
-        if(jsonObject != null)  {
+        if (jsonObject != null) {
 
-            HashMap<String,Integer> pubkeys = new HashMap<String,Integer>();
+            HashMap<String, Integer> pubkeys = new HashMap<String, Integer>();
 
-            if(jsonObject.has("wallet"))  {
-                JSONObject walletObj = (JSONObject)jsonObject.get("wallet");
-                if(walletObj.has("final_balance"))  {
+            if (jsonObject.has("wallet")) {
+                JSONObject walletObj = (JSONObject) jsonObject.get("wallet");
+                if (walletObj.has("final_balance")) {
                     xpub_balance = walletObj.getLong("final_balance");
                     Log.d("APIFactory", "xpub_balance:" + xpub_balance);
                 }
             }
 
-            if(jsonObject.has("info"))  {
-                JSONObject infoObj = (JSONObject)jsonObject.get("info");
-                if(infoObj.has("latest_block"))  {
-                    JSONObject blockObj = (JSONObject)infoObj.get("latest_block");
-                    if(blockObj.has("height"))  {
+            if (jsonObject.has("info")) {
+                JSONObject infoObj = (JSONObject) jsonObject.get("info");
+                if (infoObj.has("latest_block")) {
+                    JSONObject blockObj = (JSONObject) infoObj.get("latest_block");
+                    if (blockObj.has("height")) {
                         latest_block_height = blockObj.getLong("height");
                     }
-                    if(blockObj.has("hash"))  {
+                    if (blockObj.has("hash")) {
                         latest_block_hash = blockObj.getString("hash");
                     }
                 }
             }
 
-            if(jsonObject.has("addresses"))  {
+            if (jsonObject.has("addresses")) {
 
-                JSONArray addressesArray = (JSONArray)jsonObject.get("addresses");
+                JSONArray addressesArray = (JSONArray) jsonObject.get("addresses");
                 JSONObject addrObj = null;
-                for(int i = 0; i < addressesArray.length(); i++)  {
-                    addrObj = (JSONObject)addressesArray.get(i);
-                    if(addrObj != null && addrObj.has("final_balance") && addrObj.has("address"))  {
-                        if(FormatsUtil.getInstance().isValidXpub((String)addrObj.get("address")))    {
-                            xpub_amounts.put((String)addrObj.get("address"), addrObj.getLong("final_balance"));
+                for (int i = 0; i < addressesArray.length(); i++) {
+                    addrObj = (JSONObject) addressesArray.get(i);
+                    if (addrObj != null && addrObj.has("final_balance") && addrObj.has("address")) {
+                        if (FormatsUtil.getInstance().isValidXpub((String) addrObj.get("address"))) {
+                            xpub_amounts.put((String) addrObj.get("address"), addrObj.getLong("final_balance"));
 
-                            if(addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr()) ||
-                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccount(0).zpubstr()))    {
+                            if (addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr()) ||
+                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccount(0).zpubstr())) {
                                 AddressFactory.getInstance().setHighestBIP84ReceiveIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 AddressFactory.getInstance().setHighestBIP84ChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccount(0).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccount(0).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                            }
-                            else if(addrObj.getString("address").equals(BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr()) ||
-                                    addrObj.getString("address").equals(BIP49Util.getInstance(context).getWallet().getAccount(0).ypubstr()))    {
+                            } else if (addrObj.getString("address").equals(BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr()) ||
+                                    addrObj.getString("address").equals(BIP49Util.getInstance(context).getWallet().getAccount(0).ypubstr())) {
                                 AddressFactory.getInstance().setHighestBIP49ReceiveIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 AddressFactory.getInstance().setHighestBIP49ChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                 BIP49Util.getInstance(context).getWallet().getAccount(0).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 BIP49Util.getInstance(context).getWallet().getAccount(0).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                            }
-                            else if(AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")) != null)    {
+                            } else if (AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")) != null) {
                                 AddressFactory.getInstance().setHighestTxReceiveIdx(AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")), addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
-                                AddressFactory.getInstance().setHighestTxChangeIdx(AddressFactory.getInstance().xpub2account().get((String)addrObj.get("address")), addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
+                                AddressFactory.getInstance().setHighestTxChangeIdx(AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")), addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
 
                                 try {
                                     HD_WalletFactory.getInstance(context).get().getAccount(0).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                     HD_WalletFactory.getInstance(context).get().getAccount(0).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                                }
-                                catch(IOException | MnemonicException.MnemonicLengthException e) {
+                                } catch (IOException | MnemonicException.MnemonicLengthException e) {
                                     ;
                                 }
-                            }
-                            else    {
+                            } else {
                                 ;
                             }
-                        }
-                        else    {
+                        } else {
                             long amount = 0L;
                             String addr = null;
-                            addr = (String)addrObj.get("address");
+                            addr = (String) addrObj.get("address");
                             amount = addrObj.getLong("final_balance");
                             String pcode = BIP47Meta.getInstance().getPCode4Addr(addr);
-                            if(addr != null && addr.length() > 0 && pcode != null && pcode.length() > 0 && BIP47Meta.getInstance().getIdx4Addr(addr) != null)    {
+                            if (addr != null && addr.length() > 0 && pcode != null && pcode.length() > 0 && BIP47Meta.getInstance().getIdx4Addr(addr) != null) {
                                 int idx = BIP47Meta.getInstance().getIdx4Addr(addr);
-                                if(amount > 0L)    {
+                                if (amount > 0L) {
                                     BIP47Meta.getInstance().addUnspent(pcode, idx);
-                                    if(idx > BIP47Meta.getInstance().getIncomingIdx(pcode))    {
+                                    if (idx > BIP47Meta.getInstance().getIncomingIdx(pcode)) {
                                         BIP47Meta.getInstance().setIncomingIdx(pcode, idx);
                                     }
-                                }
-                                else    {
-                                    if(addrObj.has("pubkey"))    {
+                                } else {
+                                    if (addrObj.has("pubkey")) {
                                         String pubkey = addrObj.getString("pubkey");
-                                        if(pubkeys.containsKey(pubkey))    {
+                                        if (pubkeys.containsKey(pubkey)) {
                                             int count = pubkeys.get(pubkey);
                                             count++;
-                                            if(count == 3)    {
+                                            if (count == 3) {
                                                 BIP47Meta.getInstance().removeUnspent(pcode, Integer.valueOf(idx));
-                                            }
-                                            else    {
+                                            } else {
                                                 pubkeys.put(pubkey, count + 1);
                                             }
-                                        }
-                                        else    {
+                                        } else {
                                             pubkeys.put(pubkey, 1);
                                         }
-                                    }
-                                    else    {
+                                    } else {
                                         BIP47Meta.getInstance().removeUnspent(pcode, Integer.valueOf(idx));
                                     }
                                 }
-                                if(addr != null)  {
+                                if (addr != null) {
                                     bip47_amounts.put(addr, amount);
                                 }
                             }
@@ -576,15 +540,15 @@ public class APIFactory	{
                 }
             }
 
-            if(jsonObject.has("txs"))  {
+            if (jsonObject.has("txs")) {
 
                 List<String> seenHashes = new ArrayList<String>();
 
-                JSONArray txArray = (JSONArray)jsonObject.get("txs");
+                JSONArray txArray = (JSONArray) jsonObject.get("txs");
                 JSONObject txObj = null;
-                for(int i = 0; i < txArray.length(); i++)  {
+                for (int i = 0; i < txArray.length(); i++) {
 
-                    txObj = (JSONObject)txArray.get(i);
+                    txObj = (JSONObject) txArray.get(i);
                     long height = 0L;
                     long amount = 0L;
                     long ts = 0L;
@@ -592,86 +556,81 @@ public class APIFactory	{
                     String addr = null;
                     String _addr = null;
 
-                    if(txObj.has("block_height"))  {
+                    if (txObj.has("block_height")) {
                         height = txObj.getLong("block_height");
-                    }
-                    else  {
+                    } else {
                         height = -1L;  // 0 confirmations
                     }
-                    if(txObj.has("hash"))  {
-                        hash = (String)txObj.get("hash");
+                    if (txObj.has("hash")) {
+                        hash = (String) txObj.get("hash");
                     }
-                    if(txObj.has("result"))  {
+                    if (txObj.has("result")) {
                         amount = txObj.getLong("result");
                     }
-                    if(txObj.has("time"))  {
+                    if (txObj.has("time")) {
                         ts = txObj.getLong("time");
                     }
 
-                    if(!seenHashes.contains(hash))  {
+                    if (!seenHashes.contains(hash)) {
                         seenHashes.add(hash);
                     }
 
-                    if(txObj.has("inputs"))  {
-                        JSONArray inputArray = (JSONArray)txObj.get("inputs");
+                    if (txObj.has("inputs")) {
+                        JSONArray inputArray = (JSONArray) txObj.get("inputs");
                         JSONObject inputObj = null;
-                        for(int j = 0; j < inputArray.length(); j++)  {
-                            inputObj = (JSONObject)inputArray.get(j);
-                            if(inputObj.has("prev_out"))  {
-                                JSONObject prevOutObj = (JSONObject)inputObj.get("prev_out");
-                                if(prevOutObj.has("xpub"))  {
-                                    JSONObject xpubObj = (JSONObject)prevOutObj.get("xpub");
-                                    addr = (String)xpubObj.get("m");
-                                }
-                                else if(prevOutObj.has("addr") && BIP47Meta.getInstance().getPCode4Addr((String)prevOutObj.get("addr")) != null)  {
-                                    _addr = (String)prevOutObj.get("addr");
-                                }
-                                else  {
-                                    _addr = (String)prevOutObj.get("addr");
+                        for (int j = 0; j < inputArray.length(); j++) {
+                            inputObj = (JSONObject) inputArray.get(j);
+                            if (inputObj.has("prev_out")) {
+                                JSONObject prevOutObj = (JSONObject) inputObj.get("prev_out");
+                                if (prevOutObj.has("xpub")) {
+                                    JSONObject xpubObj = (JSONObject) prevOutObj.get("xpub");
+                                    addr = (String) xpubObj.get("m");
+                                } else if (prevOutObj.has("addr") && BIP47Meta.getInstance().getPCode4Addr((String) prevOutObj.get("addr")) != null) {
+                                    _addr = (String) prevOutObj.get("addr");
+                                } else {
+                                    _addr = (String) prevOutObj.get("addr");
                                 }
                             }
                         }
                     }
 
-                    if(txObj.has("out"))  {
-                        JSONArray outArray = (JSONArray)txObj.get("out");
+                    if (txObj.has("out")) {
+                        JSONArray outArray = (JSONArray) txObj.get("out");
                         JSONObject outObj = null;
-                        for(int j = 0; j < outArray.length(); j++)  {
-                            outObj = (JSONObject)outArray.get(j);
-                            if(outObj.has("xpub"))  {
-                                JSONObject xpubObj = (JSONObject)outObj.get("xpub");
-                                addr = (String)xpubObj.get("m");
-                            }
-                            else  {
-                                _addr = (String)outObj.get("addr");
+                        for (int j = 0; j < outArray.length(); j++) {
+                            outObj = (JSONObject) outArray.get(j);
+                            if (outObj.has("xpub")) {
+                                JSONObject xpubObj = (JSONObject) outObj.get("xpub");
+                                addr = (String) xpubObj.get("m");
+                            } else {
+                                _addr = (String) outObj.get("addr");
                             }
                         }
                     }
 
-                    if(addr != null || _addr != null)  {
+                    if (addr != null || _addr != null) {
 
-                        if(addr == null)    {
+                        if (addr == null) {
                             addr = _addr;
                         }
 
                         Tx tx = new Tx(hash, addr, amount, ts, (latest_block_height > 0L && height > 0L) ? (latest_block_height - height) + 1 : 0);
-                        if(SentToFromBIP47Util.getInstance().getByHash(hash) != null)    {
+                        if (SentToFromBIP47Util.getInstance().getByHash(hash) != null) {
                             tx.setPaymentCode(SentToFromBIP47Util.getInstance().getByHash(hash));
                         }
-                        if(BIP47Meta.getInstance().getPCode4Addr(addr) != null)    {
+                        if (BIP47Meta.getInstance().getPCode4Addr(addr) != null) {
                             tx.setPaymentCode(BIP47Meta.getInstance().getPCode4Addr(addr));
                         }
-                        if(!xpub_txs.containsKey(addr))  {
+                        if (!xpub_txs.containsKey(addr)) {
                             xpub_txs.put(addr, new ArrayList<Tx>());
                         }
-                        if(FormatsUtil.getInstance().isValidXpub(addr))    {
+                        if (FormatsUtil.getInstance().isValidXpub(addr)) {
                             xpub_txs.get(addr).add(tx);
-                        }
-                        else    {
+                        } else {
                             xpub_txs.get(AddressFactory.getInstance().account2xpub().get(0)).add(tx);
                         }
 
-                        if(height > 0L)    {
+                        if (height > 0L) {
                             RBFUtil.getInstance().remove(hash);
                         }
 
@@ -679,9 +638,9 @@ public class APIFactory	{
                 }
 
                 List<String> hashesSentToViaBIP47 = SentToFromBIP47Util.getInstance().getAllHashes();
-                if(hashesSentToViaBIP47.size() > 0)    {
-                    for(String s : hashesSentToViaBIP47)    {
-                        if(!seenHashes.contains(s)) {
+                if (hashesSentToViaBIP47.size() > 0) {
+                    for (String s : hashesSentToViaBIP47) {
+                        if (!seenHashes.contains(s)) {
                             SentToFromBIP47Util.getInstance().removeHash(s);
                         }
                     }
@@ -691,8 +650,7 @@ public class APIFactory	{
 
             try {
                 PayloadUtil.getInstance(context).serializeMultiAddr(jsonObject);
-            }
-            catch(IOException | DecryptionException e) {
+            } catch (IOException | DecryptionException e) {
                 ;
             }
 
@@ -703,6 +661,7 @@ public class APIFactory	{
         return false;
 
     }
+
     /*
         public synchronized JSONObject deleteXPUB(String xpub, boolean bip49) {
 
@@ -787,35 +746,33 @@ public class APIFactory	{
     */
     public synchronized JSONObject lockXPUB(String xpub, int purpose, String tag) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
 
             String response = null;
             ECKey ecKey = null;
 
-            if(AddressFactory.getInstance(context).xpub2account().get(xpub) != null ||
+            if (AddressFactory.getInstance(context).xpub2account().get(xpub) != null ||
                     xpub.equals(BIP49Util.getInstance(context).getWallet().getAccount(0).ypubstr()) ||
                     xpub.equals(BIP84Util.getInstance(context).getWallet().getAccount(0).zpubstr()) ||
                     xpub.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).zpubstr()) ||
                     xpub.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr())
-            )    {
+            ) {
 
                 HD_Address addr = null;
-                switch(purpose)    {
+                switch (purpose) {
                     case 49:
                         addr = BIP49Util.getInstance(context).getWallet().getAccountAt(0).getChange().getAddressAt(0);
                         break;
                     case 84:
-                        if(tag != null && tag.equals(PrefsUtil.XPUBPRELOCK))    {
+                        if (tag != null && tag.equals(PrefsUtil.XPUBPRELOCK)) {
                             addr = BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).getChange().getAddressAt(0);
-                        }
-                        else if(tag != null && tag.equals(PrefsUtil.XPUBPOSTLOCK))   {
+                        } else if (tag != null && tag.equals(PrefsUtil.XPUBPOSTLOCK)) {
                             addr = BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).getChange().getAddressAt(0);
-                        }
-                        else    {
+                        } else {
                             addr = BIP84Util.getInstance(context).getWallet().getAccountAt(0).getChange().getAddressAt(0);
                         }
                         break;
@@ -825,11 +782,11 @@ public class APIFactory	{
                 }
                 ecKey = addr.getECKey();
 
-                if(ecKey != null && ecKey.hasPrivKey())    {
+                if (ecKey != null && ecKey.hasPrivKey()) {
 
                     String sig = ecKey.signMessage("lock");
                     String address = null;
-                    switch(purpose)    {
+                    switch (purpose) {
                         case 49:
                             SegwitAddress p2shp2wpkh = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
                             address = p2shp2wpkh.getAddressAsString();
@@ -843,7 +800,7 @@ public class APIFactory	{
                             break;
                     }
 
-                    if(!TorManager.getInstance(context).isRequired())    {
+                    if (!TorManager.getInstance(context).isRequired()) {
                         StringBuilder args = new StringBuilder();
                         args.append("address=");
                         args.append(address);
@@ -856,9 +813,8 @@ public class APIFactory	{
                         args.append(getAccessToken());
                         response = WebUtil.getInstance(context).postURL(_url + "xpub/" + xpub + "/lock/", args.toString());
 //                        Log.i("APIFactory", "lock XPUB response:" + response);
-                    }
-                    else    {
-                        HashMap<String,String> args = new HashMap<String,String>();
+                    } else {
+                        HashMap<String, String> args = new HashMap<String, String>();
                         args.put("address", address);
 //                        args.put("signature", Uri.encode(sig));
                         args.put("signature", sig);
@@ -873,13 +829,12 @@ public class APIFactory	{
                     try {
                         jsonObject = new JSONObject(response);
 
-                        if(jsonObject.has("status") && jsonObject.getString("status").equals("ok"))    {
+                        if (jsonObject.has("status") && jsonObject.getString("status").equals("ok")) {
 
-                            if(tag != null)    {
+                            if (tag != null) {
                                 PrefsUtil.getInstance(context).setValue(tag, true);
-                            }
-                            else    {
-                                switch(purpose)    {
+                            } else {
+                                switch (purpose) {
                                     case 49:
                                         PrefsUtil.getInstance(context).setValue(PrefsUtil.XPUB49LOCK, true);
                                         break;
@@ -894,8 +849,7 @@ public class APIFactory	{
 
                         }
 
-                    }
-                    catch(JSONException je) {
+                    } catch (JSONException je) {
                         je.printStackTrace();
                         jsonObject = null;
                     }
@@ -903,8 +857,7 @@ public class APIFactory	{
                 }
             }
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -912,19 +865,19 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    public long getLatestBlockHeight()  {
+    public long getLatestBlockHeight() {
         return latest_block_height;
     }
 
-    public String getLatestBlockHash()  {
+    public String getLatestBlockHash() {
         return latest_block_hash;
     }
 
     public JSONObject getNotifTx(String hash, String addr) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             StringBuilder url = new StringBuilder(_url);
@@ -939,13 +892,11 @@ public class APIFactory	{
             try {
                 jsonObject = new JSONObject(response);
                 parseNotifTx(jsonObject, addr, hash);
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -957,7 +908,7 @@ public class APIFactory	{
 
         String _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : WebUtil.SAMOURAI_API2;
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             StringBuilder url = new StringBuilder(_url);
@@ -971,13 +922,11 @@ public class APIFactory	{
             try {
                 jsonObject = new JSONObject(response);
                 parseNotifAddress(jsonObject, addr);
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -985,24 +934,24 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    public void parseNotifAddress(JSONObject jsonObject, String addr) throws JSONException  {
+    public void parseNotifAddress(JSONObject jsonObject, String addr) throws JSONException {
 
-        if(jsonObject != null && jsonObject.has("txs"))  {
+        if (jsonObject != null && jsonObject.has("txs")) {
 
             JSONArray txArray = jsonObject.getJSONArray("txs");
             JSONObject txObj = null;
-            for(int i = 0; i < txArray.length(); i++)  {
-                txObj = (JSONObject)txArray.get(i);
+            for (int i = 0; i < txArray.length(); i++) {
+                txObj = (JSONObject) txArray.get(i);
 
-                if(!txObj.has("block_height") || (txObj.has("block_height") && txObj.getLong("block_height") < 1L))    {
+                if (!txObj.has("block_height") || (txObj.has("block_height") && txObj.getLong("block_height") < 1L)) {
                     return;
                 }
 
                 String hash = null;
 
-                if(txObj.has("hash"))  {
-                    hash = (String)txObj.get("hash");
-                    if(BIP47Meta.getInstance().getIncomingStatus(hash) == null)    {
+                if (txObj.has("hash")) {
+                    hash = (String) txObj.get("hash");
+                    if (BIP47Meta.getInstance().getIncomingStatus(hash) == null) {
                         getNotifTx(hash, addr);
                     }
                 }
@@ -1013,33 +962,32 @@ public class APIFactory	{
 
     }
 
-    public void parseNotifTx(JSONObject jsonObject, String addr, String hash) throws JSONException  {
+    public void parseNotifTx(JSONObject jsonObject, String addr, String hash) throws JSONException {
 
         Log.i("APIFactory", "notif address:" + addr);
         Log.i("APIFactory", "hash:" + hash);
 
-        if(jsonObject != null)  {
+        if (jsonObject != null) {
 
             byte[] mask = null;
             byte[] payload = null;
             PaymentCode pcode = null;
 
-            if(jsonObject.has("inputs"))    {
+            if (jsonObject.has("inputs")) {
 
-                JSONArray inArray = (JSONArray)jsonObject.get("inputs");
+                JSONArray inArray = (JSONArray) jsonObject.get("inputs");
 
-                if(inArray.length() > 0)    {
-                    JSONObject objInput = (JSONObject)inArray.get(0);
+                if (inArray.length() > 0) {
+                    JSONObject objInput = (JSONObject) inArray.get(0);
                     byte[] pubkey = null;
                     String strScript = objInput.getString("sig");
                     Log.i("APIFactory", "scriptsig:" + strScript);
-                    if((strScript == null || strScript.length() == 0 || strScript.startsWith("160014")) && objInput.has("witness"))    {
-                        JSONArray witnessArray = (JSONArray)objInput.get("witness");
-                        if(witnessArray.length() == 2)    {
-                            pubkey = Hex.decode((String)witnessArray.get(1));
+                    if ((strScript == null || strScript.length() == 0 || strScript.startsWith("160014")) && objInput.has("witness")) {
+                        JSONArray witnessArray = (JSONArray) objInput.get("witness");
+                        if (witnessArray.length() == 2) {
+                            pubkey = Hex.decode((String) witnessArray.get(1));
                         }
-                    }
-                    else    {
+                    } else {
                         Script script = new Script(Hex.decode(strScript));
                         Log.i("APIFactory", "pubkey from script:" + Hex.toHexString(script.getPubKey()));
                         pubkey = script.getPubKey();
@@ -1048,7 +996,7 @@ public class APIFactory	{
                     Log.i("APIFactory", "address from script:" + pKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
 //                        Log.i("APIFactory", "uncompressed public key from script:" + Hex.toHexString(pKey.decompress().getPubKey()));
 
-                    if(((JSONObject)inArray.get(0)).has("outpoint"))    {
+                    if (((JSONObject) inArray.get(0)).has("outpoint")) {
                         JSONObject received_from = ((JSONObject) inArray.get(0)).getJSONObject("outpoint");
 
                         String strHash = received_from.getString("txid");
@@ -1063,8 +1011,7 @@ public class APIFactory	{
                         try {
                             mask = BIP47Util.getInstance(context).getIncomingMask(pubkey, outpoint);
                             Log.i("APIFactory", "mask:" + Hex.toHexString(mask));
-                        }
-                        catch(Exception e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
 
@@ -1074,35 +1021,35 @@ public class APIFactory	{
 
             }
 
-            if(jsonObject.has("outputs"))  {
-                JSONArray outArray = (JSONArray)jsonObject.get("outputs");
+            if (jsonObject.has("outputs")) {
+                JSONArray outArray = (JSONArray) jsonObject.get("outputs");
                 JSONObject outObj = null;
                 boolean isIncoming = false;
                 String _addr = null;
                 String script = null;
                 String op_return = null;
-                for(int j = 0; j < outArray.length(); j++)  {
-                    outObj = (JSONObject)outArray.get(j);
-                    if(outObj.has("address"))  {
+                for (int j = 0; j < outArray.length(); j++) {
+                    outObj = (JSONObject) outArray.get(j);
+                    if (outObj.has("address")) {
                         _addr = outObj.getString("address");
-                        if(addr.equals(_addr))    {
+                        if (addr.equals(_addr)) {
                             isIncoming = true;
                         }
                     }
-                    if(outObj.has("scriptpubkey"))  {
+                    if (outObj.has("scriptpubkey")) {
                         script = outObj.getString("scriptpubkey");
-                        if(script.startsWith("6a4c50"))    {
+                        if (script.startsWith("6a4c50")) {
                             op_return = script;
                         }
                     }
                 }
-                if(isIncoming && op_return != null && op_return.startsWith("6a4c50"))    {
+                if (isIncoming && op_return != null && op_return.startsWith("6a4c50")) {
                     payload = Hex.decode(op_return.substring(6));
                 }
 
             }
 
-            if(mask != null && payload != null)    {
+            if (mask != null && payload != null) {
                 try {
                     byte[] xlat_payload = PaymentCode.blind(payload, mask);
                     Log.i("APIFactory", "xlat_payload:" + Hex.toHexString(xlat_payload));
@@ -1110,13 +1057,12 @@ public class APIFactory	{
                     pcode = new PaymentCode(xlat_payload);
                     Log.i("APIFactory", "incoming payment code:" + pcode.toString());
 
-                    if(!pcode.toString().equals(BIP47Util.getInstance(context).getPaymentCode().toString()) && pcode.isValid() && !BIP47Meta.getInstance().incomingExists(pcode.toString()))    {
+                    if (!pcode.toString().equals(BIP47Util.getInstance(context).getPaymentCode().toString()) && pcode.isValid() && !BIP47Meta.getInstance().incomingExists(pcode.toString())) {
                         BIP47Meta.getInstance().setLabel(pcode.toString(), "");
                         BIP47Meta.getInstance().setIncomingStatus(hash);
                     }
 
-                }
-                catch(AddressFormatException afe) {
+                } catch (AddressFormatException afe) {
                     afe.printStackTrace();
                 }
 
@@ -1125,19 +1071,18 @@ public class APIFactory	{
             //
             // get receiving addresses for spends from decoded payment code
             //
-            if(pcode != null)    {
+            if (pcode != null) {
                 try {
 
                     //
                     // initial lookup
                     //
-                    for(int i = 0; i < BIP47Meta.INCOMING_LOOKAHEAD; i++)   {
+                    for (int i = 0; i < BIP47Meta.INCOMING_LOOKAHEAD; i++) {
                         Log.i("APIFactory", "receive from " + i + ":" + BIP47Util.getInstance(context).getReceivePubKey(pcode, i));
                         BIP47Meta.getInstance().getIdx4AddrLookup().put(BIP47Util.getInstance(context).getReceivePubKey(pcode, i), i);
                         BIP47Meta.getInstance().getPCode4AddrLookup().put(BIP47Util.getInstance(context).getReceivePubKey(pcode, i), pcode.toString());
                     }
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     ;
                 }
             }
@@ -1148,11 +1093,11 @@ public class APIFactory	{
 
     public synchronized int getNotifTxConfirmations(String hash) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
 //        Log.i("APIFactory", "Notif tx:" + hash);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             StringBuilder url = new StringBuilder(_url);
@@ -1168,8 +1113,7 @@ public class APIFactory	{
 //            Log.i("APIFactory", "Notif tx json:" + jsonObject.toString());
 
             return parseNotifTx(jsonObject);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1177,18 +1121,18 @@ public class APIFactory	{
         return 0;
     }
 
-    public synchronized int parseNotifTx(JSONObject jsonObject) throws JSONException  {
+    public synchronized int parseNotifTx(JSONObject jsonObject) throws JSONException {
 
         int cf = 0;
 
-        if(jsonObject != null && jsonObject.has("block") && jsonObject.getJSONObject("block").has("height"))  {
+        if (jsonObject != null && jsonObject.has("block") && jsonObject.getJSONObject("block").has("height")) {
 
             long latestBlockHeght = getLatestBlockHeight();
             long height = jsonObject.getJSONObject("block").getLong("height");
 
-            cf = (int)((latestBlockHeght - height) + 1);
+            cf = (int) ((latestBlockHeght - height) + 1);
 
-            if(cf < 0)    {
+            if (cf < 0) {
                 cf = 0;
             }
 
@@ -1199,18 +1143,17 @@ public class APIFactory	{
 
     public synchronized JSONObject getUnspentOutputs(String[] xpubs) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
         String response = null;
 
         try {
 
-            if(AppUtil.getInstance(context).isOfflineMode())    {
+            if (AppUtil.getInstance(context).isOfflineMode()) {
                 utxos.clear();
                 response = PayloadUtil.getInstance(context).deserializeUTXO().toString();
-            }
-            else if(!TorManager.getInstance(context).isRequired())    {
+            } else if (!TorManager.getInstance(context).isRequired()) {
                 StringBuilder args = new StringBuilder();
                 args.append("active=");
                 args.append(StringUtils.join(xpubs, URLEncoder.encode("|", "UTF-8")));
@@ -1219,9 +1162,8 @@ public class APIFactory	{
                 args.append(getAccessToken());
                 response = WebUtil.getInstance(context).postURL(_url + "unspent?", args.toString());
                 Log.d("APIFactory", "UTXO:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("active", StringUtils.join(xpubs, "|"));
                 args.put("at", getAccessToken());
                 response = WebUtil.getInstance(context).tor_postURL(_url + "unspent", args);
@@ -1229,17 +1171,15 @@ public class APIFactory	{
 
             parseUnspentOutputs(response);
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
 
-        if(!AppUtil.getInstance(context).isOfflineMode())    {
+        if (!AppUtil.getInstance(context).isOfflineMode()) {
             try {
                 jsonObject = new JSONObject(response);
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 ;
             }
         }
@@ -1247,18 +1187,18 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    private synchronized boolean parseUnspentOutputs(String unspents)   {
+    private synchronized boolean parseUnspentOutputs(String unspents) {
 
-        if(unspents != null)    {
+        if (unspents != null) {
 
             try {
                 JSONObject jsonObj = new JSONObject(unspents);
 
-                if(jsonObj == null || !jsonObj.has("unspent_outputs"))    {
+                if (jsonObj == null || !jsonObj.has("unspent_outputs")) {
                     return false;
                 }
                 JSONArray utxoArray = jsonObj.getJSONArray("unspent_outputs");
-                if(utxoArray == null || utxoArray.length() == 0) {
+                if (utxoArray == null || utxoArray.length() == 0) {
                     return false;
                 }
 
@@ -1266,46 +1206,41 @@ public class APIFactory	{
 
                     JSONObject outDict = utxoArray.getJSONObject(i);
 
-                    byte[] hashBytes = Hex.decode((String)outDict.get("tx_hash"));
+                    byte[] hashBytes = Hex.decode((String) outDict.get("tx_hash"));
                     Sha256Hash txHash = Sha256Hash.wrap(hashBytes);
-                    int txOutputN = ((Number)outDict.get("tx_output_n")).intValue();
-                    BigInteger value = BigInteger.valueOf(((Number)outDict.get("value")).longValue());
-                    String script = (String)outDict.get("script");
+                    int txOutputN = ((Number) outDict.get("tx_output_n")).intValue();
+                    BigInteger value = BigInteger.valueOf(((Number) outDict.get("value")).longValue());
+                    String script = (String) outDict.get("script");
                     byte[] scriptBytes = Hex.decode(script);
-                    int confirmations = ((Number)outDict.get("confirmations")).intValue();
+                    int confirmations = ((Number) outDict.get("confirmations")).intValue();
                     String path = null;
 
                     try {
                         String address = null;
-                        if(Bech32Util.getInstance().isBech32Script(script))    {
+                        if (Bech32Util.getInstance().isBech32Script(script)) {
                             address = Bech32Util.getInstance().getAddressFromScript(script);
-                        }
-                        else    {
+                        } else {
                             address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
 
-                        if(outDict.has("xpub"))    {
-                            JSONObject xpubObj = (JSONObject)outDict.get("xpub");
-                            path = (String)xpubObj.get("path");
-                            String m = (String)xpubObj.get("m");
+                        if (outDict.has("xpub")) {
+                            JSONObject xpubObj = (JSONObject) outDict.get("xpub");
+                            path = (String) xpubObj.get("path");
+                            String m = (String) xpubObj.get("m");
                             unspentPaths.put(address, path);
-                            if(m.equals(BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr()))    {
+                            if (m.equals(BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr())) {
                                 unspentBIP49.put(address, 0);   // assume account 0
-                            }
-                            else if(m.equals(BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr()))    {
+                            } else if (m.equals(BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr())) {
                                 unspentBIP84.put(address, 0);   // assume account 0
-                            }
-                            else    {
+                            } else {
                                 unspentAccounts.put(address, AddressFactory.getInstance(context).xpub2account().get(m));
                             }
-                        }
-                        else if(outDict.has("pubkey"))    {
+                        } else if (outDict.has("pubkey")) {
                             int idx = BIP47Meta.getInstance().getIdx4AddrLookup().get(outDict.getString("pubkey"));
                             BIP47Meta.getInstance().getIdx4AddrLookup().put(address, idx);
                             String pcode = BIP47Meta.getInstance().getPCode4AddrLookup().get(outDict.getString("pubkey"));
                             BIP47Meta.getInstance().getPCode4AddrLookup().put(address, pcode);
-                        }
-                        else    {
+                        } else {
                             ;
                         }
 
@@ -1313,32 +1248,28 @@ public class APIFactory	{
                         MyTransactionOutPoint outPoint = new MyTransactionOutPoint(txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
 
-                        if(utxos.containsKey(script))    {
+                        if (utxos.containsKey(script)) {
                             utxos.get(script).getOutpoints().add(outPoint);
-                        }
-                        else    {
+                        } else {
                             UTXO utxo = new UTXO();
                             utxo.getOutpoints().add(outPoint);
                             utxo.setPath(path);
                             utxos.put(script, utxo);
                         }
 
-                        if(!BlockedUTXO.getInstance().contains(txHash.toString(), txOutputN))    {
+                        if (!BlockedUTXO.getInstance().contains(txHash.toString(), txOutputN)) {
 
-                            if(Bech32Util.getInstance().isBech32Script(script))    {
+                            if (Bech32Util.getInstance().isBech32Script(script)) {
                                 UTXOFactory.getInstance().addP2WPKH(script, utxos.get(script));
-                            }
-                            else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+                            } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                                 UTXOFactory.getInstance().addP2SH_P2WPKH(script, utxos.get(script));
-                            }
-                            else    {
+                            } else {
                                 UTXOFactory.getInstance().addP2PKH(script, utxos.get(script));
                             }
 
                         }
 
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         ;
                     }
 
@@ -1346,8 +1277,7 @@ public class APIFactory	{
 
                 return true;
 
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 ;
             }
 
@@ -1359,7 +1289,7 @@ public class APIFactory	{
 
     public synchronized JSONObject getAddressInfo(String addr) {
 
-        return getXPUB(new String[] { addr }, false);
+        return getXPUB(new String[]{addr}, false);
 
     }
 
@@ -1367,7 +1297,7 @@ public class APIFactory	{
 
         String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             StringBuilder url = new StringBuilder(_url);
@@ -1379,8 +1309,7 @@ public class APIFactory	{
 
             String response = WebUtil.getInstance(context).getURL(url.toString());
             jsonObject = new JSONObject(response);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1390,9 +1319,9 @@ public class APIFactory	{
 
     public synchronized JSONObject getBlockHeader(String hash) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             StringBuilder url = new StringBuilder(_url);
@@ -1403,8 +1332,7 @@ public class APIFactory	{
 
             String response = WebUtil.getInstance(context).getURL(url.toString());
             jsonObject = new JSONObject(response);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1414,58 +1342,54 @@ public class APIFactory	{
 
     public synchronized JSONObject getDynamicFees() {
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
             int sel = PrefsUtil.getInstance(context).getValue(PrefsUtil.FEE_PROVIDER_SEL, 0);
-            if(sel == 1)    {
+            if (sel == 1) {
 
-                int[] blocks = new int[] { 2, 6, 24 };
+                int[] blocks = new int[]{2, 6, 24};
 
                 List<SuggestedFee> suggestedFees = new ArrayList<SuggestedFee>();
 
                 JSONRPC jsonrpc = new JSONRPC(TrustedNodeUtil.getInstance().getUser(), TrustedNodeUtil.getInstance().getPassword(), TrustedNodeUtil.getInstance().getNode(), TrustedNodeUtil.getInstance().getPort());
 
-                for(int i = 0; i < blocks.length; i++)   {
+                for (int i = 0; i < blocks.length; i++) {
                     JSONObject feeObj = jsonrpc.getFeeEstimate(blocks[i]);
-                    if(feeObj != null && feeObj.has("result"))    {
+                    if (feeObj != null && feeObj.has("result")) {
                         double fee = feeObj.getDouble("result");
 
                         SuggestedFee suggestedFee = new SuggestedFee();
-                        suggestedFee.setDefaultPerKB(BigInteger.valueOf((long)(fee * 1e8)));
+                        suggestedFee.setDefaultPerKB(BigInteger.valueOf((long) (fee * 1e8)));
                         suggestedFee.setStressed(false);
                         suggestedFee.setOK(true);
                         suggestedFees.add(suggestedFee);
                     }
                 }
 
-                if(suggestedFees.size() > 0)    {
+                if (suggestedFees.size() > 0) {
                     FeeUtil.getInstance().setEstimatedFees(suggestedFees);
                 }
 
-            }
-            else    {
-                String _url =  WebUtil.getAPIUrl(context);
+            } else {
+                String _url = WebUtil.getAPIUrl(context);
 //            Log.i("APIFactory", "Dynamic fees:" + url.toString());
                 String response = null;
-                if(!AppUtil.getInstance(context).isOfflineMode())    {
+                if (!AppUtil.getInstance(context).isOfflineMode()) {
                     response = WebUtil.getInstance(null).getURL(_url + "fees" + "?at=" + getAccessToken());
-                }
-                else    {
+                } else {
                     response = PayloadUtil.getInstance(context).deserializeFees().toString();
                 }
 //            Log.i("APIFactory", "Dynamic fees response:" + response);
                 try {
                     jsonObject = new JSONObject(response);
                     parseDynamicFees_bitcoind(jsonObject);
-                }
-                catch(JSONException je) {
+                } catch (JSONException je) {
                     je.printStackTrace();
                     jsonObject = null;
                 }
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1473,16 +1397,16 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    private synchronized boolean parseDynamicFees_bitcoind(JSONObject jsonObject) throws JSONException  {
+    private synchronized boolean parseDynamicFees_bitcoind(JSONObject jsonObject) throws JSONException {
 
-        if(jsonObject != null)  {
+        if (jsonObject != null) {
 
             //
             // bitcoind
             //
             List<SuggestedFee> suggestedFees = new ArrayList<SuggestedFee>();
 
-            if(jsonObject.has("2"))    {
+            if (jsonObject.has("2")) {
                 long fee = jsonObject.getInt("2");
                 SuggestedFee suggestedFee = new SuggestedFee();
                 suggestedFee.setDefaultPerKB(BigInteger.valueOf(fee * 1000L));
@@ -1491,7 +1415,7 @@ public class APIFactory	{
                 suggestedFees.add(suggestedFee);
             }
 
-            if(jsonObject.has("6"))    {
+            if (jsonObject.has("6")) {
                 long fee = jsonObject.getInt("6");
                 SuggestedFee suggestedFee = new SuggestedFee();
                 suggestedFee.setDefaultPerKB(BigInteger.valueOf(fee * 1000L));
@@ -1500,7 +1424,7 @@ public class APIFactory	{
                 suggestedFees.add(suggestedFee);
             }
 
-            if(jsonObject.has("24"))    {
+            if (jsonObject.has("24")) {
                 long fee = jsonObject.getInt("24");
                 SuggestedFee suggestedFee = new SuggestedFee();
                 suggestedFee.setDefaultPerKB(BigInteger.valueOf(fee * 1000L));
@@ -1509,7 +1433,7 @@ public class APIFactory	{
                 suggestedFees.add(suggestedFee);
             }
 
-            if(suggestedFees.size() > 0)    {
+            if (suggestedFees.size() > 0) {
                 FeeUtil.getInstance().setEstimatedFees(suggestedFees);
 
 //                Log.d("APIFactory", "high fee:" + FeeUtil.getInstance().getHighFee().getDefaultPerKB().toString());
@@ -1519,8 +1443,7 @@ public class APIFactory	{
 
             try {
                 PayloadUtil.getInstance(context).serializeFees(jsonObject);
-            }
-            catch(IOException | DecryptionException e) {
+            } catch (IOException | DecryptionException e) {
                 ;
             }
 
@@ -1541,18 +1464,17 @@ public class APIFactory	{
             public void run() {
                 Looper.prepare();
 
-                if(!AppUtil.getInstance(context).isOfflineMode()) {
+                if (!AppUtil.getInstance(context).isOfflineMode()) {
 
                     try {
                         String response = WebUtil.getInstance(context).getURL(WebUtil.SAMOURAI_API_CHECK);
 
                         JSONObject jsonObject = new JSONObject(response);
-                        if(!jsonObject.has("process"))    {
+                        if (!jsonObject.has("process")) {
                             showAlertDialog(context.getString(R.string.api_error), false);
                         }
 
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         showAlertDialog(context.getString(R.string.cannot_reach_api), false);
                     }
 
@@ -1573,17 +1495,17 @@ public class APIFactory	{
         }).start();
     }
 
-    private void showAlertDialog(final String message, final boolean forceExit){
+    private void showAlertDialog(final String message, final boolean forceExit) {
 
         if (!((Activity) context).isFinishing()) {
 
-            if(alertDialog != null)alertDialog.dismiss();
+            if (alertDialog != null) alertDialog.dismiss();
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(message);
             builder.setCancelable(false);
 
-            if(!forceExit) {
+            if (!forceExit) {
                 builder.setPositiveButton(R.string.retry,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface d, int id) {
@@ -1607,7 +1529,7 @@ public class APIFactory	{
         }
     }
 
-    public synchronized void initWallet()    {
+    public synchronized void initWallet() {
 
         Log.i("APIFactory", "initWallet()");
 
@@ -1623,38 +1545,38 @@ public class APIFactory	{
         String[] s = null;
 
         try {
-            if(PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB44REG, false) == false)    {
+            if (PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB44REG, false) == false) {
                 registerXPUB(HD_WalletFactory.getInstance(context).get().getAccount(0).xpubstr(), 44, null);
             }
-            if(PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB49REG, false) == false)    {
+            if (PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB49REG, false) == false) {
                 registerXPUB(BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr(), 49, null);
             }
-            if(PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB84REG, false) == false)    {
+            if (PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUB84REG, false) == false) {
                 registerXPUB(BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr(), 84, null);
             }
-            if(PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUBPREREG, false) == false)    {
+            if (PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUBPREREG, false) == false) {
                 registerXPUB(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).xpubstr(), 84, PrefsUtil.XPUBPREREG);
             }
-            if(PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUBPOSTREG, false) == false)    {
+            if (PrefsUtil.getInstance(context).getValue(PrefsUtil.XPUBPOSTREG, false) == false) {
                 registerXPUB(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr(), 84, PrefsUtil.XPUBPOSTREG);
             }
 
             xpub_txs.put(HD_WalletFactory.getInstance(context).get().getAccount(0).xpubstr(), new ArrayList<Tx>());
 
             addressStrings.addAll(Arrays.asList(BIP47Meta.getInstance().getIncomingAddresses(false)));
-            for(String _s : Arrays.asList(BIP47Meta.getInstance().getIncomingLookAhead(context)))   {
-                if(!addressStrings.contains(_s))    {
+            for (String _s : Arrays.asList(BIP47Meta.getInstance().getIncomingLookAhead(context))) {
+                if (!addressStrings.contains(_s)) {
                     addressStrings.add(_s);
                 }
             }
-            for(String pcode : BIP47Meta.getInstance().getUnspentProviders())   {
-                for(String addr : BIP47Meta.getInstance().getUnspentAddresses(context, pcode))   {
-                    if(!addressStrings.contains(addr))    {
+            for (String pcode : BIP47Meta.getInstance().getUnspentProviders()) {
+                for (String addr : BIP47Meta.getInstance().getUnspentAddresses(context, pcode)) {
+                    if (!addressStrings.contains(addr)) {
                         addressStrings.add(addr);
                     }
                 }
             }
-            if(addressStrings.size() > 0)    {
+            if (addressStrings.size() > 0) {
                 s = addressStrings.toArray(new String[0]);
 //                Log.i("APIFactory", addressStrings.toString());
                 utxoObj0 = getUnspentOutputs(s);
@@ -1663,16 +1585,15 @@ public class APIFactory	{
             Log.d("APIFactory", "addresses:" + addressStrings.toString());
 
             HD_Wallet hdw = HD_WalletFactory.getInstance(context).get();
-            if(hdw != null && hdw.getXPUBs() != null)    {
+            if (hdw != null && hdw.getXPUBs() != null) {
                 String[] all = null;
-                if(s != null && s.length > 0)    {
+                if (s != null && s.length > 0) {
                     all = new String[hdw.getXPUBs().length + 2 + s.length];
                     all[0] = BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr();
                     all[1] = BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr();
                     System.arraycopy(hdw.getXPUBs(), 0, all, 2, hdw.getXPUBs().length);
                     System.arraycopy(s, 0, all, hdw.getXPUBs().length + 2, s.length);
-                }
-                else    {
+                } else {
                     all = new String[hdw.getXPUBs().length + 2];
                     all[0] = BIP49Util.getInstance(context).getWallet().getAccount(0).xpubstr();
                     all[1] = BIP84Util.getInstance(context).getWallet().getAccount(0).xpubstr();
@@ -1690,15 +1611,14 @@ public class APIFactory	{
 
             try {
                 List<JSONObject> utxoObjs = new ArrayList<JSONObject>();
-                if(utxoObj0 != null)    {
+                if (utxoObj0 != null) {
                     utxoObjs.add(utxoObj0);
                 }
-                if(utxoObj1 != null)    {
+                if (utxoObj1 != null) {
                     utxoObjs.add(utxoObj1);
                 }
                 PayloadUtil.getInstance(context).serializeUTXO(utxoObjs);
-            }
-            catch(IOException | DecryptionException e) {
+            } catch (IOException | DecryptionException e) {
                 ;
             }
 
@@ -1707,27 +1627,27 @@ public class APIFactory	{
             //
             List<String> seenOutputs = new ArrayList<String>();
             List<UTXO> _utxos = getUtxos(false);
-            for(UTXO _u : _utxos)   {
-                for(MyTransactionOutPoint _o : _u.getOutpoints())   {
+            for (UTXO _u : _utxos) {
+                for (MyTransactionOutPoint _o : _u.getOutpoints()) {
                     seenOutputs.add(_o.getTxHash().toString() + "-" + _o.getTxOutputN());
                 }
             }
 
-            for(String _s : UTXOUtil.getInstance().getTags().keySet())   {
-                if(!seenOutputs.contains(_s))    {
+            for (String _s : UTXOUtil.getInstance().getTags().keySet()) {
+                if (!seenOutputs.contains(_s)) {
                     UTXOUtil.getInstance().remove(_s);
                 }
             }
-            for(String _s : BlockedUTXO.getInstance().getNotDustedUTXO())   {
+            for (String _s : BlockedUTXO.getInstance().getNotDustedUTXO()) {
 //                Log.d("APIFactory", "not dusted:" + _s);
-                if(!seenOutputs.contains(_s))    {
+                if (!seenOutputs.contains(_s)) {
                     BlockedUTXO.getInstance().removeNotDusted(_s);
 //                    Log.d("APIFactory", "not dusted removed:" + _s);
                 }
             }
-            for(String _s : BlockedUTXO.getInstance().getBlockedUTXO().keySet())   {
+            for (String _s : BlockedUTXO.getInstance().getBlockedUTXO().keySet()) {
 //                Log.d("APIFactory", "blocked:" + _s);
-                if(!seenOutputs.contains(_s))    {
+                if (!seenOutputs.contains(_s)) {
                     BlockedUTXO.getInstance().remove(_s);
 //                    Log.d("APIFactory", "blocked removed:" + _s);
                 }
@@ -1741,8 +1661,8 @@ public class APIFactory	{
 //            Log.d("APIFactory", "pre-mix unspent:" + preUnspentObj.toString());
 //            boolean parsedPreMultiAddr = parseMixXPUB(preMultiAddrObj);
 //            boolean parsedPreUnspent = parsePostMixUnspentOutputs(preUnspentObj.toString());
-            JSONObject postMultiAddrObj = getRawXPUB(new String[] { strPostMix });
-            JSONObject postUnspentObj = getRawUnspentOutputs(new String[] { strPostMix });
+            JSONObject postMultiAddrObj = getRawXPUB(new String[]{strPostMix});
+            JSONObject postUnspentObj = getRawUnspentOutputs(new String[]{strPostMix});
             Log.d("APIFactory", "post-mix multi:" + postMultiAddrObj.toString());
             Log.d("APIFactory", "post-mix unspent:" + postUnspentObj.toString());
             boolean parsedPostMultiAddr = parseMixXPUB(postMultiAddrObj);
@@ -1752,12 +1672,10 @@ public class APIFactory	{
 //            Log.d("APIFactory", "post-mix multi:" + getXpubPostMixBalance());
 //            Log.d("APIFactory", "post-mix unspent:" + getUtxosPostMix().size());
 
-        }
-        catch (IndexOutOfBoundsException ioobe) {
+        } catch (IndexOutOfBoundsException ioobe) {
             ioobe.printStackTrace();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         walletInit = true;
@@ -1772,67 +1690,62 @@ public class APIFactory	{
 
         try {
 
-            if(jsonObject != null && jsonObject.has("addresses"))  {
+            if (jsonObject != null && jsonObject.has("addresses")) {
 
-                HashMap<String,Integer> pubkeys = new HashMap<String,Integer>();
+                HashMap<String, Integer> pubkeys = new HashMap<String, Integer>();
 
-                JSONArray addressArray = (JSONArray)jsonObject.get("addresses");
+                JSONArray addressArray = (JSONArray) jsonObject.get("addresses");
                 JSONObject addrObj = null;
-                for(int i = 0; i < addressArray.length(); i++)  {
-                    addrObj = (JSONObject)addressArray.get(i);
+                for (int i = 0; i < addressArray.length(); i++) {
+                    addrObj = (JSONObject) addressArray.get(i);
                     long amount = 0L;
                     int nbTx = 0;
                     String addr = null;
                     String pcode = null;
                     int idx = -1;
-                    if(addrObj.has("address"))  {
+                    if (addrObj.has("address")) {
 
-                        if(addrObj.has("pubkey"))    {
-                            addr = (String)addrObj.get("pubkey");
+                        if (addrObj.has("pubkey")) {
+                            addr = (String) addrObj.get("pubkey");
                             pcode = BIP47Meta.getInstance().getPCode4Addr(addr);
                             idx = BIP47Meta.getInstance().getIdx4Addr(addr);
 
                             BIP47Meta.getInstance().getIdx4AddrLookup().put(addrObj.getString("address"), idx);
                             BIP47Meta.getInstance().getPCode4AddrLookup().put(addrObj.getString("address"), pcode);
-                        }
-                        else    {
-                            addr = (String)addrObj.get("address");
+                        } else {
+                            addr = (String) addrObj.get("address");
                             pcode = BIP47Meta.getInstance().getPCode4Addr(addr);
                             idx = BIP47Meta.getInstance().getIdx4Addr(addr);
                         }
 
-                        if(addrObj.has("final_balance"))  {
+                        if (addrObj.has("final_balance")) {
                             amount = addrObj.getLong("final_balance");
-                            if(amount > 0L)    {
+                            if (amount > 0L) {
                                 BIP47Meta.getInstance().addUnspent(pcode, idx);
                                 Log.i("APIFactory", "BIP47 incoming amount:" + idx + ", " + addr + ", " + amount);
-                            }
-                            else    {
-                                if(addrObj.has("pubkey"))    {
+                            } else {
+                                if (addrObj.has("pubkey")) {
                                     String pubkey = addrObj.getString("pubkey");
-                                    if(pubkeys.containsKey(pubkey))    {
+                                    if (pubkeys.containsKey(pubkey)) {
                                         int count = pubkeys.get(pubkey);
                                         count++;
-                                        if(count == 3)    {
+                                        if (count == 3) {
                                             BIP47Meta.getInstance().removeUnspent(pcode, Integer.valueOf(idx));
-                                        }
-                                        else    {
+                                        } else {
                                             pubkeys.put(pubkey, count + 1);
                                         }
-                                    }
-                                    else    {
+                                    } else {
                                         pubkeys.put(pubkey, 1);
                                     }
-                                }
-                                else    {
+                                } else {
                                     BIP47Meta.getInstance().removeUnspent(pcode, Integer.valueOf(idx));
                                 }
                             }
                         }
-                        if(addrObj.has("n_tx"))  {
+                        if (addrObj.has("n_tx")) {
                             nbTx = addrObj.getInt("n_tx");
-                            if(nbTx > 0)    {
-                                if(idx > BIP47Meta.getInstance().getIncomingIdx(pcode))    {
+                            if (nbTx > 0) {
+                                if (idx > BIP47Meta.getInstance().getIncomingIdx(pcode)) {
                                     BIP47Meta.getInstance().setIncomingIdx(pcode, idx);
                                 }
                                 Log.i("APIFactory", "sync receive idx:" + idx + ", " + addr);
@@ -1845,8 +1758,7 @@ public class APIFactory	{
 
             }
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1861,36 +1773,35 @@ public class APIFactory	{
 
         try {
 
-            if(jsonObject != null && jsonObject.has("addresses"))  {
+            if (jsonObject != null && jsonObject.has("addresses")) {
 
-                JSONArray addressArray = (JSONArray)jsonObject.get("addresses");
+                JSONArray addressArray = (JSONArray) jsonObject.get("addresses");
                 JSONObject addrObj = null;
-                for(int i = 0; i < addressArray.length(); i++)  {
-                    addrObj = (JSONObject)addressArray.get(i);
+                for (int i = 0; i < addressArray.length(); i++) {
+                    addrObj = (JSONObject) addressArray.get(i);
                     int nbTx = 0;
                     String addr = null;
                     String pcode = null;
                     int idx = -1;
                     Log.i("APIFactory", "address object:" + addrObj.toString());
 
-                    if(addrObj.has("pubkey"))    {
-                        addr = (String)addrObj.get("pubkey");
+                    if (addrObj.has("pubkey")) {
+                        addr = (String) addrObj.get("pubkey");
                         pcode = BIP47Meta.getInstance().getPCode4Addr(addr);
                         idx = BIP47Meta.getInstance().getIdx4Addr(addr);
 
                         BIP47Meta.getInstance().getIdx4AddrLookup().put(addrObj.getString("address"), idx);
                         BIP47Meta.getInstance().getPCode4AddrLookup().put(addrObj.getString("address"), pcode);
-                    }
-                    else    {
-                        addr = (String)addrObj.get("address");
+                    } else {
+                        addr = (String) addrObj.get("address");
                         pcode = BIP47Meta.getInstance().getPCode4Addr(addr);
                         idx = BIP47Meta.getInstance().getIdx4Addr(addr);
                     }
 
-                    if(addrObj.has("n_tx"))  {
+                    if (addrObj.has("n_tx")) {
                         nbTx = addrObj.getInt("n_tx");
-                        if(nbTx > 0)    {
-                            if(idx >= BIP47Meta.getInstance().getOutgoingIdx(pcode))    {
+                        if (nbTx > 0) {
+                            if (idx >= BIP47Meta.getInstance().getOutgoingIdx(pcode)) {
                                 Log.i("APIFactory", "sync send idx:" + idx + ", " + addr);
                                 BIP47Meta.getInstance().setOutgoingIdx(pcode, idx + 1);
                             }
@@ -1903,8 +1814,7 @@ public class APIFactory	{
 
             }
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -1912,28 +1822,28 @@ public class APIFactory	{
         return ret;
     }
 
-    public long getXpubBalance()  {
+    public long getXpubBalance() {
         return xpub_balance - BlockedUTXO.getInstance().getTotalValueBlocked0();
     }
 
-    public void setXpubBalance(long value)  {
+    public void setXpubBalance(long value) {
         xpub_balance = value;
         walletBalanceObserver.onNext(value);
     }
 
-    public long getXpubPostMixBalance()  {
+    public long getXpubPostMixBalance() {
         return xpub_postmix_balance - BlockedUTXO.getInstance().getTotalValueBlockedPostMix();
     }
 
-    public void setXpubPostMixBalance(long value)  {
+    public void setXpubPostMixBalance(long value) {
         xpub_postmix_balance = value;
     }
 
-    public HashMap<String,Long> getXpubAmounts()  {
+    public HashMap<String, Long> getXpubAmounts() {
         return xpub_amounts;
     }
 
-    public HashMap<String,List<Tx>> getXpubTxs()  {
+    public HashMap<String, List<Tx>> getXpubTxs() {
         return xpub_txs;
     }
 
@@ -1957,20 +1867,19 @@ public class APIFactory	{
 
         List<UTXO> unspents = new ArrayList<UTXO>();
 
-        if(filter)    {
-            for(String key : utxos.keySet())   {
+        if (filter) {
+            for (String key : utxos.keySet()) {
                 UTXO u = new UTXO();
-                for(MyTransactionOutPoint out : utxos.get(key).getOutpoints())    {
-                    if(!BlockedUTXO.getInstance().contains(out.getTxHash().toString(), out.getTxOutputN()))    {
+                for (MyTransactionOutPoint out : utxos.get(key).getOutpoints()) {
+                    if (!BlockedUTXO.getInstance().contains(out.getTxHash().toString(), out.getTxOutputN())) {
                         u.getOutpoints().add(out);
                     }
                 }
-                if(u.getOutpoints().size() > 0)    {
+                if (u.getOutpoints().size() > 0) {
                     unspents.add(u);
                 }
             }
-        }
-        else    {
+        } else {
             unspents.addAll(utxos.values());
         }
 
@@ -1981,20 +1890,19 @@ public class APIFactory	{
 
         List<UTXO> unspents = new ArrayList<UTXO>();
 
-        if(filter)    {
-            for(String key : utxosPostMix.keySet())   {
+        if (filter) {
+            for (String key : utxosPostMix.keySet()) {
                 UTXO u = new UTXO();
-                for(MyTransactionOutPoint out : utxosPostMix.get(key).getOutpoints())    {
-                    if(!BlockedUTXO.getInstance().containsPostMix(out.getTxHash().toString(), out.getTxOutputN()))    {
+                for (MyTransactionOutPoint out : utxosPostMix.get(key).getOutpoints()) {
+                    if (!BlockedUTXO.getInstance().containsPostMix(out.getTxHash().toString(), out.getTxOutputN())) {
                         u.getOutpoints().add(out);
                     }
                 }
-                if(u.getOutpoints().size() > 0)    {
+                if (u.getOutpoints().size() > 0) {
                     unspents.add(u);
                 }
             }
-        }
-        else    {
+        } else {
             unspents.addAll(utxosPostMix.values());
         }
 
@@ -2009,12 +1917,12 @@ public class APIFactory	{
         APIFactory.utxosPostMix = utxos;
     }
 
-    public synchronized List<Tx> getAllXpubTxs()  {
+    public synchronized List<Tx> getAllXpubTxs() {
 
         List<Tx> ret = new ArrayList<Tx>();
-        for(String key : xpub_txs.keySet())  {
+        for (String key : xpub_txs.keySet()) {
             List<Tx> txs = xpub_txs.get(key);
-            for(Tx tx : txs)   {
+            for (Tx tx : txs) {
                 ret.add(tx);
             }
         }
@@ -2026,13 +1934,13 @@ public class APIFactory	{
 
     public synchronized UTXO getUnspentOutputsForSweep(String address) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
         try {
 
             String response = null;
 
-            if(!TorManager.getInstance(context).isRequired())    {
+            if (!TorManager.getInstance(context).isRequired()) {
                 StringBuilder args = new StringBuilder();
                 args.append("active=");
                 args.append(address);
@@ -2041,9 +1949,8 @@ public class APIFactory	{
 //                Log.d("APIFactory", args.toString());
                 response = WebUtil.getInstance(context).postURL(_url + "unspent?", args.toString());
 //                Log.d("APIFactory", response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("active", address);
                 args.put("at", getAccessToken());
 //                Log.d("APIFactory", args.toString());
@@ -2053,28 +1960,27 @@ public class APIFactory	{
 
             return parseUnspentOutputsForSweep(response);
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
     }
 
-    private synchronized UTXO parseUnspentOutputsForSweep(String unspents)   {
+    private synchronized UTXO parseUnspentOutputsForSweep(String unspents) {
 
         UTXO utxo = null;
 
-        if(unspents != null)    {
+        if (unspents != null) {
 
             try {
                 JSONObject jsonObj = new JSONObject(unspents);
 
-                if(jsonObj == null || !jsonObj.has("unspent_outputs"))    {
+                if (jsonObj == null || !jsonObj.has("unspent_outputs")) {
                     return null;
                 }
                 JSONArray utxoArray = jsonObj.getJSONArray("unspent_outputs");
-                if(utxoArray == null || utxoArray.length() == 0) {
+                if (utxoArray == null || utxoArray.length() == 0) {
                     return null;
                 }
 
@@ -2084,42 +1990,39 @@ public class APIFactory	{
 
                     JSONObject outDict = utxoArray.getJSONObject(i);
 
-                    byte[] hashBytes = Hex.decode((String)outDict.get("tx_hash"));
+                    byte[] hashBytes = Hex.decode((String) outDict.get("tx_hash"));
                     Sha256Hash txHash = Sha256Hash.wrap(hashBytes);
-                    int txOutputN = ((Number)outDict.get("tx_output_n")).intValue();
-                    BigInteger value = BigInteger.valueOf(((Number)outDict.get("value")).longValue());
-                    String script = (String)outDict.get("script");
+                    int txOutputN = ((Number) outDict.get("tx_output_n")).intValue();
+                    BigInteger value = BigInteger.valueOf(((Number) outDict.get("value")).longValue());
+                    String script = (String) outDict.get("script");
                     byte[] scriptBytes = Hex.decode(script);
-                    int confirmations = ((Number)outDict.get("confirmations")).intValue();
+                    int confirmations = ((Number) outDict.get("confirmations")).intValue();
 
                     try {
                         String address = null;
 
-                        if(Bech32Util.getInstance().isBech32Script(script))    {
+                        if (Bech32Util.getInstance().isBech32Script(script)) {
                             address = Bech32Util.getInstance().getAddressFromScript(script);
                             Log.d("address parsed:", address);
-                        }
-                        else    {
+                        } else {
                             address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
 
                         // Construct the output
                         MyTransactionOutPoint outPoint = new MyTransactionOutPoint(txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
-                        if(utxo == null)    {
+                        if (utxo == null) {
                             utxo = new UTXO();
                         }
                         utxo.getOutpoints().add(outPoint);
 
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         ;
                     }
 
                 }
 
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 ;
             }
 
@@ -2139,13 +2042,11 @@ public class APIFactory	{
 
             int ret = 0;
 
-            if(t1.getTS() > t2.getTS()) {
+            if (t1.getTS() > t2.getTS()) {
                 ret = BEFORE;
-            }
-            else if(t1.getTS() < t2.getTS()) {
+            } else if (t1.getTS() < t2.getTS()) {
                 ret = AFTER;
-            }
-            else    {
+            } else {
                 ret = EQUAL;
             }
 
@@ -2161,16 +2062,15 @@ public class APIFactory	{
 
         String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
 
         try {
 
             String response = null;
 
-            if(AppUtil.getInstance(context).isOfflineMode())    {
+            if (AppUtil.getInstance(context).isOfflineMode()) {
                 response = PayloadUtil.getInstance(context).deserializeMultiAddrPost().toString();
-            }
-            else if(!TorManager.getInstance(context).isRequired())    {
+            } else if (!TorManager.getInstance(context).isRequired()) {
                 // use POST
                 StringBuilder args = new StringBuilder();
                 args.append("active=");
@@ -2180,9 +2080,8 @@ public class APIFactory	{
                 args.append(getAccessToken());
                 response = WebUtil.getInstance(context).postURL(_url + "multiaddr?", args.toString());
                 Log.i("APIFactory", "XPUB response:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("active", StringUtils.join(xpubs, "|"));
                 Log.i("APIFactory", "XPUB:" + args.toString());
                 args.put("at", getAccessToken());
@@ -2193,13 +2092,11 @@ public class APIFactory	{
             try {
                 jsonObject = new JSONObject(response);
                 return jsonObject;
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 je.printStackTrace();
                 jsonObject = null;
             }
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
@@ -2209,17 +2106,16 @@ public class APIFactory	{
 
     public synchronized JSONObject getRawUnspentOutputs(String[] xpubs) {
 
-        String _url =  WebUtil.getAPIUrl(context);
+        String _url = WebUtil.getAPIUrl(context);
 
-        JSONObject jsonObject  = null;
+        JSONObject jsonObject = null;
         String response = null;
 
         try {
 
-            if(AppUtil.getInstance(context).isOfflineMode())    {
+            if (AppUtil.getInstance(context).isOfflineMode()) {
                 response = PayloadUtil.getInstance(context).deserializeUTXOPost().toString();
-            }
-            else if(!TorManager.getInstance(context).isRequired())    {
+            } else if (!TorManager.getInstance(context).isRequired()) {
                 StringBuilder args = new StringBuilder();
                 args.append("active=");
                 args.append(StringUtils.join(xpubs, URLEncoder.encode("|", "UTF-8")));
@@ -2228,25 +2124,22 @@ public class APIFactory	{
                 args.append(getAccessToken());
                 response = WebUtil.getInstance(context).postURL(_url + "unspent?", args.toString());
                 Log.d("APIFactory", "UTXO:" + response);
-            }
-            else    {
-                HashMap<String,String> args = new HashMap<String,String>();
+            } else {
+                HashMap<String, String> args = new HashMap<String, String>();
                 args.put("active", StringUtils.join(xpubs, "|"));
                 args.put("at", getAccessToken());
                 response = WebUtil.getInstance(context).tor_postURL(_url + "unspent", args);
             }
 
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             jsonObject = null;
             e.printStackTrace();
         }
 
-        if(!AppUtil.getInstance(context).isOfflineMode())    {
+        if (!AppUtil.getInstance(context).isOfflineMode()) {
             try {
                 jsonObject = new JSONObject(response);
-            }
-            catch(JSONException je) {
+            } catch (JSONException je) {
                 ;
             }
         }
@@ -2254,55 +2147,53 @@ public class APIFactory	{
         return jsonObject;
     }
 
-    private synchronized boolean parseMixXPUB(JSONObject jsonObject) throws JSONException  {
+    private synchronized boolean parseMixXPUB(JSONObject jsonObject) throws JSONException {
 
-        if(jsonObject != null)  {
+        if (jsonObject != null) {
 
-            if(jsonObject.has("wallet"))  {
-                JSONObject walletObj = (JSONObject)jsonObject.get("wallet");
-                if(walletObj.has("final_balance"))  {
+            if (jsonObject.has("wallet")) {
+                JSONObject walletObj = (JSONObject) jsonObject.get("wallet");
+                if (walletObj.has("final_balance")) {
                     xpub_postmix_balance = walletObj.getLong("final_balance");
                     Log.d("APIFactory", "xpub_postmix_balance:" + xpub_postmix_balance);
                 }
             }
 
-            if(jsonObject.has("info"))  {
-                JSONObject infoObj = (JSONObject)jsonObject.get("info");
-                if(infoObj.has("latest_block"))  {
-                    JSONObject blockObj = (JSONObject)infoObj.get("latest_block");
-                    if(blockObj.has("height"))  {
+            if (jsonObject.has("info")) {
+                JSONObject infoObj = (JSONObject) jsonObject.get("info");
+                if (infoObj.has("latest_block")) {
+                    JSONObject blockObj = (JSONObject) infoObj.get("latest_block");
+                    if (blockObj.has("height")) {
                         latest_block_height = blockObj.getLong("height");
                     }
-                    if(blockObj.has("hash"))  {
+                    if (blockObj.has("hash")) {
                         latest_block_hash = blockObj.getString("hash");
                     }
                 }
             }
 
-            if(jsonObject.has("addresses"))  {
+            if (jsonObject.has("addresses")) {
 
-                JSONArray addressesArray = (JSONArray)jsonObject.get("addresses");
+                JSONArray addressesArray = (JSONArray) jsonObject.get("addresses");
                 JSONObject addrObj = null;
-                for(int i = 0; i < addressesArray.length(); i++)  {
-                    addrObj = (JSONObject)addressesArray.get(i);
-                    if(addrObj != null && addrObj.has("final_balance") && addrObj.has("address"))  {
-                        if(FormatsUtil.getInstance().isValidXpub((String)addrObj.get("address")))    {
+                for (int i = 0; i < addressesArray.length(); i++) {
+                    addrObj = (JSONObject) addressesArray.get(i);
+                    if (addrObj != null && addrObj.has("final_balance") && addrObj.has("address")) {
+                        if (FormatsUtil.getInstance().isValidXpub((String) addrObj.get("address"))) {
 //                            xpub_amounts.put((String)addrObj.get("address"), addrObj.getLong("final_balance"));
-                            if(addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()) ||
-                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr()))    {
+                            if (addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()) ||
+                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr())) {
                                 AddressFactory.getInstance().setHighestPostReceiveIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 AddressFactory.getInstance().setHighestPostChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                            }
-                            else if(addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).xpubstr()) ||
-                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).zpubstr()))    {
+                            } else if (addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).xpubstr()) ||
+                                    addrObj.getString("address").equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).zpubstr())) {
                                 AddressFactory.getInstance().setHighestPreReceiveIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 AddressFactory.getInstance().setHighestPreChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                 BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                            }
-                            else    {
+                            } else {
                                 ;
                             }
                         }
@@ -2312,8 +2203,7 @@ public class APIFactory	{
 
             try {
                 PayloadUtil.getInstance(context).serializeMultiAddrPost(jsonObject);
-            }
-            catch(IOException | DecryptionException e) {
+            } catch (IOException | DecryptionException e) {
                 ;
             }
 
@@ -2325,18 +2215,18 @@ public class APIFactory	{
 
     }
 
-    private synchronized boolean parsePostMixUnspentOutputs(String unspents)   {
+    private synchronized boolean parsePostMixUnspentOutputs(String unspents) {
 
-        if(unspents != null)    {
+        if (unspents != null) {
 
             try {
                 JSONObject jsonObj = new JSONObject(unspents);
 
-                if(jsonObj == null || !jsonObj.has("unspent_outputs"))    {
+                if (jsonObj == null || !jsonObj.has("unspent_outputs")) {
                     return false;
                 }
                 JSONArray utxoArray = jsonObj.getJSONArray("unspent_outputs");
-                if(utxoArray == null || utxoArray.length() == 0) {
+                if (utxoArray == null || utxoArray.length() == 0) {
                     return false;
                 }
 
@@ -2344,28 +2234,27 @@ public class APIFactory	{
 
                     JSONObject outDict = utxoArray.getJSONObject(i);
 
-                    byte[] hashBytes = Hex.decode((String)outDict.get("tx_hash"));
+                    byte[] hashBytes = Hex.decode((String) outDict.get("tx_hash"));
                     Sha256Hash txHash = Sha256Hash.wrap(hashBytes);
-                    int txOutputN = ((Number)outDict.get("tx_output_n")).intValue();
-                    BigInteger value = BigInteger.valueOf(((Number)outDict.get("value")).longValue());
-                    String script = (String)outDict.get("script");
+                    int txOutputN = ((Number) outDict.get("tx_output_n")).intValue();
+                    BigInteger value = BigInteger.valueOf(((Number) outDict.get("value")).longValue());
+                    String script = (String) outDict.get("script");
                     byte[] scriptBytes = Hex.decode(script);
-                    int confirmations = ((Number)outDict.get("confirmations")).intValue();
+                    int confirmations = ((Number) outDict.get("confirmations")).intValue();
                     String path = null;
 
                     try {
                         String address = Bech32Util.getInstance().getAddressFromScript(script);
 
-                        if(outDict.has("xpub"))    {
-                            JSONObject xpubObj = (JSONObject)outDict.get("xpub");
-                            path = (String)xpubObj.get("path");
-                            String m = (String)xpubObj.get("m");
+                        if (outDict.has("xpub")) {
+                            JSONObject xpubObj = (JSONObject) outDict.get("xpub");
+                            path = (String) xpubObj.get("path");
+                            String m = (String) xpubObj.get("m");
                             unspentPaths.put(address, path);
-                            if(m.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()))    {
+                            if (m.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr())) {
                                 unspentBIP84PostMix.put(address, WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix());
                             }
-                        }
-                        else    {
+                        } else {
                             ;
                         }
 
@@ -2373,10 +2262,9 @@ public class APIFactory	{
                         MyTransactionOutPoint outPoint = new MyTransactionOutPoint(txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
 
-                        if(utxosPostMix.containsKey(script))    {
+                        if (utxosPostMix.containsKey(script)) {
                             utxosPostMix.get(script).getOutpoints().add(outPoint);
-                        }
-                        else    {
+                        } else {
                             UTXO utxo = new UTXO();
                             utxo.getOutpoints().add(outPoint);
                             utxo.setPath(path);
@@ -2385,8 +2273,7 @@ public class APIFactory	{
 
                         UTXOFactory.getInstance().addPostMix(script, utxosPostMix.get(script));
 
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         ;
                     }
 
@@ -2396,8 +2283,7 @@ public class APIFactory	{
 
                 return true;
 
-            }
-            catch(Exception j) {
+            } catch (Exception j) {
                 ;
             }
 

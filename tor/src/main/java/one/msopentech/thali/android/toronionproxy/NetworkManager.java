@@ -1,6 +1,4 @@
-package com.msopentech.thali.android.toronionproxy;
-
-import java.util.concurrent.TimeUnit;
+package one.msopentech.thali.android.toronionproxy;
 
 import io.reactivex.Observable;
 import io.reactivex.Observer;

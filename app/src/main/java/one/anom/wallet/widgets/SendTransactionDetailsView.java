@@ -16,8 +16,8 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import one.anom.wallet.R;
-import com.samourai.boltzmann.processor.TxProcessorResult;
 
+import com.samourai.boltzmann.processor.TxProcessorResult;
 
 import java.text.DecimalFormat;
 
@@ -34,7 +34,7 @@ public class SendTransactionDetailsView extends FrameLayout {
     private ViewGroup stowawayLayout, stoneWallX2Layout, stoneWallLayout;
     private EntropyBar entropyBarStoneWallX2, entropyBarStoneWallX1;
     private Switch stoneWallx1Switch;
-    private TextView stowawayMixingParticipant, entropyValueX1,entropyValueX2, stowawayMethod, stoneWallx2Fee, stoneWallx2mixingParticipant;
+    private TextView stowawayMixingParticipant, entropyValueX1, entropyValueX2, stowawayMethod, stoneWallx2Fee, stoneWallx2mixingParticipant;
 
 
     public SendTransactionDetailsView(@NonNull Context context) {
@@ -83,7 +83,8 @@ public class SendTransactionDetailsView extends FrameLayout {
     public View getTransactionView() {
         return transactionView;
     }
-    public void enableForRicochet(boolean enable){
+
+    public void enableForRicochet(boolean enable) {
         stoneWallLayout.setVisibility(enable ? INVISIBLE : VISIBLE);
     }
 
@@ -160,10 +161,10 @@ public class SendTransactionDetailsView extends FrameLayout {
     }
 
     public void setEntropyBarStoneWallX1(TxProcessorResult entropy) {
-        if(entropy == null){
+        if (entropy == null) {
             entropyBarStoneWallX1.disable();
             entropyValueX1.setText(R.string.not_available);
-        }else {
+        } else {
             entropyBarStoneWallX1.setRange(entropy);
             DecimalFormat decimalFormat = new DecimalFormat("##.00");
             entropyValueX1.setText(decimalFormat.format(entropy.getEntropy()).concat(" bits"));
@@ -180,22 +181,21 @@ public class SendTransactionDetailsView extends FrameLayout {
     }
 
     public void setEntropyBarStoneWallX2(TxProcessorResult entropy) {
-        if(entropy == null){
+        if (entropy == null) {
             entropyBarStoneWallX2.disable();
             entropyValueX2.setText(R.string.not_available);
 
-        }else {
+        } else {
             entropyBarStoneWallX2.setRange(entropy);
             DecimalFormat decimalFormat = new DecimalFormat("##.00");
             entropyValueX2.setText(decimalFormat.format(entropy.getEntropy()).concat(" bits"));
         }
     }
+
     public void setEntropyBarStoneWallX2(int entropy) {
         entropyBarStoneWallX2.setRange(entropy);
         entropyValueX2.setText(R.string.zero_bits);
     }
-
-
 
     public void showTransaction() {
         TransitionSet set = new TransitionSet();

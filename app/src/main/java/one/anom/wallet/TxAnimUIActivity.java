@@ -8,12 +8,12 @@ import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 import android.view.View;
@@ -23,8 +23,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.JSONRPC.TrustedNodeUtil;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
 
+import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionInput;
+import org.bitcoinj.core.TransactionOutput;
+import org.bitcoinj.crypto.MnemonicException;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.spongycastle.util.encoders.DecoderException;
+import org.spongycastle.util.encoders.Hex;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+
+import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.hd.HD_WalletFactory;
@@ -47,27 +65,8 @@ import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.SendAddressUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
 import one.anom.wallet.widgets.TransactionProgressView;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
-
-
-import org.bitcoinj.core.Address;
-import org.bitcoinj.core.Transaction;
-import org.bitcoinj.core.TransactionInput;
-import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.crypto.MnemonicException;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.spongycastle.util.encoders.DecoderException;
-import org.spongycastle.util.encoders.Hex;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 public class TxAnimUIActivity extends AppCompatActivity {
 
@@ -337,11 +336,10 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                 if (SendParams.getInstance().getChangeAmount() > 0L && SendParams.getInstance().getSpendType() == SendActivity.SPEND_SIMPLE) {
 
-                    if(SendParams.getInstance().getAccount() != 0)    {
+                    if (SendParams.getInstance().getAccount() != 0) {
                         BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccountAt(SendParams.getInstance().getAccount()).getChange().incAddrIdx();
                         AddressFactory.getInstance(TxAnimUIActivity.this).setHighestPostChangeIdx(SendParams.getInstance().getChangeIdx() + 1);
-                    }
-                    else if (SendParams.getInstance().getChangeType() == 84) {
+                    } else if (SendParams.getInstance().getChangeType() == 84) {
                         BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().incAddrIdx();
                     } else if (SendParams.getInstance().getChangeType() == 49) {
                         BIP49Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().incAddrIdx();
@@ -448,11 +446,10 @@ public class TxAnimUIActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(TxAnimUIActivity.this, R.string.tx_failed, Toast.LENGTH_SHORT).show();
                 // reset change index upon tx fail
-                if(SendParams.getInstance().getAccount() != 0)    {
+                if (SendParams.getInstance().getAccount() != 0) {
                     BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccountAt(SendParams.getInstance().getAccount()).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());
                     AddressFactory.getInstance(TxAnimUIActivity.this).setHighestPostChangeIdx(SendParams.getInstance().getChangeIdx());
-                }
-                else if (SendParams.getInstance().getChangeType() == 84) {
+                } else if (SendParams.getInstance().getChangeType() == 84) {
                     BIP84Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());
                 } else if (SendParams.getInstance().getChangeType() == 49) {
                     BIP49Util.getInstance(TxAnimUIActivity.this).getWallet().getAccount(0).getChange().setAddrIdx(SendParams.getInstance().getChangeIdx());

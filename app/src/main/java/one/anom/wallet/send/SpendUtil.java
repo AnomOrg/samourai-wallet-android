@@ -2,9 +2,9 @@ package one.anom.wallet.send;
 
 import android.content.Context;
 
-import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 import org.bitcoinj.core.Address;
@@ -16,10 +16,9 @@ public class SpendUtil {
 
     public static List<UTXO> getUTXOS(Context context, String address, long neededAmount, int account) {
         List<UTXO> utxos = null;
-        if(account == WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix() && UTXOFactory.getInstance().getTotalPostMix() > neededAmount)    {
+        if (account == WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix() && UTXOFactory.getInstance().getTotalPostMix() > neededAmount) {
             utxos = new ArrayList<UTXO>(UTXOFactory.getInstance().getPostMix().values());
-        }
-        else if (FormatsUtil.getInstance().isValidBech32(address) && (UTXOFactory.getInstance().getP2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2WPKH() > neededAmount)) {
+        } else if (FormatsUtil.getInstance().isValidBech32(address) && (UTXOFactory.getInstance().getP2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2WPKH() > neededAmount)) {
             utxos = new ArrayList<UTXO>(UTXOFactory.getInstance().getP2WPKH().values());
 //                    Log.d("SendActivity", "segwit utxos:" + utxos.size());
         } else if (!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress() && (UTXOFactory.getInstance().getP2SH_P2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2SH_P2WPKH() > neededAmount)) {

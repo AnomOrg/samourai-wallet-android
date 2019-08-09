@@ -21,7 +21,6 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import one.anom.wallet.R;
 
 import java.io.BufferedReader;
@@ -82,9 +81,9 @@ public class MnemonicSeedEditText extends android.support.v7.widget.AppCompatMul
                 if (thisString.length() != 0) {
                     String[] arr = thisString.split(" ");
                     String lastItem = arr[arr.length - 1];
-                    if(lastItem.length() > 1 && lastItem.length() <= 4){
+                    if (lastItem.length() > 1 && lastItem.length() <= 4) {
                         MnemonicSeedEditText.this.showDropDown();
-                    }else {
+                    } else {
                         MnemonicSeedEditText.this.dismissDropDown();
                     }
                 }

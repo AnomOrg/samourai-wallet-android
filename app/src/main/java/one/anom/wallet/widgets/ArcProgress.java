@@ -1,6 +1,5 @@
 package one.anom.wallet.widgets;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;

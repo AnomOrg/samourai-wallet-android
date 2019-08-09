@@ -5,12 +5,15 @@ import android.widget.Toast;
 
 import org.bitcoinj.crypto.MnemonicException;
 
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.SamouraiWallet;
+
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
+
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+
 import com.samourai.wallet.segwit.SegwitAddress;
 
 import java.io.IOException;
@@ -26,8 +29,8 @@ public class AddressFactory {
     private static Context context = null;
     private static AddressFactory instance = null;
 
-    private static HashMap<Integer,Integer> highestTxReceiveIdx = null;
-    private static HashMap<Integer,Integer> highestTxChangeIdx = null;
+    private static HashMap<Integer, Integer> highestTxReceiveIdx = null;
+    private static HashMap<Integer, Integer> highestTxChangeIdx = null;
 
     private static int highestBIP49ReceiveIdx = 0;
     private static int highestBIP49ChangeIdx = 0;
@@ -38,22 +41,24 @@ public class AddressFactory {
     private static int highestPostReceiveIdx = 0;
     private static int highestPostChangeIdx = 0;
 
-    private static HashMap<String,Integer> xpub2account = null;
-    private static HashMap<Integer,String> account2xpub = null;
+    private static HashMap<String, Integer> xpub2account = null;
+    private static HashMap<Integer, String> account2xpub = null;
 
-    private AddressFactory() { ; }
+    private AddressFactory() {
+        ;
+    }
 
     public static AddressFactory getInstance(Context ctx) {
 
         context = ctx;
 
-        if(instance == null) {
+        if (instance == null) {
             instance = new AddressFactory();
 
-            highestTxReceiveIdx = new HashMap<Integer,Integer>();
-            highestTxChangeIdx = new HashMap<Integer,Integer>();
-            xpub2account = new HashMap<String,Integer>();
-            account2xpub = new HashMap<Integer,String>();
+            highestTxReceiveIdx = new HashMap<Integer, Integer>();
+            highestTxChangeIdx = new HashMap<Integer, Integer>();
+            xpub2account = new HashMap<String, Integer>();
+            account2xpub = new HashMap<Integer, String>();
         }
 
         return instance;
@@ -61,40 +66,38 @@ public class AddressFactory {
 
     public static AddressFactory getInstance() {
 
-        if(instance == null) {
+        if (instance == null) {
             instance = new AddressFactory();
 
-            highestTxReceiveIdx = new HashMap<Integer,Integer>();
-            highestTxChangeIdx = new HashMap<Integer,Integer>();
-            xpub2account = new HashMap<String,Integer>();
-            account2xpub = new HashMap<Integer,String>();
+            highestTxReceiveIdx = new HashMap<Integer, Integer>();
+            highestTxChangeIdx = new HashMap<Integer, Integer>();
+            xpub2account = new HashMap<String, Integer>();
+            account2xpub = new HashMap<Integer, String>();
         }
 
         return instance;
     }
 
-    public HD_Address get(int chain)	{
+    public HD_Address get(int chain) {
 
         int idx = 0;
         HD_Address addr = null;
 
-        try	{
+        try {
             HD_Wallet hdw = HD_WalletFactory.getInstance(context).get();
 
-            if(hdw != null)    {
+            if (hdw != null) {
                 idx = HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddrIdx();
                 addr = HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddressAt(idx);
-                if(chain == RECEIVE_CHAIN && canIncReceiveAddress(SamouraiWallet.SAMOURAI_ACCOUNT))	{
+                if (chain == RECEIVE_CHAIN && canIncReceiveAddress(SamouraiWallet.SAMOURAI_ACCOUNT)) {
                     HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
                 }
             }
-        }
-        catch(IOException ioe)	{
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
-        }
-        catch(MnemonicException.MnemonicLengthException mle)	{
+        } catch (MnemonicException.MnemonicLengthException mle) {
             mle.printStackTrace();
             Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
         }
@@ -113,24 +116,24 @@ public class AddressFactory {
 
     }
 
-    public SegwitAddress getBIP49(int chain)	{
+    public SegwitAddress getBIP49(int chain) {
 
         int idx = 0;
         HD_Address addr = null;
         SegwitAddress p2shp2wpkh = null;
 
 //        try	{
-            HD_Wallet hdw = BIP49Util.getInstance(context).getWallet();
+        HD_Wallet hdw = BIP49Util.getInstance(context).getWallet();
 
-            if(hdw != null)    {
-                idx = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddrIdx();
-                addr = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddressAt(idx);
-                p2shp2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
-                if(chain == RECEIVE_CHAIN && canIncBIP49ReceiveAddress(idx))	{
-                    BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).incAddrIdx();
+        if (hdw != null) {
+            idx = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddrIdx();
+            addr = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddressAt(idx);
+            p2shp2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+            if (chain == RECEIVE_CHAIN && canIncBIP49ReceiveAddress(idx)) {
+                BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
-                }
             }
+        }
 //        }
         /*
         catch(JSONException je)	{
@@ -155,7 +158,7 @@ public class AddressFactory {
 
     }
 
-    public SegwitAddress getBIP84(int chain)	{
+    public SegwitAddress getBIP84(int chain) {
 
         int idx = 0;
         HD_Address addr = null;
@@ -164,11 +167,11 @@ public class AddressFactory {
 //        try	{
         HD_Wallet hdw = BIP84Util.getInstance(context).getWallet();
 
-        if(hdw != null)    {
+        if (hdw != null) {
             idx = BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddrIdx();
             addr = BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).getAddressAt(idx);
             p2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
-            if(chain == RECEIVE_CHAIN && canIncBIP84ReceiveAddress(idx))	{
+            if (chain == RECEIVE_CHAIN && canIncBIP84ReceiveAddress(idx)) {
                 BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(chain).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
             }
@@ -197,18 +200,16 @@ public class AddressFactory {
 
     }
 
-    public HD_Address get(int accountIdx, int chain, int idx)	{
+    public HD_Address get(int accountIdx, int chain, int idx) {
 
         HD_Address addr = null;
 
-        try	{
+        try {
             addr = HD_WalletFactory.getInstance(context).get().getAccount(accountIdx).getChain(chain).getAddressAt(idx);
-        }
-        catch(IOException ioe)	{
+        } catch (IOException ioe) {
             ioe.printStackTrace();
             Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
-        }
-        catch(MnemonicException.MnemonicLengthException mle)	{
+        } catch (MnemonicException.MnemonicLengthException mle) {
             mle.printStackTrace();
             Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
         }
@@ -216,7 +217,7 @@ public class AddressFactory {
         return addr;
     }
 
-    public SegwitAddress getBIP49(int accountIdx, int chain, int idx)	{
+    public SegwitAddress getBIP49(int accountIdx, int chain, int idx) {
 
         HD_Address addr = null;
         SegwitAddress p2shp2wpkh = null;
@@ -228,7 +229,7 @@ public class AddressFactory {
         return p2shp2wpkh;
     }
 
-    public SegwitAddress getBIP84(int accountIdx, int chain, int idx)	{
+    public SegwitAddress getBIP84(int accountIdx, int chain, int idx) {
 
         HD_Address addr = null;
         SegwitAddress p2wpkh = null;
@@ -240,35 +241,33 @@ public class AddressFactory {
         return p2wpkh;
     }
 
-    public int getHighestTxReceiveIdx(int account)  {
-        if(highestTxReceiveIdx.get(account) != null)  {
-           return highestTxReceiveIdx.get(account);
-        }
-        else  {
+    public int getHighestTxReceiveIdx(int account) {
+        if (highestTxReceiveIdx.get(account) != null) {
+            return highestTxReceiveIdx.get(account);
+        } else {
             return -1;
         }
     }
 
     public void setHighestTxReceiveIdx(int account, int idx) {
- //       Log.i("AddressFactory", "setting highestTxReceiveIdx to " + idx);
+        //       Log.i("AddressFactory", "setting highestTxReceiveIdx to " + idx);
         highestTxReceiveIdx.put(account, idx);
     }
 
     public int getHighestTxChangeIdx(int account) {
-        if(highestTxChangeIdx.get(account) != null)  {
+        if (highestTxChangeIdx.get(account) != null) {
             return highestTxChangeIdx.get(account);
-        }
-        else  {
+        } else {
             return -1;
         }
     }
 
     public void setHighestTxChangeIdx(int account, int idx) {
- //       Log.i("AddressFactory", "setting highestTxChangeIdx to " + idx);
+        //       Log.i("AddressFactory", "setting highestTxChangeIdx to " + idx);
         highestTxChangeIdx.put(account, idx);
     }
 
-    public int getHighestBIP49ReceiveIdx()  {
+    public int getHighestBIP49ReceiveIdx() {
         return highestBIP49ReceiveIdx;
     }
 
@@ -284,7 +283,7 @@ public class AddressFactory {
         highestBIP49ChangeIdx = idx;
     }
 
-    public int getHighestBIP84ReceiveIdx()  {
+    public int getHighestBIP84ReceiveIdx() {
         return highestBIP84ReceiveIdx;
     }
 
@@ -333,10 +332,9 @@ public class AddressFactory {
     }
 
     public boolean canIncReceiveAddress(int account, int idx) {
-        if(highestTxReceiveIdx.get(account) != null) {
+        if (highestTxReceiveIdx.get(account) != null) {
             return ((idx - highestTxReceiveIdx.get(account)) < (LOOKAHEAD_GAP - 1));
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -357,11 +355,11 @@ public class AddressFactory {
         return ((idx - highestBIP84ReceiveIdx) < (LOOKAHEAD_GAP - 1));
     }
 
-    public HashMap<String,Integer> xpub2account()   {
+    public HashMap<String, Integer> xpub2account() {
         return xpub2account;
     }
 
-    public HashMap<Integer,String> account2xpub()   {
+    public HashMap<Integer, String> account2xpub() {
         return account2xpub;
     }
 

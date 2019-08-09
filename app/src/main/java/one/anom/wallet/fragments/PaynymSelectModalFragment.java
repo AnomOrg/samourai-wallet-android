@@ -16,12 +16,13 @@ import android.widget.TextView;
 
 import one.anom.wallet.R;
 import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.bip47.paynym.WebUtil;
 import one.anom.wallet.paynym.PayNymHome;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import one.anom.wallet.bip47.paynym.WebUtil;
 
 public class PaynymSelectModalFragment extends BottomSheetDialogFragment {
 

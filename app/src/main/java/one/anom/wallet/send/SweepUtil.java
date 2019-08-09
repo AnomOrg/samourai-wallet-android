@@ -9,13 +9,15 @@ import android.widget.Toast;
 import android.util.Log;
 
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
-import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.api.APIFactory;
+
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.PrivKeyReader;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import com.samourai.wallet.segwit.SegwitAddress;
+import one.anom.wallet.R;
 
 import org.bitcoinj.core.Coin;
 import org.json.JSONException;
@@ -26,7 +28,7 @@ import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 
-public class SweepUtil  {
+public class SweepUtil {
 
     public static int TYPE_P2PKH = 0;
     public static int TYPE_P2SH_P2WPKH = 1;
@@ -43,20 +45,22 @@ public class SweepUtil  {
     private static String addressP2SH_P2WPKH = null;
     private static String addressP2WPKH = null;
 
-    private SweepUtil() { ; }
+    private SweepUtil() {
+        ;
+    }
 
     public static SweepUtil getInstance(Context ctx) {
 
         context = ctx;
 
-        if(instance == null)    {
+        if (instance == null) {
             instance = new SweepUtil();
         }
 
         return instance;
     }
 
-    public void sweep(final PrivKeyReader privKeyReader, final int type)  {
+    public void sweep(final PrivKeyReader privKeyReader, final int type) {
 
         new Thread(new Runnable() {
             @Override
@@ -66,7 +70,7 @@ public class SweepUtil  {
 
                 try {
 
-                    if(privKeyReader == null || privKeyReader.getKey() == null || !privKeyReader.getKey().hasPrivKey())    {
+                    if (privKeyReader == null || privKeyReader.getKey() == null || !privKeyReader.getKey().hasPrivKey()) {
                         Toast.makeText(context, R.string.cannot_recognize_privkey, Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -74,15 +78,13 @@ public class SweepUtil  {
                     final String address;
                     UTXO utxo = null;
 
-                    if(type == TYPE_P2SH_P2WPKH)    {
+                    if (type == TYPE_P2SH_P2WPKH) {
                         utxo = utxoP2SH_P2WPKH;
                         address = addressP2SH_P2WPKH;
-                    }
-                    else if(type == TYPE_P2WPKH)    {
+                    } else if (type == TYPE_P2WPKH) {
                         utxo = utxoP2WPKH;
                         address = addressP2WPKH;
-                    }
-                    else    {
+                    } else {
                         addressP2PKH = privKeyReader.getKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
                         Log.d("SweepUtil", "address derived P2PKH:" + addressP2PKH);
                         addressP2SH_P2WPKH = new SegwitAddress(privKeyReader.getKey(), SamouraiWallet.getInstance().getCurrentNetworkParams()).getAddressAsString();
@@ -98,15 +100,15 @@ public class SweepUtil  {
                         address = addressP2PKH;
                     }
 
-                    if(utxo != null)    {
+                    if (utxo != null) {
 
                         long total_value = 0L;
                         final List<MyTransactionOutPoint> outpoints = utxo.getOutpoints();
-                        for(MyTransactionOutPoint outpoint : outpoints)   {
+                        for (MyTransactionOutPoint outpoint : outpoints) {
                             total_value += outpoint.getValue().longValue();
                         }
 
-                        if(FeeUtil.getInstance().getSuggestedFee().getDefaultPerKB().longValue() <= 1000L)    {
+                        if (FeeUtil.getInstance().getSuggestedFee().getDefaultPerKB().longValue() <= 1000L) {
                             SuggestedFee suggestedFee = new SuggestedFee();
                             suggestedFee.setDefaultPerKB(BigInteger.valueOf(1100L));
                             Log.d("SweepUtil", "adjusted fee:" + suggestedFee.getDefaultPerKB().longValue());
@@ -117,13 +119,11 @@ public class SweepUtil  {
                         Log.d("SweepUtil", "type:" + type);
 
                         final BigInteger fee;
-                        if(type == TYPE_P2SH_P2WPKH)    {
+                        if (type == TYPE_P2SH_P2WPKH) {
                             fee = FeeUtil.getInstance().estimatedFeeSegwit(0, outpoints.size(), 1);
-                        }
-                        else if(type == TYPE_P2WPKH)    {
+                        } else if (type == TYPE_P2WPKH) {
                             fee = FeeUtil.getInstance().estimatedFeeSegwit(0, 0, outpoints.size(), 1);
-                        }
-                        else    {
+                        } else {
                             fee = FeeUtil.getInstance().estimatedFee(outpoints.size(), 1);
                         }
 
@@ -148,10 +148,9 @@ public class SweepUtil  {
                                 progress.show();
 
                                 String receive_address = null;
-                                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_SEGWIT, true) == true)    {
+                                if (PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_SEGWIT, true) == true) {
                                     receive_address = AddressFactory.getInstance(context).getBIP84(AddressFactory.RECEIVE_CHAIN).getBech32AsString();
-                                }
-                                else    {
+                                } else {
                                     receive_address = AddressFactory.getInstance(context).get(AddressFactory.RECEIVE_CHAIN).getAddressString();
                                 }
                                 final HashMap<String, BigInteger> receivers = new HashMap<String, BigInteger>();
@@ -165,44 +164,39 @@ public class SweepUtil  {
 
                                 String response = null;
                                 try {
-                                    if(PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_TRUSTED_NODE, false) == true)    {
-                                        if(TrustedNodeUtil.getInstance().isSet())    {
+                                    if (PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_TRUSTED_NODE, false) == true) {
+                                        if (TrustedNodeUtil.getInstance().isSet()) {
                                             response = PushTx.getInstance(context).trustedNode(hexTx);
                                             JSONObject jsonObject = new org.json.JSONObject(response);
-                                            if(jsonObject.has("result"))    {
-                                                if(jsonObject.getString("result").matches("^[A-Za-z0-9]{64}$"))    {
+                                            if (jsonObject.has("result")) {
+                                                if (jsonObject.getString("result").matches("^[A-Za-z0-9]{64}$")) {
                                                     Toast.makeText(context, R.string.tx_sent, Toast.LENGTH_SHORT).show();
-                                                }
-                                                else    {
+                                                } else {
                                                     Toast.makeText(context, R.string.trusted_node_tx_error, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
-                                        }
-                                        else    {
+                                        } else {
                                             Toast.makeText(context, R.string.trusted_node_not_valid, Toast.LENGTH_SHORT).show();
                                         }
-                                    }
-                                    else    {
+                                    } else {
                                         response = PushTx.getInstance(context).samourai(hexTx);
 
-                                        if(response != null)    {
+                                        if (response != null) {
                                             JSONObject jsonObject = new org.json.JSONObject(response);
-                                            if(jsonObject.has("status"))    {
-                                                if(jsonObject.getString("status").equals("ok"))    {
+                                            if (jsonObject.has("status")) {
+                                                if (jsonObject.getString("status").equals("ok")) {
                                                     Toast.makeText(context, R.string.tx_sent, Toast.LENGTH_SHORT).show();
                                                 }
                                             }
-                                        }
-                                        else    {
+                                        } else {
                                             Toast.makeText(context, R.string.pushtx_returns_null, Toast.LENGTH_SHORT).show();
                                         }
                                     }
-                                }
-                                catch(JSONException je) {
+                                } catch (JSONException je) {
                                     Toast.makeText(context, "pushTx:" + je.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
 
-                                if(progress != null && progress.isShowing())    {
+                                if (progress != null && progress.isShowing()) {
                                     progress.dismiss();
                                 }
 
@@ -217,22 +211,17 @@ public class SweepUtil  {
                         AlertDialog alert = builder.create();
                         alert.show();
 
-                    }
-                    else if(type == TYPE_P2SH_P2WPKH)    {
+                    } else if (type == TYPE_P2SH_P2WPKH) {
                         sweep(privKeyReader, TYPE_P2WPKH);
-                    }
-                    else if(type == TYPE_P2PKH)    {
+                    } else if (type == TYPE_P2PKH) {
                         sweep(privKeyReader, TYPE_P2SH_P2WPKH);
-                    }
-                    else if(type == TYPE_P2WPKH)    {
+                    } else if (type == TYPE_P2WPKH) {
                         ;
-                    }
-                    else    {
+                    } else {
                         ;
                     }
 
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(context, R.string.cannot_sweep_privkey, Toast.LENGTH_SHORT).show();
                 }
 

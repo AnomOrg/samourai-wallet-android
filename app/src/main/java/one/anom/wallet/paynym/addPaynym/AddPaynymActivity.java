@@ -16,14 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
-import one.anom.wallet.R;
-import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
 import com.google.common.base.Splitter;
-
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.fragments.CameraFragmentBottomSheet;
-import one.anom.wallet.util.FormatsUtil;
 
 import org.bitcoinj.core.AddressFormatException;
 
@@ -32,8 +25,13 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import one.anom.wallet.R;
+import one.anom.wallet.bip47.BIP47Util;
+import one.anom.wallet.fragments.CameraFragmentBottomSheet;
+import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
+import one.anom.wallet.util.FormatsUtil;
+
 import static android.content.ClipDescription.MIMETYPE_TEXT_PLAIN;
-import static one.anom.wallet.bip47.BIP47Meta.strSamouraiDonationPCode;
 
 public class AddPaynymActivity extends AppCompatActivity {
 
@@ -60,7 +58,7 @@ public class AddPaynymActivity extends AppCompatActivity {
 
         findViewById(R.id.add_paynym_scan_qr).setOnClickListener(view -> {
             CameraFragmentBottomSheet cameraFragmentBottomSheet = new CameraFragmentBottomSheet();
-            cameraFragmentBottomSheet.show(getSupportFragmentManager(),cameraFragmentBottomSheet.getTag());
+            cameraFragmentBottomSheet.show(getSupportFragmentManager(), cameraFragmentBottomSheet.getTag());
             cameraFragmentBottomSheet.setQrCodeScanLisenter(code -> {
                 cameraFragmentBottomSheet.dismissAllowingStateLoss();
                 processScan(code);
@@ -75,8 +73,8 @@ public class AddPaynymActivity extends AppCompatActivity {
         /*findViewById(R.id.dev_fund_button).setOnClickListener(view -> {
 
             Intent intent = new Intent(this, PayNymDetailsActivity.class);
-            intent.putExtra("pcode", strSamouraiDonationPCode);
-            intent.putExtra("label", BIP47Meta.getInstance().getDisplayLabel(strSamouraiDonationPCode));
+            intent.putExtra("pcode", BIP47Meta.strSamouraiDonationPCode);
+            intent.putExtra("label", BIP47Meta.getInstance().getDisplayLabel(BIP47Meta.strSamouraiDonationPCode));
             startActivityForResult(intent, EDIT_PCODE);
         });*/
     }

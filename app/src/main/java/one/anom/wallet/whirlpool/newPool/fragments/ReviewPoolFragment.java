@@ -12,8 +12,6 @@ import android.widget.TextView;
 import one.anom.wallet.R;
 import one.anom.wallet.widgets.EntropyBar;
 
-
-
 public class ReviewPoolFragment extends Fragment {
 
     private static final String TAG = "SelectPoolFragment";

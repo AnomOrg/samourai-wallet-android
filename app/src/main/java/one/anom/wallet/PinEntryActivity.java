@@ -23,16 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.access.ScrambledPin;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.TimeOutUtil;
-import one.anom.wallet.widgets.PinEntryView;
-
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.hd.HD_Wallet;
@@ -50,6 +40,16 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.access.ScrambledPin;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.TimeOutUtil;
+import one.anom.wallet.widgets.PinEntryView;
 
 public class PinEntryActivity extends AppCompatActivity {
 
@@ -342,7 +342,7 @@ public class PinEntryActivity extends AppCompatActivity {
                             startActivity(intent);
                         });
 
-                    }  else {
+                    } else {
                         AppUtil.getInstance(PinEntryActivity.this).restartApp(getIntent().getExtras());
                     }
 

@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/windowDark"
     android:orientation="vertical"
-    tools:context="com.samourai.wallet.com.anom.wallet.tx.TxDetailsActivity">
-
+    tools:context="one.anom.wallet.tx.TxDetailsActivity">
 
     <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

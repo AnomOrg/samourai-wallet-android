@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 
 import one.anom.wallet.R;
 
-
 public class CahootReviewFragment extends Fragment {
-
 
     public static CahootReviewFragment newInstance() {
         Bundle args = new Bundle();

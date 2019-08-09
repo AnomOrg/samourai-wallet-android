@@ -12,24 +12,25 @@ import android.util.Log;
 
 import one.anom.wallet.R;
 
-
 public class PermissionsUtil {
 
     public final static int READ_WRITE_EXTERNAL_PERMISSION_CODE = 0;
-//    public static final int SMS_PERMISSION_CODE = 1;
+    //    public static final int SMS_PERMISSION_CODE = 1;
 //    public static final int OUTGOING_CALL_PERMISSION_CODE = 2;
     public static final int CAMERA_PERMISSION_CODE = 3;
 
     private static PermissionsUtil instance = null;
     private static Context context = null;
 
-    private PermissionsUtil()   { ; }
+    private PermissionsUtil() {
+        ;
+    }
 
     public static PermissionsUtil getInstance(Context ctx) {
 
         context = ctx;
 
-        if(instance == null)    {
+        if (instance == null) {
             instance = new PermissionsUtil();
         }
 
@@ -45,7 +46,7 @@ public class PermissionsUtil {
         String title = "";
         String message = "";
 
-        switch(code)    {
+        switch (code) {
             case READ_WRITE_EXTERNAL_PERMISSION_CODE:
                 title = context.getString(R.string.permission_alert_dialog_title_external);
                 message = context.getString(R.string.permission_dialog_message_external);
@@ -76,7 +77,7 @@ public class PermissionsUtil {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                switch(code)    {
+                switch (code) {
                     case READ_WRITE_EXTERNAL_PERMISSION_CODE:
                         requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, READ_WRITE_EXTERNAL_PERMISSION_CODE);
                         break;
@@ -106,7 +107,7 @@ public class PermissionsUtil {
             }
         });
 
-        if(!((Activity)context).isFinishing())    {
+        if (!((Activity) context).isFinishing()) {
             builder.show();
         }
 
@@ -114,12 +115,11 @@ public class PermissionsUtil {
 
     private void requestPermissions(String[] permissions, int code) {
 
-        for(int i = 0; i < permissions.length; i++)   {
-            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity)context, permissions[i])) {
+        for (int i = 0; i < permissions.length; i++) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, permissions[i])) {
                 Log.d("PermissionsUtil", "shouldShowRequestPermissionRationale(), no permission requested");
-            }
-            else    {
-                ActivityCompat.requestPermissions((Activity)context, permissions, code);
+            } else {
+                ActivityCompat.requestPermissions((Activity) context, permissions, code);
                 break;
             }
         }

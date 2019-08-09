@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 //import android.util.Log;
 
-
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
@@ -270,7 +269,7 @@ public class WebUtil {
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         }
-        if(URL.contains("onion")){
+        if (URL.contains("onion")) {
             getHostNameVerifier(builder);
         }
 
@@ -279,8 +278,8 @@ public class WebUtil {
                 .build();
 
         try (Response response = builder.build().newCall(request).execute()) {
-            if(response.body() == null){
-                return  "";
+            if (response.body() == null) {
+                return "";
             }
             return response.body().string();
 
@@ -292,7 +291,7 @@ public class WebUtil {
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
 
-        if (args != null && args.size()!=0) {
+        if (args != null && args.size() != 0) {
             List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
             for (String key : args.keySet()) {
                 formBodyBuilder.add(key, args.get(key));
@@ -305,7 +304,7 @@ public class WebUtil {
                 .connectTimeout(90, TimeUnit.SECONDS)
                 .readTimeout(90, TimeUnit.SECONDS);
 
-        if(URL.contains("onion")){
+        if (URL.contains("onion")) {
             getHostNameVerifier(builder);
         }
 
@@ -319,8 +318,8 @@ public class WebUtil {
                 .build();
 
         try (Response response = builder.build().newCall(request).execute()) {
-            if(response.body() == null){
-                return  "";
+            if (response.body() == null) {
+                return "";
             }
             return response.body().string();
 
@@ -337,7 +336,7 @@ public class WebUtil {
         OkHttpClient.Builder builder = new OkHttpClient.Builder()
                 .proxy(TorManager.getInstance(this.context).getProxy());
 
-        if(URL.contains("onion")){
+        if (URL.contains("onion")) {
             getHostNameVerifier(builder);
         }
 
@@ -351,8 +350,8 @@ public class WebUtil {
                 .build();
 
         try (Response response = builder.build().newCall(request).execute()) {
-            if(response.body() == null){
-                return  "";
+            if (response.body() == null) {
+                return "";
             }
             return response.body().string();
 
@@ -441,12 +440,12 @@ public class WebUtil {
 
     }
 
-    public static String getAPIUrl(Context context){
-        if(TorManager.getInstance(context).isRequired()){
-            return   SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET_TOR : SAMOURAI_API2_TOR;
+    public static String getAPIUrl(Context context) {
+        if (TorManager.getInstance(context).isRequired()) {
+            return SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET_TOR : SAMOURAI_API2_TOR;
 
-        }else {
-            return   SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET : SAMOURAI_API2;
+        } else {
+            return SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET : SAMOURAI_API2;
         }
 
     }

@@ -23,14 +23,11 @@ import one.anom.wallet.R;
 import one.anom.wallet.whirlpool.adapters.CoinsAdapter;
 import one.anom.wallet.whirlpool.models.Coin;
 
-
 import java.util.ArrayList;
-
 
 public class ChooseUTXOsFragment extends Fragment {
 
     private static final String TAG = "ChooseUTXOsFragment";
-
 
     private OnUTXOSelectionListener onUTXOSelectionListener;
     private ArrayList<Coin> coins = new ArrayList<Coin>();

@@ -16,22 +16,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.util.AppUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import com.samourai.wallet.segwit.SegwitAddress;
 
+import org.bitcoinj.core.ECKey;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bitcoinj.core.ECKey;
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.bip47.BIP47Util;
+import one.anom.wallet.util.AppUtil;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class PayNymCalcActivity extends Activity {
 
@@ -48,8 +48,8 @@ public class PayNymCalcActivity extends Activity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        edPayNym = (EditText)findViewById(R.id.paynym);
-        edIndex = (EditText)findViewById(R.id.index);
+        edPayNym = (EditText) findViewById(R.id.paynym);
+        edIndex = (EditText) findViewById(R.id.index);
 
         edPayNym.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -60,13 +60,13 @@ public class PayNymCalcActivity extends Activity {
                 final int DRAWABLE_RIGHT = 2;
                 //final int DRAWABLE_BOTTOM = 3;
 
-                if(event.getAction() == MotionEvent.ACTION_UP && event.getRawX() >= (edPayNym.getRight() - edPayNym.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if (event.getAction() == MotionEvent.ACTION_UP && event.getRawX() >= (edPayNym.getRight() - edPayNym.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
                     final List<String> entries = new ArrayList<String>();
                     entries.addAll(BIP47Meta.getInstance().getSortedByLabels(true));
 
                     final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(PayNymCalcActivity.this, android.R.layout.select_dialog_singlechoice);
-                    for(int i = 0; i < entries.size(); i++)   {
+                    for (int i = 0; i < entries.size(); i++) {
                         arrayAdapter.add(BIP47Meta.getInstance().getDisplayLabel(entries.get(i)));
                     }
 
@@ -99,7 +99,7 @@ public class PayNymCalcActivity extends Activity {
             }
         });
 
-        btOK = (Button)findViewById(R.id.ok);
+        btOK = (Button) findViewById(R.id.ok);
         btOK.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -107,12 +107,12 @@ public class PayNymCalcActivity extends Activity {
                 String strIndex = edIndex.getText().toString();
 
                 PaymentCode pcode = new PaymentCode(strPayNym);
-                if(pcode == null)    {
+                if (pcode == null) {
                     Toast.makeText(PayNymCalcActivity.this, R.string.invalid_payment_code, Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(strIndex == null || strIndex.length() < 1)   {
+                if (strIndex == null || strIndex.length() < 1) {
                     Toast.makeText(PayNymCalcActivity.this, R.string.invalid_index, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -202,8 +202,7 @@ public class PayNymCalcActivity extends Activity {
                                     QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(strPrivKey, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), 500);
                                     try {
                                         bitmap = qrCodeEncoder.encodeAsBitmap();
-                                    }
-                                    catch (WriterException e) {
+                                    } catch (WriterException e) {
                                         e.printStackTrace();
                                     }
                                     showQR.setImageBitmap(bitmap);
@@ -229,21 +228,19 @@ public class PayNymCalcActivity extends Activity {
                                                 }
                                             }).show();
                                 }
-                            })
-                            ;
-                    if(!isFinishing())    {
+                            });
+                    if (!isFinishing()) {
                         dlg.show();
                     }
 
-                }
-                catch(Exception e) {
+                } catch (Exception e) {
                     Toast.makeText(PayNymCalcActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
 
             }
         });
 
-        btCancel = (Button)findViewById(R.id.cancel);
+        btCancel = (Button) findViewById(R.id.cancel);
         btCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();

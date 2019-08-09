@@ -2,13 +2,12 @@
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    >
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="match_parent"
@@ -17,42 +16,39 @@
             android:gravity="start|center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textAlignment="gravity"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_light"
-            android:textSize="20sp"
-            android:textStyle="bold"
             android:text="@string/claim_paynym_title1"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="start|center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:textAlignment="gravity"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="@string/claim_paynym_text1"
-            />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="start|center_vertical"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:textAlignment="gravity"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/primary_light"
             android:textSize="20sp"
-            android:textStyle="bold"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:text="@string/claim_paynym_text1"
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="start|center_vertical"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
             android:text="@string/claim_paynym_title2"
-            />
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/primary_light"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="match_parent"
@@ -61,12 +57,11 @@
             android:gravity="start|center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textAlignment="gravity"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             android:text="@string/claim_paynym_text2a"
-            />
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -75,12 +70,11 @@
             android:gravity="start|center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
-            android:textAlignment="gravity"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/white"
-            android:textSize="16sp"
             android:text="@string/claim_paynym_text2b"
-            />
+            android:textAlignment="gravity"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -89,12 +83,11 @@
             android:gravity="start|center_vertical"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
+            android:text="@string/claim_paynym_text2c"
             android:textAlignment="gravity"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/white"
-            android:textSize="16sp"
-            android:text="@string/claim_paynym_text2c"
-            />
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/claim"
@@ -102,20 +95,18 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp"
-            android:text="@string/claim_paynym_id"
             android:background="@color/blue"
-            android:textColor="@color/white"
-            />
+            android:text="@string/claim_paynym_id"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/no_claim"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/claim_paynym_id_refused"
-            android:textSize="12sp"
             android:background="@color/window"
+            android:text="@string/claim_paynym_id_refused"
             android:textColor="@color/white"
-            />
+            android:textSize="12sp" />
 
     </LinearLayout>
 </ScrollView>

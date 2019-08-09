@@ -7,9 +7,8 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.os.Looper;
 
-import one.anom.wallet.R;
 import one.anom.wallet.util.AppUtil;
-
+import one.anom.wallet.R;
 
 public class SSLVerifierThreadUtil {
 
@@ -76,17 +75,17 @@ public class SSLVerifierThreadUtil {
         }).start();
     }
 
-    private void showAlertDialog(final String message, final boolean forceExit){
+    private void showAlertDialog(final String message, final boolean forceExit) {
 
         if (!((Activity) context).isFinishing()) {
 
-            if(alertDialog != null)alertDialog.dismiss();
+            if (alertDialog != null) alertDialog.dismiss();
 
             final AlertDialog.Builder builder = new AlertDialog.Builder(context);
             builder.setMessage(message);
             builder.setCancelable(false);
 
-            if(!forceExit) {
+            if (!forceExit) {
                 builder.setPositiveButton(R.string.retry,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface d, int id) {

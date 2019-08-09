@@ -3,9 +3,9 @@ package one.anom.wallet.tor;
 import android.content.Context;
 import android.util.Log;
 
+import one.msopentech.thali.android.toronionproxy.AndroidOnionProxyManager;
+import one.msopentech.thali.toronionproxy.OnionProxyManager;
 import one.anom.wallet.util.PrefsUtil;
-import com.msopentech.thali.android.toronionproxy.AndroidOnionProxyManager;
-import com.msopentech.thali.toronionproxy.OnionProxyManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -216,8 +216,7 @@ public class TorManager {
 
             jsonPayload.put("active", PrefsUtil.getInstance(context).getValue(PrefsUtil.ENABLE_TOR, false));
 
-        }
-        catch(JSONException je) {
+        } catch (JSONException je) {
             ;
         }
 
@@ -228,12 +227,11 @@ public class TorManager {
 
         try {
 
-            if(jsonPayload.has("active"))    {
+            if (jsonPayload.has("active")) {
                 PrefsUtil.getInstance(context).setValue(PrefsUtil.ENABLE_TOR, jsonPayload.getBoolean("active"));
             }
 
-        }
-        catch(JSONException ex) {
+        } catch (JSONException ex) {
             throw new RuntimeException(ex);
         }
 

@@ -5,8 +5,8 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.MutableLiveData;
 import android.support.annotation.NonNull;
 
-import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.payload.PayloadUtil;
 
 import org.json.JSONArray;
 import org.json.JSONException;

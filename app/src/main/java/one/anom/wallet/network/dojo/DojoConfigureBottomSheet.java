@@ -19,7 +19,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 import one.anom.wallet.tor.TorManager;

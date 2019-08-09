@@ -1,6 +1,7 @@
 package one.anom.http.client;
 
 import one.anom.wallet.util.WebUtil;
+
 import com.google.gson.Gson;
 import com.samourai.http.client.HttpException;
 import com.samourai.http.client.IHttpClient;
@@ -24,8 +25,7 @@ public class AndroidHttpClient implements IHttpClient {
         try {
             String responseString = webUtil.getURL(url);
             return gson.fromJson(responseString, entityClass);
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             String responseBody = null; // TODO get server response
             throw new HttpException(e, responseBody);
         }
@@ -37,8 +37,7 @@ public class AndroidHttpClient implements IHttpClient {
             String jsonString = gson.toJson(body);
             webUtil.postURL(WebUtil.CONTENT_TYPE_APPLICATION_JSON, url, jsonString);
             //webUtil.tor_postURL("application/json", url, body) // TODO use TOR
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             String responseBody = e.getMessage();
             throw new HttpException(e, responseBody);
         }
@@ -50,8 +49,7 @@ public class AndroidHttpClient implements IHttpClient {
             String jsonString = gson.toJson(body);
             webUtil.postURL(null, url, jsonString);
             //webUtil.tor_postURL(null, url, body) // TODO use TOR
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             String responseBody = e.getMessage();
             throw new HttpException(e, responseBody);
         }

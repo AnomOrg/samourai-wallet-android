@@ -1,18 +1,5 @@
 package one.anom.wallet;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.security.SignatureException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NoSuchElementException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.PendingIntent;
@@ -35,6 +22,7 @@ import android.support.v4.content.FileProvider;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -45,7 +33,32 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
+
+import com.github.mjdev.libaums.UsbMassStorageDevice;
+import com.github.mjdev.libaums.fs.FileSystem;
+import com.github.mjdev.libaums.fs.FileSystemFactory;
+import com.github.mjdev.libaums.fs.UsbFile;
+import com.github.mjdev.libaums.fs.UsbFileInputStream;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.samourai.wallet.util.CharSequenceX;
+
+import org.bitcoinj.core.Coin;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.security.SignatureException;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
@@ -55,21 +68,8 @@ import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.PrivKeyReader;
 import one.github.magnusja.libaums.javafs.JavaFsFileSystemCreator;
-import com.github.mjdev.libaums.UsbMassStorageDevice;
-import com.github.mjdev.libaums.fs.FileSystem;
-import com.github.mjdev.libaums.fs.FileSystemFactory;
-import com.github.mjdev.libaums.fs.UsbFile;
-import com.github.mjdev.libaums.fs.UsbFileInputStream;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
-
-import com.samourai.wallet.util.CharSequenceX;
-
-import org.bitcoinj.core.Coin;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class OpenDimeActivity extends Activity {
 
@@ -116,8 +116,7 @@ public class OpenDimeActivity extends Activity {
                     }
                 }
 
-            }
-            else if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
+            } else if (UsbManager.ACTION_USB_DEVICE_ATTACHED.equals(action)) {
                 UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
                 Log.d(TAG, "USB device attached");
@@ -126,8 +125,7 @@ public class OpenDimeActivity extends Activity {
                 if (device != null) {
                     readOpenDimeUSB();
                 }
-            }
-            else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
+            } else if (UsbManager.ACTION_USB_DEVICE_DETACHED.equals(action)) {
                 UsbDevice device = (UsbDevice) intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
                 Log.d(TAG, "USB device detached");
@@ -161,7 +159,7 @@ public class OpenDimeActivity extends Activity {
 
         setTitle(R.string.Anom_opendime);
 
-        if(!AccessFactory.getInstance(OpenDimeActivity.this).isLoggedIn())    {
+        if (!AccessFactory.getInstance(OpenDimeActivity.this).isLoggedIn()) {
             Intent _intent = new Intent(OpenDimeActivity.this, PinEntryActivity.class);
             _intent.putExtra("opendime", true);
             _intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -173,13 +171,13 @@ public class OpenDimeActivity extends Activity {
         display.getSize(size);
         imgWidth = Math.max(size.x - 300, 150);
 
-        tvAddress = (TextView)findViewById(R.id.address);
-        tvBalance = (TextView)findViewById(R.id.balanceAmount);
-        tvKey = (TextView)findViewById(R.id.keyStatus);
-        ivQR = (ImageView)findViewById(R.id.qr);
-        btTopUp = (Button)findViewById(R.id.topup);
-        btView = (Button)findViewById(R.id.view);
-        btSweep = (Button)findViewById(R.id.sweep);
+        tvAddress = (TextView) findViewById(R.id.address);
+        tvBalance = (TextView) findViewById(R.id.balanceAmount);
+        tvKey = (TextView) findViewById(R.id.keyStatus);
+        ivQR = (ImageView) findViewById(R.id.qr);
+        btTopUp = (Button) findViewById(R.id.topup);
+        btView = (Button) findViewById(R.id.view);
+        btSweep = (Button) findViewById(R.id.sweep);
 
         btTopUp.setVisibility(View.GONE);
 /*
@@ -191,11 +189,11 @@ public class OpenDimeActivity extends Activity {
             }
         });
 */
-        btView = (Button)findViewById(R.id.view);
+        btView = (Button) findViewById(R.id.view);
         btView.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(strAddress != null)    {
+                if (strAddress != null) {
                     String blockExplorer = "https://m.oxt.me/transaction/";
                     if (SamouraiWallet.getInstance().isTestNet()) {
                         blockExplorer = "https://blockstream.info/testnet/";
@@ -208,11 +206,11 @@ public class OpenDimeActivity extends Activity {
             }
         });
 
-        btSweep = (Button)findViewById(R.id.sweep);
+        btSweep = (Button) findViewById(R.id.sweep);
         btSweep.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                if(strPrivKey != null)    {
+                if (strPrivKey != null) {
                     SweepUtil.getInstance(OpenDimeActivity.this).sweep(new PrivKeyReader(strPrivKey), SweepUtil.TYPE_P2PKH);
                 }
 
@@ -223,7 +221,7 @@ public class OpenDimeActivity extends Activity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-                if(strAddress != null)    {
+                if (strAddress != null) {
 
                     new AlertDialog.Builder(OpenDimeActivity.this)
                             .setTitle(R.string.app_name)
@@ -232,7 +230,7 @@ public class OpenDimeActivity extends Activity {
                             .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager)OpenDimeActivity.this.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                                    android.content.ClipboardManager clipboard = (android.content.ClipboardManager) OpenDimeActivity.this.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
                                     android.content.ClipData clip = null;
                                     clip = android.content.ClipData.newPlainText("Receive address", strAddress);
                                     clipboard.setPrimaryClip(clip);
@@ -283,14 +281,13 @@ public class OpenDimeActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_refresh) {
+        if (id == R.id.action_refresh) {
 
             readOpenDimeUSB();
 
-        }
-        else if (id == R.id.action_share_receive) {
+        } else if (id == R.id.action_share_receive) {
 
-            if(strAddress != null)    {
+            if (strAddress != null) {
 
                 new AlertDialog.Builder(OpenDimeActivity.this)
                         .setTitle(R.string.app_name)
@@ -302,11 +299,10 @@ public class OpenDimeActivity extends Activity {
 
                                 String strFileName = AppUtil.getInstance(OpenDimeActivity.this).getReceiveQRFilename();
                                 File file = new File(strFileName);
-                                if(!file.exists()) {
+                                if (!file.exists()) {
                                     try {
                                         file.createNewFile();
-                                    }
-                                    catch(Exception e) {
+                                    } catch (Exception e) {
                                         Toast.makeText(OpenDimeActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -315,24 +311,22 @@ public class OpenDimeActivity extends Activity {
                                 FileOutputStream fos = null;
                                 try {
                                     fos = new FileOutputStream(file);
-                                }
-                                catch(FileNotFoundException fnfe) {
+                                } catch (FileNotFoundException fnfe) {
                                     ;
                                 }
 
-                                android.content.ClipboardManager clipboard = (android.content.ClipboardManager)OpenDimeActivity.this.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                                android.content.ClipboardManager clipboard = (android.content.ClipboardManager) OpenDimeActivity.this.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
                                 android.content.ClipData clip = null;
                                 clip = android.content.ClipData.newPlainText("Receive address", strAddress);
                                 clipboard.setPrimaryClip(clip);
 
-                                if(file != null && fos != null) {
-                                    Bitmap bitmap = ((BitmapDrawable)ivQR.getDrawable()).getBitmap();
+                                if (file != null && fos != null) {
+                                    Bitmap bitmap = ((BitmapDrawable) ivQR.getDrawable()).getBitmap();
                                     bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
 
                                     try {
                                         fos.close();
-                                    }
-                                    catch(IOException ioe) {
+                                    } catch (IOException ioe) {
                                         ;
                                     }
 
@@ -347,7 +341,8 @@ public class OpenDimeActivity extends Activity {
                                                         .getPackageName() + ".provider", file));
                                     } else {
                                         intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
-                                    }                                    startActivity(Intent.createChooser(intent, OpenDimeActivity.this.getText(R.string.select_app)));
+                                    }
+                                    startActivity(Intent.createChooser(intent, OpenDimeActivity.this.getText(R.string.select_app)));
                                 }
 
                             }
@@ -361,8 +356,7 @@ public class OpenDimeActivity extends Activity {
 
             }
 
-        }
-        else    {
+        } else {
             ;
         }
 
@@ -379,13 +373,12 @@ public class OpenDimeActivity extends Activity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-        if(keyCode == KeyEvent.KEYCODE_BACK) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
 
             AppUtil.getInstance(OpenDimeActivity.this).restartApp();
 
             return true;
-        }
-        else	{
+        } else {
             ;
         }
 
@@ -396,8 +389,7 @@ public class OpenDimeActivity extends Activity {
     public void onBackPressed() {
         try {
             UsbFile dir = dirs.pop();
-        }
-        catch (NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             ;
         }
 
@@ -406,13 +398,13 @@ public class OpenDimeActivity extends Activity {
         super.onBackPressed();
     }
 
-    private boolean hasPublicAddress()  {
+    private boolean hasPublicAddress() {
 
-        for(UsbFile usbFile : files)   {
+        for (UsbFile usbFile : files) {
 
             String s = readUsbFile(usbFile);
 
-            if(usbFile.getName().equals("address.txt") && FormatsUtil.getInstance().isValidBitcoinAddress(s.trim()))	{
+            if (usbFile.getName().equals("address.txt") && FormatsUtil.getInstance().isValidBitcoinAddress(s.trim())) {
                 strAddress = s.trim();
                 return true;
             }
@@ -422,11 +414,11 @@ public class OpenDimeActivity extends Activity {
         return false;
     }
 
-    private boolean hasPrivkey()  {
+    private boolean hasPrivkey() {
 
-        for(UsbFile usbFile : files)   {
+        for (UsbFile usbFile : files) {
 
-            if(usbFile.getName().equals("private-key.txt"))	{
+            if (usbFile.getName().equals("private-key.txt")) {
                 return true;
             }
 
@@ -435,35 +427,31 @@ public class OpenDimeActivity extends Activity {
         return false;
     }
 
-    private boolean hasExposedPrivkey()  {
+    private boolean hasExposedPrivkey() {
 
-        for(UsbFile usbFile : files)   {
+        for (UsbFile usbFile : files) {
 
-            if(usbFile.getName().equals("private-key.txt"))	{
+            if (usbFile.getName().equals("private-key.txt")) {
 
                 String s = readUsbFile(usbFile);
 
-                if(s != null && s.contains("SEALED") && s.contains("README.txt"))    {
+                if (s != null && s.contains("SEALED") && s.contains("README.txt")) {
                     return false;
-                }
-                else if(s != null)    {
+                } else if (s != null) {
                     strPrivKey = new CharSequenceX(s.trim());
                     PrivKeyReader privkeyReader = new PrivKeyReader(strPrivKey);
                     try {
-                        if(privkeyReader.getFormat() != null)   {
+                        if (privkeyReader.getFormat() != null) {
                             return true;
-                        }
-                        else    {
+                        } else {
                             strPrivKey = null;
                             return false;
                         }
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         strPrivKey = null;
                         return false;
                     }
-                }
-                else    {
+                } else {
                     ;
                 }
             }
@@ -473,11 +461,11 @@ public class OpenDimeActivity extends Activity {
         return false;
     }
 
-    private boolean hasValidatedSignedMessage()  {
+    private boolean hasValidatedSignedMessage() {
 
-        for(UsbFile usbFile : files)   {
+        for (UsbFile usbFile : files) {
 
-            if(usbFile.getName().equals("verify2.txt"))	{
+            if (usbFile.getName().equals("verify2.txt")) {
 
                 String s = readUsbFile(usbFile);
 
@@ -489,32 +477,30 @@ public class OpenDimeActivity extends Activity {
         return false;
     }
 
-    private String readUsbFile(UsbFile usbFile)    {
+    private String readUsbFile(UsbFile usbFile) {
 
         String ret = null;
 
         try {
             UsbFileInputStream inputStream = new UsbFileInputStream(usbFile);
-            byte[] buf = new byte[(int)usbFile.getLength()];
+            byte[] buf = new byte[(int) usbFile.getLength()];
             inputStream.read(buf);
             ret = new String(buf, "UTF-8");
-        }
-        catch(IOException ioe) {
+        } catch (IOException ioe) {
             ;
         }
 
         return ret;
     }
 
-    private boolean verifySignedMessage(String strText)	{
+    private boolean verifySignedMessage(String strText) {
 
         boolean ret = false;
         String[] s = strText.split("[\\r\\n]+");
 
-        try	{
+        try {
             ret = MessageSignUtil.getInstance(OpenDimeActivity.this).verifySignedMessage(s[1].trim(), s[0].trim(), s[2].trim());
-        }
-        catch(SignatureException se)	{
+        } catch (SignatureException se) {
             ;
         }
 
@@ -522,7 +508,7 @@ public class OpenDimeActivity extends Activity {
 
     }
 
-    private void readOpenDimeUSB()  {
+    private void readOpenDimeUSB() {
 
         strAddress = null;
         strPrivKey = null;
@@ -546,12 +532,12 @@ public class OpenDimeActivity extends Activity {
 
                 UsbDevice usbDevice = (UsbDevice) getIntent().getParcelableExtra(UsbManager.EXTRA_DEVICE);
 
-                if(usbDevice == null)    {
+                if (usbDevice == null) {
                     HashMap<String, UsbDevice> deviceList = usbManager.getDeviceList();
                     Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
-                    while(deviceIterator.hasNext()){
+                    while (deviceIterator.hasNext()) {
                         UsbDevice device = deviceIterator.next();
-                        if(device != null)  {
+                        if (device != null) {
                             usbDevice = device;
                             break;
                         }
@@ -576,20 +562,20 @@ public class OpenDimeActivity extends Activity {
                         files.clear();
 
                         UsbFile[] ufiles = currentDir.listFiles();
-                        for(int i = 0; i < ufiles.length; i++)	{
+                        for (int i = 0; i < ufiles.length; i++) {
                             Log.d("UsbFileListAdapter", "found root level file:" + ufiles[i].getName());
-                            if(ufiles[i].getName().equals("address.txt") || ufiles[i].getName().equals("private-key.txt"))	{
+                            if (ufiles[i].getName().equals("address.txt") || ufiles[i].getName().equals("private-key.txt")) {
                                 files.add(ufiles[i]);
                             }
-                            if(ufiles[i].isDirectory())	{
+                            if (ufiles[i].isDirectory()) {
 
                                 Log.d("UsbFileListAdapter", "is directory:" + ufiles[i].getName());
 
                                 UsbFile advancedDir = ufiles[i];
                                 UsbFile[] afiles = advancedDir.listFiles();
-                                for(int j = 0; j < afiles.length; j++)	{
+                                for (int j = 0; j < afiles.length; j++) {
                                     Log.d("UsbFileListAdapter", "found inner dir file:" + afiles[j].getName());
-                                    if(afiles[j].getName().equals("verify2.txt"))	{
+                                    if (afiles[j].getName().equals("verify2.txt")) {
                                         files.add(afiles[j]);
                                     }
 
@@ -599,7 +585,7 @@ public class OpenDimeActivity extends Activity {
 
                         }
 
-                        if(hasPrivkey() && hasExposedPrivkey() && hasPublicAddress())    {
+                        if (hasPrivkey() && hasExposedPrivkey() && hasPublicAddress()) {
                             handler.post(new Runnable() {
                                 public void run() {
 //                                    Toast.makeText(OpenDimeActivity.this, "spendable|consultable", Toast.LENGTH_LONG).show();
@@ -609,8 +595,7 @@ public class OpenDimeActivity extends Activity {
                                     btView.setVisibility(View.VISIBLE);
                                 }
                             });
-                        }
-                        else if(hasPrivkey() && !hasExposedPrivkey() && hasPublicAddress())   {
+                        } else if (hasPrivkey() && !hasExposedPrivkey() && hasPublicAddress()) {
                             handler.post(new Runnable() {
                                 public void run() {
 //                                    Toast.makeText(OpenDimeActivity.this, "not spendable|consultable", Toast.LENGTH_LONG).show();
@@ -620,8 +605,7 @@ public class OpenDimeActivity extends Activity {
                                     btView.setVisibility(View.VISIBLE);
                                 }
                             });
-                        }
-                        else if(hasPublicAddress())   {
+                        } else if (hasPublicAddress()) {
                             handler.post(new Runnable() {
                                 public void run() {
 //                                    Toast.makeText(OpenDimeActivity.this, "consultable", Toast.LENGTH_LONG).show();
@@ -631,8 +615,7 @@ public class OpenDimeActivity extends Activity {
                                     btView.setVisibility(View.VISIBLE);
                                 }
                             });
-                        }
-                        else    {
+                        } else {
                             handler.post(new Runnable() {
                                 public void run() {
                                     Toast.makeText(OpenDimeActivity.this, "not initialised", Toast.LENGTH_LONG).show();
@@ -643,7 +626,7 @@ public class OpenDimeActivity extends Activity {
                             });
                         }
 
-                        if(hasValidatedSignedMessage() && hasPublicAddress())    {
+                        if (hasValidatedSignedMessage() && hasPublicAddress()) {
                             handler.post(new Runnable() {
                                 public void run() {
 //                                    Toast.makeText(OpenDimeActivity.this, "validated", Toast.LENGTH_LONG).show();
@@ -652,8 +635,7 @@ public class OpenDimeActivity extends Activity {
                                     tvKey.setText(spannable);
                                 }
                             });
-                        }
-                        else if(!hasValidatedSignedMessage() && hasPublicAddress())    {
+                        } else if (!hasValidatedSignedMessage() && hasPublicAddress()) {
                             handler.post(new Runnable() {
                                 public void run() {
 //                                    Toast.makeText(OpenDimeActivity.this, "invalidated", Toast.LENGTH_LONG).show();
@@ -665,12 +647,11 @@ public class OpenDimeActivity extends Activity {
                                     btView.setVisibility(View.VISIBLE);
                                 }
                             });
-                        }
-                        else    {
+                        } else {
                             ;
                         }
 
-                        if(strAddress != null)    {
+                        if (strAddress != null) {
                             ivQR.setImageBitmap(generateQRCode(strAddress));
 
                             new Thread(new Runnable() {
@@ -683,26 +664,24 @@ public class OpenDimeActivity extends Activity {
 
                                     try {
 
-                                        if(obj != null && obj.has("wallet"))    {
+                                        if (obj != null && obj.has("wallet")) {
                                             walletObj = obj.getJSONObject("wallet");
-                                            if(walletObj.has("final_balance"))    {
+                                            if (walletObj.has("final_balance")) {
                                                 balance = walletObj.getLong("final_balance");
                                             }
                                         }
 
-                                    }
-                                    catch(JSONException je) {
+                                    } catch (JSONException je) {
                                         ;
                                     }
 
-                                    if(walletObj != null && walletObj.has("final_balance"))    {
+                                    if (walletObj != null && walletObj.has("final_balance")) {
                                         handler.post(new Runnable() {
                                             public void run() {
                                                 String strBalance = "" + Coin.valueOf(balance).toPlainString() + " BTC";
-                                                if(balance > 0L && strPrivKey != null && strPrivKey.length() > 0)    {
+                                                if (balance > 0L && strPrivKey != null && strPrivKey.length() > 0) {
                                                     btSweep.setVisibility(View.VISIBLE);
-                                                }
-                                                else    {
+                                                } else {
                                                     btSweep.setVisibility(View.GONE);
                                                 }
                                                 tvBalance.setText(strBalance);
@@ -717,13 +696,11 @@ public class OpenDimeActivity extends Activity {
 
                         }
 
-                    }
-                    catch (IOException e) {
+                    } catch (IOException e) {
                         Log.e(TAG, "error setting up device", e);
                     }
 
-                }
-                else {
+                } else {
                     // first request permission from user to communicate with the
                     // underlying
                     // UsbDevice

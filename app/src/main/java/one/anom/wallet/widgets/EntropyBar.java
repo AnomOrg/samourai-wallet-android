@@ -10,10 +10,9 @@ import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.View;
 
-import one.anom.wallet.R;
 import com.samourai.boltzmann.processor.TxProcessorResult;
 
-
+import one.anom.wallet.R;
 
 public class EntropyBar extends View {
 
@@ -141,7 +140,7 @@ public class EntropyBar extends View {
             if (disable) {
                 paint = mBarPaintRed;
             }
-            canvas.drawRoundRect(left, getHeight(), right, bottom,9f,9f, paint);
+            canvas.drawRoundRect(left, getHeight(), right, bottom, 9f, 9f, paint);
 
         }
     }

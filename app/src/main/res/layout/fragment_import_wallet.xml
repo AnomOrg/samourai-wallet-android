@@ -8,10 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <!--Import From seed-->
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,8 +64,8 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
                         android:layout_marginTop="10dp"
+                        android:layout_marginBottom="8dp"
                         android:text="@string/mnemonic" />
 
                     <one.anom.wallet.widgets.MnemonicSeedEditText
@@ -78,16 +75,16 @@
                         android:layout_gravity="center_vertical"
                         android:background="@color/darkgrey"
                         android:cursorVisible="true"
+                        android:dropDownHeight="100dp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:gravity="start"
                         android:hint="@string/enter_your_code_here"
-                        android:dropDownHeight="100dp"
-                        android:minHeight="80dp"
                         android:imeOptions="flagNoPersonalizedLearning"
+                        android:minHeight="80dp"
                         android:padding="12dp"
-                        android:paddingEnd="18dp"
                         android:paddingStart="18dp"
+                        android:paddingEnd="18dp"
                         android:textAlignment="center" />
                 </LinearLayout>
 
@@ -125,8 +122,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:background="@drawable/button_dark"
-                        android:paddingEnd="8dp"
                         android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:text="@string/add_bip39_password" />
                 </LinearLayout>
 
@@ -134,7 +131,6 @@
 
 
         </LinearLayout>
-
 
 
         <!-- Import samourai backup-->
@@ -150,7 +146,7 @@
                 android:orientation="vertical"
                 android:paddingLeft="14dp"
                 android:paddingRight="14dp"
-                tools:context="com.samourai.wallet.com.anom.wallet.fragments.PassphraseEntryFragment">
+                tools:context="one.samourai.wallet.fragments.PassphraseEntryFragment">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -199,8 +195,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
                             android:layout_marginTop="10dp"
+                            android:layout_marginBottom="8dp"
                             android:text="@string/backup_file" />
 
                         <LinearLayout
@@ -208,10 +204,10 @@
                             android:layout_height="wrap_content"
                             android:background="@color/darkgrey"
                             android:orientation="vertical"
-                            android:paddingBottom="18dp"
-                            android:paddingEnd="18dp"
                             android:paddingStart="18dp"
-                            android:paddingTop="8dp">
+                            android:paddingTop="8dp"
+                            android:paddingEnd="18dp"
+                            android:paddingBottom="18dp">
 
                             <TextView
                                 android:id="@+id/backup_file_txtview"
@@ -225,8 +221,8 @@
                                 android:id="@+id/last_updated_txtview"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
                                 android:layout_marginTop="8dp"
+                                android:layout_marginBottom="8dp"
                                 android:text="@string/last_updated"
                                 android:textColor="@color/text_secondary"
                                 android:textSize="12sp" />
@@ -238,8 +234,8 @@
                             android:layout_height="wrap_content"
                             android:gravity="end"
                             android:orientation="horizontal"
-                            android:paddingBottom="8dp"
-                            android:paddingTop="8dp">
+                            android:paddingTop="8dp"
+                            android:paddingBottom="8dp">
 
                             <Button
                                 android:id="@+id/choose_file_button"
@@ -265,9 +261,9 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
                         android:layout_marginStart="12dp"
                         android:layout_marginTop="15dp"
+                        android:layout_marginEnd="12dp"
                         android:orientation="vertical"
                         android:paddingBottom="18dp">
 

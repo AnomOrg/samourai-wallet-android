@@ -27,7 +27,7 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and limitations under the License.
 */
 
-package com.msopentech.thali.android.toronionproxy;
+package one.msopentech.thali.android.toronionproxy;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
@@ -36,7 +36,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import com.msopentech.thali.toronionproxy.OnionProxyManager;
+import one.msopentech.thali.toronionproxy.OnionProxyManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

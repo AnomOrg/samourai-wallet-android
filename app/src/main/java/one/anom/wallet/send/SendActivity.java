@@ -57,6 +57,7 @@ import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.SendAddressUtil;
 import one.anom.wallet.util.WebUtil;
 import one.anom.wallet.widgets.SendTransactionDetailsView;
+
 import com.google.common.base.Splitter;
 import com.samourai.boltzmann.beans.BoltzmannSettings;
 import com.samourai.boltzmann.beans.Txos;
@@ -64,22 +65,52 @@ import com.samourai.boltzmann.linker.TxosLinkerOptionEnum;
 import com.samourai.boltzmann.processor.TxProcessor;
 import com.samourai.boltzmann.processor.TxProcessorResult;
 
+import one.anom.wallet.BatchSendActivity;
+import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.TxAnimUIActivity;
 import one.anom.wallet.UTXOActivity;
+import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.bip47.BIP47Util;
+
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
+
+import one.anom.wallet.cahoots.Cahoots;
+import one.anom.wallet.cahoots.CahootsUtil;
 import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 import one.anom.wallet.fragments.PaynymSelectModalFragment;
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
 import one.anom.wallet.ricochet.RicochetActivity;
 import one.anom.wallet.ricochet.RicochetMeta;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+
 import com.samourai.wallet.segwit.SegwitAddress;
+
+import one.anom.wallet.send.cahoots.ManualStoneWall;
+import one.anom.wallet.send.cahoots.SelectCahootsType;
 import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+
 import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.util.DecimalDigitsInputFilter;
+import one.anom.wallet.util.ExchangeRateFactory;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.MonetaryUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.SendAddressUtil;
+import one.anom.wallet.util.WebUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMain;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
+import one.anom.wallet.widgets.SendTransactionDetailsView;
+
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
@@ -188,7 +219,7 @@ public class SendActivity extends AppCompatActivity {
     private String getFiatDisplayAmount(long value) {
 
         String strFiat = PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
-        double btc_fx = com.anom.wallet.util.ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
+        double btc_fx = ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
         String strAmount = MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
 
         return strAmount;
@@ -243,7 +274,7 @@ public class SendActivity extends AppCompatActivity {
         defaultSeparator = Character.toString(symbols.getDecimalSeparator());
 
         strFiat = PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
-        btc_fx = com.anom.wallet.util.ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
+        btc_fx = ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
 
         btcEditText.addTextChangedListener(BTCWatcher);
         btcEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 8)});

@@ -48,59 +48,65 @@ import org.bitcoinj.crypto.BIP38PrivateKey;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
 
+import one.anom.wallet.R;
+import one.dm.zbar.android.scanner.ZBarConstants;
+import one.anom.wallet.ExodusActivity;
 import one.anom.wallet.JSONRPC.JSONRPC;
 import one.anom.wallet.JSONRPC.PoW;
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
-import one.anom.wallet.R;
+
+import one.anom.wallet.ReceiveActivity;
+import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.send.SendActivity;
+import one.anom.wallet.SettingsActivity;
+import one.anom.wallet.UTXOActivity;
 import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.api.Tx;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.paynym.WebUtil;
+import one.anom.wallet.fragments.CameraFragmentBottomSheet;
+import one.anom.wallet.paynym.ClaimPayNymActivity;
 import one.anom.wallet.cahoots.Cahoots;
 import one.anom.wallet.cahoots.CahootsUtil;
+
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.hd.HD_Wallet;
+
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.util.ExchangeRateFactory;
+import one.anom.wallet.whirlpool.WhirlpoolMeta;
+import one.anom.wallet.widgets.ItemDividerDecorator;
+import one.anom.wallet.bip47.paynym.WebUtil;
+import one.anom.wallet.home.adapters.TxAdapter;
 import one.anom.wallet.network.NetworkDashboard;
 import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.paynym.ClaimPayNymActivity;
 import one.anom.wallet.paynym.PayNymHome;
+import one.anom.wallet.permissions.PermissionsUtil;
+import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.BlockedUTXO;
 import one.anom.wallet.send.MyTransactionOutPoint;
-import one.anom.wallet.send.SendActivity;
 import one.anom.wallet.send.SweepUtil;
 import one.anom.wallet.send.UTXO;
 import one.anom.wallet.service.RefreshService;
 import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.tor.TorService;
+import one.anom.wallet.tx.TxDetailsActivity;
 import one.anom.wallet.util.AppUtil;
+
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.PrivKeyReader;
 import one.anom.wallet.util.TimeOutUtil;
-import one.anom.wallet.widgets.ItemDividerDecorator;
-import one.dm.zbar.android.scanner.ZBarConstants;
-import one.anom.wallet.ExodusActivity;
-;
-import one.anom.wallet.ReceiveActivity;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.SettingsActivity;
-import one.anom.wallet.UTXOActivity;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.api.Tx;
-import one.anom.wallet.fragments.CameraFragmentBottomSheet;
-import com.samourai.wallet.crypto.AESUtil;
-import com.samourai.wallet.crypto.DecryptionException;
-import com.samourai.wallet.hd.HD_Wallet;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
-import one.anom.wallet.home.adapters.TxAdapter;
-import one.anom.wallet.permissions.PermissionsUtil;
-import one.anom.wallet.ricochet.RicochetMeta;
-import one.anom.wallet.tx.TxDetailsActivity;
-import com.samourai.wallet.util.CharSequenceX;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -129,7 +135,6 @@ public class BalanceActivity extends AppCompatActivity {
     private final static int SCAN_COLD_STORAGE = 2011;
     private final static int SCAN_QR = 2012;
     private static final String TAG = "BalanceActivity";
-
 
     private List<Tx> txs = null;
     private RecyclerView TxRecyclerView;
@@ -1066,7 +1071,7 @@ public class BalanceActivity extends AppCompatActivity {
 
             final String[] export_methods = new String[1];
             export_methods[0] = getString(R.string.export_to_clipboard);
-           // export_methods[1] = getString(R.string.export_to_email);
+            // export_methods[1] = getString(R.string.export_to_email);
 
             new AlertDialog.Builder(BalanceActivity.this)
                     .setTitle(R.string.options_export)
@@ -1229,7 +1234,7 @@ public class BalanceActivity extends AppCompatActivity {
     private String getFiatDisplayAmount(long value) {
 
         String strFiat = PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
-        double btc_fx = com.anom.wallet.util.ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
+        double btc_fx = ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
 
         return MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
     }

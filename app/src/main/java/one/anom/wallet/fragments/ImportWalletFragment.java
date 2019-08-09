@@ -22,10 +22,6 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import one.anom.wallet.R;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.widgets.MnemonicSeedEditText;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,6 +31,10 @@ import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
+
+import one.anom.wallet.R;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.widgets.MnemonicSeedEditText;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
@@ -185,7 +185,7 @@ public class ImportWalletFragment extends Fragment {
             reader.close();
             BIP39_EN = sb.toString();
             List<String> validWordList = Arrays.asList(BIP39_EN.split("\\n"));
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),android.R.layout.simple_list_item_1,validWordList);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, validWordList);
             mnemonicSeed.setTokenizer(new MnemonicSeedEditText.SpaceTokenizer(getActivity()));
             mnemonicSeed.setAdapter(adapter);
         } catch (IOException e) {

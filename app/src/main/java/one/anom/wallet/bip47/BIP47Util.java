@@ -3,16 +3,20 @@ package one.anom.wallet.bip47;
 import android.content.Context;
 import android.widget.Toast;
 
-import one.anom.wallet.bip47.rpc.SecretPoint;
 import one.anom.wallet.SamouraiWallet;
+
 import com.samourai.wallet.bip47.BIP47UtilGeneric;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
+
+import one.anom.wallet.bip47.rpc.SecretPoint;
+
 import com.samourai.wallet.bip47.rpc.secretPoint.ISecretPoint;
 import com.samourai.wallet.bip47.rpc.secretPoint.ISecretPointFactory;
 import com.samourai.wallet.hd.HD_Address;
+
 import one.anom.wallet.hd.HD_WalletFactory;
 
 import org.bitcoinj.core.AddressFormatException;
@@ -36,16 +40,14 @@ public class BIP47Util extends BIP47UtilGeneric {
 
         context = ctx;
 
-        if(instance == null || wallet == null) {
+        if (instance == null || wallet == null) {
 
             try {
                 wallet = HD_WalletFactory.getInstance(context).getBIP47();
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 ioe.printStackTrace();
                 Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
-            }
-            catch (MnemonicException.MnemonicLengthException mle) {
+            } catch (MnemonicException.MnemonicLengthException mle) {
                 mle.printStackTrace();
                 Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
             }
@@ -59,18 +61,19 @@ public class BIP47Util extends BIP47UtilGeneric {
     private BIP47Util() {
         super(secretPointFactory);
     }
+
     private static final ISecretPointFactory secretPointFactory = new ISecretPointFactory() {
         @Override
         public ISecretPoint newSecretPoint(byte[] dataPrv, byte[] dataPub) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException, InvalidKeyException {
             return new SecretPoint(dataPrv, dataPub);
         }
     };
-    
+
     private NetworkParameters getNetworkParams() {
         return SamouraiWallet.getInstance().getCurrentNetworkParams();
     }
 
-    public void reset()  {
+    public void reset() {
         wallet = null;
     }
 
@@ -86,19 +89,19 @@ public class BIP47Util extends BIP47UtilGeneric {
         return super.getNotificationAddress(wallet, account);
     }
 
-    public PaymentCode getPaymentCode() throws AddressFormatException   {
+    public PaymentCode getPaymentCode() throws AddressFormatException {
         return super.getPaymentCode(wallet);
     }
 
-    public PaymentCode getPaymentCode(int account) throws AddressFormatException   {
+    public PaymentCode getPaymentCode(int account) throws AddressFormatException {
         return super.getPaymentCode(wallet, account);
     }
 
-    public PaymentCode getFeaturePaymentCode() throws AddressFormatException   {
+    public PaymentCode getFeaturePaymentCode() throws AddressFormatException {
         return super.getFeaturePaymentCode(wallet);
     }
 
-    public PaymentCode getFeaturePaymentCode(int account) throws AddressFormatException   {
+    public PaymentCode getFeaturePaymentCode(int account) throws AddressFormatException {
         return super.getFeaturePaymentCode(wallet, account);
     }
 
@@ -134,11 +137,11 @@ public class BIP47Util extends BIP47UtilGeneric {
         return super.getSendPubKey(wallet, account, pcode, idx, getNetworkParams());
     }
 
-    public byte[] getIncomingMask(byte[] pubkey, byte[] outPoint) throws AddressFormatException, Exception    {
+    public byte[] getIncomingMask(byte[] pubkey, byte[] outPoint) throws AddressFormatException, Exception {
         return super.getIncomingMask(wallet, pubkey, outPoint, getNetworkParams());
     }
 
-    public byte[] getIncomingMask(byte[] pubkey, int account, byte[] outPoint) throws AddressFormatException, Exception    {
+    public byte[] getIncomingMask(byte[] pubkey, int account, byte[] outPoint) throws AddressFormatException, Exception {
         return super.getIncomingMask(wallet, account, pubkey, outPoint, getNetworkParams());
     }
 

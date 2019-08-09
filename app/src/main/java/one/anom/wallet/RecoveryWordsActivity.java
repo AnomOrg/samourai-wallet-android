@@ -19,7 +19,6 @@ import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.TimeOutUtil;
 
-
 public class RecoveryWordsActivity extends Activity {
     private GridView recoveryWordsGrid;
     private Button returnToWallet;
@@ -60,8 +59,8 @@ public class RecoveryWordsActivity extends Activity {
 
         //set grid no of Columns based on display density
         int densityDpi = getResources().getDisplayMetrics().densityDpi;
-        if(densityDpi<= DisplayMetrics.DENSITY_MEDIUM){
-                    recoveryWordsGrid.setNumColumns(2);
+        if (densityDpi <= DisplayMetrics.DENSITY_MEDIUM) {
+            recoveryWordsGrid.setNumColumns(2);
         }
 
     }

@@ -21,11 +21,10 @@ import one.anom.wallet.R;
 import one.anom.wallet.whirlpool.models.Coin;
 import one.anom.wallet.whirlpool.models.Pool;
 import one.anom.wallet.whirlpool.models.PoolCyclePriority;
+import one.anom.wallet.whirlpool.newPool.fragments.ChooseUTXOsFragment;
 import one.anom.wallet.whirlpool.newPool.fragments.ReviewPoolFragment;
 import one.anom.wallet.whirlpool.newPool.fragments.SelectPoolFragment;
 import one.anom.wallet.widgets.ViewPager;
-
-import one.anom.wallet.whirlpool.newPool.fragments.ChooseUTXOsFragment;
 
 import java.util.ArrayList;
 
@@ -123,7 +122,7 @@ public class NewPoolActivity extends AppCompatActivity {
     }
 
     private void processWhirlPool() {
-        Toast.makeText(this,"Begin Pool",Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Begin Pool", Toast.LENGTH_SHORT).show();
     }
 
     private void setUpViewPager() {

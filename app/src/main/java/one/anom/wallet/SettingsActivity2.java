@@ -22,6 +22,7 @@ import android.preference.PreferenceActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -29,23 +30,36 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.util.Log;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.util.CharSequenceX;
+import com.yanzhenjie.zbar.Symbol;
 
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.crypto.MnemonicException;
-
 import org.bouncycastle.util.encoders.Hex;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.security.MessageDigest;
+
 import one.anom.wallet.JSONRPC.JSONRPC;
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
-
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.cahoots.CahootsUtil;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.send.FeeUtil;
@@ -55,29 +69,16 @@ import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.BatchSendUtil;
 import one.anom.wallet.util.BlockExplorerUtil;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.ReceiversUtil;
 import one.anom.wallet.util.SIMUtil;
 import one.anom.wallet.util.SendAddressUtil;
+import one.anom.wallet.whirlpool.WhirlpoolMeta;
 import one.dm.zbar.android.scanner.ZBarConstants;
 import one.dm.zbar.android.scanner.ZBarScannerActivity;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
-import com.samourai.wallet.crypto.AESUtil;
-import com.samourai.wallet.crypto.DecryptionException;
-import one.anom.wallet.ricochet.RicochetMeta;
-import com.samourai.wallet.util.CharSequenceX;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
-import com.yanzhenjie.zbar.Symbol;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.security.MessageDigest;
 
 public class SettingsActivity2 extends PreferenceActivity {
 
@@ -899,7 +900,7 @@ public class SettingsActivity2 extends PreferenceActivity {
 
     private void getExchange() {
 
-        final String[] exchanges = com.anom.wallet.util.ExchangeRateFactory.getInstance(this).getExchangeLabels();
+        final String[] exchanges = ExchangeRateFactory.getInstance(this).getExchangeLabels();
         final int sel = PrefsUtil.getInstance(SettingsActivity2.this).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0);
 
         new AlertDialog.Builder(SettingsActivity2.this)
@@ -927,9 +928,9 @@ public class SettingsActivity2 extends PreferenceActivity {
 
         final String[] currencies;
         if (fxSel == 1) {
-            currencies = com.anom.wallet.util.ExchangeRateFactory.getInstance(this).getCurrencyLabelsBTCe();
+            currencies = ExchangeRateFactory.getInstance(this).getCurrencyLabelsBTCe();
         } else {
-            currencies = com.anom.wallet.util.ExchangeRateFactory.getInstance(this).getCurrencyLabels();
+            currencies = ExchangeRateFactory.getInstance(this).getCurrencyLabels();
         }
 
         new AlertDialog.Builder(SettingsActivity2.this)

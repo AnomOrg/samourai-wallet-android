@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 import one.anom.wallet.R;
 
-
 public class PassphraseEntryFragment extends Fragment {
 
     private onPassPhraseListener mListener = null;

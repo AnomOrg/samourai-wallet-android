@@ -5,7 +5,6 @@ import android.os.Bundle;
 
 import one.anom.wallet.util.AppUtil;
 
-
 public class AboutActivity extends Activity {
 
     @Override

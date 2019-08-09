@@ -12,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import one.anom.wallet.R;
-import one.anom.wallet.widgets.ItemDividerDecorator;
-
 import one.anom.wallet.whirlpool.CycleDetail;
 import one.anom.wallet.whirlpool.models.Cycle;
+import one.anom.wallet.widgets.ItemDividerDecorator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +23,7 @@ public class WhirlpoolCyclesFragment extends Fragment {
 
     private WhirlpoolCyclesFragmentAdapter adapter;
     private RecyclerView cyclesList;
+
     public WhirlpoolCyclesFragment() {
     }
 
@@ -78,7 +78,7 @@ public class WhirlpoolCyclesFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(final ViewHolder holder, int position) {
-            holder.itemView.setOnClickListener( view -> startActivity(new Intent( getActivity(), CycleDetail.class)));
+            holder.itemView.setOnClickListener(view -> startActivity(new Intent(getActivity(), CycleDetail.class)));
         }
 
         @Override

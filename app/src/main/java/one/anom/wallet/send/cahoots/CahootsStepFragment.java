@@ -17,13 +17,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import one.anom.wallet.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+
+import one.anom.wallet.R;
+import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
-
-import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 
 public class CahootsStepFragment extends Fragment {
 

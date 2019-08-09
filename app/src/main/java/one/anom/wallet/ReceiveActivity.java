@@ -38,20 +38,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.DecimalDigitsInputFilter;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.PrefsUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;
@@ -70,6 +58,18 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import java.util.Objects;
+
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.DecimalDigitsInputFilter;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class ReceiveActivity extends AppCompatActivity {
 
@@ -154,7 +154,7 @@ public class ReceiveActivity extends AppCompatActivity {
         edAmountBTC = findViewById(R.id.amountBTC);
         edAmountSAT = findViewById(R.id.amountSAT);
         populateSpinner();
-        edAmountBTC.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8,8)});
+        edAmountBTC.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 8)});
 
         edAmountBTC.addTextChangedListener(BTCWatcher);
         edAmountSAT.addTextChangedListener(satWatcher);
@@ -340,10 +340,9 @@ public class ReceiveActivity extends AppCompatActivity {
                     edAmountSAT.setText("0");
                     edAmountSAT.setSelection(edAmountSAT.getText().length());
                     Toast.makeText(ReceiveActivity.this, R.string.invalid_amount, Toast.LENGTH_SHORT).show();
-                }
-                else    {
+                } else {
                     DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
-                    DecimalFormatSymbols symbols=format.getDecimalFormatSymbols();
+                    DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
                     String defaultSeparator = Character.toString(symbols.getDecimalSeparator());
                     int max_len = 8;
                     NumberFormat btcFormat = NumberFormat.getInstance(Locale.US);
@@ -366,8 +365,7 @@ public class ReceiveActivity extends AppCompatActivity {
                         }
                     } catch (NumberFormatException nfe) {
                         ;
-                    }
-                    catch(ParseException pe) {
+                    } catch (ParseException pe) {
                         ;
                     }
 
@@ -637,7 +635,7 @@ public class ReceiveActivity extends AppCompatActivity {
 
         tvAddress.setText(addr);
         displayPath();
-        if(!AppUtil.getInstance(ReceiveActivity.this).isOfflineMode())    {
+        if (!AppUtil.getInstance(ReceiveActivity.this).isOfflineMode()) {
             checkPrevUse();
         }
 
@@ -741,13 +739,13 @@ public class ReceiveActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void displayPath()  {
+    private void displayPath() {
 
         int sel = addressTypesSpinner.getSelectedItemPosition();
         String path = "m/";
-        int idx = 0 ;
+        int idx = 0;
 
-        switch(sel)    {
+        switch (sel) {
             case 0:
                 path += "49'";
                 idx = BIP49Util.getInstance(ReceiveActivity.this).getWallet().getAccount(0).getChain(0).getAddrIdx() - 1;
@@ -759,9 +757,8 @@ public class ReceiveActivity extends AppCompatActivity {
             default:
                 path += "44'";
                 try {
-                    idx = HD_WalletFactory.getInstance(ReceiveActivity.this).get().getAccount(0).getChain(0).getAddrIdx() -1;
-                }
-                catch(IOException | MnemonicException.MnemonicLengthException e) {
+                    idx = HD_WalletFactory.getInstance(ReceiveActivity.this).get().getAccount(0).getChain(0).getAddrIdx() - 1;
+                } catch (IOException | MnemonicException.MnemonicLengthException e) {
                     ;
                 }
         }
