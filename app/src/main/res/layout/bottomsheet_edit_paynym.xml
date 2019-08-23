@@ -27,8 +27,8 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Label"
-            android:textColor="@color/white"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:textColor="@color/white" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -40,11 +40,11 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:theme="@style/FloatingLabelStylePaynym"
         app:layout_constraintBottom_toTopOf="@+id/edit_paynym_button"
         app:layout_constraintEnd_toEndOf="@+id/editText_layout"
         app:layout_constraintStart_toStartOf="@+id/editText_layout"
         app:layout_constraintTop_toBottomOf="@+id/editText_layout"
-        android:theme="@style/FloatingLabelStylePaynym"
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
@@ -56,10 +56,9 @@
             android:ems="10"
             android:gravity="start|top"
             android:hint="Pcode"
-            android:textColor="@color/white"
             android:inputType="textMultiLine"
             android:lines="5"
-     />
+            android:textColor="@color/white" />
 
 
     </android.support.design.widget.TextInputLayout>
@@ -84,9 +83,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_blue"
-        tools:text="SAve"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="SAve" />
 </android.support.constraint.ConstraintLayout>

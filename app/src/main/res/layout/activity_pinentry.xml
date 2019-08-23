@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/windowDark"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/windowDark">
 
     <android.support.v7.widget.Toolbar
-        app:title=""
         android:id="@+id/toolbar_pinEntry"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/transparent" />
+        android:background="@android:color/transparent"
+        app:title="" />
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,12 +20,12 @@
         <one.anom.wallet.widgets.PinEntryView
             android:id="@+id/pinentry_view"
             android:layout_width="0dp"
-            android:maxHeight="330dp"
             android:layout_height="0dp"
             android:layout_marginStart="64dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="64dp"
             android:layout_marginBottom="24dp"
+            android:maxHeight="330dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

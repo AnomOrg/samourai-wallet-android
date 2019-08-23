@@ -28,23 +28,9 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.send.BlockedUTXO;
-import one.anom.wallet.send.MyTransactionOutPoint;
-import one.anom.wallet.send.SendFactory;
-import one.anom.wallet.send.UTXO;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.MessageSignUtil;
-import one.anom.wallet.util.UTXOUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
 import com.samourai.wallet.segwit.SegwitAddress;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
@@ -55,6 +41,20 @@ import org.spongycastle.util.encoders.Hex;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.send.BlockedUTXO;
+import one.anom.wallet.send.MyTransactionOutPoint;
+import one.anom.wallet.send.SendFactory;
+import one.anom.wallet.send.UTXO;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.MessageSignUtil;
+import one.anom.wallet.util.UTXOUtil;
+import one.anom.wallet.whirlpool.WhirlpoolMeta;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class UTXOActivity extends Activity {
 

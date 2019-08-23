@@ -12,11 +12,11 @@ import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import one.anom.wallet.AnomApplication;
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.R;
 import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.util.WebUtil;
-
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -28,8 +28,6 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static android.support.v4.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static one.anom.wallet.AnomApplication.TOR_CHANNEL_ID;
-
 
 public class TorService extends Service {
 
@@ -48,7 +46,7 @@ public class TorService extends Service {
 
     public void onCreate() {
         super.onCreate();
-        Notification notification = new NotificationCompat.Builder(this, TOR_CHANNEL_ID)
+        Notification notification = new NotificationCompat.Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText("Waiting...")
                 .setOngoing(true)
@@ -236,7 +234,7 @@ public class TorService extends Service {
             title = "Tor: Disconnected";
         }
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, TOR_CHANNEL_ID)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setOngoing(true)

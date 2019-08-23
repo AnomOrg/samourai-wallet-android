@@ -28,7 +28,6 @@ import android.view.ViewOutlineProvider;
 
 import one.anom.wallet.R;
 
-
 public class CircleImageView extends android.support.v7.widget.AppCompatImageView {
 
     private static final ScaleType SCALE_TYPE = ScaleType.CENTER_CROP;

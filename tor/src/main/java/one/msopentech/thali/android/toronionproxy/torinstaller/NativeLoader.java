@@ -1,5 +1,5 @@
 
-package com.msopentech.thali.android.toronionproxy.torinstaller;
+package one.msopentech.thali.android.toronionproxy.torinstaller;
 
 import android.content.Context;
 import android.os.Build;

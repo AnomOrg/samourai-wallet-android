@@ -1,4 +1,4 @@
-package com.msopentech.thali.android.toronionproxy.torinstaller;/* Copyright (c) 2009, Nathan Freitas, Orbot / The Guardian Project - http://openideals.com/guardian */
+package one.msopentech.thali.android.toronionproxy.torinstaller;/* Copyright (c) 2009, Nathan Freitas, Orbot / The Guardian Project - http://openideals.com/guardian */
 /* See LICENSE for licensing information */
 
 import android.content.Context;

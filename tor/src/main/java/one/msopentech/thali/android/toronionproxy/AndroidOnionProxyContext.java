@@ -11,13 +11,13 @@ MERCHANTABLITY OR NON-INFRINGEMENT.
 See the Apache 2 License for the specific language governing permissions and limitations under the License.
 */
 
-package com.msopentech.thali.android.toronionproxy;
+package one.msopentech.thali.android.toronionproxy;
 
 import android.content.Context;
 
-import com.msopentech.thali.android.toronionproxy.torinstaller.TorResourceInstaller;
-import com.msopentech.thali.toronionproxy.OnionProxyContext;
-import com.msopentech.thali.toronionproxy.WriteObserver;
+import one.msopentech.thali.android.toronionproxy.torinstaller.TorResourceInstaller;
+import one.msopentech.thali.toronionproxy.OnionProxyContext;
+import one.msopentech.thali.toronionproxy.WriteObserver;
 
 import java.io.File;
 import java.io.IOException;

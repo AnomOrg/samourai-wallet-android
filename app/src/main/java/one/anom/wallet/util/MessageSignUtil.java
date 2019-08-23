@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 
@@ -23,11 +22,13 @@ public class MessageSignUtil {
     private static Context context = null;
     private static MessageSignUtil instance = null;
 
-    private MessageSignUtil() { ; }
+    private MessageSignUtil() {
+        ;
+    }
 
     public static MessageSignUtil getInstance() {
 
-        if(instance == null) {
+        if (instance == null) {
             instance = new MessageSignUtil();
         }
 
@@ -38,7 +39,7 @@ public class MessageSignUtil {
 
         context = ctx;
 
-        if(instance == null) {
+        if (instance == null) {
             instance = new MessageSignUtil();
         }
 
@@ -64,10 +65,9 @@ public class MessageSignUtil {
 
                         String strSignedMessage = null;
                         String result = etMessage.getText().toString();
-                        if(result == null || result.length() == 0)    {
+                        if (result == null || result.length() == 0) {
                             strSignedMessage = MessageSignUtil.getInstance().signMessageArmored(ecKey, message);
-                        }
-                        else    {
+                        } else {
                             strSignedMessage = MessageSignUtil.getInstance().signMessageArmored(ecKey, result);
                         }
 
@@ -108,22 +108,21 @@ public class MessageSignUtil {
 
     public boolean verifySignedMessage(String address, String strMessage, String strSignature) throws SignatureException {
 
-        if(address == null || strMessage == null || strSignature == null)    {
+        if (address == null || strMessage == null || strSignature == null) {
             return false;
         }
 
         ECKey ecKey = signedMessageToKey(strMessage, strSignature);
-        if(ecKey != null)   {
+        if (ecKey != null) {
             return ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString().equals(address);
-        }
-        else    {
+        } else {
             return false;
         }
     }
 
     public String signMessage(ECKey key, String strMessage) {
 
-        if(key == null || strMessage == null || !key.hasPrivKey())    {
+        if (key == null || strMessage == null || !key.hasPrivKey()) {
             return null;
         }
 
@@ -135,7 +134,7 @@ public class MessageSignUtil {
         String sig = signMessage(key, strMessage);
         String ret = null;
 
-        if(sig != null)    {
+        if (sig != null) {
             ret = "-----BEGIN BITCOIN SIGNED MESSAGE-----\n";
             ret += strMessage;
             ret += "\n";
@@ -152,7 +151,7 @@ public class MessageSignUtil {
 
     private ECKey signedMessageToKey(String strMessage, String strSignature) throws SignatureException {
 
-        if(strMessage == null || strSignature == null)    {
+        if (strMessage == null || strSignature == null) {
             return null;
         }
 

@@ -11,12 +11,11 @@ import one.anom.wallet.permissions.PermissionsUtil;
 import one.anom.wallet.receivers.InterceptOutgoingReceiver;
 import one.anom.wallet.receivers.SMSReceiver;
 
-
 import java.util.ArrayList;
 import java.util.List;
 //import android.util.Log;
 
-public class ReceiversUtil  {
+public class ReceiversUtil {
 
     private static ReceiversUtil instance = null;
 
@@ -31,13 +30,15 @@ public class ReceiversUtil  {
 
     private static List<BroadcastReceiver> receivers = new ArrayList<BroadcastReceiver>();
 
-    private ReceiversUtil() { ; }
+    private ReceiversUtil() {
+        ;
+    }
 
-    public static ReceiversUtil getInstance(Context ctx)   {
+    public static ReceiversUtil getInstance(Context ctx) {
 
         context = ctx;
 
-        if(instance == null)    {
+        if (instance == null) {
             instance = new ReceiversUtil();
         }
 
@@ -49,8 +50,8 @@ public class ReceiversUtil  {
         boolean hideIcon = PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false);
         boolean acceptRemote = PrefsUtil.getInstance(context).getValue(PrefsUtil.ACCEPT_REMOTE, false);
 
-        if(hideIcon && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.PROCESS_OUTGOING_CALLS)) {
-            if(!receivers.contains(ocReceiver)) {
+        if (hideIcon && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.PROCESS_OUTGOING_CALLS)) {
+            if (!receivers.contains(ocReceiver)) {
                 ocFilter = new IntentFilter();
                 ocFilter.addAction("android.intent.action.NEW_OUTGOING_CALL");
                 ocFilter.setPriority(1001);
@@ -58,25 +59,23 @@ public class ReceiversUtil  {
                 receivers.add(ocReceiver);
                 context.getApplicationContext().registerReceiver(ocReceiver, ocFilter);
             }
-        }
-        else {
-            if(receivers.contains(ocReceiver)) {
+        } else {
+            if (receivers.contains(ocReceiver)) {
                 context.getApplicationContext().unregisterReceiver(ocReceiver);
                 receivers.remove(ocReceiver);
             }
         }
 
-        if(acceptRemote && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.RECEIVE_SMS)) {
-            if(!receivers.contains(isReceiver)) {
+        if (acceptRemote && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.RECEIVE_SMS)) {
+            if (!receivers.contains(isReceiver)) {
                 isFilter = new IntentFilter();
                 isFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
                 isFilter.setPriority(2147483647);
                 isReceiver = new SMSReceiver();
                 context.getApplicationContext().registerReceiver(isReceiver, isFilter);
             }
-        }
-        else {
-            if(receivers.contains(isReceiver)) {
+        } else {
+            if (receivers.contains(isReceiver)) {
                 context.getApplicationContext().unregisterReceiver(isReceiver);
                 receivers.remove(isReceiver);
             }
@@ -89,23 +88,21 @@ public class ReceiversUtil  {
         //
         // check for SIM switch
         //
-        if(PrefsUtil.getInstance(context).getValue(PrefsUtil.CHECK_SIM, false) == true && PrefsUtil.getInstance(context).getValue(PrefsUtil.ALERT_MOBILE_NO, "").length() > 0 && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.READ_PHONE_STATE)) {
+        if (PrefsUtil.getInstance(context).getValue(PrefsUtil.CHECK_SIM, false) == true && PrefsUtil.getInstance(context).getValue(PrefsUtil.ALERT_MOBILE_NO, "").length() > 0 && PermissionsUtil.getInstance(context).hasPermission(Manifest.permission.READ_PHONE_STATE)) {
 
             new Thread() {
                 public void run() {
 
                     try {
                         sleep(1000 * 90);
-                    }
-                    catch(Exception e) {
+                    } catch (Exception e) {
                         ;
                     }
 
-                    if(SIMUtil.getInstance(context).isSIMSwitch()) {
+                    if (SIMUtil.getInstance(context).isSIMSwitch()) {
                         SMSSender.getInstance(context).send(context.getResources().getString(R.string.sim_warning), PrefsUtil.getInstance(context).getValue(PrefsUtil.ALERT_MOBILE_NO, ""));
 //                        SIMUtil.getInstance(context).setStoredSIM();
-                    }
-                    else {
+                    } else {
                         ;
                     }
 

@@ -15,11 +15,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import one.anom.wallet.R;
 
 import java.util.ArrayList;
-
 
 public class CycleDetail extends AppCompatActivity {
 

@@ -19,11 +19,9 @@ import android.widget.TextView;
 
 import one.anom.wallet.R;
 
-
 public class SelectCahootsType extends BottomSheetDialogFragment {
 
-
-    public enum type {STONEWALLX2_MANUAL,STONEWALLX2_SAMOURAI, STOWAWAY, NONE}
+    public enum type {STONEWALLX2_MANUAL, STONEWALLX2_SAMOURAI, STOWAWAY, NONE}
 
     private OnSelectListener onSelectListener;
     private ViewGroup stowaway, stonewallx2;
@@ -51,7 +49,7 @@ public class SelectCahootsType extends BottomSheetDialogFragment {
         closeBtn = view.findViewById(R.id.cahoots_type_close_btn);
         title = view.findViewById(R.id.cahoots_sheet_title);
 
-        stowaway.setOnClickListener(view1 ->{
+        stowaway.setOnClickListener(view1 -> {
             if (onSelectListener != null) {
                 Log.i("UTU", "onViewCreated: ");
                 onSelectListener.onSelect(type.STOWAWAY);

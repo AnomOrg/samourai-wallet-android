@@ -13,8 +13,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import one.anom.wallet.R;
-import one.anom.wallet.bip47.BIP47Meta;
+
+import one.anom.wallet.R;
 import one.anom.wallet.api.Tx;
+import one.anom.wallet.bip47.BIP47Meta;
 
 import org.bitcoinj.core.Coin;
 import org.json.JSONObject;
@@ -205,7 +207,6 @@ public class TxAdapter extends RecyclerView.Adapter<TxAdapter.TxViewHolder> {
         }
     }
 
-
     private synchronized Observable<List<Tx>> makeSectionedDataSet(List<Tx> txes) {
         return Observable.fromCallable(() -> {
             Collections.sort(txes, (tx, t1) -> Long.compare(tx.getTS(), t1.getTS()));
@@ -274,7 +275,7 @@ public class TxAdapter extends RecyclerView.Adapter<TxAdapter.TxViewHolder> {
                         }
                     } else if (fmt.format(key).equals(fmt.format(date))) {
 
-                        if(tx.getConfirmations() >= MAX_CONFIRM_COUNT){
+                        if (tx.getConfirmations() >= MAX_CONFIRM_COUNT) {
                             sectioned.add(tx);
                         }
 

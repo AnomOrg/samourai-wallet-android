@@ -12,7 +12,6 @@ import one.anom.codescanner.CodeScanner;
 import one.anom.codescanner.CodeScannerView;
 import one.anom.wallet.R;
 
-
 public class CameraFragmentBottomSheet extends BottomSheetDialogFragment {
     private CodeScanner mCodeScanner;
 

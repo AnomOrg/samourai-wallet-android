@@ -11,25 +11,30 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
+
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
+
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
+
 import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
+
 import org.apache.commons.lang3.tuple.Pair;
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.crypto.MnemonicException;
@@ -104,7 +109,7 @@ public class RefreshService extends IntentService {
             Intent _intent = new Intent("com.samourai.wallet.BalanceFragment.DISPLAY");
             LocalBroadcastManager.getInstance(RefreshService.this).sendBroadcast(_intent);
 
-            com.anom.wallet.util.ExchangeRateFactory.getInstance(RefreshService.this).exchangeRateThread();
+            ExchangeRateFactory.getInstance(RefreshService.this).exchangeRateThread();
         }
 
         PrefsUtil.getInstance(RefreshService.this).setValue(PrefsUtil.FIRST_RUN, false);

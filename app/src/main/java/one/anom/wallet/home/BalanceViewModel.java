@@ -6,7 +6,13 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.util.Log;
 
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.api.Tx;
 import one.anom.wallet.bip47.BIP47Meta;
+
+import com.samourai.wallet.crypto.DecryptionException;
+
+import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
@@ -15,10 +21,6 @@ import one.anom.wallet.send.RBFUtil;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.api.Tx;
-import com.samourai.wallet.crypto.DecryptionException;
-import one.anom.wallet.hd.HD_WalletFactory;
 
 import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
@@ -32,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -72,7 +75,7 @@ public class BalanceViewModel extends AndroidViewModel {
                             Collections.sort(txes, new APIFactory.TxMostRecentDateComparator());
                             txs.postValue(txes);
                             toggleSat.setValue(false);
-                            balance.postValue(xpub_balance- BlockedUTXO.getInstance().getTotalValueBlocked0());
+                            balance.postValue(xpub_balance - BlockedUTXO.getInstance().getTotalValueBlocked0());
 
                         }, error -> {
                             txs.postValue(new ArrayList<>());
@@ -178,15 +181,13 @@ public class BalanceViewModel extends AndroidViewModel {
                                     AddressFactory.getInstance().setHighestBIP84ChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                     BIP84Util.getInstance(getApplication()).getWallet().getAccount(0).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                     BIP84Util.getInstance(getApplication()).getWallet().getAccount(0).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                                }
-                                else if (addrObj.getString("address").equals(BIP49Util.getInstance(getApplication()).getWallet().getAccount(0).xpubstr()) ||
+                                } else if (addrObj.getString("address").equals(BIP49Util.getInstance(getApplication()).getWallet().getAccount(0).xpubstr()) ||
                                         addrObj.getString("address").equals(BIP49Util.getInstance(getApplication()).getWallet().getAccount(0).ypubstr())) {
                                     AddressFactory.getInstance().setHighestBIP49ReceiveIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                     AddressFactory.getInstance().setHighestBIP49ChangeIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
                                     BIP49Util.getInstance(getApplication()).getWallet().getAccount(0).getChain(0).setAddrIdx(addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                     BIP49Util.getInstance(getApplication()).getWallet().getAccount(0).getChain(1).setAddrIdx(addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
-                                }
-                                else if (AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")) != null) {
+                                } else if (AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")) != null) {
                                     AddressFactory.getInstance().setHighestTxReceiveIdx(AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")), addrObj.has("account_index") ? addrObj.getInt("account_index") : 0);
                                     AddressFactory.getInstance().setHighestTxChangeIdx(AddressFactory.getInstance().xpub2account().get((String) addrObj.get("address")), addrObj.has("change_index") ? addrObj.getInt("change_index") : 0);
 

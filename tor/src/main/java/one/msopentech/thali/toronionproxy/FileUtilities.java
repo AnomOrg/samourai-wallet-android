@@ -65,7 +65,7 @@ http://www.gnu.org/licenses/lgpl.html
 
  */
 
-package com.msopentech.thali.toronionproxy;
+package one.msopentech.thali.toronionproxy;
 
 import android.util.Log;
 

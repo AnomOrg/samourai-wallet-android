@@ -31,10 +31,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.bip47.paynym.WebUtil;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.widgets.ItemDividerDecorator;
-
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.send.SendActivity;
 import one.anom.wallet.access.AccessFactory;
@@ -43,11 +39,17 @@ import one.anom.wallet.api.Tx;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.bip47.SendNotifTxFactory;
+
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
+
 import one.anom.wallet.bip47.rpc.SecretPoint;
+
 import com.samourai.wallet.crypto.DecryptionException;
+
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.bip47.paynym.WebUtil;
 import one.anom.wallet.paynym.fragments.EditPaynymBottomSheet;
 import one.anom.wallet.paynym.fragments.ShowPayNymQRBottomSheet;
 import one.anom.wallet.segwit.BIP49Util;
@@ -62,11 +64,15 @@ import one.anom.wallet.send.SuggestedFee;
 import one.anom.wallet.send.UTXO;
 import one.anom.wallet.send.UTXOFactory;
 import one.anom.wallet.util.AddressFactory;
+
 import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
+import one.anom.wallet.widgets.ItemDividerDecorator;
+
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -163,7 +169,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
                     getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clip = ClipData.newPlainText("paynym", ((TextView) view).getText().toString());
             clipboard.setPrimaryClip(clip);
-            Toast.makeText(this,"Paynym id copied",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Paynym id copied", Toast.LENGTH_SHORT).show();
         });
     }
 
@@ -178,12 +184,12 @@ public class PayNymDetailsActivity extends AppCompatActivity {
         }
 //        Log.i(TAG, "setPayNym: ".concat(String.valueOf(BIP47Meta.getInstance().getIncomingIdx(pcode))));
 
-        if(BIP47Meta.getInstance().getIncomingIdx(pcode) == BIP47Meta.STATUS_NOT_SENT)
-        if (BIP47Meta.getInstance().getOutgoingStatus(pcode) == BIP47Meta.STATUS_SENT_NO_CFM) {
-            showWaitingForConfirm();
-        }
+        if (BIP47Meta.getInstance().getIncomingIdx(pcode) == BIP47Meta.STATUS_NOT_SENT)
+            if (BIP47Meta.getInstance().getOutgoingStatus(pcode) == BIP47Meta.STATUS_SENT_NO_CFM) {
+                showWaitingForConfirm();
+            }
 
-        if(BIP47Meta.getInstance().getIncomingIdx(pcode) >= 0){
+        if (BIP47Meta.getInstance().getIncomingIdx(pcode) >= 0) {
             historyLayout.setVisibility(View.VISIBLE);
         }
 //        if(BIP47Meta.getInstance().getIncomingIdx(pcode)) ){

@@ -43,22 +43,21 @@
         android:name="one.anom.wallet.AnomApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
         android:theme="@style/AppTheme">
         <activity
             android:name="one.anom.wallet.network.NetworkDashboard"
-            android:theme="@style/ui_2_theme"
             android:exported="true"
+            android:label="@string/title_activity_network_dashboard"
             android:parentActivityName="one.anom.wallet.home.BalanceActivity"
-            android:label="@string/title_activity_network_dashboard">
+            android:theme="@style/ui_2_theme">
 
         </activity>
         <activity
             android:name="one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity"
-            android:theme="@style/ui_2_theme"
             android:label=""
-            />
+            android:theme="@style/ui_2_theme" />
         <activity
             android:name="one.anom.wallet.paynym.addPaynym.AddPaynymActivity"
             android:exported="true"
@@ -127,8 +126,8 @@
         <activity
             android:name="one.anom.wallet.PinEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@style/ui_2_theme_dark_status"
-            android:label="" />
+            android:label=""
+            android:theme="@style/ui_2_theme_dark_status" />
         <activity
             android:name="one.anom.wallet.bip47.BIP47Add"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -249,7 +248,6 @@
             android:exported="true"
             android:theme="@style/ui_2_theme"
             android:windowSoftInputMode="stateHidden" />
-
         <activity
             android:name="one.anom.wallet.whirlpool.WhirlpoolMain"
             android:exported="true"
@@ -257,8 +255,8 @@
             android:theme="@style/whirlpoolTheme" />
         <activity
             android:name="one.anom.wallet.whirlpool.CycleDetail"
-            android:label=""
             android:exported="true"
+            android:label=""
             android:theme="@style/whirlpoolTheme" />
         <activity
             android:name="one.anom.wallet.tx.TxDetailsActivity"
@@ -278,7 +276,7 @@
             android:theme="@style/ui_2_theme" />
 
         <receiver
-            android:name="com.msopentech.thali.android.toronionproxy.ConnectionChangeReceiver"
+            android:name="one.msopentech.thali.android.toronionproxy.ConnectionChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

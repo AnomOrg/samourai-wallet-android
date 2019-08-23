@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.access.ScrambledPin;
@@ -21,7 +20,6 @@ import static android.content.Context.VIBRATOR_SERVICE;
  * Re-Usable custom KeypadView for pin entry
  */
 public class PinEntryView extends FrameLayout implements View.OnClickListener {
-
 
 
     public enum KeyClearTypes {
@@ -142,11 +140,11 @@ public class PinEntryView extends FrameLayout implements View.OnClickListener {
 
     }
 
-    public void setConfirmClickListner(OnClickListener clickListner){
+    public void setConfirmClickListner(OnClickListener clickListner) {
         tconfirm.setOnClickListener(clickListner);
     }
 
-    public void setSize(int size,int margin) {
+    public void setSize(int size, int margin) {
 //        int dp = (int) (getResources().getDimension(size));
 //        for (int i = 0; i < gridLayout.getChildCount(); i++) {
 //            GridLayout.LayoutParams params = new GridLayout.LayoutParams(new ViewGroup.LayoutParams(dp, dp));
@@ -154,7 +152,8 @@ public class PinEntryView extends FrameLayout implements View.OnClickListener {
 //            gridLayout.getChildAt(i).setLayoutParams(params);
 //        }
     }
-    public void disableHapticFeedBack(){
+
+    public void disableHapticFeedBack() {
         enableHaptic = false;
     }
 

@@ -10,7 +10,6 @@ import android.widget.EditText;
 
 import one.anom.wallet.R;
 
-
 public class EditPaynymBottomSheet extends BottomSheetDialogFragment {
 
 

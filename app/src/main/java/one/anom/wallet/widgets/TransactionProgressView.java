@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import one.anom.wallet.R;
 
-
 public class TransactionProgressView extends FrameLayout {
 
     private ArcProgress mArcProgress;

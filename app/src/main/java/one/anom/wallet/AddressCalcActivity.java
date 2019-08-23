@@ -18,27 +18,26 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.MessageSignUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
-import one.google.zxing.client.android.Contents;
-import one.google.zxing.client.android.encode.QRCodeEncoder;
-
 import com.samourai.wallet.hd.HD_Address;
-import one.anom.wallet.ricochet.RicochetMeta;
 import com.samourai.wallet.segwit.SegwitAddress;
-
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.ECKey;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.ricochet.RicochetMeta;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.MessageSignUtil;
+import one.anom.wallet.whirlpool.WhirlpoolMeta;
+import one.google.zxing.client.android.Contents;
+import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class AddressCalcActivity extends Activity {
 

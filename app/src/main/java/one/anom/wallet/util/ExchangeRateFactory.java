@@ -1,4 +1,4 @@
-package com.anom.wallet.util;
+package one.anom.wallet.util;
 
 import android.content.Context;
 import android.os.Handler;
@@ -13,9 +13,6 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.WebUtil;
 
 //import android.util.Log;
 

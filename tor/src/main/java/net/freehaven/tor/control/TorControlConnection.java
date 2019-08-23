@@ -2,7 +2,7 @@
 // See LICENSE file for copying information
 package net.freehaven.tor.control;
 
-import com.msopentech.thali.toronionproxy.OnionProxyManagerEventHandler;
+import one.msopentech.thali.toronionproxy.OnionProxyManagerEventHandler;
 
 import java.io.BufferedReader;
 import java.io.IOException;

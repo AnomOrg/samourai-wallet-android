@@ -28,7 +28,6 @@ import one.anom.wallet.whirlpool.models.PoolCyclePriority;
 
 import java.util.ArrayList;
 
-
 public class SelectPoolFragment extends Fragment {
 
     private static final String TAG = "SelectPoolFragment";

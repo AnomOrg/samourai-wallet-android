@@ -8,7 +8,6 @@
     android:clickable="true"
     android:orientation="vertical">
 
-
     <one.anom.wallet.widgets.CircleImageView
         android:id="@+id/paynym_avatar"
         android:layout_width="54dp"
@@ -47,6 +46,4 @@
         app:layout_constraintBottom_toBottomOf="@+id/paynym_code"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/paynym_code" />
-
-
 </android.support.constraint.ConstraintLayout>

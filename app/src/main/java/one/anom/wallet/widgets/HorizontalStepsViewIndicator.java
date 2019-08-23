@@ -8,14 +8,11 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.animation.FastOutLinearInInterpolator;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import one.anom.wallet.R;
-
 
 public class HorizontalStepsViewIndicator extends View {
 
@@ -86,7 +83,7 @@ public class HorizontalStepsViewIndicator extends View {
         this.getViewTreeObserver().addOnGlobalLayoutListener(() -> {
             screenW = getWidth();
             distance = (screenW / points);
-            animatedPoint = circleRadius*2;
+            animatedPoint = circleRadius * 2;
             invalidate();
         });
     }
@@ -125,7 +122,7 @@ public class HorizontalStepsViewIndicator extends View {
     }
 
     public void setStep(int i) {
-        if(i==1){
+        if (i == 1) {
             animateItem((int) circleRadius);
             return;
         }

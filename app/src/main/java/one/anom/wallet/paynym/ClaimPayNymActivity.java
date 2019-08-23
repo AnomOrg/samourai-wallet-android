@@ -10,14 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
-import one.anom.wallet.R;
-import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.paynym.WebUtil;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.MessageSignUtil;
-import one.anom.wallet.util.PrefsUtil;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,6 +18,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import one.anom.wallet.R;
+import one.anom.wallet.bip47.BIP47Util;
+import one.anom.wallet.bip47.paynym.WebUtil;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.MessageSignUtil;
+import one.anom.wallet.util.PrefsUtil;
 
 public class ClaimPayNymActivity extends Activity {
 

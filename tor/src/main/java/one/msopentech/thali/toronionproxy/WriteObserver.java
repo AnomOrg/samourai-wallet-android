@@ -12,7 +12,7 @@ See the Apache 2 License for the specific language governing permissions and lim
 */
 
 
-package com.msopentech.thali.toronionproxy;
+package one.msopentech.thali.toronionproxy;
 
 import java.util.concurrent.TimeUnit;
 

@@ -14,7 +14,6 @@ import one.anom.wallet.R;
 import one.anom.wallet.widgets.HorizontalStepsViewIndicator;
 import one.anom.wallet.widgets.ViewPager;
 
-
 import java.util.ArrayList;
 
 public class ManualStoneWall extends AppCompatActivity {

@@ -4,9 +4,12 @@ import android.content.Context;
 import android.widget.Toast;
 
 import one.anom.wallet.SamouraiWallet;
+
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
+
 import one.anom.wallet.hd.HD_WalletFactory;
+
 import com.samourai.wallet.segwit.SegwitAddress;
 
 import org.bitcoinj.crypto.MnemonicException;
@@ -20,22 +23,22 @@ public class BIP84Util {
     private static Context context = null;
     private static BIP84Util instance = null;
 
-    private BIP84Util() { ; }
+    private BIP84Util() {
+        ;
+    }
 
     public static BIP84Util getInstance(Context ctx) {
 
         context = ctx;
 
-        if(instance == null || wallet == null) {
+        if (instance == null || wallet == null) {
 
             try {
                 wallet = HD_WalletFactory.getInstance(context).getBIP84();
-            }
-            catch (IOException ioe) {
+            } catch (IOException ioe) {
                 ioe.printStackTrace();
                 Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
-            }
-            catch (MnemonicException.MnemonicLengthException mle) {
+            } catch (MnemonicException.MnemonicLengthException mle) {
                 mle.printStackTrace();
                 Toast.makeText(context, "HD wallet error", Toast.LENGTH_SHORT).show();
             }
@@ -46,7 +49,7 @@ public class BIP84Util {
         return instance;
     }
 
-    public void reset()  {
+    public void reset() {
         wallet = null;
     }
 

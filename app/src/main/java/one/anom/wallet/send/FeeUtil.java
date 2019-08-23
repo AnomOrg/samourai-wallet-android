@@ -2,8 +2,8 @@ package one.anom.wallet.send;
 
 import android.util.Log;
 
-import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.util.FormatsUtil;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.Vector;
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.Address;
 
-public class FeeUtil  {
+public class FeeUtil {
 
     private static String[] providers = {
             "Samourai (bitcoind)",
@@ -32,11 +32,13 @@ public class FeeUtil  {
 
     private static FeeUtil instance = null;
 
-    private FeeUtil() { ; }
+    private FeeUtil() {
+        ;
+    }
 
     public static FeeUtil getInstance() {
 
-        if(instance == null)    {
+        if (instance == null) {
             estimatedFees = new ArrayList<SuggestedFee>();
             highFee = new SuggestedFee();
             suggestedFee = new SuggestedFee();
@@ -47,15 +49,14 @@ public class FeeUtil  {
         return instance;
     }
 
-    public String[] getProviders()	 {
+    public String[] getProviders() {
         return providers;
     }
 
     public synchronized SuggestedFee getSuggestedFee() {
-        if(suggestedFee != null)    {
+        if (suggestedFee != null) {
             return suggestedFee;
-        }
-        else    {
+        } else {
             SuggestedFee fee = new SuggestedFee();
             fee.setDefaultPerKB(BigInteger.valueOf(10000L));
             return fee;
@@ -67,7 +68,7 @@ public class FeeUtil  {
     }
 
     public synchronized SuggestedFee getHighFee() {
-        if(highFee == null)    {
+        if (highFee == null) {
             highFee = getSuggestedFee();
         }
 
@@ -79,7 +80,7 @@ public class FeeUtil  {
     }
 
     public synchronized SuggestedFee getNormalFee() {
-        if(normalFee == null)    {
+        if (normalFee == null) {
             normalFee = getSuggestedFee();
         }
 
@@ -91,7 +92,7 @@ public class FeeUtil  {
     }
 
     public synchronized SuggestedFee getLowFee() {
-        if(lowFee == null)    {
+        if (lowFee == null) {
             lowFee = getSuggestedFee();
         }
 
@@ -109,7 +110,7 @@ public class FeeUtil  {
     public synchronized void setEstimatedFees(List<SuggestedFee> estimatedFees) {
         FeeUtil.estimatedFees = estimatedFees;
 
-        switch(estimatedFees.size())    {
+        switch (estimatedFees.size()) {
             case 1:
                 suggestedFee = highFee = normalFee = lowFee = estimatedFees.get(0);
                 break;
@@ -129,63 +130,60 @@ public class FeeUtil  {
 
     }
 
-    public BigInteger estimatedFee(int inputs, int outputs)   {
+    public BigInteger estimatedFee(int inputs, int outputs) {
         int size = estimatedSize(inputs, outputs);
         return calculateFee(size, getSuggestedFee().getDefaultPerKB());
     }
 
-    public BigInteger estimatedFeeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int outputs)   {
+    public BigInteger estimatedFeeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int outputs) {
         int size = estimatedSizeSegwit(inputsP2PKH, inputsP2SHP2WPKH, outputs);
         return calculateFee(size, getSuggestedFee().getDefaultPerKB());
     }
 
-    public BigInteger estimatedFeeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int inputsP2WPKH, int outputs)   {
+    public BigInteger estimatedFeeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int inputsP2WPKH, int outputs) {
         int size = estimatedSizeSegwit(inputsP2PKH, inputsP2SHP2WPKH, inputsP2WPKH, outputs);
         return calculateFee(size, getSuggestedFee().getDefaultPerKB());
     }
 
-    public int estimatedSize(int inputs, int outputs)   {
+    public int estimatedSize(int inputs, int outputs) {
         return (outputs * ESTIMATED_OUTPUT_LEN) + (inputs * ESTIMATED_INPUT_LEN_P2PKH) + inputs + 8 + 1 + 1;
     }
 
-    public int estimatedSizeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int outputs)   {
+    public int estimatedSizeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int outputs) {
         return (outputs * ESTIMATED_OUTPUT_LEN) + (inputsP2PKH * ESTIMATED_INPUT_LEN_P2PKH) + (inputsP2SHP2WPKH * ESTIMATED_INPUT_LEN_P2SH_P2WPKH) + inputsP2PKH + inputsP2SHP2WPKH + 8 + 1 + 1;
     }
 
-    public int estimatedSizeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int inputsP2WPKH, int outputs)   {
+    public int estimatedSizeSegwit(int inputsP2PKH, int inputsP2SHP2WPKH, int inputsP2WPKH, int outputs) {
         return (outputs * ESTIMATED_OUTPUT_LEN) + (inputsP2PKH * ESTIMATED_INPUT_LEN_P2PKH) + (inputsP2SHP2WPKH * ESTIMATED_INPUT_LEN_P2SH_P2WPKH) + (inputsP2WPKH * ESTIMATED_INPUT_LEN_P2WPKH) + inputsP2PKH + inputsP2SHP2WPKH + inputsP2WPKH + 8 + 1 + 1;
     }
 
-    public BigInteger estimatedFee(int inputs, int outputs, BigInteger feePerKb)   {
+    public BigInteger estimatedFee(int inputs, int outputs, BigInteger feePerKb) {
         int size = estimatedSize(inputs, outputs);
         return calculateFee(size, feePerKb);
     }
 
-    public BigInteger calculateFee(int txSize, BigInteger feePerKb)   {
-        double fee = ((double)txSize / 1000.0 ) * feePerKb.doubleValue();
-        if(Math.ceil(fee) < (double)txSize)    {
-            Log.d("FeeUtil", "adjusted fee:" + BigInteger.valueOf((long)(txSize + (txSize / 20))).longValue());
-            return BigInteger.valueOf((long)(txSize + (txSize / 20)));
-        }
-        else    {
-            return BigInteger.valueOf((long)fee);
+    public BigInteger calculateFee(int txSize, BigInteger feePerKb) {
+        double fee = ((double) txSize / 1000.0) * feePerKb.doubleValue();
+        if (Math.ceil(fee) < (double) txSize) {
+            Log.d("FeeUtil", "adjusted fee:" + BigInteger.valueOf((long) (txSize + (txSize / 20))).longValue());
+            return BigInteger.valueOf((long) (txSize + (txSize / 20)));
+        } else {
+            return BigInteger.valueOf((long) fee);
         }
     }
 
-    public Triple<Integer,Integer,Integer> getOutpointCount(Vector<MyTransactionOutPoint> outpoints) {
+    public Triple<Integer, Integer, Integer> getOutpointCount(Vector<MyTransactionOutPoint> outpoints) {
 
         int p2wpkh = 0;
         int p2sh_p2wpkh = 0;
         int p2pkh = 0;
 
-        for(MyTransactionOutPoint out : outpoints)   {
-            if(FormatsUtil.getInstance().isValidBech32(out.getAddress()))    {
+        for (MyTransactionOutPoint out : outpoints) {
+            if (FormatsUtil.getInstance().isValidBech32(out.getAddress())) {
                 p2wpkh++;
-            }
-            else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), out.getAddress()).isP2SHAddress())    {
+            } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), out.getAddress()).isP2SHAddress()) {
                 p2sh_p2wpkh++;
-            }
-            else   {
+            } else {
                 p2pkh++;
             }
         }
@@ -193,8 +191,8 @@ public class FeeUtil  {
         return Triple.of(p2pkh, p2sh_p2wpkh, p2wpkh);
     }
 
-    public void sanitizeFee()  {
-        if(FeeUtil.getInstance().getSuggestedFee().getDefaultPerKB().longValue() < 1000L)    {
+    public void sanitizeFee() {
+        if (FeeUtil.getInstance().getSuggestedFee().getDefaultPerKB().longValue() < 1000L) {
             SuggestedFee suggestedFee = new SuggestedFee();
             suggestedFee.setDefaultPerKB(BigInteger.valueOf(1200L));
             Log.d("FeeUtil", "adjusted fee:" + suggestedFee.getDefaultPerKB().longValue());

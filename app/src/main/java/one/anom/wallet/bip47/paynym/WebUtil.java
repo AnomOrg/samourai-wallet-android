@@ -2,7 +2,6 @@ package one.anom.wallet.bip47.paynym;
 
 import android.content.Context;
 
-
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.tor.TorManager;
 

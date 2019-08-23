@@ -10,26 +10,25 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import one.anom.wallet.R;
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.bech32.Bech32Util;
-import one.anom.wallet.service.WebSocketService;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.MainActivity2;
-
+import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionOutPoint;
 import one.anom.wallet.send.PushTx;
 import one.anom.wallet.send.SendFactory;
 import one.anom.wallet.send.SuggestedFee;
 import one.anom.wallet.send.UTXO;
+import one.anom.wallet.service.WebSocketService;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.PrefsUtil;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.Address;

@@ -1,7 +1,5 @@
 package one.anom.wallet.whirlpool.models;
 
-import android.content.Intent;
-
 import java.util.Date;
 
 public class Cycle {

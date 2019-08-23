@@ -18,19 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.TimeOutUtil;
-import one.anom.wallet.widgets.ViewPager;
-
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
-import one.anom.wallet.fragments.PassphraseEntryFragment;
-import one.anom.wallet.fragments.PinEntryFragment;
 import com.samourai.wallet.util.CharSequenceX;
 
 import org.apache.commons.codec.DecoderException;
@@ -40,6 +29,16 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.fragments.PassphraseEntryFragment;
+import one.anom.wallet.fragments.PinEntryFragment;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.TimeOutUtil;
+import one.anom.wallet.widgets.ViewPager;
 
 public class CreateWalletActivity extends FragmentActivity implements
         PinEntryFragment.onPinEntryListener,
@@ -281,7 +280,7 @@ public class CreateWalletActivity extends FragmentActivity implements
     private void toggleLoading() {
         if (progressDialog == null) {
             Activity activity = this;
-            if ( activity.isFinishing() ) {
+            if (activity.isFinishing()) {
                 return;
             }
             progressDialog = new ProgressDialog(this);
@@ -410,8 +409,8 @@ public class CreateWalletActivity extends FragmentActivity implements
                                 mle.printStackTrace();
                             }
 
-                            Intent intent = new Intent(CreateWalletActivity.this,  RecoveryWordsActivity.class);
-                            intent.putExtra("BIP39_WORD_LIST",seed);
+                            Intent intent = new Intent(CreateWalletActivity.this, RecoveryWordsActivity.class);
+                            intent.putExtra("BIP39_WORD_LIST", seed);
                             startActivity(intent);
                             finish();
 

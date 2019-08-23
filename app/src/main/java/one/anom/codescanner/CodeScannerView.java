@@ -35,7 +35,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.FloatRange;
@@ -107,7 +106,7 @@ public final class CodeScannerView extends ViewGroup {
      * @see CodeScanner
      */
     public CodeScannerView(@NonNull final Context context, @Nullable final AttributeSet attrs,
-            @AttrRes final int defStyleAttr) {
+                           @AttrRes final int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initialize(context, attrs, defStyleAttr, 0);
     }
@@ -119,13 +118,13 @@ public final class CodeScannerView extends ViewGroup {
      */
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     public CodeScannerView(final Context context, final AttributeSet attrs,
-            @AttrRes final int defStyleAttr, @StyleRes final int defStyleRes) {
+                           @AttrRes final int defStyleAttr, @StyleRes final int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         initialize(context, attrs, defStyleAttr, defStyleRes);
     }
 
     private void initialize(@NonNull final Context context, @Nullable final AttributeSet attrs,
-            @AttrRes final int defStyleAttr, @StyleRes final int defStyleRes) {
+                            @AttrRes final int defStyleAttr, @StyleRes final int defStyleRes) {
         mPreviewView = new SurfaceView(context);
         mPreviewView.setLayoutParams(
                 new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
@@ -141,7 +140,7 @@ public final class CodeScannerView extends ViewGroup {
         mAutoFocusButton.setImageResource(R.drawable.ic_code_scanner_auto_focus_on);
         mAutoFocusButton.setOnClickListener(new AutoFocusClickListener());
         mFlashButton = new ImageView(context);
-        mFlashButton.setLayoutParams(new LayoutParams(mButtonSize, mButtonSize) );
+        mFlashButton.setLayoutParams(new LayoutParams(mButtonSize, mButtonSize));
         mFlashButton.setScaleType(ImageView.ScaleType.CENTER);
         mFlashButton.setImageResource(R.drawable.ic_code_scanner_flash_on);
         mFlashButton.setOnClickListener(new FlashClickListener());
@@ -215,13 +214,13 @@ public final class CodeScannerView extends ViewGroup {
 
     @Override
     protected void onLayout(final boolean changed, final int left, final int top, final int right,
-            final int bottom) {
+                            final int bottom) {
         performLayout(right - left, bottom - top);
     }
 
     @Override
     protected void onSizeChanged(final int width, final int height, final int oldWidth,
-            final int oldHeight) {
+                                 final int oldHeight) {
         performLayout(width, height);
         final SizeListener listener = mSizeListener;
         if (listener != null) {

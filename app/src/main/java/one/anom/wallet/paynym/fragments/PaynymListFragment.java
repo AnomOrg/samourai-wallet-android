@@ -16,12 +16,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import one.anom.wallet.R;
+
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.bip47.paynym.WebUtil;
 import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
 import one.anom.wallet.widgets.CircleImageView;
 import one.anom.wallet.widgets.ItemDividerDecorator;
 
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.bip47.paynym.WebUtil;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -87,7 +88,7 @@ public class PaynymListFragment extends Fragment {
                 makeSceneTransitionAnimation(getActivity(), holder.avatar, "profile");
 
 
-        startActivity(new Intent(getActivity(), PayNymDetailsActivity.class).putExtra("pcode", pcode),options.toBundle());
+        startActivity(new Intent(getActivity(), PayNymDetailsActivity.class).putExtra("pcode", pcode), options.toBundle());
     }
 
 
@@ -107,7 +108,7 @@ public class PaynymListFragment extends Fragment {
             Picasso.with(getContext()).load(WebUtil.PAYNYM_API + strPaymentCode + "/avatar")
                     .into(holder.avatar);
             holder.paynymCode.setText(BIP47Meta.getInstance().getDisplayLabel(strPaymentCode));
-            holder.avatar.getRootView().setOnClickListener(view -> onPayNymItemClick(pcodes.get(position),holder));
+            holder.avatar.getRootView().setOnClickListener(view -> onPayNymItemClick(pcodes.get(position), holder));
         }
 
         @Override

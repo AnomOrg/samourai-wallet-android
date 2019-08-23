@@ -8,12 +8,10 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
-//import android.util.Log;
 
 import one.anom.wallet.util.AppUtil;
 
-
-public class SettingsActivity extends PreferenceActivity	{
+public class SettingsActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +139,9 @@ public class SettingsActivity extends PreferenceActivity	{
 
         int id = item.getItemId();
 
-        if(id == android.R.id.home) {
+        if (id == android.R.id.home) {
             finish();
-        }
-        else {
+        } else {
             ;
         }
 

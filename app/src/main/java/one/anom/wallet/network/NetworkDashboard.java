@@ -20,14 +20,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.R;
-import one.anom.wallet.service.WebSocketService;
 import one.dm.zbar.android.scanner.ZBarConstants;
-import com.msopentech.thali.android.toronionproxy.NetworkManager;
-
+import one.msopentech.thali.android.toronionproxy.NetworkManager;
+import one.anom.wallet.R;
 import one.anom.wallet.api.APIFactory;
 
 import one.anom.wallet.fragments.CameraFragmentBottomSheet;
+import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.network.dojo.DojoUtil;
 
 import one.anom.wallet.tor.TorManager;
@@ -105,13 +104,13 @@ public class NetworkDashboard extends AppCompatActivity {
         dataButton.setOnClickListener(view -> toggleNetwork());
 
         torRenewBtn.setOnClickListener(view -> {
-            if(TorManager.getInstance(getApplicationContext()).isConnected()){
-                startService(new Intent(this,TorService.class).setAction(TorService.RENEW_IDENTITY));
+            if (TorManager.getInstance(getApplicationContext()).isConnected()) {
+                startService(new Intent(this, TorService.class).setAction(TorService.RENEW_IDENTITY));
             }
         });
         dojoBtn.setOnClickListener(view -> {
 
-            Toast.makeText(this, getString(R.string.temporary_dojo_disable),Toast.LENGTH_LONG).show();
+            Toast.makeText(this, getString(R.string.temporary_dojo_disable), Toast.LENGTH_LONG).show();
 //            DojoConfigureBottomSheet dojoConfigureBottomSheet = new DojoConfigureBottomSheet();
 //            dojoConfigureBottomSheet.show(getSupportFragmentManager(), dojoConfigureBottomSheet.getTag());
 //
@@ -132,15 +131,14 @@ public class NetworkDashboard extends AppCompatActivity {
         torButton.setOnClickListener(view -> {
 
             if (TorManager.getInstance(getApplicationContext()).isRequired()) {
-                if(DojoUtil.getInstance(NetworkDashboard.this).getDojoParams() !=null ){
-                    Toast.makeText(this,R.string.cannot_disable_tor_dojo,Toast.LENGTH_LONG).show();
+                if (DojoUtil.getInstance(NetworkDashboard.this).getDojoParams() != null) {
+                    Toast.makeText(this, R.string.cannot_disable_tor_dojo, Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 stopTor();
                 PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, false);
-            }
-            else {
+            } else {
                 if (AppUtil.getInstance(NetworkDashboard.this.getApplicationContext()).isServiceRunning(WebSocketService.class)) {
                     stopService(new Intent(NetworkDashboard.this.getApplicationContext(), WebSocketService.class));
                 }
@@ -155,8 +153,8 @@ public class NetworkDashboard extends AppCompatActivity {
                 .debounce(100, TimeUnit.MILLISECONDS)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(state->{
-                    new Handler().postDelayed(this::setDataState,300);
+                .subscribe(state -> {
+                    new Handler().postDelayed(this::setDataState, 300);
                 }, error -> {
                     Log.i(TAG, "onCreate: ".concat(error.getMessage()));
                 });
@@ -164,11 +162,10 @@ public class NetworkDashboard extends AppCompatActivity {
 
         dojoLayout = findViewById(R.id.network_dojo_layout);
         dojoLayout.setVisibility(View.GONE);
-        if(DojoUtil.getInstance(NetworkDashboard.this).getDojoParams() != null)    {
+        if (DojoUtil.getInstance(NetworkDashboard.this).getDojoParams() != null) {
             dojoLayout.setVisibility(View.VISIBLE);
             setDojoConnectionState(CONNECTION_STATUS.ENABLED);
-        }
-        else    {
+        } else {
             resetAPI();
             dojoLayout.setVisibility(View.GONE);
             setDojoConnectionState(CONNECTION_STATUS.DISABLED);
@@ -189,16 +186,14 @@ public class NetworkDashboard extends AppCompatActivity {
 
         if (resultCode == Activity.RESULT_OK && requestCode == SCAN_PAIRING) {
             final String strResult = data.getStringExtra(ZBarConstants.SCAN_RESULT).trim();
-            if(DojoUtil.getInstance(NetworkDashboard.this).isValidPairingPayload(strResult))    {
+            if (DojoUtil.getInstance(NetworkDashboard.this).isValidPairingPayload(strResult)) {
                 DojoUtil.getInstance(NetworkDashboard.this).clear();
                 strPairingParams = strResult;
                 enableDojoConfigure(strPairingParams);
             }
-        }
-        else if (resultCode == Activity.RESULT_CANCELED && requestCode == SCAN_PAIRING) {
+        } else if (resultCode == Activity.RESULT_CANCELED && requestCode == SCAN_PAIRING) {
             ;
-        }
-        else {
+        } else {
             ;
         }
 
@@ -207,7 +202,7 @@ public class NetworkDashboard extends AppCompatActivity {
     private void doScan() {
 
         CameraFragmentBottomSheet cameraFragmentBottomSheet = new CameraFragmentBottomSheet();
-        cameraFragmentBottomSheet.show(getSupportFragmentManager(),cameraFragmentBottomSheet.getTag());
+        cameraFragmentBottomSheet.show(getSupportFragmentManager(), cameraFragmentBottomSheet.getTag());
 
         cameraFragmentBottomSheet.setQrCodeScanLisenter(code -> {
             cameraFragmentBottomSheet.dismissAllowingStateLoss();
@@ -216,8 +211,7 @@ public class NetworkDashboard extends AppCompatActivity {
                     DojoUtil.getInstance(NetworkDashboard.this).clear();
                     strPairingParams = code.trim();
                     enableDojoConfigure(strPairingParams);
-                }
-                else {
+                } else {
                     ;
                 }
             } catch (Exception e) {
@@ -236,14 +230,14 @@ public class NetworkDashboard extends AppCompatActivity {
             setDataConnectionState(CONNECTION_STATUS.ENABLED);
             if (TorManager.getInstance(getApplicationContext()).isRequired() && !TorManager.getInstance(getApplicationContext()).isConnected()) {
                 startTor();
-             }
+            }
         } else {
             setDataConnectionState(CONNECTION_STATUS.DISABLED);
             if (TorManager.getInstance(getApplicationContext()).isConnected()) {
                 stopTor();
             }
-            if(!ConnectionChangeReceiver.isConnected(getApplicationContext())){
-               Snackbar.make(torButton.getRootView(),"No data connection",Snackbar.LENGTH_SHORT).show();
+            if (!ConnectionChangeReceiver.isConnected(getApplicationContext())) {
+                Snackbar.make(torButton.getRootView(), "No data connection", Snackbar.LENGTH_SHORT).show();
             }
         }
     }
@@ -260,13 +254,13 @@ public class NetworkDashboard extends AppCompatActivity {
                 .torStatus
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( this::setTorConnectionState);
+                .subscribe(this::setTorConnectionState);
 
         disposables.add(disposable);
 
         NetworkDashboard.this.runOnUiThread(new Runnable() {
             public void run() {
-                    setTorConnectionState(TorManager.getInstance(getApplicationContext()).isConnected() ? TorManager.CONNECTION_STATES.CONNECTED : TorManager.CONNECTION_STATES.DISCONNECTED);
+                setTorConnectionState(TorManager.getInstance(getApplicationContext()).isConnected() ? TorManager.CONNECTION_STATES.CONNECTED : TorManager.CONNECTION_STATES.DISCONNECTED);
             }
         });
 
@@ -323,7 +317,7 @@ public class NetworkDashboard extends AppCompatActivity {
                 torConnectionIcon.setColorFilter(activeColor);
                 torConnectionStatus.setText("Enabled");
                 torRenewBtn.setVisibility(View.VISIBLE);
-                if(waitingForPairing)    {
+                if (waitingForPairing) {
                     waitingForPairing = false;
 
                     if (strPairingParams != null) {
@@ -334,15 +328,13 @@ public class NetworkDashboard extends AppCompatActivity {
 
                 }
 
-            }
-            else if (enabled == TorManager.CONNECTION_STATES.CONNECTING) {
+            } else if (enabled == TorManager.CONNECTION_STATES.CONNECTING) {
                 torRenewBtn.setVisibility(View.INVISIBLE);
                 torButton.setText("loading...");
                 torButton.setEnabled(false);
                 torConnectionIcon.setColorFilter(waiting);
                 torConnectionStatus.setText("Tor initializing");
-            }
-            else  {
+            } else {
                 torRenewBtn.setVisibility(View.INVISIBLE);
                 torButton.setText("Enable");
                 torButton.setEnabled(true);
@@ -392,7 +384,7 @@ public class NetworkDashboard extends AppCompatActivity {
         return true;
     }
 
-    private void enableDojoConfigure(String params)  {
+    private void enableDojoConfigure(String params) {
 
         Log.d("NetworkDashboard", "enableDojoConfigure()");
 

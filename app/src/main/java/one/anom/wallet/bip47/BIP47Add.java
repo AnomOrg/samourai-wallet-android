@@ -16,13 +16,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 //import android.util.Log;
 
-import one.anom.wallet.R;
 import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import com.samourai.wallet.crypto.DecryptionException;
-import com.samourai.wallet.util.CharSequenceX;
-import one.anom.wallet.util.FormatsUtil;
 
+import com.samourai.wallet.crypto.DecryptionException;
+
+import one.anom.wallet.payload.PayloadUtil;
+
+import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.R;
 
 import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONException;
@@ -45,14 +48,14 @@ public class BIP47Add extends Activity {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        edLabel = (EditText)findViewById(R.id.label);
-        edPCode = (EditText)findViewById(R.id.pcode);
+        edLabel = (EditText) findViewById(R.id.label);
+        edPCode = (EditText) findViewById(R.id.pcode);
 
         Bundle extras = getIntent().getExtras();
-        if(extras != null && extras.containsKey("pcode"))	{
+        if (extras != null && extras.containsKey("pcode")) {
             edPCode.setText(extras.getString("pcode"));
         }
-        if(extras != null && extras.containsKey("label"))	{
+        if (extras != null && extras.containsKey("label")) {
             edLabel.setText(extras.getString("label"));
         }
 
@@ -91,27 +94,24 @@ public class BIP47Add extends Activity {
 
         int id = item.getItemId();
 
-        if(id == android.R.id.home) {
+        if (id == android.R.id.home) {
             finish();
-        }
-        else if(id == R.id.action_add) {
+        } else if (id == R.id.action_add) {
 
             View view = BIP47Add.this.getCurrentFocus();
-            if(view != null) {
-                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
             }
 
             String label = edLabel.getText().toString();
             final String pcode = edPCode.getText().toString();
 
-            if(pcode == null || pcode.length() < 1 || !FormatsUtil.getInstance().isValidPaymentCode(pcode))    {
+            if (pcode == null || pcode.length() < 1 || !FormatsUtil.getInstance().isValidPaymentCode(pcode)) {
                 Toast.makeText(BIP47Add.this, R.string.invalid_payment_code, Toast.LENGTH_SHORT).show();
-            }
-            else if(label == null || label.length() < 1)    {
+            } else if (label == null || label.length() < 1) {
                 Toast.makeText(BIP47Add.this, R.string.bip47_no_label_error, Toast.LENGTH_SHORT).show();
-            }
-            else    {
+            } else {
                 BIP47Meta.getInstance().setLabel(pcode, label);
 
                 new Thread(new Runnable() {
@@ -121,32 +121,25 @@ public class BIP47Add extends Activity {
 
                         try {
                             PayloadUtil.getInstance(BIP47Add.this).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(BIP47Add.this).getGUID() + AccessFactory.getInstance().getPIN()));
-                        }
-                        catch(MnemonicException.MnemonicLengthException mle) {
+                        } catch (MnemonicException.MnemonicLengthException mle) {
                             mle.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        catch(DecoderException de) {
+                        } catch (DecoderException de) {
                             de.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        catch(JSONException je) {
+                        } catch (JSONException je) {
                             je.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        catch(IOException ioe) {
+                        } catch (IOException ioe) {
                             ioe.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        catch(java.lang.NullPointerException npe) {
+                        } catch (java.lang.NullPointerException npe) {
                             npe.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        catch(DecryptionException de) {
+                        } catch (DecryptionException de) {
                             de.printStackTrace();
                             Toast.makeText(BIP47Add.this, R.string.decryption_error, Toast.LENGTH_SHORT).show();
-                        }
-                        finally {
+                        } finally {
                             ;
                         }
 
@@ -162,8 +155,7 @@ public class BIP47Add extends Activity {
 
             }
 
-        }
-        else {
+        } else {
             ;
         }
 

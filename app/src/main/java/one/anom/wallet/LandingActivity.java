@@ -27,22 +27,9 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.network.dojo.DojoConfigureBottomSheet;
-import one.anom.wallet.network.dojo.DojoUtil;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.tor.TorManager;
-import one.anom.wallet.tor.TorService;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.WebUtil;
-
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.hd.HD_Wallet;
-import one.anom.wallet.permissions.PermissionsUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
 import org.apache.commons.codec.DecoderException;
@@ -61,8 +48,20 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.network.dojo.DojoConfigureBottomSheet;
+import one.anom.wallet.network.dojo.DojoUtil;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.permissions.PermissionsUtil;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.tor.TorService;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.WebUtil;
 
-public class LandingActivity extends AppCompatActivity  {
+public class LandingActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog = null;
     private ProgressBar progressBarTor;
@@ -75,6 +74,7 @@ public class LandingActivity extends AppCompatActivity  {
     private boolean waitingForPairing = false;
     private String strPairingParams = null;
     private static final String TAG = "LandingActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +96,7 @@ public class LandingActivity extends AppCompatActivity  {
         setAppVersion();
         if (PayloadUtil.getInstance(this).getBackupFile().exists()) {
             snackBarView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             snackBarView.setVisibility(View.INVISIBLE);
 
         }
@@ -225,7 +225,7 @@ public class LandingActivity extends AppCompatActivity  {
     @Override
     protected void onDestroy() {
         compositeDisposables.dispose();
-        if( progressDialog !=null && progressDialog.isShowing()){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         super.onDestroy();
@@ -265,7 +265,7 @@ public class LandingActivity extends AppCompatActivity  {
         }
     }
 
-    private void doDojoPairing0()    {
+    private void doDojoPairing0() {
         waitingForPairing = true;
         DojoConfigureBottomSheet dojoConfigureBottomSheet = new DojoConfigureBottomSheet();
         dojoConfigureBottomSheet.show(getSupportFragmentManager(), dojoConfigureBottomSheet.getTag());
@@ -283,7 +283,7 @@ public class LandingActivity extends AppCompatActivity  {
                 new Handler().postDelayed(() -> {
                     Intent intent = new Intent(LandingActivity.this, CreateWalletActivity.class);
                     startActivity(intent);
-                },400);
+                }, 400);
             }
 
             @Override
@@ -292,7 +292,6 @@ public class LandingActivity extends AppCompatActivity  {
             }
         });
     }
-
 
 
     @Override

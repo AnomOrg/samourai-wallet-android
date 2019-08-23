@@ -1,5 +1,5 @@
 package one.anom.wallet.util;
- 
+
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -10,17 +10,19 @@ import android.util.Log;
 import android.widget.Toast;
 
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
-import one.anom.wallet.R;
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.MainActivity2;
-import one.anom.wallet.api.APIFactory;
-import com.samourai.wallet.hd.HD_Wallet;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.prng.PRNGFixes;
 
+import one.anom.wallet.MainActivity2;
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
+
+import com.samourai.wallet.hd.HD_Wallet;
+
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.prng.PRNGFixes;
+import one.anom.wallet.R;
 import one.anom.wallet.ricochet.RicochetMeta;
+import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.send.BlockedUTXO;
 
 import java.io.File;
@@ -38,9 +40,9 @@ public class AppUtil {
     public static final String OPENVPN_PACKAGE_ID = "de.blinkt.openvpn";
 
     private boolean isInForeground = false;
-	
-	private static AppUtil instance = null;
-	private static Context context = null;
+
+    private static AppUtil instance = null;
+    private static Context context = null;
 
     private static String strReceiveQRFilename = null;
     private static String strBackupFilename = null;
@@ -52,20 +54,22 @@ public class AppUtil {
     private static boolean isOfflineMode = false;
     private static boolean isUserOfflineMode = false;
 
-    private AppUtil() { ; }
+    private AppUtil() {
+        ;
+    }
 
-	public static AppUtil getInstance(Context ctx) {
-		
-		context = ctx;
-		
-		if(instance == null) {
+    public static AppUtil getInstance(Context ctx) {
+
+        context = ctx;
+
+        if (instance == null) {
             strReceiveQRFilename = context.getExternalCacheDir() + File.separator + "qr.png";
             strBackupFilename = context.getCacheDir() + File.separator + "backup.asc";
-			instance = new AppUtil();
-		}
-		
-		return instance;
-	}
+            instance = new AppUtil();
+        }
+
+        return instance;
+    }
 
     public boolean isOfflineMode() {
 
@@ -91,14 +95,13 @@ public class AppUtil {
         try {
             HD_Wallet hdw = HD_WalletFactory.getInstance(context).get();
             String[] s = hdw.getXPUBs();
-            for(int i = 0; i < s.length; i++)   {
+            for (int i = 0; i < s.length; i++) {
 //                APIFactory.getInstance(context).deleteXPUB(s[i], false);
             }
             String _s = BIP49Util.getInstance(context).getWallet().getAccount(0).ypubstr();
 //            APIFactory.getInstance(context).deleteXPUB(_s, true);
             PayloadUtil.getInstance(context).wipe();
-        }
-        catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -109,14 +112,13 @@ public class AppUtil {
         try {
             context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
             PrefsUtil.getInstance(context).setValue(PrefsUtil.ICON_HIDDEN, false);
-        }
-        catch(IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             ;
         }
 
         APIFactory.getInstance(context).setXpubBalance(0L);
         APIFactory.getInstance(context).reset();
-		PrefsUtil.getInstance(context).clear();
+        PrefsUtil.getInstance(context).clear();
         BlockedUTXO.getInstance().clear();
         RicochetMeta.getInstance(context).empty();
         SendAddressUtil.getInstance().reset();
@@ -124,57 +126,53 @@ public class AppUtil {
         BatchSendUtil.getInstance().clear();
         AccessFactory.getInstance(context).setIsLoggedIn(false);
         TrustedNodeUtil.getInstance().reset();
-	}
+    }
 
-	public void restartApp() {
-		Intent intent = new Intent(context, MainActivity2.class);
-        if(PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
+    public void restartApp() {
+        Intent intent = new Intent(context, MainActivity2.class);
+        if (PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }
-        else {
+        } else {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
-		context.startActivity(intent);
-	}
+        context.startActivity(intent);
+    }
 
-	public void restartApp(Bundle extras) {
+    public void restartApp(Bundle extras) {
 
-		Intent intent = new Intent(context, MainActivity2.class);
-        if(PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
+        Intent intent = new Intent(context, MainActivity2.class);
+        if (PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }
-        else {
+        } else {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
-        if(extras!=null){
+        if (extras != null) {
             intent.putExtras(extras);
         }
-		context.startActivity(intent);
-	}
+        context.startActivity(intent);
+    }
 
-	public void restartApp(String name, boolean value) {
+    public void restartApp(String name, boolean value) {
         Intent intent = new Intent(context, MainActivity2.class);
-        if(PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
+        if (PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }
-        else {
+        } else {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
-		if(name != null) {
-    		intent.putExtra(name, value);
-		}
-		context.startActivity(intent);
-	}
+        if (name != null) {
+            intent.putExtra(name, value);
+        }
+        context.startActivity(intent);
+    }
 
     public void restartApp(String name, String value) {
         Intent intent = new Intent(context, MainActivity2.class);
-        if(PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
+        if (PrefsUtil.getInstance(context).getValue(PrefsUtil.ICON_HIDDEN, false) == true) {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }
-        else {
+        } else {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         }
-        if(name != null && value != null) {
+        if (name != null && value != null) {
             intent.putExtra(name, value);
         }
         context.startActivity(intent);
@@ -182,7 +180,7 @@ public class AppUtil {
 
     public boolean isServiceRunning(Class<?> serviceClass) {
 
-        ActivityManager manager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager manager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
                 Log.d("AppUtil", "service class name:" + serviceClass.getName() + " is running");
@@ -202,26 +200,26 @@ public class AppUtil {
         isInForeground = foreground;
     }
 
-    public String getReceiveQRFilename(){
+    public String getReceiveQRFilename() {
         return strReceiveQRFilename;
     }
 
-    public String getBackupFilename(){
+    public String getBackupFilename() {
         return strBackupFilename;
     }
 
-    public void deleteQR(){
+    public void deleteQR() {
         String strFileName = strReceiveQRFilename;
         File file = new File(strFileName);
-        if(file.exists()) {
+        if (file.exists()) {
             file.delete();
         }
     }
 
-    public void deleteBackup(){
+    public void deleteBackup() {
         String strFileName = strBackupFilename;
         File file = new File(strFileName);
-        if(file.exists()) {
+        if (file.exists()) {
             file.delete();
         }
     }
@@ -234,11 +232,10 @@ public class AppUtil {
         PRNG_FIXES = prng;
     }
 
-    public void applyPRNGFixes()    {
+    public void applyPRNGFixes() {
         try {
             PRNGFixes.apply();
-        }
-        catch(Exception e0) {
+        } catch (Exception e0) {
             //
             // some Android 4.0 devices throw an exception when PRNGFixes is re-applied
             // removing provider before apply() is a workaround
@@ -246,19 +243,17 @@ public class AppUtil {
             Security.removeProvider("LinuxPRNG");
             try {
                 PRNGFixes.apply();
-            }
-            catch(Exception e1) {
+            } catch (Exception e1) {
                 Toast.makeText(context, R.string.cannot_launch_app, Toast.LENGTH_SHORT).show();
                 System.exit(0);
             }
         }
     }
 
-    public void checkTimeOut()   {
-        if(TimeOutUtil.getInstance().isTimedOut())    {
+    public void checkTimeOut() {
+        if (TimeOutUtil.getInstance().isTimedOut()) {
             AppUtil.getInstance(context).restartApp();
-        }
-        else    {
+        } else {
             TimeOutUtil.getInstance().updatePin();
         }
     }

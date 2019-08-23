@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 import one.anom.wallet.R;
 import one.anom.wallet.whirlpool.models.Coin;
 
@@ -44,9 +43,9 @@ public class CoinsAdapter extends RecyclerView.Adapter<CoinsAdapter.ViewHolder> 
         holder.checkBox.setTag(mCoins.get(position));
 
         // Placeholder for showing tx with coinbase tag
-        if(position==2){
+        if (position == 2) {
             holder.coinbaseGroup.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.coinbaseGroup.setVisibility(View.GONE);
 
         }

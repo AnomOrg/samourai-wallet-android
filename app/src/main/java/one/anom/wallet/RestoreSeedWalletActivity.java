@@ -15,20 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.TimeOutUtil;
-import one.anom.wallet.widgets.MnemonicSeedEditText;
-import one.anom.wallet.widgets.ViewPager;
-
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
-import one.anom.wallet.fragments.ImportWalletFragment;
-import one.anom.wallet.fragments.PinEntryFragment;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.util.CharSequenceX;
 
@@ -44,6 +32,17 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.fragments.ImportWalletFragment;
+import one.anom.wallet.fragments.PinEntryFragment;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.TimeOutUtil;
+import one.anom.wallet.widgets.MnemonicSeedEditText;
+import one.anom.wallet.widgets.ViewPager;
 
 public class RestoreSeedWalletActivity extends FragmentActivity implements
         PinEntryFragment.onPinEntryListener,

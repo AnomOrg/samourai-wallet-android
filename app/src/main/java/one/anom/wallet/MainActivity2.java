@@ -16,20 +16,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.prng.PRNGFixes;
-import one.anom.wallet.service.BackgroundManager;
-import one.anom.wallet.service.WebSocketService;
-import one.anom.wallet.tor.TorManager;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.ConnectivityStatus;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.util.TimeOutUtil;
 import com.auth0.android.jwt.JWT;
-
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
@@ -43,6 +30,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.home.BalanceActivity;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.prng.PRNGFixes;
+import one.anom.wallet.service.BackgroundManager;
+import one.anom.wallet.service.WebSocketService;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.ConnectivityStatus;
+import one.anom.wallet.util.ExchangeRateFactory;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.util.TimeOutUtil;
 
 public class MainActivity2 extends Activity {
 
@@ -139,7 +139,7 @@ public class MainActivity2 extends Activity {
             AppUtil.getInstance(MainActivity2.this).setPRNG_FIXED(true);
         }
 
-        if (TorManager.getInstance(getApplicationContext()).isRequired() && ConnectivityStatus.hasConnectivity(getApplicationContext()) && !TorManager.getInstance(getApplicationContext()).isConnected())  {
+        if (TorManager.getInstance(getApplicationContext()).isRequired() && ConnectivityStatus.hasConnectivity(getApplicationContext()) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
             loaderTxView.setText(getText(R.string.initializing_tor));
             ((AnomApplication) getApplication()).startService();
             Disposable disposable = TorManager.getInstance(this)
@@ -168,7 +168,7 @@ public class MainActivity2 extends Activity {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
 
-            com.anom.wallet.util.ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
+            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
@@ -277,7 +277,7 @@ public class MainActivity2 extends Activity {
                 intent.putExtra("uri", strUri);
                 PrefsUtil.getInstance(MainActivity2.this).setValue("SCHEMED_URI", strUri);
             }
-            if(getBundleExtras()!=null){
+            if (getBundleExtras() != null) {
                 intent.putExtras(getBundleExtras());
             }
             startActivity(intent);
@@ -335,25 +335,24 @@ public class MainActivity2 extends Activity {
 
     private void doAppInit0(final boolean isDial, final String strUri, final String strPCode) {
 
-        if(!APIFactory.getInstance(MainActivity2.this).APITokenRequired())    {
+        if (!APIFactory.getInstance(MainActivity2.this).APITokenRequired()) {
             doAppInit1(isDial, strUri, strPCode);
             return;
         }
 
 
-
         Disposable disposable = Observable.fromCallable(() -> {
             if (APIFactory.getInstance(MainActivity2.this).getAccessToken() == null) {
-                return  true;
+                return true;
             } else {
                 JWT jwt = new JWT(APIFactory.getInstance(MainActivity2.this).getAccessToken());
                 if (jwt.isExpired(APIFactory.getInstance(MainActivity2.this).getAccessTokenRefresh())) {
                     APIFactory.getInstance(MainActivity2.this).getToken(true);
-                    return  true;
+                    return true;
                 }
             }
-            return  false;
-        }) .subscribeOn(Schedulers.io())
+            return false;
+        }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(needToken -> {
 
@@ -369,11 +368,10 @@ public class MainActivity2 extends Activity {
                         doAppInit1(isDial, strUri, strPCode);
                     }
 
-                },error->{
+                }, error -> {
                     error.printStackTrace();
                 });
         compositeDisposables.add(disposable);
-
 
 
     }
@@ -387,14 +385,14 @@ public class MainActivity2 extends Activity {
 
     private Bundle getBundleExtras() {
         Bundle bundle = getIntent().getExtras();
-        if(bundle==null){
+        if (bundle == null) {
             return null;
         }
         if (Intent.ACTION_VIEW.equals(getIntent().getAction()) && getIntent().getScheme() != null && getIntent().getScheme().equals("bitcoin")) {
-            bundle.putString("uri",getIntent().getData().toString());
-        }else {
-            if(bundle.containsKey("uri")){
-                bundle.putString("uri",bundle.getString("uri"));
+            bundle.putString("uri", getIntent().getData().toString());
+        } else {
+            if (bundle.containsKey("uri")) {
+                bundle.putString("uri", bundle.getString("uri"));
             }
         }
 
@@ -404,7 +402,7 @@ public class MainActivity2 extends Activity {
 
     private void doAppInit1(boolean isDial, final String strUri, final String strPCode) {
 
-          if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
+        if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             if (AppUtil.getInstance(MainActivity2.this).isSideLoaded()) {
                 doSelectNet();
@@ -424,7 +422,7 @@ public class MainActivity2 extends Activity {
             Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
             intent.putExtra("notifTx", true);
             intent.putExtra("fetch", true);
-            if(getBundleExtras()!=null){
+            if (getBundleExtras() != null) {
                 intent.putExtras(getBundleExtras());
             }
             startActivity(intent);
@@ -436,10 +434,10 @@ public class MainActivity2 extends Activity {
     }
 
     private void doSelectNet() {
-        if(dlg!=null){
+        if (dlg != null) {
             return;
         }
-          dlg = new AlertDialog.Builder(this)
+        dlg = new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.select_network)
                 .setCancelable(false)

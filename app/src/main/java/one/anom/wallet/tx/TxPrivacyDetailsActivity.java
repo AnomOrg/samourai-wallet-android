@@ -9,11 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import one.anom.wallet.R;
 
 import java.util.Objects;
-
 
 public class TxPrivacyDetailsActivity extends AppCompatActivity {
 
