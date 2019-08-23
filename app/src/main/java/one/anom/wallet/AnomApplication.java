@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.PrefsUtil;
@@ -19,6 +21,7 @@ public class AnomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         setUpChannels();
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false)) {
             startService();
