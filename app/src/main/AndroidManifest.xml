@@ -291,6 +291,9 @@
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="c28223d2f469f2c27d45c4becb4cc91a754ea5b3" />
     </application>
 
 </manifest>
