@@ -73,7 +73,7 @@ public class RefreshService extends IntentService {
             Notification notification = builder.build();
             startForeground(1001, notification);
         } else {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+            Notification.Builder builder = new Notification.Builder(this)
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText("refresh")
                     .setAutoCancel(true);

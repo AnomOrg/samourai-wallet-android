@@ -315,7 +315,6 @@ public class WebSocketHandler {
                                             if (in_addr != null && in_addr.length() > 0) {
                                                 marquee += " from " + in_addr;
                                             }
-
                                             NotificationsFactory.getInstance(context).setNotification(title, marquee, marquee, R.drawable.ic_launcher, MainActivity2.class, 1000);
                                         }
 
