@@ -5,8 +5,12 @@ import java.util.List;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -54,15 +58,27 @@ public class RefreshService extends IntentService {
     protected void onHandleIntent(Intent intent) {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-
-            Notification.Builder builder = new Notification.Builder(this)
+            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel channel = new NotificationChannel("1001",
+                    "refresh_channel",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            channel.setDescription("refresh");
+            if (nm != null) {
+                nm.createNotificationChannel(channel);
+            }
+            Notification.Builder builder = new Notification.Builder(this, "1001")
                     .setContentTitle(getString(R.string.app_name))
                     .setContentText("refresh")
                     .setAutoCancel(true);
-
             Notification notification = builder.build();
             startForeground(1001, notification);
-
+        } else {
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setContentTitle(getString(R.string.app_name))
+                    .setContentText("refresh")
+                    .setAutoCancel(true);
+            Notification notification = builder.build();
+            startForeground(1001, notification);
         }
 
         dragged = intent.getBooleanExtra("dragged", false);
