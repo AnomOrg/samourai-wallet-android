@@ -163,7 +163,7 @@
             app:layout_constraintStart_toEndOf="@+id/textView80"
             app:layout_constraintTop_toTopOf="@+id/textView15" />
 
-        <com.samourai.wallet.widgets.EntropyBar
+        <one.anom.wallet.widgets.EntropyBar
             android:id="@+id/cahoots_entropy_bar"
             android:layout_width="24dp"
             android:layout_height="0dp"

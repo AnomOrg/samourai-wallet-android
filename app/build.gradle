@@ -1,16 +1,25 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    signingConfigs {
+        test {
+            storeFile file('123456')
+            storePassword '123456'
+            keyAlias = '123456'
+            keyPassword '123456'
+        }
+    }
+    compileSdkVersion 28
     buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
     flavorDimensions "versionCode"
     defaultConfig {
-        applicationId 'com.samourai.wallet'
+        applicationId 'one.anom.wallet'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 161
-        versionName "0.99.93"
+        versionCode 152
+        versionName "1.0.1"
+
         // Enabling multidex support.
         multiDexEnabled true
     }
@@ -49,22 +58,22 @@ android {
     }
     productFlavors {
         production {
-            applicationId 'com.samourai.wallet'
+            applicationId 'one.anom.wallet'
             minSdkVersion 21
             targetSdkVersion 28
-            versionCode 161
-            versionName "0.99.93"
-            resValue "string", "app_name", "Samourai"
-            resValue "string", "version_name", "0.99.93"
+            versionCode 148
+            versionName "1.0.1"
+            resValue "string", "app_name", "Wallet"
+            resValue "string", "version_name", "1.0.1"
         }
         staging {
-            applicationId 'com.samourai.wallet.staging'
+            applicationId 'one.anom.wallet.staging'
             minSdkVersion 21
             targetSdkVersion 28
-            versionCode 161
-            versionName "0.99.93"
-            resValue "string", "app_name", "Samourai Staging"
-            resValue "string", "version_name", "0.99.93"
+            versionCode 148
+            versionName "1.0.1"
+            resValue "string", "app_name", "Anom Staging"
+            resValue "string", "version_name", "1.0.1"
         }
     }
     testOptions {
@@ -105,6 +114,7 @@ dependencies {
     implementation 'com.github.mjdev:libaums:0.5.5'
     implementation 'de.mindpipe.android:android-logging-log4j:1.0.3'
     implementation 'com.github.magnusja:java-fs:0.1.3'
+    //noinspection GradleCompatible
     implementation 'com.android.support:support-v4:26.1.0'
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.yanzhenjie.zbar:camera:1.0.0'

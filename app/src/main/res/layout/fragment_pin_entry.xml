@@ -10,7 +10,7 @@
         android:orientation="vertical"
         android:paddingLeft="22dp"
         android:paddingRight="22dp"
-        tools:context="com.samourai.wallet.fragments.PassphraseEntryFragment">
+        tools:context="one.anom.wallet.fragments.PassphraseEntryFragment">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.samourai.wallet.widgets.PinEntryView
+            <one.anom.wallet.widgets.PinEntryView
                 android:id="@+id/pin_entry_view"
                 android:layout_width="320dp"
                 android:layout_height="match_parent"

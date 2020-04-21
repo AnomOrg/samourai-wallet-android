@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.samourai.wallet.widgets.ViewPager
+    <one.anom.wallet.widgets.ViewPager
         android:id="@+id/wallet_create_viewpager"
         android:layout_width="match_parent"
         android:layout_marginBottom="52dp"
@@ -47,7 +47,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/dots"
+            android:id="@+id/dot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="60"
