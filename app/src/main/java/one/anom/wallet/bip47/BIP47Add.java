@@ -16,11 +16,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 //import android.util.Log;
 
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.R;
 import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.crypto.DecryptionException;
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.FormatsUtil;
 
 import org.bitcoinj.crypto.MnemonicException;

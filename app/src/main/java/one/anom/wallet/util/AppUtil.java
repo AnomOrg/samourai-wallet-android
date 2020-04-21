@@ -9,12 +9,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.samourai.wallet.hd.HD_Wallet;
+
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.R;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_Wallet;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.prng.PRNGFixes;

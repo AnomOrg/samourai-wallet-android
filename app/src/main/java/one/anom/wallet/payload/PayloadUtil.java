@@ -8,7 +8,10 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 //import android.util.Log;
 
+import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.hd.HD_Account;
+import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.util.CharSequenceX;
 
 import one.anom.wallet.R;

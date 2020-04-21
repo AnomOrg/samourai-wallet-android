@@ -1,6 +1,7 @@
 package one.anom.wallet.whirlpool.models;
 
-import one.anom.wallet.api.backend.beans.UnspentResponse;
+
+import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount;
 import com.samourai.whirlpool.client.wallet.beans.WhirlpoolUtxo;
 import com.samourai.whirlpool.client.wallet.beans.WhirlpoolUtxoConfig;

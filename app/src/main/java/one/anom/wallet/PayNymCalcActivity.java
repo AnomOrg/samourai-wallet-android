@@ -18,14 +18,16 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
 
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.segwit.SegwitAddress;
+
 import one.anom.wallet.util.AppUtil;
 
 import java.util.ArrayList;

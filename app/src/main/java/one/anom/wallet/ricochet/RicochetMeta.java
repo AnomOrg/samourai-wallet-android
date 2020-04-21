@@ -3,18 +3,20 @@ package one.anom.wallet.ricochet;
 import android.content.Context;
 //import android.util.Log;
 
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.segwit.bech32.Bech32Segwit;
+
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.bip47.SendNotifTxFactory;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.hd.HD_Address;
+
 
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
-import one.anom.wallet.segwit.bech32.Bech32Segwit;
 
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionOutPoint;

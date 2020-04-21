@@ -1,7 +1,8 @@
 package one.anom.wallet.bip47.rpc;
 
-import one.anom.wallet.bip47.rpc.secretPoint.ISecretPoint;
-import one.anom.wallet.bip47.rpc.secretPoint.ISecretPointFactory;
+
+import com.samourai.wallet.bip47.rpc.secretPoint.ISecretPoint;
+import com.samourai.wallet.bip47.rpc.secretPoint.ISecretPointFactory;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

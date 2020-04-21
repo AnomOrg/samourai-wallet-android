@@ -1,6 +1,7 @@
 package one.anom.wallet.JSONRPC;
 
-import one.anom.wallet.util.CharSequenceX;
+
+import com.samourai.wallet.util.CharSequenceX;
 
 import org.json.JSONException;
 import org.json.JSONObject;

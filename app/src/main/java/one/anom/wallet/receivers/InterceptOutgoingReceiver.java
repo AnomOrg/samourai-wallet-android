@@ -5,10 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.crypto.AESUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.TimeOutUtil;
 

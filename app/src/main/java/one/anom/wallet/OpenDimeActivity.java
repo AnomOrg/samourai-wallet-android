@@ -55,6 +55,8 @@ import com.github.mjdev.libaums.fs.UsbFile;
 import com.github.mjdev.libaums.fs.UsbFileInputStream;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
 
@@ -63,7 +65,6 @@ import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.send.SweepUtil;
 import one.anom.wallet.util.AppUtil;
 
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.PrivKeyReader;

@@ -2,7 +2,8 @@ package one.anom.wallet.access;
 
 import android.content.Context;
 
-import one.anom.wallet.util.CharSequenceX;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.util.PrefsUtil;
 
 import org.bouncycastle.util.encoders.Hex;

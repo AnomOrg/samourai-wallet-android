@@ -3,6 +3,9 @@ package one.anom.wallet.hd;
 import android.content.Context;
 //import android.util.Log;
 
+import com.samourai.wallet.bip47.rpc.BIP47Wallet;
+import com.samourai.wallet.hd.HD_Wallet;
+
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -12,8 +15,7 @@ import org.bitcoinj.crypto.MnemonicException;
 
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.BIP47Wallet;
-import one.anom.wallet.hd.HD_Wallet;
+
 
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;

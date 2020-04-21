@@ -3,15 +3,16 @@ package one.anom.wallet.util;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.hd.HD_Wallet;
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import org.bitcoinj.crypto.MnemonicException;
 import one.anom.wallet.SamouraiWallet;
 
-import one.anom.wallet.hd.HD_Address;
-import one.anom.wallet.hd.HD_Wallet;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
 
 import java.io.IOException;
 import java.util.HashMap;

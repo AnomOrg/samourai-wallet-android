@@ -17,10 +17,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.auth0.android.jwt.JWT;
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.util.CharSequenceX;
 
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.crypto.AESUtil;
 import one.anom.wallet.home.BalanceActivity;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.prng.PRNGFixes;
@@ -28,7 +29,6 @@ import one.anom.wallet.service.BackgroundManager;
 import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;

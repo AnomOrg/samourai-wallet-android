@@ -1,8 +1,8 @@
 package one.anom.wallet.segwit.bech32;
 
-import one.anom.wallet.SamouraiWallet;
+import com.samourai.wallet.segwit.bech32.Bech32Segwit;
 
-import one.anom.wallet.segwit.bech32.Bech32Segwit;
+import one.anom.wallet.SamouraiWallet;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bouncycastle.util.encoders.Hex;

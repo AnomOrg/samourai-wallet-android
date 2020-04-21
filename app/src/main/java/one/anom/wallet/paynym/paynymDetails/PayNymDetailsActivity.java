@@ -39,10 +39,7 @@ import one.anom.wallet.api.Tx;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.bip47.SendNotifTxFactory;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
 import one.anom.wallet.bip47.rpc.SecretPoint;
-import one.anom.wallet.crypto.DecryptionException;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.bip47.paynym.WebUtil;
@@ -60,12 +57,16 @@ import one.anom.wallet.send.SuggestedFee;
 import one.anom.wallet.send.UTXO;
 import one.anom.wallet.send.UTXOFactory;
 import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
 import one.anom.wallet.widgets.ItemDividerDecorator;
+
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.util.CharSequenceX;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 

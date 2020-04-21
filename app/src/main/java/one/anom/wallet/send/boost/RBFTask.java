@@ -10,20 +10,21 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.bip69.BIP69OutputComparator;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.bip69.BIP69OutputComparator;
-import one.anom.wallet.hd.HD_Address;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionInput;

@@ -10,15 +10,16 @@ import android.text.TextWatcher;
 import android.view.Gravity;
 import android.widget.EditText;
 
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.segwit.bech32.Bech32Segwit;
+
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.cahoots.psbt.PSBT;
-import one.anom.wallet.hd.HD_Address;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
-import one.anom.wallet.segwit.bech32.Bech32Segwit;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionOutPoint;

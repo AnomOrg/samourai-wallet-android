@@ -20,15 +20,16 @@ import android.widget.Toast;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.google.zxing.client.android.Contents;
 import one.google.zxing.client.android.encode.QRCodeEncoder;
 
-import one.anom.wallet.hd.HD_Address;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
 import one.anom.wallet.util.AppUtil;
 
 import one.anom.wallet.util.FormatsUtil;

@@ -2,7 +2,7 @@ package one.anom.wallet.bip47;
 
 import android.content.Context;
 
-import one.anom.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONArray;

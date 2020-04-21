@@ -14,6 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 //import android.util.Log;
 
+import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.R;
 import one.anom.wallet.home.BalanceActivity;
 import one.anom.wallet.SamouraiWallet;
@@ -21,12 +26,9 @@ import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.NotSecp256k1Exception;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
+
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.send.PushTx;
 
 import org.bitcoinj.crypto.MnemonicException;

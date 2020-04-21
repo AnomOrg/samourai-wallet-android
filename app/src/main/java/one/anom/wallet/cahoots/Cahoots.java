@@ -1,8 +1,9 @@
 package one.anom.wallet.cahoots;
 
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.util.Z85;
+
 import one.anom.wallet.cahoots.psbt.PSBT;
-import one.anom.wallet.segwit.SegwitAddress;
-import one.anom.wallet.util.Z85;
 
 import org.bitcoinj.core.*;
 import org.bitcoinj.crypto.TransactionSignature;

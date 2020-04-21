@@ -2,9 +2,10 @@ package one.anom.wallet.util;
 
 import android.content.Context;
 
+import com.samourai.wallet.util.FormatsUtilGeneric;
+
 import one.anom.wallet.SamouraiWallet;
 
-import one.anom.wallet.util.FormatsUtilGeneric;
 
 import org.bitcoinj.core.NetworkParameters;
 

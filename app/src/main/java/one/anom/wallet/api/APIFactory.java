@@ -17,17 +17,12 @@ import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.NotSecp256k1Exception;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.crypto.DecryptionException;
-import one.anom.wallet.hd.HD_Address;
-import one.anom.wallet.hd.HD_Wallet;
+
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.BlockedUTXO;
 import one.anom.wallet.send.FeeUtil;
@@ -46,6 +41,13 @@ import one.anom.wallet.util.WebUtil;
 import one.anom.wallet.utxos.UTXOUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 import one.anom.whirlpool.client.wallet.AndroidWhirlpoolWalletService;
+
+import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.hd.HD_Wallet;
+import com.samourai.wallet.segwit.SegwitAddress;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWallet;
 import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount;
 

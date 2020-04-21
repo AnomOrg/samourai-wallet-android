@@ -10,6 +10,7 @@ import com.neovisionaries.ws.client.WebSocket;
 import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
 
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.R;
@@ -17,7 +18,6 @@ import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.PaymentCode;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.MonetaryUtil;

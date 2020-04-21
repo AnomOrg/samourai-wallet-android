@@ -3,16 +3,16 @@ package one.anom.wallet.bip47;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.samourai.wallet.bip47.BIP47UtilGeneric;
+import com.samourai.wallet.bip47.rpc.BIP47Wallet;
+import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.hd.HD_Address;
+
 import one.anom.wallet.SamouraiWallet;
 
-import one.anom.wallet.bip47.BIP47UtilGeneric;
-
 import one.anom.wallet.bip47.rpc.AndroidSecretPointFactory;
-import one.anom.wallet.bip47.rpc.BIP47Wallet;
-import one.anom.wallet.bip47.rpc.NotSecp256k1Exception;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.hd.HD_Address;
 import one.anom.wallet.hd.HD_WalletFactory;
 
 import org.bitcoinj.core.AddressFormatException;

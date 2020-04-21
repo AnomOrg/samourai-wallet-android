@@ -1,10 +1,10 @@
 package one.anom.whirlpool.client.wallet;
 
 import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.api.backend.beans.UnspentResponse;
 import one.anom.wallet.send.MyTransactionOutPoint;
 import one.anom.wallet.send.UTXO;
 
+import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.whirlpool.client.wallet.WhirlpoolDataService;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWallet;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWalletConfig;

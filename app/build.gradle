@@ -81,7 +81,7 @@ android {
     }
 }
 
-def getApiKey(key){
+static def getApiKey(key){
     def Properties props = new Properties()
     props.load(new FileInputStream(new File('samourai.api')))
     return props[key]

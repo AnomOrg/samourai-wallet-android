@@ -29,10 +29,6 @@ import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.NotSecp256k1Exception;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.crypto.DecryptionException;
 import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.bip47.paynym.WebUtil;
@@ -41,11 +37,16 @@ import one.anom.wallet.paynym.fragments.PaynymListFragment;
 import one.anom.wallet.paynym.fragments.ShowPayNymQRBottomSheet;
 import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
 import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.widgets.ViewPager;
+
+import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.util.CharSequenceX;
 import com.squareup.picasso.Picasso;
 
 import org.bitcoinj.core.AddressFormatException;

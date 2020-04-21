@@ -2,9 +2,10 @@ package one.anom.wallet.util;
 
 import android.util.Base64;
 
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.SamouraiWallet;
 
-import one.anom.wallet.util.CharSequenceX;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bitcoinj.core.Base58;

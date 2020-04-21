@@ -25,7 +25,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.api.backend.beans.UnspentResponse;
 
 import one.anom.wallet.R;
 import one.anom.wallet.send.BlockedUTXO;
@@ -45,6 +44,8 @@ import one.anom.wallet.whirlpool.newPool.fragments.ReviewPoolFragment;
 import one.anom.wallet.whirlpool.newPool.fragments.SelectPoolFragment;
 import one.anom.wallet.whirlpool.service.WhirlpoolNotificationService;
 import one.anom.wallet.widgets.ViewPager;
+
+import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.whirlpool.client.tx0.Tx0;
 import com.samourai.whirlpool.client.tx0.Tx0Config;
 import com.samourai.whirlpool.client.tx0.UnspentOutputWithKey;

@@ -1,22 +1,36 @@
 package one.anom.whirlpool.client.tx0;
 
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.segwit.bech32.Bech32Util;
-import one.anom.wallet.send.FeeUtil;
 
+import com.samourai.wallet.api.backend.beans.UnspentResponse;
 
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.util.FeeUtil;
 import com.samourai.whirlpool.client.tx0.Tx0Service;
 import com.samourai.whirlpool.client.tx0.UnspentOutputWithKey;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWalletConfig;
 
 import org.bitcoinj.core.Address;
+import org.bitcoinj.core.Coin;
+import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.NetworkParameters;
 import org.bitcoinj.core.Transaction;
+import org.bitcoinj.core.TransactionOutPoint;
+import org.bitcoinj.core.TransactionWitness;
+import org.bitcoinj.crypto.TransactionSignature;
 import org.bitcoinj.script.Script;
+import org.bitcoinj.script.ScriptBuilder;
 import org.bouncycastle.util.encoders.Hex;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.math.BigInteger;
 import java.util.Collection;
+
+import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.segwit.bech32.Bech32Util;
+import one.anom.wallet.send.MyTransactionInput;
+import one.anom.wallet.send.MyTransactionOutPoint;
+import one.anom.wallet.util.FormatsUtil;
 
 public class AndroidTx0Service extends Tx0Service {
     private Logger log = LoggerFactory.getLogger(AndroidTx0Service.class.getSimpleName());
@@ -66,20 +80,20 @@ public class AndroidTx0Service extends Tx0Service {
 
     @Override
     protected void buildTx0Input(Transaction tx, UnspentOutputWithKey input, NetworkParameters params) {
-       /* ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
+        ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
         TransactionOutPoint depositSpendFrom = input.computeOutpoint(params);
 
         SegwitAddress segwitAddress = new SegwitAddress(spendFromKey.getPubKey(), params);
         MyTransactionOutPoint _outpoint = new MyTransactionOutPoint(depositSpendFrom.getHash(), (int)depositSpendFrom.getIndex(), BigInteger.valueOf(depositSpendFrom.getValue().longValue()), segwitAddress.segWitRedeemScript().getProgram(), segwitAddress.getBech32AsString());
         MyTransactionInput _input = new MyTransactionInput(params, null, new byte[0], _outpoint, depositSpendFrom.getHash().toString(), (int)depositSpendFrom.getIndex());
 
-        tx.addInput(_input);*/
+        tx.addInput(_input);
     }
 
     @Override
     protected void signTx0(Transaction tx, Collection<UnspentOutputWithKey> inputs, NetworkParameters params) {
         int idx = 0;
-        /*for (UnspentOutputWithKey input : inputs) {
+        for (UnspentOutputWithKey input : inputs) {
 
             String address = input.addr;
             ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
@@ -112,7 +126,7 @@ public class AndroidTx0Service extends Tx0Service {
 
             idx++;
 
-        }*/
+        }
         super.signTx0(tx, inputs, params);
     }
 }

@@ -8,11 +8,12 @@ import android.os.Looper;
 import android.widget.Toast;
 import android.util.Log;
 
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.segwit.SegwitAddress;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.PrivKeyReader;

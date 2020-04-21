@@ -48,12 +48,9 @@ import one.google.zxing.client.android.encode.QRCodeEncoder;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.PaymentAddress;
-import one.anom.wallet.bip47.rpc.PaymentCode;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
 import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.segwit.SegwitAddress;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionOutPoint;
@@ -70,6 +67,10 @@ import one.anom.wallet.util.DecimalDigitsInputFilter;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.PrefsUtil;
+
+import com.samourai.wallet.bip47.rpc.PaymentAddress;
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.segwit.SegwitAddress;
 import com.yanzhenjie.zbar.Symbol;
 
 import org.apache.commons.lang3.tuple.Triple;

@@ -31,20 +31,20 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiActivity;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.crypto.DecryptionException;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.send.BlockedUTXO;
 import one.anom.wallet.send.MyTransactionOutPoint;
 import one.anom.wallet.send.SendActivity;
 import one.anom.wallet.send.UTXO;
 import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.LinearLayoutManagerWrapper;
 import one.anom.wallet.util.LogUtil;
@@ -815,8 +815,6 @@ public class UTXOSActivity extends SamouraiActivity implements ActionMode.Callba
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (DecryptionException e) {
                 e.printStackTrace();
             }
             return true;

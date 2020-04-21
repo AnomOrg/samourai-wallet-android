@@ -19,9 +19,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import one.anom.wallet.util.CharSequenceX;
 
 import android.util.Log;
+
+import com.samourai.wallet.util.CharSequenceX;
 
 public class JSONRPC {
 

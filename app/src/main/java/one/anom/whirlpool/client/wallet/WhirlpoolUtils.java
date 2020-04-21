@@ -2,7 +2,8 @@ package one.anom.whirlpool.client.wallet;
 
 import android.content.Context;
 
-import one.anom.wallet.hd.HD_Wallet;
+
+import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.whirlpool.client.exception.NotifiableException;
 import com.samourai.whirlpool.client.utils.ClientUtils;
 

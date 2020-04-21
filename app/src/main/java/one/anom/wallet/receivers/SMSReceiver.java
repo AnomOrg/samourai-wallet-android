@@ -8,13 +8,14 @@ import android.os.Looper;
 import android.telephony.SmsMessage;
 //import android.util.Log;
 
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.util.CharSequenceX;
+
 import org.bitcoinj.crypto.MnemonicException;
 import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.crypto.AESUtil;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.SMSSender;
 

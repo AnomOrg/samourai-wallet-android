@@ -2,11 +2,12 @@ package one.anom.wallet.cahoots;
 
 import android.util.Log;
 
-import one.anom.wallet.bip69.BIP69InputComparator;
-import one.anom.wallet.bip69.BIP69OutputComparator;
+import com.samourai.wallet.bip69.BIP69InputComparator;
+import com.samourai.wallet.bip69.BIP69OutputComparator;
+import com.samourai.wallet.segwit.SegwitAddress;
+
 import one.anom.wallet.cahoots.psbt.PSBT;
 import one.anom.wallet.cahoots.psbt.PSBTEntry;
-import one.anom.wallet.segwit.SegwitAddress;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.*;

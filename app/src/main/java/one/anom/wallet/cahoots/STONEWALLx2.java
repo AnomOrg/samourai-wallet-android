@@ -1,11 +1,7 @@
 package one.anom.wallet.cahoots;
 
 import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.bip69.BIP69InputComparator;
-import one.anom.wallet.bip69.BIP69OutputComparator;
 import one.anom.wallet.cahoots.psbt.PSBT;
-import one.anom.wallet.segwit.SegwitAddress;
-import one.anom.wallet.segwit.bech32.Bech32Segwit;
 import one.anom.wallet.util.FormatsUtil;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -22,6 +18,11 @@ import java.security.SecureRandom;
 import java.util.*;
 
 import android.util.Log;
+
+import com.samourai.wallet.bip69.BIP69InputComparator;
+import com.samourai.wallet.bip69.BIP69OutputComparator;
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.segwit.bech32.Bech32Segwit;
 
 public class STONEWALLx2 extends Cahoots {
 

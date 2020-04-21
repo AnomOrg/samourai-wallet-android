@@ -1,6 +1,7 @@
 package one.anom.wallet.cahoots.psbt;
 
-import one.anom.wallet.util.Z85;
+
+import com.samourai.wallet.util.Z85;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;

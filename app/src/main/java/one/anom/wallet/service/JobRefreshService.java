@@ -8,21 +8,22 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.util.CharSequenceX;
+
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.bip47.rpc.PaymentCode;
-import one.anom.wallet.crypto.AESUtil;
-import one.anom.wallet.crypto.DecryptionException;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.CharSequenceX;
 import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;

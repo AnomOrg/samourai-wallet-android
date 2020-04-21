@@ -1,6 +1,7 @@
 package one.anom.wallet.bip47.rpc;
 
-import one.anom.wallet.bip47.rpc.secretPoint.ISecretPoint;
+
+import com.samourai.wallet.bip47.rpc.secretPoint.ISecretPoint;
 
 import org.spongycastle.jce.ECNamedCurveTable;
 import org.spongycastle.jce.spec.ECParameterSpec;
