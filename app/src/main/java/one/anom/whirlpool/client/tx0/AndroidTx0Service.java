@@ -80,14 +80,14 @@ public class AndroidTx0Service extends Tx0Service {
 
     @Override
     protected void buildTx0Input(Transaction tx, UnspentOutputWithKey input, NetworkParameters params) {
-        ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
+     /*   ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
         TransactionOutPoint depositSpendFrom = input.computeOutpoint(params);
 
         SegwitAddress segwitAddress = new SegwitAddress(spendFromKey.getPubKey(), params);
         MyTransactionOutPoint _outpoint = new MyTransactionOutPoint(depositSpendFrom.getHash(), (int)depositSpendFrom.getIndex(), BigInteger.valueOf(depositSpendFrom.getValue().longValue()), segwitAddress.segWitRedeemScript().getProgram(), segwitAddress.getBech32AsString());
         MyTransactionInput _input = new MyTransactionInput(params, null, new byte[0], _outpoint, depositSpendFrom.getHash().toString(), (int)depositSpendFrom.getIndex());
 
-        tx.addInput(_input);
+        tx.addInput(_input);*/
     }
 
     @Override
@@ -95,7 +95,7 @@ public class AndroidTx0Service extends Tx0Service {
         int idx = 0;
         for (UnspentOutputWithKey input : inputs) {
 
-            String address = input.addr;
+          /*  String address = input.addr;
             ECKey spendFromKey = ECKey.fromPrivate(input.getKey());
 
             // sign input
@@ -124,7 +124,7 @@ public class AndroidTx0Service extends Tx0Service {
                 tx.getInput(idx).setScriptSig(ScriptBuilder.createInputScript(sig, spendFromKey));
             }
 
-            idx++;
+            idx++;*/
 
         }
         super.signTx0(tx, inputs, params);
