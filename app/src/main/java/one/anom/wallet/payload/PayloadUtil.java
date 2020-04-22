@@ -83,6 +83,11 @@ public class PayloadUtil	{
 
     private final static String strMultiAddrFilename = "samourai.multi";
     private final static String strUTXOFilename = "samourai.utxo";
+    private final static String strFX_LBC = "samourai.fx_lbc";
+    private final static String strFX_BFX = "samourai.fx_bfx";
+    private final static String strFX_BTCe_USD = "samourai.fx_btce_usd";
+    private final static String strFX_BTCe_RUR = "samourai.fx_btce_rur";
+    private final static String strFX_BTCe_EUR = "samourai.fx_btce_eur";
     private final static String strFeesFilename = "samourai.fees";
     private final static String strPayNymFilename = "samourai.paynyms";
     private final static String strMultiAddrPreFilename = "samourai.multi.pre";
@@ -223,15 +228,47 @@ public class PayloadUtil	{
         }
     }
 
+
     public void serializeUTXOBadBank(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
 
-        if(!AppUtil.getInstance(context).isOfflineMode())    {
+        if(!AppUtil.getInstance(context).isOfflineMode()) {
 
-            if(obj != null) {
+            if (obj != null) {
                 JSONObject utxoObj = new JSONObject();
                 utxoObj.put("unspent_outputs", obj);
                 serializeAux(utxoObj, new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance().getPIN()), strUTXOBadBankFilename);
             }
+        }}
+
+    public void serializeFX_LBC(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException
+            {
+                if (!AppUtil.getInstance(context).isOfflineMode()) {
+                    serializeAux(obj, null, strFX_LBC);
+                }
+            }
+
+
+    public void serializeFX_BTCe_USD(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_USD);
+        }
+    }
+
+    public void serializeFX_BTCe_RUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_RUR);
+        }
+    }
+
+    public void serializeFX_BTCe_EUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_EUR);
+        }
+    }
+
+    public void serializeFX_BFX(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BFX);
         }
     }
 
@@ -253,6 +290,26 @@ public class PayloadUtil	{
 
     public JSONObject deserializeUTXO()  throws IOException, JSONException  {
         return deserializeAux(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance().getPIN()), strUTXOFilename);
+    }
+
+    public JSONObject deserializeFX_LBC() throws IOException, JSONException {
+        return deserializeAux(null, strFX_LBC);
+    }
+
+    public JSONObject deserializeFX_BTCe_USD()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_USD);
+    }
+
+    public JSONObject deserializeFX_BTCe_RUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_RUR);
+    }
+
+    public JSONObject deserializeFX_BTCe_EUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_EUR);
+    }
+
+    public JSONObject deserializeFX_BFX()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BFX);
     }
 
     public JSONObject deserializeMultiAddrPost()  throws IOException, JSONException {

@@ -20,6 +20,9 @@ import com.auth0.android.jwt.JWT;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
+import com.samourai.wallet.util.ExchangeRateFactory;
+
+
 import org.apache.commons.codec.DecoderException;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
@@ -160,6 +163,8 @@ public class MainActivity2 extends Activity {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
 
+            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
+
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
             String strUri = null;
@@ -187,8 +192,7 @@ public class MainActivity2 extends Activity {
 
     @Override
     protected void onResume() {
-        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) &&
-                !TorManager.getInstance(getApplicationContext()).isConnected()) {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
 
             ((AnomApplication) getApplication()).startService();
 

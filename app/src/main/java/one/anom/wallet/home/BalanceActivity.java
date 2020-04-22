@@ -19,9 +19,11 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.transition.ChangeBounds;
 import android.support.transition.TransitionManager;
 import android.support.v4.content.LocalBroadcastManager;
@@ -50,6 +52,7 @@ import org.bitcoinj.script.Script;
 
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.send.cahoots.ManualCahootsActivity;
 import one.anom.wallet.utxos.UTXOSActivity;
 import one.dm.zbar.android.scanner.ZBarConstants;
 import one.anom.wallet.ExodusActivity;
@@ -98,6 +101,7 @@ import one.anom.wallet.tor.TorService;
 import one.anom.wallet.tx.TxDetailsActivity;
 import one.anom.wallet.util.AppUtil;
 
+import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.CharSequenceX;
 
 import one.anom.wallet.util.FormatsUtil;
@@ -154,7 +158,11 @@ public class BalanceActivity extends SamouraiActivity {
     private ProgressBar progressBarMenu;
     private TextView mFiatAmount;
 
-    public static final String ACTION_INTENT = "com.samourai.wallet.BalanceFragment.REFRESH";
+    public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
+
+    private boolean mConsumedIntent;
+    private final String SAVED_INSTANCE_STATE_CONSUMED_INTENT = "SAVED_INSTANCE_STATE_CONSUMED_INTENT";
+
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -228,7 +236,7 @@ public class BalanceActivity extends SamouraiActivity {
         }
     };
 
-    public static final String DISPLAY_INTENT = "com.samourai.wallet.BalanceFragment.DISPLAY";
+    public static final String DISPLAY_INTENT = "com.anom.wallet.BalanceFragment.DISPLAY";
     protected BroadcastReceiver receiverDisplay = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -316,9 +324,22 @@ public class BalanceActivity extends SamouraiActivity {
         }
     };
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_INSTANCE_STATE_CONSUMED_INTENT, mConsumedIntent);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_balance);
+
+        Log.d("BalanceActivity", "onCreate");
+
+        if (savedInstanceState != null) {
+            mConsumedIntent = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_CONSUMED_INTENT);
+        }
+
         balanceViewModel = ViewModelProviders.of(this).get(BalanceViewModel.class);
         makePaynymAvatarcache();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -412,7 +433,6 @@ public class BalanceActivity extends SamouraiActivity {
             doClipboardCheck();
         }
 
-
         final Handler delayedHandler = new Handler();
         delayedHandler.postDelayed(() -> {
 
@@ -437,31 +457,38 @@ public class BalanceActivity extends SamouraiActivity {
         checkDeepLinks();
     }
 
+    private boolean hasActivityLaunchedFromDeepLinks = false;
+
     private void checkDeepLinks() {
         Bundle bundle = getIntent().getExtras();
         if (bundle == null) {
             return;
         }
-        if (bundle.containsKey("pcode") || bundle.containsKey("uri") || bundle.containsKey("amount")) {
-            if (balanceViewModel.getBalance().getValue() != null)
+        if (bundle.containsKey("uri") || bundle.containsKey("amount")) {
+
+            if (balanceViewModel.getBalance().getValue() != null) {
                 bundle.putLong("balance", balanceViewModel.getBalance().getValue());
+            }
+
+            hasActivityLaunchedFromDeepLinks = true;
+
             Intent intent = new Intent(this, SendActivity.class);
             intent.putExtras(bundle);
             startActivity(intent);
         }
-
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        mConsumedIntent = false;
     }
 
     private void initViewModel() {
-        TxAdapter adapter = new TxAdapter(getApplicationContext(), new ArrayList<>());
+        TxAdapter adapter = new TxAdapter(getApplicationContext(), new ArrayList<>(), account);
         adapter.setHasStableIds(true);
-        adapter.setClickListner((position, tx) -> txDetails(tx));
+        adapter.setClickListener((position, tx) -> txDetails(tx));
 
         TxRecyclerView.setAdapter(adapter);
 
@@ -491,8 +518,8 @@ public class BalanceActivity extends SamouraiActivity {
                 adapter.setTxes(list);
             }
         });
-        mCollapsingToolbar.setOnClickListener(view -> balanceViewModel.toggleSat());
 
+        mCollapsingToolbar.setOnClickListener(view -> balanceViewModel.toggleSat());
     }
 
     private void setBalance(Long balance, boolean isSat) {
@@ -531,6 +558,82 @@ public class BalanceActivity extends SamouraiActivity {
         LocalBroadcastManager.getInstance(BalanceActivity.this).sendBroadcast(intent);
 
         updateDisplay(false);
+        checkForAnomRequest();
+        hasActivityLaunchedFromDeepLinks = false;
+    }
+
+    private void checkForAnomRequest() {
+
+        Intent intent = getIntent();
+        Bundle bundle = (intent != null) ? intent.getExtras() : null;
+        boolean launchedFromHistory = (intent != null) && (intent.getFlags() &
+                Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0;
+
+        if (!launchedFromHistory && !mConsumedIntent && bundle != null &&
+                !hasActivityLaunchedFromDeepLinks && (bundle.containsKey("get_address") ||
+                bundle.containsKey("send_address") || bundle.containsKey("pcode") ||
+                bundle.containsKey("get_paynym_code"))) {
+
+            Snackbar.make(TxRecyclerView.getRootView(),
+                    "Please wait... your wallet is still loading",
+                    Snackbar.LENGTH_LONG).show();
+
+            mConsumedIntent = true;
+            if (bundle.containsKey("pcode")) {
+
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+                    Intent sendActivityIntent = new Intent(this, SendActivity.class);
+                    if (balanceViewModel.getBalance().getValue() != null) {
+                        bundle.putLong("balance", balanceViewModel.getBalance().getValue());
+                    }
+
+                    sendActivityIntent.putExtras(bundle);
+                    startActivity(sendActivityIntent);
+                }, 5000);
+            } else if (bundle.containsKey("get_address")) {
+
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+                    try {
+                        HD_Wallet hdw = HD_WalletFactory.getInstance(BalanceActivity.this).get();
+                        if (hdw != null) {
+
+                            Intent receiveActivityIntent = new Intent(
+                                    BalanceActivity.this, ReceiveActivity.class);
+                            receiveActivityIntent.putExtra("get_address", "");
+                            startActivity(receiveActivityIntent);
+                        }
+                    } catch (IOException | MnemonicException.MnemonicLengthException e) {
+                        e.printStackTrace();
+                    }
+                }, 5000);
+            } else if (bundle.containsKey("send_address")) {
+
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+
+                    Intent sendActivityIntent = new Intent(BalanceActivity.this,
+                            SendActivity.class);
+
+                    if (balanceViewModel.getBalance().getValue() != null) {
+                        sendActivityIntent.putExtra("balance",
+                                balanceViewModel.getBalance().getValue());
+                    }
+
+                    sendActivityIntent.putExtras(bundle);
+                    startActivity(sendActivityIntent);
+                }, 5000);
+            } else if (bundle.containsKey("get_paynym_code")) {
+
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    Intent getPaynymCodeIntent = new Intent(BalanceActivity.this,
+                            PayNymHome.class);
+
+                    getPaynymCodeIntent.putExtra("get_paynym_code", "");
+                    startActivity(getPaynymCodeIntent);
+                }, 5000);
+            }
+        }
     }
 
     @Override
@@ -542,9 +645,7 @@ public class BalanceActivity extends SamouraiActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && AppUtil.getInstance(BalanceActivity.this.getApplicationContext()).isServiceRunning(WebSocketService.class)) {
             stopService(new Intent(BalanceActivity.this.getApplicationContext(), WebSocketService.class));
         }
-
     }
-
 
     private void makePaynymAvatarcache() {
         try {
@@ -725,7 +826,10 @@ public class BalanceActivity extends SamouraiActivity {
                     if (privKeyReader.getFormat() != null) {
                         doPrivKey(strResult.trim());
                     } else if (Cahoots.isCahoots(strResult.trim())) {
-                        CahootsUtil.getInstance(BalanceActivity.this).processCahoots(strResult.trim(), 0);
+                        Intent cahootIntent = new Intent(this, ManualCahootsActivity.class);
+                        cahootIntent.putExtra("_account", account);
+                        cahootIntent.putExtra("payload", strResult.trim());
+                        startActivity(cahootIntent);
                     } else if (FormatsUtil.getInstance().isPSBT(strResult.trim())) {
                         CahootsUtil.getInstance(BalanceActivity.this).doPSBT(strResult.trim());
                     } else if (DojoUtil.getInstance(BalanceActivity.this).isValidPairingPayload(strResult.trim())) {
@@ -1231,10 +1335,10 @@ public class BalanceActivity extends SamouraiActivity {
         return MonetaryUtil.getInstance().getSatoshiUnits();
     }
 
+
     private String getFiatDisplayAmount(long value) {
-
         String strFiat = PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
-
+        double btc_fx = ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
         return MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
     }
 
@@ -1300,7 +1404,6 @@ public class BalanceActivity extends SamouraiActivity {
                         ;
                     }
                 }
-
             }
 
             if (RicochetMeta.getInstance(BalanceActivity.this).getStaggered().size() > 0) {
