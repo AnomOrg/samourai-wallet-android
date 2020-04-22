@@ -23,25 +23,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.common.base.Splitter;
-
-import one.anom.wallet.R;
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.bip47.BIP47Meta;
-import one.anom.wallet.bip47.BIP47Util;
-import one.anom.wallet.fragments.CameraFragmentBottomSheet;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.bip47.paynym.WebUtil;
-import one.anom.wallet.paynym.addPaynym.AddPaynymActivity;
-import one.anom.wallet.paynym.fragments.PaynymListFragment;
-import one.anom.wallet.paynym.fragments.ShowPayNymQRBottomSheet;
-import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.MessageSignUtil;
-import one.anom.wallet.util.PrefsUtil;
-import one.anom.wallet.widgets.ViewPager;
-
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
@@ -76,9 +57,23 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.exceptions.UndeliverableException;
 import io.reactivex.plugins.RxJavaPlugins;
 import io.reactivex.schedulers.Schedulers;
-
-import static one.anom.wallet.bip47.paynym.WebUtil.PAYNYM_API;
-
+import one.anom.wallet.R;
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.bip47.BIP47Meta;
+import one.anom.wallet.bip47.BIP47Util;
+import one.anom.wallet.bip47.paynym.WebUtil;
+import one.anom.wallet.fragments.CameraFragmentBottomSheet;
+import one.anom.wallet.payload.PayloadUtil;
+import one.anom.wallet.paynym.addPaynym.AddPaynymActivity;
+import one.anom.wallet.paynym.fragments.PaynymListFragment;
+import one.anom.wallet.paynym.fragments.ShowPayNymQRBottomSheet;
+import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.MessageSignUtil;
+import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.widgets.ViewPager;
 
 public class PayNymHome extends AppCompatActivity {
 
@@ -93,7 +88,7 @@ public class PayNymHome extends AppCompatActivity {
     private static final String TAG = "PayNymHome";
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private PayNymHomeViewModel payNymHomeViewModel;
-    private ProgressBar  paynymSync;
+    private ProgressBar paynymSync;
     private TextView paynym, paynymCode, paymentCodeSyncMessage;
     private ImageView userAvatar;
     private FloatingActionButton paynymFab;
@@ -225,7 +220,7 @@ public class PayNymHome extends AppCompatActivity {
         }
         super.onDestroy();
 
-        if(compositeDisposable != null && !compositeDisposable.isDisposed()) {
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
             compositeDisposable.dispose();
         }
     }
@@ -239,7 +234,7 @@ public class PayNymHome extends AppCompatActivity {
             String res = "{}";
 
             if (!AppUtil.getInstance(PayNymHome.this).isOfflineMode()) {
-                res = WebUtil.getInstance(PayNymHome.this).postURL("application/json", null, PAYNYM_API + "api/v1/nym", obj.toString());
+                res = WebUtil.getInstance(PayNymHome.this).postURL("application/json", null, WebUtil.PAYNYM_API + "api/v1/nym", obj.toString());
             } else {
                 res = PayloadUtil.getInstance(PayNymHome.this).deserializePayNyms().toString();
             }
@@ -277,17 +272,17 @@ public class PayNymHome extends AppCompatActivity {
                 finish();
                 break;
             }
-            case R.id.action_support: {
+            /*case R.id.action_support: {
                 doSupport();
                 break;
-            }
+            }*/
             case R.id.action_scan_qr: {
 
                 CameraFragmentBottomSheet cameraFragmentBottomSheet = new CameraFragmentBottomSheet();
-                cameraFragmentBottomSheet.show(getSupportFragmentManager(),cameraFragmentBottomSheet.getTag());
+                cameraFragmentBottomSheet.show(getSupportFragmentManager(), cameraFragmentBottomSheet.getTag());
                 cameraFragmentBottomSheet.setQrCodeScanLisenter(code -> {
                     cameraFragmentBottomSheet.dismissAllowingStateLoss();
-                     processScan(code);
+                    processScan(code);
                 });
 
                 break;
@@ -326,7 +321,6 @@ public class PayNymHome extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.bip47_menu, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
 
 
     private void doSign() {
@@ -388,9 +382,6 @@ public class PayNymHome extends AppCompatActivity {
 
         Set<String> _pcodes = BIP47Meta.getInstance().getSortedByLabels(false);
 
-        if(_pcodes.size() == 0){
-            return;
-        }
         //
         // check for own payment code
         //

@@ -20,6 +20,16 @@ import com.auth0.android.jwt.JWT;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
+import org.apache.commons.codec.DecoderException;
+import org.bitcoinj.crypto.MnemonicException;
+import org.bitcoinj.params.MainNetParams;
+import org.bitcoinj.params.TestNet3Params;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.home.BalanceActivity;
@@ -30,28 +40,17 @@ import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.ConnectivityStatus;
-import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.TimeOutUtil;
-
-import org.apache.commons.codec.DecoderException;
-import org.bitcoinj.crypto.MnemonicException;
-import org.bitcoinj.params.MainNetParams;
-import org.bitcoinj.params.TestNet3Params;
-
-import io.reactivex.Completable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class MainActivity2 extends Activity {
 
     private ProgressDialog progress = null;
-    public static final String ACTION_RESTART = "one.anom.wallet.MainActivity2.RESTART_SERVICE";
+
+    public static final String ACTION_RESTART = "MainActivity2.RESTART_SERVICE";
     private AlertDialog.Builder dlg;
     private boolean pinEntryActivityLaunched = false;
-    private static final String TAG = "MainActivity2";
+
     private TextView loaderTxView;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
 
@@ -78,13 +77,13 @@ public class MainActivity2 extends Activity {
     protected BackgroundManager.Listener bgListener = new BackgroundManager.Listener() {
 
         public void onBecameForeground() {
-//
-//            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
-//            intent.putExtra("notifTx", false);
-//            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
-//
-//            Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
-//            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
+
+            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+            intent.putExtra("notifTx", false);
+            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
+
+            Intent _intent = new Intent("MainActivity2.RESTART_SERVICE");
+            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
 
         }
 
@@ -149,6 +148,7 @@ public class MainActivity2 extends Activity {
                     .subscribe(connection_states -> {
                         if (connection_states == TorManager.CONNECTION_STATES.CONNECTED) {
                             initAppOnCreate();
+                            compositeDisposables.dispose();
                         }
                     });
             compositeDisposables.add(disposable);
@@ -166,6 +166,8 @@ public class MainActivity2 extends Activity {
         } else {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
+
+            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
@@ -256,8 +258,8 @@ public class MainActivity2 extends Activity {
 
     private void initDialog() {
         Intent intent = new Intent(MainActivity2.this, LandingActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-        finish();
     }
 
     private void validatePIN(String strUri) {
@@ -269,6 +271,7 @@ public class MainActivity2 extends Activity {
 
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             Intent intent = new Intent(MainActivity2.this, PinEntryActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             if (strUri != null) {
                 intent.putExtra("uri", strUri);
                 PrefsUtil.getInstance(MainActivity2.this).setValue("SCHEMED_URI", strUri);
@@ -277,7 +280,6 @@ public class MainActivity2 extends Activity {
                 intent.putExtras(getBundleExtras());
             }
             startActivity(intent);
-            finish();
             pinEntryActivityLaunched = true;
 
         }
@@ -332,41 +334,41 @@ public class MainActivity2 extends Activity {
 
     private void doAppInit0(final boolean isDial, final String strUri, final String strPCode) {
 
-        Disposable disposable = Completable.fromCallable(() -> {
+        if (!APIFactory.getInstance(MainActivity2.this).APITokenRequired()) {
+            doAppInit1(isDial, strUri, strPCode);
+            return;
+        }
 
-            if (!APIFactory.getInstance(MainActivity2.this).APITokenRequired()) {
-                doAppInit1(isDial, strUri, strPCode);
-                return false;
-            }
-            boolean needToken = false;
+
+        Disposable disposable = Observable.fromCallable(() -> {
             if (APIFactory.getInstance(MainActivity2.this).getAccessToken() == null) {
-                needToken = true;
+                return true;
             } else {
                 JWT jwt = new JWT(APIFactory.getInstance(MainActivity2.this).getAccessToken());
                 if (jwt.isExpired(APIFactory.getInstance(MainActivity2.this).getAccessTokenRefresh())) {
                     APIFactory.getInstance(MainActivity2.this).getToken(true);
-                    needToken = true;
+                    return true;
                 }
             }
-            if (needToken && !AppUtil.getInstance(MainActivity2.this).isOfflineMode()) {
-
-                APIFactory.getInstance(MainActivity2.this).stayingAlive();
-
-                doAppInit1(isDial, strUri, strPCode);
-
-                return true;
-
-            } else {
-                doAppInit1(isDial, strUri, strPCode);
-            }
-            return true;
+            return false;
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(() -> {
-                }, e -> {
-                    LogUtil.error(TAG, e.getMessage());
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                .subscribe(needToken -> {
+
+                    if (needToken && !AppUtil.getInstance(MainActivity2.this).isOfflineMode()) {
+
+                        APIFactory.getInstance(MainActivity2.this).stayingAlive();
+
+                        doAppInit1(isDial, strUri, strPCode);
+
+                        return;
+
+                    } else {
+                        doAppInit1(isDial, strUri, strPCode);
+                    }
+
+                }, error -> {
+                    error.printStackTrace();
                 });
         compositeDisposables.add(disposable);
 
@@ -402,17 +404,18 @@ public class MainActivity2 extends Activity {
         if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             if (AppUtil.getInstance(MainActivity2.this).isSideLoaded()) {
-                runOnUiThread(this::doSelectNet);
+                doSelectNet();
             } else {
-                runOnUiThread(this::initDialog);
+                initDialog();
             }
         } else if (isDial && AccessFactory.getInstance(MainActivity2.this).validateHash(PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.ACCESS_HASH, ""), AccessFactory.getInstance(MainActivity2.this).getGUID(), new CharSequenceX(AccessFactory.getInstance(MainActivity2.this).getPIN()), AESUtil.DefaultPBKDF2Iterations)) {
             TimeOutUtil.getInstance().updatePin();
             launchFromDialer(AccessFactory.getInstance(MainActivity2.this).getPIN());
         } else if (TimeOutUtil.getInstance().isTimedOut()) {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
-            validatePIN(strUri);
+            validatePIN(strUri == null ? null : strUri);
         } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() && !TimeOutUtil.getInstance().isTimedOut()) {
+
             TimeOutUtil.getInstance().updatePin();
 
             Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
