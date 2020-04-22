@@ -68,9 +68,7 @@ public class MainActivity2 extends Activity {
                     }
                     startService(new Intent(MainActivity2.this.getApplicationContext(), WebSocketService.class));
                 }
-
             }
-
         }
     };
 
@@ -84,7 +82,6 @@ public class MainActivity2 extends Activity {
 
             Intent _intent = new Intent("MainActivity2.RESTART_SERVICE");
             LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
-
         }
 
         public void onBecameBackground() {
@@ -109,9 +106,7 @@ public class MainActivity2 extends Activity {
                     }
                 }).start();
             }
-
         }
-
     };
 
     @Override
@@ -122,7 +117,6 @@ public class MainActivity2 extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loaderTxView = findViewById(R.id.loader_text);
-
 
         if (PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.TESTNET, false) == true) {
             SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
@@ -155,7 +149,6 @@ public class MainActivity2 extends Activity {
         } else {
             initAppOnCreate();
         }
-
     }
 
     private void initAppOnCreate() {
@@ -166,8 +159,6 @@ public class MainActivity2 extends Activity {
         } else {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
-
-            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
@@ -191,14 +182,13 @@ public class MainActivity2 extends Activity {
             }
 
             doAppInit0(isDial, strUri, strPCode);
-
         }
-
     }
 
     @Override
     protected void onResume() {
-        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) &&
+                !TorManager.getInstance(getApplicationContext()).isConnected()) {
 
             ((AnomApplication) getApplication()).startService();
 
@@ -214,10 +204,11 @@ public class MainActivity2 extends Activity {
                     });
             compositeDisposables.add(disposable);
         } else {
+
             initAppOnResume();
         }
-        super.onResume();
 
+        super.onResume();
     }
 
     private void initAppOnResume() {
@@ -280,6 +271,7 @@ public class MainActivity2 extends Activity {
                 intent.putExtras(getBundleExtras());
             }
             startActivity(intent);
+            finish();
             pinEntryActivityLaunched = true;
 
         }
@@ -372,9 +364,8 @@ public class MainActivity2 extends Activity {
                 });
         compositeDisposables.add(disposable);
 
-
-    }
-
+            return;
+        }
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -387,16 +378,23 @@ public class MainActivity2 extends Activity {
         if (bundle == null) {
             return null;
         }
+
         if (Intent.ACTION_VIEW.equals(getIntent().getAction()) && getIntent().getScheme() != null && getIntent().getScheme().equals("bitcoin")) {
+
             bundle.putString("uri", getIntent().getData().toString());
         } else {
             if (bundle.containsKey("uri")) {
                 bundle.putString("uri", bundle.getString("uri"));
+            } else if (bundle.containsKey("get_address")) {
+                bundle.putString("get_address", "");
+            } else if (bundle.containsKey("get_paynym_code")) {
+                bundle.putString("get_paynym_code", "");
+            } else if (bundle.containsKey("send_address")) {
+                bundle.putString("send_address", bundle.getString("send_address"));
             }
         }
 
         return bundle;
-
     }
 
     private void doAppInit1(boolean isDial, final String strUri, final String strPCode) {
@@ -429,13 +427,13 @@ public class MainActivity2 extends Activity {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
         }
-
     }
 
     private void doSelectNet() {
         if (dlg != null) {
             return;
         }
+
         dlg = new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.select_network)
@@ -460,10 +458,9 @@ public class MainActivity2 extends Activity {
 
                     }
                 });
+
         if (!isFinishing()) {
             dlg.show();
         }
-
     }
-
 }

@@ -49,6 +49,8 @@ import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
 
 import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.utxos.UTXOSActivity;
 import one.dm.zbar.android.scanner.ZBarConstants;
 import one.anom.wallet.ExodusActivity;
 import one.anom.wallet.JSONRPC.JSONRPC;
@@ -128,7 +130,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class BalanceActivity extends AppCompatActivity {
+public class BalanceActivity extends SamouraiActivity {
 
     private final static int SCAN_COLD_STORAGE = 2011;
     private final static int SCAN_QR = 2012;
@@ -856,7 +858,7 @@ public class BalanceActivity extends AppCompatActivity {
     }
 
     private void doUTXO() {
-        Intent intent = new Intent(BalanceActivity.this, UTXOActivity.class);
+        Intent intent = new Intent(BalanceActivity.this, UTXOSActivity.class);
         startActivity(intent);
     }
 
@@ -1232,7 +1234,6 @@ public class BalanceActivity extends AppCompatActivity {
     private String getFiatDisplayAmount(long value) {
 
         String strFiat = PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
-        double btc_fx = ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
 
         return MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
     }

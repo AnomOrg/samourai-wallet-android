@@ -13,6 +13,7 @@ import one.anom.wallet.bip47.BIP47Util;
 
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
+import com.samourai.wallet.bip69.BIP69InputComparator;
 import com.samourai.wallet.bip69.BIP69OutputComparator;
 import com.samourai.wallet.hd.HD_Address;
 
@@ -57,6 +58,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+
+import static one.anom.wallet.util.LogUtil.debug;
 
 //import android.util.Log;
 
@@ -111,6 +114,7 @@ public class SendFactory {
                 }
 //                Log.i("SendFactory", "address from script:" + address);
                 ECKey ecKey = null;
+
                 ecKey = getPrivKey(address, account);
                 if (ecKey != null) {
                     keyBag.put(input.getOutpoint().toString(), ecKey);
@@ -123,7 +127,6 @@ public class SendFactory {
             } catch (Exception e) {
                 ;
             }
-
         }
 
         Transaction signedTx = signTransaction(unsignedTx, keyBag);
@@ -359,7 +362,7 @@ public class SendFactory {
         if (set0 == null) {
             return null;
         }
-        Log.d("SendFactory", "set0 utxo returned:" + set0.getRight().toString());
+        debug("SendFactory", "set0 utxo returned:" + set0.getRight().toString());
 
         long set0Value = 0L;
         for (UTXO u : set0.getRight()) {
@@ -373,8 +376,8 @@ public class SendFactory {
             }
         }
 
-        Log.d("SendFactory", "set0 value:" + set0Value);
-        Log.d("SendFactory", "utxosBis value:" + utxosBisValue);
+        debug("SendFactory", "set0 value:" + set0Value);
+        debug("SendFactory", "utxosBis value:" + utxosBisValue);
 
         List<UTXO> _utxo = null;
         if (set0.getRight() != null && set0.getRight().size() > 0 && set0Value > spendAmount.longValue()) {
@@ -386,6 +389,7 @@ public class SendFactory {
         } else {
             return null;
         }
+
         Triple<ArrayList<MyTransactionOutPoint>, ArrayList<TransactionOutput>, ArrayList<UTXO>> set1 = boltzmannSet(_utxo, spendAmount, address, set0.getLeft(), account, set0.getMiddle());
         if (set1 == null) {
             return null;
@@ -455,9 +459,9 @@ public class SendFactory {
         for (UTXO utxo : utxos) {
             totalOutpointsAmount += utxo.getValue();
         }
-        Log.d("SendFactory", "total outputs amount:" + totalOutpointsAmount);
-        Log.d("SendFactory", "spend amount:" + spendAmount.toString());
-        Log.d("SendFactory", "utxos:" + utxos.size());
+        debug("SendFactory", "total outputs amount:" + totalOutpointsAmount);
+        debug("SendFactory", "spend amount:" + spendAmount.toString());
+        debug("SendFactory", "utxos:" + utxos.size());
 
         if (totalOutpointsAmount <= spendAmount.longValue()) {
             Log.d("SendFactory", "spend amount must be > total amount available");
@@ -592,6 +596,10 @@ public class SendFactory {
             }
             changeOutput0.setValue(Coin.valueOf(changeDue0.longValue()));
             outputs0.set(1, changeOutput0);
+        }
+
+        if (changeDue.subtract(biFee).compareTo(SamouraiWallet.bDust) > 0) {
+            changeDue = changeDue.subtract(biFee);
         }
 
         try {
