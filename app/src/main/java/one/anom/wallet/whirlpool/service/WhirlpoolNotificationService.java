@@ -31,8 +31,8 @@ import io.reactivex.schedulers.Schedulers;
 import java8.util.Optional;
 
 import static android.support.v4.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_CHANNEL;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_NOTIFICATIONS;
+import static one.anom.wallet.AnomApplication.WHIRLPOOL_CHANNEL;
+import static one.anom.wallet.AnomApplication.WHIRLPOOL_NOTIFICATIONS;
 import static one.anom.wallet.util.FormatsUtil.getBTCDecimalFormat;
 
 public class WhirlpoolNotificationService extends Service {

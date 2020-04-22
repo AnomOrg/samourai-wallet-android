@@ -38,7 +38,7 @@ import org.json.JSONException;
 import java.io.IOException;
 import java.util.List;
 
-import static one.anom.wallet.SamouraiApplication.FOREGROUND_SERVICE_CHANNEL_ID;
+import static one.anom.wallet.AnomApplication.FOREGROUND_SERVICE_CHANNEL_ID;
 
 public class RefreshService extends IntentService {
 

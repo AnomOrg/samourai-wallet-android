@@ -26,7 +26,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.SamouraiApplication;
+import one.anom.wallet.AnomApplication;
 
 import static android.support.v4.app.NotificationCompat.GROUP_ALERT_SUMMARY;
 
@@ -48,7 +48,7 @@ public class TorService extends Service {
 
     public void onCreate() {
         super.onCreate();
-        Notification notification = new NotificationCompat.Builder(this, SamouraiApplication.TOR_CHANNEL_ID)
+        Notification notification = new NotificationCompat.Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText("Waiting...")
                 .setOngoing(true)
@@ -249,7 +249,7 @@ public class TorService extends Service {
             title = "Tor: Disconnected";
         }
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, SamouraiApplication.TOR_CHANNEL_ID)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText(content)
                 .setOngoing(true)
