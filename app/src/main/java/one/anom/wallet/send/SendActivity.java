@@ -1806,7 +1806,7 @@ public class SendActivity extends SamouraiActivity {
                     break;
                 }
                 case STONEWALLX2_SAMOURAI: {
-                    sendTransactionDetailsView.showStonewallX2Layout("Samourai Wallet", 1000);
+                    sendTransactionDetailsView.showStonewallX2Layout("Anom Wallet", 1000);
                     break;
                 }
                 case STOWAWAY: {

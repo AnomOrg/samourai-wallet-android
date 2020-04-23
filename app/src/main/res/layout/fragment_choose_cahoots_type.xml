@@ -242,7 +242,7 @@ blockchain including amount spent."
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="16dp"
-                android:text="Samourai Wallet"
+                android:text="Anom Wallet"
                 android:textColor="@color/white"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -254,7 +254,7 @@ blockchain including amount spent."
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
-                android:text="Samourai Wallet controlled servers will act as a
+                android:text="Anom Wallet controlled servers will act as a
 participant to create this CoinJoin. This is the easiest
 and quickest option."
                 app:layout_constraintBottom_toBottomOf="parent"

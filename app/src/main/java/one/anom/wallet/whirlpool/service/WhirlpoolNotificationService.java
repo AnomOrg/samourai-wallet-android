@@ -49,7 +49,7 @@ public class WhirlpoolNotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         Notification notification = new NotificationCompat.Builder(this, WHIRLPOOL_CHANNEL)
-                .setContentTitle("Samourai Whirlpool")
+                .setContentTitle("Anom Whirlpool")
                 .setContentText("Waiting...")
                 .setOngoing(true)
                 .setSound(null)
@@ -160,7 +160,7 @@ public class WhirlpoolNotificationService extends Service {
     void updateNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, WHIRLPOOL_CHANNEL)
                 .setGroupAlertBehavior(GROUP_ALERT_SUMMARY)
-                .setContentTitle("Samourai Whirlpool")
+                .setContentTitle("Anom Whirlpool")
                 .setOngoing(true)
                 .setSound(null)
                 .setGroup("service")
