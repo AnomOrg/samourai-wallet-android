@@ -83,11 +83,7 @@
         android:orderInCategory="100"
         android:title="Paste cahoots payload"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/action_support"
-        android:orderInCategory="100"
-        android:title="@string/action_support"
-        app:showAsAction="never" />
+F
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
