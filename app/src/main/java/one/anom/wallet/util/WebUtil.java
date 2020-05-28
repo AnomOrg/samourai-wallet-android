@@ -51,20 +51,10 @@ public class WebUtil {
     public static final String SAMOURAI_API2 = "https://api.samouraiwallet.com/v2/";
     public static final String SAMOURAI_API2_TESTNET = "https://api.samouraiwallet.com/test/v2/";
 
-    public static final String SAMOURAI_API2_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/v2/";
-    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/test/v2/";
 
-    public static String SAMOURAI_API2_TOR = SAMOURAI_API2_TOR_DIST;
-    public static String SAMOURAI_API2_TESTNET_TOR = SAMOURAI_API2_TESTNET_TOR_DIST;
-
-    public static final String LBC_EXCHANGE_URL = "https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/";
-    public static final String BTCe_EXCHANGE_URL = "https://wex.nz/api/3/ticker/";
-    public static final String BFX_EXCHANGE_URL = "https://api.bitfinex.com/v1/pubticker/btcusd";
-    public static final String VALIDATE_SSL_URL = SAMOURAI_API;
-
-
-    //to change a dojo node only change these 3 parameter
-    public static final String DOJO_URL = "http://yzlz4vav7igywlsjvr2xeixrt3ejemkmmzmk2or7xb7ds6rg2gwgb4ad.onion/v2";
+    //to change a dojo node only change these  parameter
+    public static final String SAMOURAI_API2_TOR_DIST = "http://yzlz4vav7igywlsjvr2xeixrt3ejemkmmzmk2or7xb7ds6rg2gwgb4ad.onion/v2";
+    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = SAMOURAI_API2_TOR_DIST;
     public static final String DOJO_API_KEY = "apiz7FesfThMsXzU";
     public static final String DOJO_PARAMS = "{\n" +
             "        \"pairing\": {\n" +
@@ -76,9 +66,15 @@ public class WebUtil {
             "    }";
 
 
+    public static String SAMOURAI_API2_TOR = SAMOURAI_API2_TOR_DIST;
+    public static String SAMOURAI_API2_TESTNET_TOR = SAMOURAI_API2_TESTNET_TOR_DIST;
 
+    public static final String LBC_EXCHANGE_URL = "https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/";
+    public static final String BTCe_EXCHANGE_URL = "https://wex.nz/api/3/ticker/";
+    public static final String BFX_EXCHANGE_URL = "https://api.bitfinex.com/v1/pubticker/btcusd";
+    public static final String VALIDATE_SSL_URL = SAMOURAI_API;
+    
     public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
-
     private static final int DefaultRequestRetry = 2;
     private static final int DefaultRequestTimeout = 60000;
 

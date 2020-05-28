@@ -14,7 +14,6 @@ import io.reactivex.Observable;
 
 import static one.anom.wallet.util.WebUtil.DOJO_API_KEY;
 import static one.anom.wallet.util.WebUtil.DOJO_PARAMS;
-import static one.anom.wallet.util.WebUtil.DOJO_URL;
 
 public class DojoUtil {
 
@@ -103,13 +102,6 @@ public class DojoUtil {
        return Observable.fromCallable(() -> {
            DojoUtil.dojoParams = DOJO_PARAMS;
 
-           if(SamouraiWallet.getInstance().isTestNet())    {
-               WebUtil.SAMOURAI_API2_TESTNET_TOR = DOJO_URL;
-           }
-           else    {
-               WebUtil.SAMOURAI_API2_TOR = DOJO_URL;
-           }
-
            APIFactory.getInstance(context).setAppToken(DOJO_API_KEY);
            APIFactory.getInstance(context).getToken(true);
            return  true;
@@ -119,7 +111,7 @@ public class DojoUtil {
     public synchronized void removeDojoParams() {
         DojoUtil.dojoParams = null;
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(SamouraiWallet.getInstance().isTestNet())  {
             WebUtil.SAMOURAI_API2_TESTNET_TOR = WebUtil.SAMOURAI_API2_TESTNET_TOR_DIST;
         }
         else    {
