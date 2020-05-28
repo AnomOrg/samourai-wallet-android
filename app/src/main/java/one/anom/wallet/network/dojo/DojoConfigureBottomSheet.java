@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import one.anom.wallet.LandingActivity;
 import one.anom.wallet.R;
 import one.anom.wallet.fragments.CameraFragmentBottomSheet;
 import one.anom.wallet.tor.TorManager;
@@ -39,7 +40,7 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
     private TextView progressStates;
     private Group btnGroup, progressGroup;
     private CameraFragmentBottomSheet cameraFragmentBottomSheet;
-    private DojoConfigurationListener dojoConfigurationListener;
+    private LandingActivity.DojoConfigurationListener dojoConfigurationListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,7 +64,7 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
         return view;
     }
 
-    public void setDojoConfigurationListener(DojoConfigurationListener dojoConfigurationListener) {
+    public void setDojoConfigurationListener(LandingActivity.DojoConfigurationListener dojoConfigurationListener) {
         this.dojoConfigurationListener = dojoConfigurationListener;
     }
 
@@ -202,9 +203,5 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
 
     }
 
-    public interface DojoConfigurationListener {
-        void onConnect();
 
-        void onError();
-    }
 }
