@@ -13,7 +13,7 @@
         android:title="@string/get_help_create"
         />
     <item android:id="@+id/dojo"
-        android:visible="false"
+        android:visible="true"
         android:title="@string/connect_to_existing_dojo"
         />
     <item android:id="@+id/get_help_menu_restore"

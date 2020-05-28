@@ -337,7 +337,7 @@ public class APIFactory	{
                 response = WebUtil.getInstance(context).postURL(_url + "auth/login?", args.toString());
                 LogUtil.info("APIFactory", "API token response:" + response);
             }
-            else    {
+            else  {
                 HashMap<String,String> args = new HashMap<String,String>();
                 args.put("apikey", new String(getXORKey()));
                 LogUtil.info("APIFactory", "API key (XOR):" + new String(getXORKey()));
