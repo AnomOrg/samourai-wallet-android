@@ -54,6 +54,7 @@ import one.anom.wallet.R;
 import one.anom.wallet.SamouraiActivity;
 import one.anom.wallet.send.cahoots.ManualCahootsActivity;
 import one.anom.wallet.utxos.UTXOSActivity;
+import one.anom.wallet.whirlpool.WhirlpoolMain;
 import one.dm.zbar.android.scanner.ZBarConstants;
 import one.anom.wallet.ExodusActivity;
 import one.anom.wallet.JSONRPC.JSONRPC;
@@ -157,6 +158,7 @@ public class BalanceActivity extends SamouraiActivity {
     private ImageView menuTorIcon;
     private ProgressBar progressBarMenu;
     private TextView mFiatAmount;
+    private View  whirlpoolFab,sendFab, receiveFab, paynymFab;
 
     public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
 
@@ -351,6 +353,10 @@ public class BalanceActivity extends SamouraiActivity {
         mCollapsingToolbar = findViewById(R.id.toolbar_layout);
         txSwipeLayout = findViewById(R.id.tx_swipe_container);
         mFiatAmount = findViewById(R.id.tv_fiat_amount);
+        whirlpoolFab = findViewById(R.id.whirlpool_fab);
+        sendFab =  findViewById(R.id.send_fab);
+        receiveFab =  findViewById(R.id.receive_fab);
+        paynymFab =  findViewById(R.id.paynym_fab);
 
         setSupportActionBar(toolbar);
         TxRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -402,6 +408,13 @@ public class BalanceActivity extends SamouraiActivity {
             progressBar.setVisibility(View.VISIBLE);
         });
 
+        findViewById(R.id.whirlpool_fab).setOnClickListener(view -> {
+            Intent intent = new Intent(BalanceActivity.this, WhirlpoolMain.class);
+            startActivity(intent);
+            menuFab.toggle(true);
+        });
+
+
         IntentFilter filter = new IntentFilter(ACTION_INTENT);
         LocalBroadcastManager.getInstance(BalanceActivity.this).registerReceiver(receiver, filter);
         IntentFilter filterDisplay = new IntentFilter(DISPLAY_INTENT);
@@ -433,7 +446,7 @@ public class BalanceActivity extends SamouraiActivity {
             doClipboardCheck();
         }
 
-        final Handler delayedHandler = new Handler();
+       /* final Handler delayedHandler = new Handler();
         delayedHandler.postDelayed(() -> {
 
             boolean notifTx = false;
@@ -445,7 +458,36 @@ public class BalanceActivity extends SamouraiActivity {
             refreshTx(notifTx, false, true);
 
             updateDisplay(false);
-        }, 100L);
+        }, 100L);*/
+
+        if (account == 0) {
+            final Handler delayedHandler = new Handler();
+            delayedHandler.postDelayed(() -> {
+
+                boolean notifTx = false;
+                Bundle extras = getIntent().getExtras();
+                if (extras != null && extras.containsKey("notifTx")) {
+                    notifTx = extras.getBoolean("notifTx");
+                }
+
+                refreshTx(notifTx, false, true);
+
+                updateDisplay(false);
+            }, 100L);
+
+            getSupportActionBar().setIcon(R.drawable.ic_samourai_logo_toolbar);
+
+            balanceViewModel.loadOfflineData();
+        }
+        else {
+            getSupportActionBar().setIcon(R.drawable.ic_whirlpool);
+
+            receiveFab.setVisibility(View.GONE);
+            whirlpoolFab.setVisibility(View.GONE);
+            paynymFab.setVisibility(View.GONE);
+            new Handler().postDelayed(() -> updateDisplay(true), 600L);
+        }
+
 
         if (!AppUtil.getInstance(BalanceActivity.this.getApplicationContext()).isServiceRunning(WebSocketService.class)) {
             startService(new Intent(BalanceActivity.this.getApplicationContext(), WebSocketService.class));
@@ -454,6 +496,7 @@ public class BalanceActivity extends SamouraiActivity {
         initViewModel();
         updateDisplay(false);
         progressBar.setVisibility(View.VISIBLE);
+
         checkDeepLinks();
     }
 
