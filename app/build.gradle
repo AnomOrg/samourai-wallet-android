@@ -74,7 +74,7 @@ android {
             versionCode 161
             versionName "1.99.92"
             resValue "string", "app_name", "Wallet"
-            resValue "string", "version_name", "1.0.1"
+            resValue "string", "version_name", "1.99.92"
         }
         staging {
             applicationId 'one.anom.wallet.staging'
@@ -83,7 +83,7 @@ android {
             versionCode 161
             versionName "1.99.92"
             resValue "string", "app_name", "Anom Staging"
-            resValue "string", "version_name", "1.0.1"
+            resValue "string", "version_name", "1.99.92"
         }
     }
     testOptions {
