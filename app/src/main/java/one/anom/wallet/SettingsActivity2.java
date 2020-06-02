@@ -1132,15 +1132,15 @@ public class SettingsActivity2 extends PreferenceActivity {
 
     private void getFeeProvider() {
 
-        final String[] providers;
-        if (PrefsUtil.getInstance(SettingsActivity2.this).getValue(PrefsUtil.USE_TRUSTED_NODE, false) == true) {
-            providers = new String[FeeUtil.getInstance().getProviders().length + 1];
+        final String[] providers= {"Anom Wallet(bitcoind)"};
+       /* if (PrefsUtil.getInstance(SettingsActivity2.this).getValue(PrefsUtil.USE_TRUSTED_NODE, false) == true) {
+            providers = new String[0];
             System.arraycopy(FeeUtil.getInstance().getProviders(), 0, providers, 0, FeeUtil.getInstance().getProviders().length);
             String[] trusted = new String[]{"Trusted node"};
             System.arraycopy(trusted, 0, providers, FeeUtil.getInstance().getProviders().length, 1);
         } else {
             providers = FeeUtil.getInstance().getProviders();
-        }
+        }*/
 
         final int sel;
         if (PrefsUtil.getInstance(SettingsActivity2.this).getValue(PrefsUtil.FEE_PROVIDER_SEL, 0) >= providers.length) {

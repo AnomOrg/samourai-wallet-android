@@ -161,7 +161,7 @@ public class AndroidWhirlpoolWalletService extends WhirlpoolWalletService {
 
     public Completable startService(Context context) {
         if (source.hasObservers())
-            source.onNext(ConnectionStates.STARTING);
+            source.onNext(ConnectionStates.CONNECTED);
         return Completable.fromCallable(() -> {
             this.getOrOpenWhirlpoolWallet(context).start();
             if (source.hasObservers()) {

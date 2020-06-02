@@ -97,8 +97,8 @@ public class PayloadUtil	{
     private final static String strUTXOPostFilename = "samourai.utxo.post";
     private final static String strUTXOBadBankFilename = "samourai.utxo.badbank";
 
-    private final static String strOptionalBackupDir = "/samourai";
-    private final static String strOptionalFilename = "samourai.txt";
+    private final static String strOptionalBackupDir = "/anomwallet";
+    private final static String strOptionalFilename = "anomwallet.txt";
 
     private static Context context = null;
 

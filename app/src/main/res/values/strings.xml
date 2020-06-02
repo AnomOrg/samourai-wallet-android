@@ -479,7 +479,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC into your wallet and try again.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">I understand that Anom cannot provide assistance in the case of lost or forgotten passphrases. Anomnever has any knowledge of my passphrase.</string>
+    <string name="passphrase_disclaimer">I understand that Anom cannot provide assistance in the case of lost or forgotten passphrases. Anom Wallet never has any knowledge of my passphrase.</string>
     <string name="confirm_pin_code">Confirm pin code</string>
     <string name="re_enter_your_pin_code">Re-enter your PIN code</string>
     <string name="re_enter_a_passphrase">Re-enter a passphrase</string>
