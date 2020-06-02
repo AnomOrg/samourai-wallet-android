@@ -104,7 +104,7 @@ import one.anom.wallet.util.AppUtil;
 
 import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.CharSequenceX;
-
+F
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.MonetaryUtil;

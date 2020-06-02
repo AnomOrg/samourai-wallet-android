@@ -4,8 +4,8 @@
     <string name="alpha_create_wallet">Write these words down and keep them safe. Do not lose these words or forget your passphrase.</string>
     <string name="alpha_create_confirm_backup">I\'ve written down my words</string>
 
-    <string name="creating_wallet">Creating wallet. Please wait...</string>
-    <string name="restoring_wallet">Restoring wallet. Please wait...</string>
+    <string name="creating_wallet">Creating anom wallet. Please wait...</string>
+    <string name="restoring_wallet">Restoring anom wallet. Please wait...</string>
     <string name="decrypting_bip38">Decrypting BIP38 password. Please wait...</string>
 
     <string name="action_settings">Settings</string>
@@ -24,12 +24,12 @@
     <string name="options_cat_prefs">Currency, Block explorer</string>
     <string name="options_cat_stealth">Stealth</string>
     <string name="options_cat_remote">Remote</string>
-    <string name="options_cat_wallet">Wallet</string>
+    <string name="options_cat_wallet">Anom Wallet</string>
     <string name="options_cat_networking">Networking</string>
     <string name="options_cat_other">About</string>
 
     <string name="options_mnemonic">Show mnemonic</string>
-    <string name="options_mnemonic2">Show 12-word seed for this wallet.</string>
+    <string name="options_mnemonic2">Show 12-word seed for this anom wallet.</string>
     <string name="options_xpub">Show BIP44 XPUB</string>
     <string name="options_xpub2">Show extended public key for BIP44 account.</string>
     <string name="options_xpub49">Show Segwit YPUB</string>
@@ -42,7 +42,7 @@
     <string name="options_xpub84_postmix2">Show extended public key for BIP84 Segwit account (Bech32) Whirlpool post-mix.</string>
     <string name="options_xpub84_badbank">Show Whirlpool bad bank ZPUB</string>
     <string name="options_xpub84_badbank2">Show extended public key for BIP84 Segwit account (Bech32) Whirlpool bad bank.</string>
-    <string name="options_wipe">Secure erase wallet</string>
+    <string name="options_wipe">Secure erase anom wallet</string>
     <string name="options_wipe2">Securely erase this anom wallet from the device.</string>
     <string name="options_stealth_display">Stealth launcher</string>
     <string name="options_stealth_display2">Remove Anom Wallet from the launcher and home screen. You must dial **YOUR_PIN_CODE# from the phone dialer to launch Anom.</string>
@@ -66,7 +66,7 @@
     <string name="options_Tor2">Launch Orbot (Tor).</string>
     <string name="options_export">Export anom wallet backup</string>
     <string name="options_change_pin">Change PIN</string>
-    <string name="options_change_pin2">Define a new PIN code; used to unlock your wallet.</string>
+    <string name="options_change_pin2">Define a new PIN code; used to unlock your anom wallet.</string>
     <string name="options_remote_pin">Stealth launch and remote PIN</string>
     <string name="options_remote_pin2">Define alternative PIN for stealth launch and remote functions.</string>
     <string name="options_autosave_backup">Autosave backup to device storage</string>
@@ -105,8 +105,8 @@
     <string name="options_address_calc2">Calculate addresses derived from your anom wallet seed.</string>
     <string name="options_paynym_calc">PayNym calculator</string>
     <string name="options_paynym_calc2">Calculate addresses shared with other PayNyms.</string>
-    <string name="options_indexes">Wallet indexes</string>
-    <string name="options_indexes2">Current index values for this wallet.</string>
+    <string name="options_indexes">Anom wallet indexes</string>
+    <string name="options_indexes2">Current index values for this anom wallet.</string>
     <string name="options_whirlpool_gui">Pair to Whirlpool GUI</string>
     <string name="options_whirlpool_gui2">Pair to Whirlpool GUI for continuous mixing.</string>
     <string name="options_postmix">Spend from post-mix Whirlpool</string>
@@ -142,20 +142,20 @@
     <string name="no_internet">No Internet connectivity. Please try again.</string>
     <string name="bip38_pw">BIP38 password</string>
     <string name="bip38_pw_error">BIP38 password error</string>
-    <string name="bip39_safe">Please create a passphrase and keep it secret. You will need this passphrase if you lose access to your wallet.</string>
-    <string name="bip39_safe2">Please confirm your passphrase. Keep it secret. You will need this passphrase if you lose access to your wallet.</string>
+    <string name="bip39_safe">Please create a passphrase and keep it secret. You will need this passphrase if you lose access to your anom wallet.</string>
+    <string name="bip39_safe2">Please confirm your passphrase. Keep it secret. You will need this passphrase if you lose access to your anom wallet.</string>
     <string name="bip39_restore">Enter your mnemonic (or hex entropy) and, if necessary, your BIP39 passphrase. If you do not use a BIP39 passphrase, leave it blank.</string>
     <string name="bip39_must">Your anom wallet must use a passphrase. Please try again.</string>
     <string name="bip39_unmatch">Passphrase does not match. Please try again.</string>
     <string name="bip39_invalid">Do not use any space characters in your passphrase. Please try again.</string>
     <string name="bip39_empty">You must define a passphrase.</string>
     <string name="please_select">Please select...</string>
-    <string name="create_wallet">Create wallet</string>
-    <string name="restore_wallet">Restore wallet</string>
-    <string name="wallet_passphrase">Enter your anom  wallet passphrase</string>
+    <string name="create_wallet">Create anom wallet</string>
+    <string name="restore_wallet">Restore anom wallet</string>
+    <string name="wallet_passphrase">Enter your anom wallet passphrase</string>
     <string name="bip39_passphrase">BIP39 passphrase</string>
     <string name="bip39_match">BIP39 passphrase verified OK.</string>
-    <string name="bip39_decrypt_test">Wallet passphrase verified OK. Would you like to test decryption of the latest auto backup?</string>
+    <string name="bip39_decrypt_test">Anom wallet passphrase verified OK. Would you like to test decryption of the latest auto backup?</string>
     <string name="backup_read_ok">Backup file OK.</string>
     <string name="backup_read_error">Error reading backup file.</string>
     <string name="mnemonic_hex">Mnemonic or hex entropy</string>
@@ -163,10 +163,10 @@
     <string name="please_wait">Please wait...</string>
     <string name="random_key_error">Random key error</string>
     <string name="login_error">Login failed</string>
-    <string name="wallet_created_ok">Wallet created OK.</string>
-    <string name="wallet_created_ko">Error creating wallet.</string>
-    <string name="wallet_restored_ok">Wallet restored OK.</string>
-    <string name="wallet_restored_ko">Error restoring wallet.</string>
+    <string name="wallet_created_ok">Anom wallet created OK.</string>
+    <string name="wallet_created_ko">Error creating anom wallet.</string>
+    <string name="wallet_restored_ok">Anom wallet restored OK.</string>
+    <string name="wallet_restored_ko">Error restoring anom wallet.</string>
 
     <string name="address_used_previously">You have used this address before! Reusing addresses may result in a loss of privacy.</string>
 
@@ -186,15 +186,15 @@
     <string name="receive_address_to_clipboard">Copy this receive address to the clipboard? If copied, it may be visible to other applications.</string>
     <string name="txid_to_clipboard">Copy this transaction id  to the clipboard? If copied, it may be visible to other applications.</string>
     <string name="receive_address_to_share">Share this receive address? If shared, it may be read to other applications.</string>
-    <string name="sure_to_erase">Are you sure you want to erase this wallet?</string>
-    <string name="wallet_erased">Wallet erased from device.</string>
+    <string name="sure_to_erase">Are you sure you want to erase this anom wallet?</string>
+    <string name="wallet_erased">Anom wallet erased from device.</string>
 
     <string name="send_privacy_warning">Privacy warning: be aware that you have already sent funds to this address.</string>
 
-    <string name="securely_wiping_wait">Securely wiping wallet. Please wait.</string>
+    <string name="securely_wiping_wait">Securely wiping anom wallet. Please wait.</string>
 
     <string name="options_scramble_pin">Scramble PIN Screen</string>
-    <string name="options_scramble_pin2">Use scrambled numerical pad to enter your wallet. </string>
+    <string name="options_scramble_pin2">Use scrambled numerical pad to enter your anom wallet. </string>
 
     <string name="you_must_have_orbot">You must have Orbot installed and activated to proxy traffic through it. Would you like to install it from Google Play?</string>
 
@@ -212,7 +212,7 @@
     <string name="custom_fee">Custom</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">Wallet</string>
+    <string name="account_Samourai">Anom Wallet</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">Max. available:</string>
@@ -276,7 +276,7 @@
 
     <string name="invalid_passphrase">Invalid passphrase</string>
     <string name="passphrase">Passphrase</string>
-    <string name="passphrase_needed_for_backup">Your anom wallet is not protected by a passphrase. Wallet backups are encrypted using your anom wallet passphrase. If you would like to use encrypted anom wallet backups and other Anom Wallet features create your anom wallet using Anom Wallet and transfer your funds.</string>
+    <string name="passphrase_needed_for_backup">Your anom wallet is not protected by a passphrase. Anom Wallet backups are encrypted using your anom wallet passphrase. If you would like to use encrypted anom wallet backups and other Anom Wallet features create your anom wallet using Anom Wallet and transfer your funds.</string>
     <string name="passphrase_required">A passphrase is required to use this function. Please consider creating a new anom wallet which will automatically include a passphrase.</string>
 
     <string name="cannot_reach_api">Anom Wallet APIs cannot be reached. Please verify connection and try again or try later.</string>
@@ -397,7 +397,7 @@
     <string name="replay_in_progress">In progress</string>
     <string name="replay_protected">Protected</string>
     <string name="replay_disclaimer">Chain split detected</string>
-    <string name="replay_text">All addresses will be merged into a single transaction and sent to an address in your wallet. This is referred to as merging inputs and may degrade your privacy.</string>
+    <string name="replay_text">All addresses will be merged into a single transaction and sent to an address in your anom wallet. This is referred to as merging inputs and may degrade your privacy.</string>
     <string name="replay_ENABLE">ENABLE REPLAY PROTECTION</string>
 
     <string name="replay_broadcast_to_network">broadcast to network...</string>
@@ -423,7 +423,7 @@
     <string name="TestNet">TestNet</string>
 
     <string name="segwit_address">Segwit Address</string>
-    <string name="segwit_switch_prompt">Funds deposited in Segwit addresses are more efficient to transact with. Offering reduced miner fees when sending bitcoin from your wallet.</string>
+    <string name="segwit_switch_prompt">Funds deposited in Segwit addresses are more efficient to transact with. Offering reduced miner fees when sending bitcoin from your anom wallet.</string>
 
     <string name="privkey_clipboard">A private key has been identified in your clipboard. Delete the clipboard contents?</string>
 
@@ -484,13 +484,13 @@
     <string name="re_enter_your_pin_code">Re-enter your PIN code</string>
     <string name="re_enter_a_passphrase">Re-enter a passphrase</string>
     <string name="create_a_passphrase">Create a passphrase</string>
-    <string name="create_a_secure_passphrase_for_your_wallet">Create a secure passphrase for your wallet</string>
+    <string name="create_a_secure_passphrase_for_your_wallet">Create a secure passphrase for your anom wallet</string>
     <string name="set_pin_code">Set Pin code</string>
     <string name="accept_disclaimer_error">You need to accept disclaimer</string>
     <string name="import_external_wallet">Import external  anom wallet</string>
     <string name="import_samourai_wallet">Import anom wallet backup</string>
     <string name="backup_file">Backup file</string>
-    <string name="import_an_encrypted_samourai_wallet">import an encrypted anom Wallet backup to restore anom wallet with all meta-data intact</string>
+    <string name="import_an_encrypted_samourai_wallet">import an encrypted Anom Wallet backup to restore anom wallet with all meta-data intact</string>
     <string name="back">BACK</string>
     <string name="finish">finish</string>
     <string name="choose_file">choose file</string>
@@ -506,7 +506,7 @@
     <string name="import_samourai_backup">Import Anom Wallet backup</string>
     <string name="samourai_bitcoin_wallet">Anom Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Enter your anom wallet passphrase</string>
-    <string name="start_new_wallet">Start new wallet</string>
+    <string name="start_new_wallet">Start new anom wallet</string>
     <string name="get_help_create">Create anom wallet: Get help</string>
     <string name="get_help_restore">Restore anom wallet: Get help</string>
 
@@ -688,7 +688,7 @@
     <string name="add_new">Add New</string>
     <string name="paynym_follow_message_2">to automatically generate unique private addresses for sending bitcoin to this contact</string>
     <string name="follow">Follow</string>
-    <string name="wallet_locked">Wallet Locked</string>
+    <string name="wallet_locked">Anom Wallet Locked</string>
     <string name="address">Address</string>
     <string name="is_offline">Anom Wallet is offline</string>
     <string name="history_will_be_updated">Balance and transaction history will not be updated until a working data connection is established</string>
@@ -733,7 +733,7 @@
     <string name="select_participant">Select participant</string>
     <string name="select_cahoots_type">Select cahoots type</string>
     <string name="cannot_disable_tor_dojo">Tor cannot be stopped since anom wallet is connected to a AnomDojo node.</string>
-    <string name="temporary_dojo_disable">Uninstall AnomWallet to unpair from your Dojo node. \'DISABLE\' will be fully activated in a later update.</string>
+    <string name="temporary_dojo_disable">Uninstall Anom Wallet to unpair from your Dojo node. \'DISABLE\' will be fully activated in a later update.</string>
 
     <string name="renew">RENEW</string>
     <string name="continue_exchanging_qr_codes">Continue exchanging QR codes\n until the transaction is broadcast!</string>
