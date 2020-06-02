@@ -211,7 +211,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="NOTE: You are making a post-mix spend. If #Cahoots\nis not selected Wallet will attempt to make a STONEWALL spend."
+                    android:text="NOTE: You are making a post-mix spend. If #Cahoots\nis not selected anom Wallet will attempt to make a STONEWALL spend."
                     android:textAlignment="viewStart"
                     android:textColor="@color/white"
                     android:textSize="13sp"
