@@ -38,7 +38,7 @@
     <string name="options_wipe">Portemonnee veilig wissen</string>
     <string name="options_wipe2">Wis deze portemonnee veilig van dit apparaat.</string>
     <string name="options_stealth_display">Onzichtbaar starten</string>
-    <string name="options_stealth_display2">Verberg Anom op het startscherm. Je moet **JOUW_PINCODE# intoetsen op het belscherm om Anom te starten.</string>
+    <string name="options_stealth_display2">Verberg Anom Wallet op het startscherm. Je moet **JOUW_PINCODE# intoetsen op het belscherm om Anom Wallet te starten.</string>
     <string name="options_remote_commands">Commando\'s op afstand toestaan</string>
     <string name="options_remote_commands2">Commando\'s via sms toestaan.</string>
     <string name="options_currency">Straatprijs</string>
@@ -117,7 +117,7 @@
     <string name="copied_to_clipboard">Gekopieerd naar klembord</string>
     <string name="send_payment_code">Betalingscode verzenden</string>
 
-    <string name="ask_you_sure_exit">Weet je zeker dat je Anom wilt sluiten?</string>
+    <string name="ask_you_sure_exit">Weet je zeker dat je Anom Wallet wilt sluiten?</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
     <string name="close">Sluiten</string>
@@ -166,7 +166,7 @@
     <string name="destination">Adres of betalingskanaal</string>
 
     <string name="insufficient_funds">Saldo ontoereikend</string>
-    <string name="tx_length_error">Anom ondersteunt geen transacties groter dan 100KB. Probeer je transactie te splitsen.</string>
+    <string name="tx_length_error">Anom Wallet ondersteunt geen transacties groter dan 100KB. Probeer je transactie te splitsen.</string>
     <string name="invalid_amount">Ongeldig bedrag</string>
     <string name="amount">Bedrag</string>
 
@@ -265,8 +265,8 @@
     <string name="passphrase_needed_for_backup">Je portemonnee is niet beveiligd met een wachtwoordzin. Portemonneeback-ups worden met een wachtwoordzin versleuteld. Als je deze en andere Anom Wallet-functies wilt gebruiken, maak je portemonnee dan aan met Anom Wallet en maak je saldo ernaar over.</string>
     <string name="passphrase_required">Een wachtwoordzin is vereist om deze functie te gebruiken. Overweeg om een nieuwe portemonnee aan te maken, die automatisch een wachtwoordzin zal bevatten.</string>
 
-    <string name="cannot_reach_api">Anom-API\'s kunnen niet worden bereikt. Zorg dat je verbinding hebt en probeer het later opnieuw.</string>
-    <string name="api_error">De Anom-API\'s geven een foutmelding. Probeer het later opnieuw.</string>
+    <string name="cannot_reach_api">Anom Wallet-API\'s kunnen niet worden bereikt. Zorg dat je verbinding hebt en probeer het later opnieuw.</string>
+    <string name="api_error">De Anom Wallet-API\'s geven een foutmelding. Probeer het later opnieuw.</string>
 
     <string name="cannot_recognize_privkey">Kan privésleutel niet herkennen</string>
     <string name="cannot_sweep_privkey">Fout bij legen privésleutel</string>
@@ -275,9 +275,9 @@
 
     <string name="change_is_dust">Het wisselgeld van deze transactie is een zeer klein \'dust\'-bedrag. Probeer het opnieuw en wijzig het te besteden bedrag of besteed het gehele saldo.</string>
 
-    <string name="tor_routing_on">Anom wordt omgeleid via Tor.</string>
-    <string name="tor_routing_off">Anom wordt niet omgeleid via Tor. Tik om te activeren.</string>
-    <string name="tor_install">Tik om Orbot te installeren en Anom via Tor om te leiden.</string>
+    <string name="tor_routing_on">Anom Wallet wordt omgeleid via Tor.</string>
+    <string name="tor_routing_off">Anom Wallet wordt niet omgeleid via Tor. Tik om te activeren.</string>
+    <string name="tor_install">Tik om Orbot te installeren en Anom Wallet via Tor om te leiden.</string>
 
     <string name="premium_addons">Betaalde extra\'s</string>
 
@@ -285,7 +285,7 @@
     <string name="ricochet_hopping">Gericochet naar</string>
     <string name="ricochet_spend1">Ricochet-uitgave naar</string>
     <string name="ricochet_spend2">van in totaal</string>
-    <string name="ricochet_spend3">(inclusief 0,002 BTC aan transactiekosten voor Anom en miners)?</string>
+    <string name="ricochet_spend3">(inclusief 0,002 BTC aan transactiekosten voor Anom Wallet en miners)?</string>
 
     <string name="action_ricochet">Ricochet opnieuw spelen</string>
     <string name="action_empty_ricochet">Ricochet-wachtrij legen</string>
@@ -374,7 +374,7 @@
     <string name="opendime_topup">OPLADEN</string>
 
     <string name="select_app">Applicatie selecteren</string>
-    <string name="samourai_opendime">Anom: OpenDime</string>
+    <string name="samourai_opendime">Anom Wallet: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">Onbeschermd</string>
@@ -442,7 +442,7 @@
 
     <string name="copy_to_clipboard">Kopiëren naar klembord</string>
 
-    <string name="no_bitpay">Fout: dit is geen geldig bitcoinverzoek. Anom ondersteunt alleen verzenden naar geldige bitcoin-adressen.</string>
+    <string name="no_bitpay">Fout: dit is geen geldig bitcoinverzoek. Anom Wallet ondersteunt alleen verzenden naar geldige bitcoin-adressen.</string>
     <string name="learn_more">Meer weten</string>
 
     <string name="paynym">PayNym</string>
@@ -463,7 +463,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC in je portemonnee en probeer het opnieuw.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">Ik begrijp dat Anom geen ondersteuning kan bieden bij een verloren of vergeten wachtwoordzin. Anom komt mijn wachtwoordzin nooit te weten.</string>
+    <string name="passphrase_disclaimer">Ik begrijp dat Anom Wallet geen ondersteuning kan bieden bij een verloren of vergeten wachtwoordzin. Anom Wallet komt mijn wachtwoordzin nooit te weten.</string>
     <string name="confirm_pin_code">Pincode bevestigen</string>
     <string name="re_enter_your_pin_code">Voer je pincode opnieuw in</string>
     <string name="re_enter_a_passphrase">Wachtwoordzin opnieuw invoeren</string>
@@ -472,9 +472,9 @@
     <string name="set_pin_code">Pincode instellen</string>
     <string name="accept_disclaimer_error">Je dient de disclaimer te accepteren</string>
     <string name="import_external_wallet">Externe portemonnee importeren</string>
-    <string name="import_samourai_wallet">Anom-back-up importeren</string>
+    <string name="import_samourai_wallet">Anom Wallet-back-up importeren</string>
     <string name="backup_file">Back-upbestand</string>
-    <string name="import_an_encrypted_samourai_wallet">Importeer een versleutelde Anom-back-up om een portemonnee te herstellen met alle metadata intact</string>
+    <string name="import_an_encrypted_samourai_wallet">Importeer een versleutelde Anom Wallet-back-up om een portemonnee te herstellen met alle metadata intact</string>
     <string name="back">TERUG</string>
     <string name="finish">gereed</string>
     <string name="choose_file">bestand kiezen</string>
@@ -487,8 +487,8 @@
     <string name="last_updated">Laatst bijgewerkt</string>
     <string name="get_help">Hulp verkrijgen</string>
     <string name="offline_mode">Offline-modus</string>
-    <string name="import_samourai_backup">Anom-back-up importeren</string>
-    <string name="samourai_bitcoin_wallet">Anom Bitcoin Wallet</string>
+    <string name="import_samourai_backup">Anom Wallet-back-up importeren</string>
+    <string name="samourai_bitcoin_wallet">Anom Wallet Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Voer de wachtwoordzin voor je portemonnee in</string>
     <string name="start_new_wallet">Nieuwe portemonnee starten</string>
     <string name="get_help_create">Portemonnee aanmaken: hulp verkrijgen</string>

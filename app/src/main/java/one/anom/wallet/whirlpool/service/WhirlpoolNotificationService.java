@@ -49,7 +49,7 @@ public class WhirlpoolNotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         Notification notification = new NotificationCompat.Builder(this, WHIRLPOOL_CHANNEL)
-                .setContentTitle("Anom Whirlpool")
+                .setContentTitle("Anom Wallet Whirlpool")
                 .setContentText("Waiting...")
                 .setOngoing(true)
                 .setSound(null)

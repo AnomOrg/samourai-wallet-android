@@ -15,7 +15,7 @@
     <string name="action_unarchive">Aktivovat všechny archivované platební kódy</string>
     <string name="action_sync_all">Synchronizovat všechny platební kódy</string>
 
-    <string name="about_us">O peněžence Anom</string>
+    <string name="about_us">O peněžence Anom Wallet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Zrušit</string>
@@ -42,7 +42,7 @@
     <string name="options_wipe">Bezpečně odstranit peněženku</string>
     <string name="options_wipe2">Bezpečně odstranit tuto peněženku z tohoto zařízení.</string>
     <string name="options_stealth_display">Utajení aplikace</string>
-    <string name="options_stealth_display2">Vymaž Anom z domovské obrazovky a ze seznamu aplikací. Musíš vytočiť **TVŮJ_PIN_KÓD# z aplikace pro volání pro spuštění Anom.</string>
+    <string name="options_stealth_display2">Vymaž Anom Wallet  z domovské obrazovky a ze seznamu aplikací. Musíš vytočiť **TVŮJ_PIN_KÓD# z aplikace pro volání pro spuštění Anom Wallet .</string>
     <string name="options_remote_commands">Povol vzdálené príkazy</string>
     <string name="options_remote_commands2">Povol vzdálené príkazy přes SMS.</string>
     <string name="options_blockexplorer">Průzkumník bloků</string>
@@ -124,12 +124,12 @@
     <string name="copied_to_clipboard">Zkopírováno do schránky</string>
     <string name="send_payment_code">Odeslat kód platby</string>
 
-    <string name="ask_you_sure_exit">Jste si jistí, že chcete ukončit Anom?</string>
+    <string name="ask_you_sure_exit">Jste si jistí, že chcete ukončit Anom Wallet ?</string>
     <string name="yes">Ano</string>
     <string name="no">Ne</string>
     <string name="close">Zavřít</string>
 
-    <string name="sim_warning">Zařízení vaší peněženky Anom má nyní jinou SIM kartu odpovídající předcházejícímu číslu této textove zprávy.</string>
+    <string name="sim_warning">Zařízení vaší peněženky Anom Wallet  má nyní jinou SIM kartu odpovídající předcházejícímu číslu této textove zprávy.</string>
 
     <string name="pin_5_8">Zvol si PIN kód mezi 5 až 8 znaky.</string>
     <string name="pin_5_8_confirm">Potvrď PIN kód</string>
@@ -173,7 +173,7 @@
     <string name="destination">Adresa nebo platební kanál</string>
 
     <string name="insufficient_funds">Nedostatečné prostředky</string>
-    <string name="tx_length_error">Anom neumí zpracovat transakce větší než 100KB. Zkuste prosím rozdělit vaši transakci.</string>
+    <string name="tx_length_error">Anom Wallet  neumí zpracovat transakce větší než 100KB. Zkuste prosím rozdělit vaši transakci.</string>
     <string name="invalid_amount">Nesprávná suma</string>
     <string name="invalid_address">Nesprávná adresa</string>
     <string name="amount">Suma</string>
@@ -229,7 +229,7 @@
 
     <string name="choose_email_client">Vyber emailového klienta:</string>
 
-    <string name="cannot_launch_app">Anom Peněženka nemůže být spuštěná na tomto zařízení</string>
+    <string name="cannot_launch_app">Anom Wallet Peněženka nemůže být spuštěná na tomto zařízení</string>
     <string name="confirm_change_pin">Jste si jistý, že chcete změnit PIN?</string>
     <string name="success_change_pin">PIN změněn</string>
     <string name="alternative_pin_create">Jste si jistý, že chcete vytvořit alternativní PIN, který bude použitý pro spuštění ve skrytém módu a vzdálené příkazy?</string>
@@ -271,11 +271,11 @@
 
     <string name="invalid_passphrase">Nesprávné přístupové heslo</string>
     <string name="passphrase">Přístupové heslo</string>
-    <string name="passphrase_needed_for_backup">Vaše peněženka není chránená přístupovým heslem. Zálohy peněženky jsou zašifrované přístupovým heslem. Pokud si přejete využívat šifrované zálohy peněženky a ostatní výhody Anom peněženky, vytvořte si vlastní peněženku Anom a přesuňte do ní vaše prostředky.</string>
+    <string name="passphrase_needed_for_backup">Vaše peněženka není chránená přístupovým heslem. Zálohy peněženky jsou zašifrované přístupovým heslem. Pokud si přejete využívat šifrované zálohy peněženky a ostatní výhody Anom Wallet peněženky, vytvořte si vlastní peněženku Anom Wallet a přesuňte do ní vaše prostředky.</string>
     <string name="passphrase_required">Přistupové heslo je vyžadováno pro tuto funkci. Prosím zvažte vytvoření nové peněženky, která bude automaticky obsahovat přístupové heslo.</string>
 
-    <string name="cannot_reach_api">Anom API není možné najít. Prosím zkontrolujte přípojení a zopakujte znovu...</string>
-    <string name="api_error">Anom API vrací chybu. Prosím zkuste znovu nebo zkuste později.</string>
+    <string name="cannot_reach_api">Anom Wallet API není možné najít. Prosím zkontrolujte přípojení a zopakujte znovu...</string>
+    <string name="api_error">Anom Wallet API vrací chybu. Prosím zkuste znovu nebo zkuste později.</string>
     <string name="api_key_error">Nesprávny API klíč.</string>
     <string name="api_token_error">Nesprávny API token.</string>
 
@@ -286,9 +286,9 @@
 
     <string name="change_is_dust">Zůstatel z této transakce představuje příliš malé množství drobných. Zkuste to znovu a buď upravte sumu výdajů nebo zadejte celý zůstatek.</string>
 
-    <string name="tor_routing_on">Anom je směřovaný přes Tor.</string>
-    <string name="tor_routing_off">Anom není směřovaný přes Tor. Stiskněte pro aktivaci.</string>
-    <string name="tor_install">Stiskněte pro nainstalování aplikace Orbot a směřuj Anom přes Tor.</string>
+    <string name="tor_routing_on">Anom Wallet je směřovaný přes Tor.</string>
+    <string name="tor_routing_off">Anom Wallet není směřovaný přes Tor. Stiskněte pro aktivaci.</string>
+    <string name="tor_install">Stiskněte pro nainstalování aplikace Orbot a směřuj Anom Wallet přes Tor.</string>
 
     <string name="premium_addons">Prémium doplňky</string>
 
@@ -296,7 +296,7 @@
     <string name="ricochet_hopping">Ricocheted na</string>
     <string name="ricochet_spend1">Ricochet utratit na</string>
     <string name="ricochet_spend2">pro celkovou sumu z</string>
-    <string name="ricochet_spend3">(zahrnuje 0.002 BTC poplatek pro Anom a těžařské poplatky)?</string>
+    <string name="ricochet_spend3">(zahrnuje 0.002 BTC poplatek pro Anom Wallet a těžařské poplatky)?</string>
 
     <string name="action_ricochet">Opakuj Ricochet</string>
     <string name="action_empty_ricochet">Prázdná Ricochet fronta</string>
@@ -385,7 +385,7 @@
     <string name="opendime_topup">DOPLNIT</string>
 
     <string name="select_app">Vyberte aplikaci</string>
-    <string name="samourai_opendime">Anom: OpenDime</string>
+    <string name="samourai_opendime">Anom Wallet : OpenDime</string>
 
     <string name="replay_protection">Ochrana před odpovědí</string>
     <string name="replay_unprotected">Nezabezpečené</string>
@@ -453,7 +453,7 @@
 
     <string name="copy_to_clipboard">Kopírovat do schránky</string>
 
-    <string name="no_bitpay">CHYBA: Toto není platný Bitcoin požadavek. Anom podporuje posílání jen na platné Bitcoin adresy.</string>
+    <string name="no_bitpay">CHYBA: Toto není platný Bitcoin požadavek. Anom Wallet podporuje posílání jen na platné Bitcoin adresy.</string>
     <string name="learn_more">Zjistit více</string>
 
     <string name="paynym">PayNym</string>
@@ -474,7 +474,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC do peněženky a zkusit znovu.</string>
     <string name="help">Pomoc</string>
 
-    <string name="passphrase_disclaimer">Porozuměl jsem, že Anom nenese žádnou zodpovednost za ztrátu vašich přístupových hesel. Anom nemá žádnou znalost o vašem přístupovém hesle.</string>
+    <string name="passphrase_disclaimer">Porozuměl jsem, že Anom Wallet nenese žádnou zodpovednost za ztrátu vašich přístupových hesel. Anom Wallet nemá žádnou znalost o vašem přístupovém hesle.</string>
     <string name="confirm_pin_code">Potvrďte PIN kód</string>
     <string name="re_enter_your_pin_code">Zadejte znovu PIN kód</string>
     <string name="re_enter_a_passphrase">Zadejte znovu přístupové heslo</string>
@@ -483,9 +483,9 @@
     <string name="set_pin_code">Nastavit PIN kód</string>
     <string name="accept_disclaimer_error">Je potřeba akceptovat podmínky používání</string>
     <string name="import_external_wallet">Importovat externí peněženku</string>
-    <string name="import_samourai_wallet">Importovat Anom zálohu</string>
+    <string name="import_samourai_wallet">Importovat Anom Wallet zálohu</string>
     <string name="backup_file">Zálohovací soubor</string>
-    <string name="import_an_encrypted_samourai_wallet">importovat šifrovanou zálohu Anom, aby jste obnovili peněženku se všemi neporušenými meta-daty</string>
+    <string name="import_an_encrypted_samourai_wallet">importovat šifrovanou zálohu Anom Wallet, aby jste obnovili peněženku se všemi neporušenými meta-daty</string>
     <string name="back">ZPĚT</string>
     <string name="finish">ukončit</string>
     <string name="choose_file">Zvolit soubor</string>
@@ -498,8 +498,8 @@
     <string name="last_updated">Naposledy aktualizované</string>
     <string name="get_help">Získej pomoc</string>
     <string name="offline_mode">Offline mód</string>
-    <string name="import_samourai_backup">Importovat Anom zálohu</string>
-    <string name="samourai_bitcoin_wallet">Anom Bitcoin peněženka</string>
+    <string name="import_samourai_backup">Importovat Anom Wallet zálohu</string>
+    <string name="samourai_bitcoin_wallet">Anom Wallet Bitcoin peněženka</string>
     <string name="enter_your_wallet_passphrase">Zadejte své přístupové heslo k peněžence</string>
     <string name="start_new_wallet">Spustit novou peněženku</string>
     <string name="get_help_create">Vytvoření peněženky: Získat pomoc</string>
@@ -570,7 +570,7 @@
     </string-array>
 
     <string name="in_offline_mode">Anom Wallet je v off-line módu.</string>
-    <string name="broadcast_off">Ve vaší Anom peněžence je odesílání vypnuté.</string>
+    <string name="broadcast_off">Ve vaší Anom Wallet peněžence je odesílání vypnuté.</string>
     <string name="tx_standby">Transakce v pohotovostním režimu</string>
     <string name="show_hex">Zobrazit Hex kód</string>
     <string name="tx_tenna_coming_soon">txTenna na Android již brzy</string>
@@ -685,10 +685,10 @@
     <string name="title_activity_network_dashboard">
         Síť
     </string>
-    <string name="powering_samourai_wallet_">Napájení peněženky Anom pomocí vlastního osobního uzlu nabízí nejlepší úroveň soukromí a nezávislosti při interakci s bitcoinovou sítí. Dojo usnadňuje a zjednodušuje provoz celého uzlu.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play plný bitcoinový uzel \n\n-Automaticky nakonfigurovaná skrytá služba Tor \n\n-nezávislost na výchozích serverech Anom</string>
+    <string name="powering_samourai_wallet_">Napájení peněženky Anom Wallet pomocí vlastního osobního uzlu nabízí nejlepší úroveň soukromí a nezávislosti při interakci s bitcoinovou sítí. Dojo usnadňuje a zjednodušuje provoz celého uzlu.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play plný bitcoinový uzel \n\n-Automaticky nakonfigurovaná skrytá služba Tor \n\n-nezávislost na výchozích serverech Anom Wallet</string>
     <string name="dojo_connect_instruction">Pokud již máte úplný uzel Dojo nebo nebo \nprovozujete bezplatný a otevřený zdrojový software Dojo \nna vlastním hardware, naskenujte párovací QR kód \numístěný na ovládacím panelu údržby Dojo</string>
-    <string name="dojo_headline">Napájejte Anom svým vlastním osobním plným uzlem DOJO</string>
+    <string name="dojo_headline">Napájejte Anom Wallet svým vlastním osobním plným uzlem DOJO</string>
     <string name="connect_to_existing_dojo">Připojte se ke stávajícímu Dojo</string>
     <string name="create_to_existing_dojo">Vytvořte peněženku a spárujte s Dojem</string>
     <string name="preorder">předobjednat</string>
@@ -698,7 +698,7 @@
     <string name="wallet_locked">Peněženka zamknuta</string>
     <string name="address">Adresa</string>
 
-    <string name="is_offline">Anom je offline</string>
+    <string name="is_offline">Anom Wallet je offline</string>
     <string name="history_will_be_updated">Historie zůstatků a transakcí nebude aktualizována, dokud nebude navázáno funkční datové připojení</string>
     <string name="you_received_s">Obdržel jste</string>
     <string name="paynym_follow_message">Tento poplatek pokrývá náklady na vytvoření zvláštního typu transakce na blockchainu. To udržuje PayNym decentralizovanou</string>
@@ -740,7 +740,7 @@
     <string name="select_participant">Vyberte účastníka</string>
     <string name="select_cahoots_type">Vybrat typ cahoots</string>
 
-    <string name="cannot_disable_tor_dojo">Tor nelze zastavit, protože peněženka je připojena k uzlu Anom Dojo.</string>
+    <string name="cannot_disable_tor_dojo">Tor nelze zastavit, protože peněženka je připojena k uzlu Anom Wallet Dojo.</string>
     <string name="temporary_dojo_disable">Odinstalujte Anom Wallet, abyste zrušili párování z vašeho uzlu Dojo. \'VYPNOUT\' bude plně aktivován v pozdější aktualizaci.</string>
     <string name="renew">OBNOVIT</string>
     <string name="continue_exchanging_qr_codes">Pokračujte ve výměně QR kódů \n, dokud se transakce neodešle!</string>

@@ -45,7 +45,7 @@
     <string name="options_wipe">Secure erase wallet</string>
     <string name="options_wipe2">Securely erase this wallet from the device.</string>
     <string name="options_stealth_display">Stealth launcher</string>
-    <string name="options_stealth_display2">Remove Anom from the launcher and home screen. You must dial **YOUR_PIN_CODE# from the phone dialer to launch Anom.</string>
+    <string name="options_stealth_display2">Remove Anom Wallet from the launcher and home screen. You must dial **YOUR_PIN_CODE# from the phone dialer to launch Anom.</string>
     <string name="options_currency">Street price</string>
     <string name="options_currency2">Choose your exchange and local fiat currency.</string>
     <string name="options_remote_commands">Enable remote commands</string>
@@ -178,7 +178,7 @@
     <string name="destination">Address or payment channel</string>
 
     <string name="insufficient_funds">Insufficient funds</string>
-    <string name="tx_length_error">Anom does not handle transactions over 100KB in size. Please try splitting your transaction.</string>
+    <string name="tx_length_error">Anom Wallet does not handle transactions over 100KB in size. Please try splitting your transaction.</string>
     <string name="invalid_amount">Invalid amount</string>
     <string name="invalid_address">Invalid address</string>
     <string name="amount">Amount</string>
@@ -279,8 +279,8 @@
     <string name="passphrase_needed_for_backup">Your wallet is not protected by a passphrase. Wallet backups are encrypted using your wallet passphrase. If you would like to use encrypted wallet backups and other Anom Wallet features create your wallet using Anom Wallet and transfer your funds.</string>
     <string name="passphrase_required">A passphrase is required to use this function. Please consider creating a new wallet which will automatically include a passphrase.</string>
 
-    <string name="cannot_reach_api">Anom APIs cannot be reached. Please verify connection and try again or try later.</string>
-    <string name="api_error">Anom APIs are returning an error. Please try again or try later.</string>
+    <string name="cannot_reach_api">Anom Wallet APIs cannot be reached. Please verify connection and try again or try later.</string>
+    <string name="api_error">Anom Wallet APIs are returning an error. Please try again or try later.</string>
     <string name="api_key_error">Invalid API key.</string>
     <string name="api_token_error">Invalid API token.</string>
 
@@ -291,9 +291,9 @@
 
     <string name="change_is_dust">The change from this transaction is a dust amount. Try again and either modify the spend amount or spend the entire balance.</string>
 
-    <string name="tor_routing_on">Anom is routing via Tor.</string>
-    <string name="tor_routing_off">Anom is not routing via Tor. Tap to activate.</string>
-    <string name="tor_install">Tap to install Orbot and route Anom through Tor.</string>
+    <string name="tor_routing_on">Anom Wallet is routing via Tor.</string>
+    <string name="tor_routing_off">Anom Wallet is not routing via Tor. Tap to activate.</string>
+    <string name="tor_install">Tap to install Orbot and route Anom Wallet through Tor.</string>
 
     <string name="premium_addons">Premium Addons</string>
 
@@ -301,7 +301,7 @@
     <string name="ricochet_hopping">Ricocheted to</string>
     <string name="ricochet_spend1">Ricochet spend to</string>
     <string name="ricochet_spend2">for a total amount of</string>
-    <string name="ricochet_spend3">(includes 0.002 BTC fee to Anom and miners\' fees)?</string>
+    <string name="ricochet_spend3">(includes 0.002 BTC fee to Anom Wallet and miners\' fees)?</string>
 
     <string name="action_ricochet">Replay Ricochet</string>
     <string name="action_empty_ricochet">Empty Ricochet queue</string>
@@ -458,7 +458,7 @@
 
     <string name="copy_to_clipboard">Copy to clipboard</string>
 
-    <string name="no_bitpay">Error: This is not a valid bitcoin request. Anom only supports sending to valid bitcoin addresses.</string>
+    <string name="no_bitpay">Error: This is not a valid bitcoin request. Anom Wallet only supports sending to valid bitcoin addresses.</string>
     <string name="learn_more">Learn More</string>
 
     <string name="paynym">PayNym</string>
@@ -479,7 +479,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC into your wallet and try again.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">I understand that Anom cannot provide assistance in the case of lost or forgotten passphrases. Anom Wallet never has any knowledge of my passphrase.</string>
+    <string name="passphrase_disclaimer">I understand that Anom Wallet cannot provide assistance in the case of lost or forgotten passphrases. Anom Wallet never has any knowledge of my passphrase.</string>
     <string name="confirm_pin_code">Confirm pin code</string>
     <string name="re_enter_your_pin_code">Re-enter your PIN code</string>
     <string name="re_enter_a_passphrase">Re-enter a passphrase</string>
@@ -503,7 +503,7 @@
     <string name="last_updated">Last updated</string>
     <string name="get_help">Get help</string>
     <string name="offline_mode">Offline mode</string>
-    <string name="import_samourai_backup">Import Anom backup</string>
+    <string name="import_samourai_backup">Import Anom Wallet backup</string>
     <string name="samourai_bitcoin_wallet">Anom Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Enter your wallet passphrase</string>
     <string name="start_new_wallet">Start new wallet</string>
@@ -681,7 +681,7 @@
     <string name="powering_samourai_wallet_">Powering Anom Wallet with your own personal node offers the best level of privacy and independence when interacting with the bitcoin network. Dojo makes running a full node easy and simple.</string>
     <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Anomservers</string>
     <string name="dojo_connect_instruction">If you already have a Dojo Full Node or are \nrunning the free and open source Dojo Software\non your own hardware, scan the pairing QR code\nlocated on the Dojo Maintenance control panel</string>
-    <string name="dojo_headline">Power Anom with your  own personal DOJO full node</string>
+    <string name="dojo_headline">Power Anom Wallet with your  own personal DOJO full node</string>
     <string name="connect_to_existing_dojo">Connect to existing Dojo</string>
     <string name="create_to_existing_dojo">Create wallet and pair to Dojo</string>
     <string name="preorder">preorder</string>
@@ -690,7 +690,7 @@
     <string name="follow">Follow</string>
     <string name="wallet_locked">Wallet Locked</string>
     <string name="address">Address</string>
-    <string name="is_offline">Anom is offline</string>
+    <string name="is_offline">Anom Wallet is offline</string>
     <string name="history_will_be_updated">Balance and transaction history will not be updated until a working data connection is established</string>
 
     <string name="you_received_s">You received</string>
