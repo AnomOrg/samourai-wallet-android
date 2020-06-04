@@ -20,8 +20,6 @@ import com.auth0.android.jwt.JWT;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
-import com.samourai.wallet.util.ExchangeRateFactory;
-
 
 import org.apache.commons.codec.DecoderException;
 import org.bitcoinj.crypto.MnemonicException;
@@ -43,6 +41,7 @@ import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.ConnectivityStatus;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.TimeOutUtil;
 

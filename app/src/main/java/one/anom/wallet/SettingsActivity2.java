@@ -39,6 +39,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import one.anom.wallet.util.BlockExplorerUtil;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.dm.zbar.android.scanner.ZBarConstants;
 import one.dm.zbar.android.scanner.ZBarScannerActivity;
 import com.google.zxing.BarcodeFormat;
@@ -77,7 +78,6 @@ import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.util.CharSequenceX;
 
 import com.samourai.wallet.util.CharSequenceX;
-import com.samourai.wallet.util.ExchangeRateFactory;
 
 import com.yanzhenjie.zbar.Symbol;
 

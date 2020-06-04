@@ -1,4 +1,4 @@
-package com.samourai.wallet.util;
+package one.anom.wallet.util;
 
 import android.content.Context;
 import android.os.Handler;

@@ -53,6 +53,7 @@ import org.bitcoinj.script.Script;
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiActivity;
 import one.anom.wallet.send.cahoots.ManualCahootsActivity;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.utxos.UTXOSActivity;
 import one.anom.wallet.whirlpool.WhirlpoolMain;
 import one.dm.zbar.android.scanner.ZBarConstants;
@@ -102,7 +103,7 @@ import one.anom.wallet.tor.TorService;
 import one.anom.wallet.tx.TxDetailsActivity;
 import one.anom.wallet.util.AppUtil;
 
-import com.samourai.wallet.util.ExchangeRateFactory;
+
 import com.samourai.wallet.util.CharSequenceX;
 
 import one.anom.wallet.util.FormatsUtil;

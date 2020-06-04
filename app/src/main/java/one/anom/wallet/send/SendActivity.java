@@ -79,6 +79,7 @@ import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.DecimalDigitsInputFilter;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.PrefsUtil;
@@ -91,7 +92,6 @@ import one.anom.wallet.whirlpool.WhirlpoolMain;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 import one.anom.wallet.widgets.SendTransactionDetailsView;
 
-import com.samourai.wallet.util.ExchangeRateFactory;
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Coin;

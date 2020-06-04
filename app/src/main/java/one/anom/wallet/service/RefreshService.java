@@ -30,10 +30,9 @@ import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
-import com.samourai.wallet.util.ExchangeRateFactory;
-
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bitcoinj.core.AddressFormatException;
