@@ -624,24 +624,10 @@ public class BalanceActivity extends SamouraiActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_DOJO, true);
                     PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
                     progressBarTor.setVisibility(View.INVISIBLE);
                     connectingDojo.setVisibility(View.INVISIBLE);
-           /*         torStatus.setVisibility(View.VISIBLE);
-                    torStatusCheck.setVisibility(View.VISIBLE);
-                    torStatus.setText("Tor Connected");
-                    progressBarTor.setVisibility(View.INVISIBLE);
-                    dojoConnectedStatus.setVisibility(View.VISIBLE);
-                    torSwitch.setChecked(true);
-                    torSwitch.setVisibility(View.GONE);*/
-                  /*  new Handler().postDelayed(() -> {
-                        Intent intent = new Intent(BalanceActivity.this, CreateWalletActivity.class);
-                        startActivity(intent);
-                    }, 400);
-                    new Handler().postDelayed(() -> {
-                        Toast.makeText(this, "Successfully connected to Dojo", Toast.LENGTH_SHORT).show();
-                        //  dismissAllowingStateLoss();
-                    }, 800);*/
                 }, error -> {
                     error.printStackTrace();
                     Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
