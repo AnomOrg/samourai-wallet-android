@@ -165,6 +165,7 @@ public class BalanceActivity extends SamouraiActivity {
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
     public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
     private ProgressBar progressBarTor;
+    private TextView connectingDojo;
 
     private boolean mConsumedIntent;
     private final String SAVED_INSTANCE_STATE_CONSUMED_INTENT = "SAVED_INSTANCE_STATE_CONSUMED_INTENT";
@@ -362,6 +363,7 @@ public class BalanceActivity extends SamouraiActivity {
         receiveFab =  findViewById(R.id.receive_fab);
         paynymFab =  findViewById(R.id.paynym_fab);
         progressBarTor = findViewById(R.id.progressBar2);
+        connectingDojo = findViewById(R.id.tv_connecting_dogo);
 
         setSupportActionBar(toolbar);
         TxRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -624,6 +626,7 @@ public class BalanceActivity extends SamouraiActivity {
                 .subscribe(aBoolean -> {
                     PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
                     progressBarTor.setVisibility(View.INVISIBLE);
+                    connectingDojo.setVisibility(View.INVISIBLE);
            /*         torStatus.setVisibility(View.VISIBLE);
                     torStatusCheck.setVisibility(View.VISIBLE);
                     torStatus.setText("Tor Connected");
@@ -643,6 +646,7 @@ public class BalanceActivity extends SamouraiActivity {
                     error.printStackTrace();
                     Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
                     progressBarTor.setVisibility(View.INVISIBLE);
+                    connectingDojo.setVisibility(View.INVISIBLE);
                 });
         compositeDisposables.add(disposable);
 
@@ -650,6 +654,7 @@ public class BalanceActivity extends SamouraiActivity {
 
     private void connectToDojo() {
         progressBarTor.setVisibility(View.VISIBLE);
+        connectingDojo.setVisibility(View.VISIBLE);
         if (TorManager.getInstance(getApplicationContext()).isConnected()) {
             DojoUtil.getInstance(getApplicationContext()).clear();
             doPairing();
