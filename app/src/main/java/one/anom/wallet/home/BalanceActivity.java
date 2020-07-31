@@ -610,9 +610,10 @@ public class BalanceActivity extends SamouraiActivity {
         if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
             startTor();
             connectToDojo();
-
+        } else if(!PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, false)) {
+                connectToDojo();
+            }
         }
-    }
     private void doPairing() {
 
         Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
@@ -627,14 +628,14 @@ public class BalanceActivity extends SamouraiActivity {
                     dojoConnectedStatus.setVisibility(View.VISIBLE);
                     torSwitch.setChecked(true);
                     torSwitch.setVisibility(View.GONE);*/
-                    new Handler().postDelayed(() -> {
+                  /*  new Handler().postDelayed(() -> {
                         Intent intent = new Intent(BalanceActivity.this, CreateWalletActivity.class);
                         startActivity(intent);
                     }, 400);
                     new Handler().postDelayed(() -> {
                         Toast.makeText(this, "Successfully connected to Dojo", Toast.LENGTH_SHORT).show();
                         //  dismissAllowingStateLoss();
-                    }, 800);
+                    }, 800);*/
                 }, error -> {
                     error.printStackTrace();
                     Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();

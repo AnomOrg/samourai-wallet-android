@@ -57,6 +57,7 @@ public class PrefsUtil {
     public static final String HAPTIC_PIN = "hapticPin";
     public static final String RICOCHET_STAGGERED = "ricochetStaggeredDelivery";
     public static final String ENABLE_TOR = "enable_tor";
+    public static final String ENABLE_DOJO = "enable_dojo";
     public static final String OFFLINE = "offline";
 
     private static Context context = null;
