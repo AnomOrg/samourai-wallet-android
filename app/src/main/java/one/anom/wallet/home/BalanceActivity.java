@@ -614,17 +614,14 @@ public class BalanceActivity extends SamouraiActivity {
         if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
             startTor();
             connectToDojo();
-        } else if(!PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, false)) {
-                connectToDojo();
-            }
         }
+    }
     private void doPairing() {
 
         Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(aBoolean -> {
-                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_DOJO, true);
                     PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
                     progressBarTor.setVisibility(View.INVISIBLE);
                     connectingDojo.setVisibility(View.INVISIBLE);

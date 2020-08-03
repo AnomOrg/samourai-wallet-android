@@ -179,7 +179,6 @@ public class LandingActivity extends AppCompatActivity {
                     new Handler().postDelayed(() -> {
                         Toast.makeText(this, "Successfully connected to Dojo", Toast.LENGTH_SHORT).show();
                         //  dismissAllowingStateLoss();
-                        PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_DOJO, true);
                     }, 800);
                 }, error -> {
                     error.printStackTrace();
