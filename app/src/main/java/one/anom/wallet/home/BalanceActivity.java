@@ -162,10 +162,8 @@ public class BalanceActivity extends SamouraiActivity {
     private ProgressBar progressBarMenu;
     private TextView mFiatAmount;
     private View  whirlpoolFab,sendFab, receiveFab, paynymFab;
-    private CompositeDisposable compositeDisposables = new CompositeDisposable();
+
     public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
-    private ProgressBar progressBarTor;
-    private TextView connectingDojo;
 
     private boolean mConsumedIntent;
     private final String SAVED_INSTANCE_STATE_CONSUMED_INTENT = "SAVED_INSTANCE_STATE_CONSUMED_INTENT";
@@ -362,8 +360,6 @@ public class BalanceActivity extends SamouraiActivity {
         sendFab =  findViewById(R.id.send_fab);
         receiveFab =  findViewById(R.id.receive_fab);
         paynymFab =  findViewById(R.id.paynym_fab);
-        progressBarTor = findViewById(R.id.progressBar2);
-        connectingDojo = findViewById(R.id.tv_connecting_dogo);
 
         setSupportActionBar(toolbar);
         TxRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -611,74 +607,6 @@ public class BalanceActivity extends SamouraiActivity {
         checkForAnomRequest();
         hasActivityLaunchedFromDeepLinks = false;
 
-        if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
-            startTor();
-            connectToDojo();
-        }
-    }
-    private void doPairing() {
-
-        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(aBoolean -> {
-                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
-                    progressBarTor.setVisibility(View.INVISIBLE);
-                    connectingDojo.setVisibility(View.INVISIBLE);
-                }, error -> {
-                    error.printStackTrace();
-                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
-                    progressBarTor.setVisibility(View.INVISIBLE);
-                    connectingDojo.setVisibility(View.INVISIBLE);
-                });
-        compositeDisposables.add(disposable);
-
-    }
-
-    private void connectToDojo() {
-        progressBarTor.setVisibility(View.VISIBLE);
-        connectingDojo.setVisibility(View.VISIBLE);
-        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
-            DojoUtil.getInstance(getApplicationContext()).clear();
-            doPairing();
-        } else {
-            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
-            startIntent.setAction(TorService.START_SERVICE);
-            startService(startIntent);
-            Disposable disposable = TorManager.getInstance(getApplicationContext())
-                    .torStatus
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(state -> {
-                        if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-                        } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
-                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
-                            DojoUtil.getInstance(getApplicationContext()).clear();
-                            doPairing();
-
-                        }
-                    });
-            compositeDisposables.add(disposable);
-        }
-    }
-
-    private void startTor() {
-        Disposable disposable = TorManager.getInstance(this)
-                .torStatus
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(state -> {
-                    if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-
-                    } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
-                        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
-                    } else {
-                    }
-                });
-        compositeDisposables.add(disposable);
-        Intent startIntent = new Intent(getApplicationContext(), TorService.class);
-        startIntent.setAction(TorService.START_SERVICE);
-        startService(startIntent);
     }
 
     private void checkForAnomRequest() {

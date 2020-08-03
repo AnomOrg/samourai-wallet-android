@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +35,14 @@ import io.reactivex.schedulers.Schedulers;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.home.BalanceActivity;
+import one.anom.wallet.network.NetworkDashboard;
+import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.prng.PRNGFixes;
 import one.anom.wallet.service.BackgroundManager;
 import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.ExchangeRateFactory;
@@ -416,20 +420,98 @@ public class MainActivity2 extends Activity {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
         } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() && !TimeOutUtil.getInstance().isTimedOut()) {
-
-            TimeOutUtil.getInstance().updatePin();
-
-            Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-            intent.putExtra("notifTx", true);
-            intent.putExtra("fetch", true);
-            if (getBundleExtras() != null) {
-                intent.putExtras(getBundleExtras());
+            if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
+                startTor();
+                if (DojoUtil.getInstance(this).getDojoParams() == null) {
+                    connectToDojo();
+                }
+            } else if (DojoUtil.getInstance(this).getDojoParams() == null) {
+                connectToDojo();
+            } else {
+                TimeOutUtil.getInstance().updatePin();
+                Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
+                intent.putExtra("notifTx", true);
+                intent.putExtra("fetch", true);
+                if (getBundleExtras() != null) {
+                    intent.putExtras(getBundleExtras());
+                }
+                startActivity(intent);
             }
-            startActivity(intent);
         } else {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
         }
+    }
+
+    private void startTor() {
+        Disposable disposable = TorManager.getInstance(this)
+                .torStatus
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(state -> {
+                    if (state == TorManager.CONNECTION_STATES.CONNECTING) {
+
+                    } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
+                        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                    } else {
+                    }
+                });
+        compositeDisposables.add(disposable);
+        Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+        startIntent.setAction(TorService.START_SERVICE);
+        startService(startIntent);
+    }
+
+    private void connectToDojo() {
+        loaderTxView.setText("Connecting to dojo");
+        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
+            DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
+        } else {
+            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+            startIntent.setAction(TorService.START_SERVICE);
+            startService(startIntent);
+            Disposable disposable = TorManager.getInstance(getApplicationContext())
+                    .torStatus
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(state -> {
+                        if (state == TorManager.CONNECTION_STATES.CONNECTING) {
+                        } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
+                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                            DojoUtil.getInstance(getApplicationContext()).clear();
+                            doPairing();
+
+                        }
+                    });
+            compositeDisposables.add(disposable);
+        }
+    }
+
+    private void doPairing() {
+
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
+                    loaderTxView.setText("Connected to dojo");
+                    TimeOutUtil.getInstance().updatePin();
+                    Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
+                    intent.putExtra("notifTx", true);
+                    intent.putExtra("fetch", true);
+                    if (getBundleExtras() != null) {
+                        intent.putExtras(getBundleExtras());
+                    }
+                    startActivity(intent);
+                }, error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
+                    loaderTxView.setText("Error connecting to Dojo");
+
+                });
+        compositeDisposables.add(disposable);
+
     }
 
     private void doSelectNet() {
