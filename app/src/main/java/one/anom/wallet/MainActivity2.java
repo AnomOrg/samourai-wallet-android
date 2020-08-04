@@ -463,7 +463,7 @@ public class MainActivity2 extends Activity {
     }
 
     private void connectToDojo() {
-        loaderTxView.setText("Connecting to dojo");
+        loaderTxView.setText(getText(R.string.connecting_dojo));
         if (TorManager.getInstance(getApplicationContext()).isConnected()) {
             DojoUtil.getInstance(getApplicationContext()).clear();
             doPairing();
@@ -495,7 +495,7 @@ public class MainActivity2 extends Activity {
                 .subscribeOn(Schedulers.io())
                 .subscribe(aBoolean -> {
                     PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
-                    loaderTxView.setText("Connected to dojo");
+                    loaderTxView.setText(getText(R.string.connected_dojo));
                     TimeOutUtil.getInstance().updatePin();
                     Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
                     intent.putExtra("notifTx", true);
@@ -507,7 +507,7 @@ public class MainActivity2 extends Activity {
                 }, error -> {
                     error.printStackTrace();
                     Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
-                    loaderTxView.setText("Error connecting to Dojo");
+                    loaderTxView.setText(getText(R.string.error_dojo));
 
                 });
         compositeDisposables.add(disposable);

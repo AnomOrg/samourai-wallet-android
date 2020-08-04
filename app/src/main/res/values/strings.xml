@@ -794,5 +794,8 @@
     <string name="this_utxo_is_marked_as_blocked">This UTXO is marked as Blocked</string>
     <string name="postmix_full_spend">This transaction will spend the entirety of your post-mix anom wallet which will undo the privacy attained via Whirlpool mixing. Are you sure that you want to do this?</string>
 
-t
+    <string name="connecting_dojo">Connecting to dojo</string>
+    <string name="connected_dojo">Connected to dojo</string>
+    <string name="error_dojo">Error connecting to Dojo</string>
+
 </resources>
