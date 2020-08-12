@@ -979,7 +979,7 @@ public class BalanceActivity extends SamouraiActivity {
         }
 
 
-        if (progressBar.getVisibility() == View.VISIBLE && fromRefreshService) {
+        if (progressBar.getVisibility() == View.VISIBLE) {
             progressBar.setVisibility(View.INVISIBLE);
         }
         if (txs != null) {

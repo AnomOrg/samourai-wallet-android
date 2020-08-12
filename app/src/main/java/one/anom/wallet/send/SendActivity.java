@@ -806,9 +806,9 @@ public class SendActivity extends SamouraiActivity {
                     balance = APIFactory.getInstance(SendActivity.this).getXpubPostMixBalance();
                 } else {
                     Long tempBalance = APIFactory.getInstance(SendActivity.this).getXpubAmounts().get(HD_WalletFactory.getInstance(SendActivity.this).get().getAccount(0).xpubstr());
-                    if (tempBalance != 0L) {
+                    if (tempBalance!= null && tempBalance != 0L) {
                         balance = tempBalance;
-                    }
+                    } 
                 }
             } catch (IOException ioe) {
                 ioe.printStackTrace();
