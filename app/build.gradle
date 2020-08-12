@@ -27,8 +27,8 @@ android {
         applicationId 'one.anom.wallet'
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 163
-        versionName "1.99.92"
+        versionCode 164
+        versionName "1.99.93"
 
         // Enabling multidex support.
         multiDexEnabled true
@@ -71,8 +71,8 @@ android {
             applicationId 'one.anom.wallet'
             minSdkVersion 21
             targetSdkVersion 28
-            versionCode 163
-            versionName "1.99.92"
+            versionCode 164
+            versionName "1.99.93"
             resValue "string", "app_name", "Anom Wallet"
             resValue "string", "version_name", "1.99.92"
         }
@@ -80,8 +80,8 @@ android {
             applicationId 'one.anom.wallet.staging'
             minSdkVersion 21
             targetSdkVersion 28
-            versionCode 163
-            versionName "1.99.92"
+            versionCode 164
+            versionName "1.99.93"
             resValue "string", "app_name", "Anom Staging"
             resValue "string", "version_name", "1.99.92"
         }
