@@ -14,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import one.anom.wallet.R;
 import one.anom.wallet.api.Tx;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.utxos.UTXOUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
-import one.anom.wallet.R;
 
 import org.bitcoinj.core.Coin;
 import org.json.JSONObject;
