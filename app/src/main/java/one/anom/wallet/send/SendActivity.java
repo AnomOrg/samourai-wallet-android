@@ -1601,11 +1601,11 @@ public class SendActivity extends SamouraiActivity {
                     break;
                 }
                 case STONEWALLX2_SAMOURAI: {
-                    sendTransactionDetailsView.showStonewallX2Layout("Samourai Wallet", 1000);
+                    sendTransactionDetailsView.showStonewallX2Layout("Anom Wallet", 1000);
                     break;
                 }
                 case STOWAWAY: {
-//                            mixingPartner.setText("Samourai Wallet");
+//                            mixingPartner.setText("Anom Wallet");
                     sendTransactionDetailsView.showStowawayLayout(address, null, 1000);
                     btnSend.setBackgroundResource(R.drawable.button_blue);
                     btnSend.setText(getString(R.string.begin_stowaway));

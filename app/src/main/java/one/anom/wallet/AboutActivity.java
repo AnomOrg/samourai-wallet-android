@@ -3,6 +3,7 @@ package one.anom.wallet;
 import android.app.Activity;
 import android.os.Bundle;
 
+
 import one.anom.wallet.util.AppUtil;
 
 public class AboutActivity extends Activity {
@@ -11,7 +12,7 @@ public class AboutActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        setTitle("Samourai, v" + getResources().getString(R.string.version_name));
+        setTitle("Anom Wallet, v" + getResources().getString(R.string.version_name));
     }
 
     @Override
