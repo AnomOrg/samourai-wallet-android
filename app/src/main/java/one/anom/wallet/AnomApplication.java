@@ -10,6 +10,9 @@ import android.os.Build;
 import android.os.Environment;
 import android.support.multidex.MultiDex;
 
+import com.crashlytics.android.Crashlytics;
+
+import io.fabric.sdk.android.Fabric;
 import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.PrefsUtil;
@@ -18,7 +21,7 @@ import one.anom.wallet.BuildConfig;
 import java.io.File;
 import java.io.PrintWriter;
 
-public class SamouraiApplication extends Application {
+public class AnomApplication extends Application {
 
     public static String TOR_CHANNEL_ID = "TOR_CHANNEL";
     public static String FOREGROUND_SERVICE_CHANNEL_ID = "FOREGROUND_SERVICE_CHANNEL_ID";
@@ -28,6 +31,7 @@ public class SamouraiApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         setUpChannels();
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false)) {
             startService();

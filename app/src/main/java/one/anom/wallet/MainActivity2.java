@@ -140,7 +140,7 @@ public class MainActivity2 extends Activity {
 
         if (TorManager.getInstance(getApplicationContext()).isRequired() && ConnectivityStatus.hasConnectivity(getApplicationContext()) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
             loaderTxView.setText(getText(R.string.initializing_tor));
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
             Disposable disposable = TorManager.getInstance(this)
                     .torStatus
                     .subscribeOn(Schedulers.io())
@@ -197,7 +197,7 @@ public class MainActivity2 extends Activity {
     protected void onResume() {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
 
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
 
             Disposable disposable = TorManager.getInstance(getApplicationContext())
                     .torStatus
