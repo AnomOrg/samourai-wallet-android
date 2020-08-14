@@ -8,7 +8,13 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 //import android.util.Log;
 
-import one.anom.wallet.JSONRPC.TrustedNodeUtil;
+import com.samourai.wallet.crypto.AESUtil;
+import com.samourai.wallet.crypto.DecryptionException;
+import com.samourai.wallet.hd.HD_Account;
+import com.samourai.wallet.hd.HD_Wallet;
+import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
@@ -16,28 +22,23 @@ import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.cahoots.CahootsFactory;
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.network.dojo.DojoUtil;
+import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.send.BlockedUTXO;
-import one.anom.wallet.send.RBFUtil;
 import one.anom.wallet.send.SendActivity;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.BatchSendUtil;
 import one.anom.wallet.util.PrefsUtil;
+import one.anom.wallet.send.RBFUtil;
 import one.anom.wallet.util.SIMUtil;
 import one.anom.wallet.util.SendAddressUtil;
+import one.anom.wallet.JSONRPC.TrustedNodeUtil;
 import one.anom.wallet.util.SentToFromBIP47Util;
 import one.anom.wallet.utxos.UTXOUtil;
-import one.anom.wallet.R;
-import com.samourai.wallet.crypto.AESUtil;
-import com.samourai.wallet.crypto.DecryptionException;
-import com.samourai.wallet.hd.HD_Account;
-import com.samourai.wallet.hd.HD_Wallet;
-import one.anom.wallet.network.dojo.DojoUtil;
-import one.anom.wallet.ricochet.RicochetMeta;
-import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.whirlpool.Tx0DisplayUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
@@ -71,6 +72,8 @@ import java.io.Writer;
 import java.security.SecureRandom;
 import java.util.List;
 
+import static one.anom.wallet.send.SendActivity.SPEND_BOLTZMANN;
+
 public class PayloadUtil	{
 
     private final static String dataDir = "wallet";
@@ -80,6 +83,11 @@ public class PayloadUtil	{
 
     private final static String strMultiAddrFilename = "samourai.multi";
     private final static String strUTXOFilename = "samourai.utxo";
+    private final static String strFX_LBC = "samourai.fx_lbc";
+    private final static String strFX_BFX = "samourai.fx_bfx";
+    private final static String strFX_BTCe_USD = "samourai.fx_btce_usd";
+    private final static String strFX_BTCe_RUR = "samourai.fx_btce_rur";
+    private final static String strFX_BTCe_EUR = "samourai.fx_btce_eur";
     private final static String strFeesFilename = "samourai.fees";
     private final static String strPayNymFilename = "samourai.paynyms";
     private final static String strMultiAddrPreFilename = "samourai.multi.pre";
@@ -89,8 +97,8 @@ public class PayloadUtil	{
     private final static String strUTXOPostFilename = "samourai.utxo.post";
     private final static String strUTXOBadBankFilename = "samourai.utxo.badbank";
 
-    private final static String strOptionalBackupDir = "/samourai";
-    private final static String strOptionalFilename = "samourai.txt";
+    private final static String strOptionalBackupDir = "/anomwallet";
+    private final static String strOptionalFilename = "anomwallet.txt";
 
     private static Context context = null;
 
@@ -220,15 +228,47 @@ public class PayloadUtil	{
         }
     }
 
+
     public void serializeUTXOBadBank(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
 
-        if(!AppUtil.getInstance(context).isOfflineMode())    {
+        if(!AppUtil.getInstance(context).isOfflineMode()) {
 
-            if(obj != null) {
+            if (obj != null) {
                 JSONObject utxoObj = new JSONObject();
                 utxoObj.put("unspent_outputs", obj);
                 serializeAux(utxoObj, new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance().getPIN()), strUTXOBadBankFilename);
             }
+        }}
+
+    public void serializeFX_LBC(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException
+    {
+        if (!AppUtil.getInstance(context).isOfflineMode()) {
+            serializeAux(obj, null, strFX_LBC);
+        }
+    }
+
+
+    public void serializeFX_BTCe_USD(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_USD);
+        }
+    }
+
+    public void serializeFX_BTCe_RUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_RUR);
+        }
+    }
+
+    public void serializeFX_BTCe_EUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_EUR);
+        }
+    }
+
+    public void serializeFX_BFX(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BFX);
         }
     }
 
@@ -250,6 +290,26 @@ public class PayloadUtil	{
 
     public JSONObject deserializeUTXO()  throws IOException, JSONException  {
         return deserializeAux(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance().getPIN()), strUTXOFilename);
+    }
+
+    public JSONObject deserializeFX_LBC() throws IOException, JSONException {
+        return deserializeAux(null, strFX_LBC);
+    }
+
+    public JSONObject deserializeFX_BTCe_USD()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_USD);
+    }
+
+    public JSONObject deserializeFX_BTCe_RUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_RUR);
+    }
+
+    public JSONObject deserializeFX_BTCe_EUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_EUR);
+    }
+
+    public JSONObject deserializeFX_BFX()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BFX);
     }
 
     public JSONObject deserializeMultiAddrPost()  throws IOException, JSONException {
@@ -432,7 +492,7 @@ public class PayloadUtil	{
             meta.put("batch_send", BatchSendUtil.getInstance().toJSON());
             meta.put("use_segwit", PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_SEGWIT, true));
             meta.put("use_like_typed_change", PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_LIKE_TYPED_CHANGE, true));
-            meta.put("spend_type", PrefsUtil.getInstance(context).getValue(PrefsUtil.SPEND_TYPE, SendActivity.SPEND_BOLTZMANN));
+            meta.put("spend_type", PrefsUtil.getInstance(context).getValue(PrefsUtil.SPEND_TYPE, SPEND_BOLTZMANN));
             meta.put("rbf_opt_in", PrefsUtil.getInstance(context).getValue(PrefsUtil.RBF_OPT_IN, false));
             meta.put("use_ricochet", PrefsUtil.getInstance(context).getValue(PrefsUtil.USE_RICOCHET, false));
             meta.put("ricochet_staggered_delivery", PrefsUtil.getInstance(context).getValue(PrefsUtil.RICOCHET_STAGGERED, false));

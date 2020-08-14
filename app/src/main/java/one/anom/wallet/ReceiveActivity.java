@@ -2,6 +2,7 @@ package one.anom.wallet;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.support.constraint.ConstraintLayout;
 import android.support.transition.AutoTransition;
 import android.support.transition.TransitionManager;
@@ -38,15 +40,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.segwit.BIP49Util;
-import one.anom.wallet.segwit.BIP84Util;
-import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.AppUtil;
-import one.anom.wallet.util.DecimalDigitsInputFilter;
-import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.PrefsUtil;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
@@ -69,6 +62,16 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 import java.util.Objects;
+
+import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.segwit.BIP49Util;
+import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
+import one.anom.wallet.util.DecimalDigitsInputFilter;
+import one.anom.wallet.util.FormatsUtil;
+import one.anom.wallet.util.PrefsUtil;
 
 public class ReceiveActivity extends AppCompatActivity {
 
@@ -103,6 +106,9 @@ public class ReceiveActivity extends AppCompatActivity {
 
     public static final String ACTION_INTENT = "com.samourai.wallet.ReceiveFragment.REFRESH";
 
+    private boolean mConsumedIntent;
+    private final String SAVED_INSTANCE_STATE_CONSUMED_INTENT = "SAVED_INSTANCE_STATE_CONSUMED_INTENT";
+
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -119,23 +125,28 @@ public class ReceiveActivity extends AppCompatActivity {
                             public void run() {
 
                                 ReceiveActivity.this.finish();
-
                             }
                         });
-
                     }
-
                 }
-
             }
-
         }
     };
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(SAVED_INSTANCE_STATE_CONSUMED_INTENT, mConsumedIntent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receive);
+
+        if (savedInstanceState != null) {
+            mConsumedIntent = savedInstanceState.getBoolean(SAVED_INSTANCE_STATE_CONSUMED_INTENT);
+        }
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
@@ -153,7 +164,7 @@ public class ReceiveActivity extends AppCompatActivity {
         edAmountBTC = findViewById(R.id.amountBTC);
         edAmountSAT = findViewById(R.id.amountSAT);
         populateSpinner();
-        edAmountBTC.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8,8)});
+        edAmountBTC.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 8)});
 
         edAmountBTC.addTextChangedListener(BTCWatcher);
         edAmountSAT.addTextChangedListener(satWatcher);
@@ -290,7 +301,6 @@ public class ReceiveActivity extends AppCompatActivity {
         displayQRCode();
     }
 
-
     private Double getSatValue(Double btc) {
         if (btc == 0) {
             return (double) 0;
@@ -339,10 +349,9 @@ public class ReceiveActivity extends AppCompatActivity {
                     edAmountSAT.setText("0");
                     edAmountSAT.setSelection(edAmountSAT.getText().length());
                     Toast.makeText(ReceiveActivity.this, R.string.invalid_amount, Toast.LENGTH_SHORT).show();
-                }
-                else    {
+                } else {
                     DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
-                    DecimalFormatSymbols symbols=format.getDecimalFormatSymbols();
+                    DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
                     String defaultSeparator = Character.toString(symbols.getDecimalSeparator());
                     int max_len = 8;
                     NumberFormat btcFormat = NumberFormat.getInstance(Locale.US);
@@ -365,8 +374,7 @@ public class ReceiveActivity extends AppCompatActivity {
                         }
                     } catch (NumberFormatException nfe) {
                         ;
-                    }
-                    catch(ParseException pe) {
+                    } catch (ParseException pe) {
                         ;
                     }
 
@@ -442,7 +450,6 @@ public class ReceiveActivity extends AppCompatActivity {
 
 
     private void populateSpinner() {
-
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.address_types, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -458,6 +465,33 @@ public class ReceiveActivity extends AppCompatActivity {
 
         AppUtil.getInstance(ReceiveActivity.this).checkTimeOut();
 
+        checkForAnomBitcoinAddressRequest();
+    }
+
+    private void checkForAnomBitcoinAddressRequest() {
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null && bundle.containsKey("get_address")) {
+
+            Intent intent1 = getIntent();
+            boolean launchedFromHistory = intent1 != null &&
+                    (intent1.getFlags() & Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY) != 0;
+
+            if (!launchedFromHistory && !mConsumedIntent) {
+                mConsumedIntent = true;
+
+                //execute the code that should be executed if the activity was not launched from history
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    final String address = tvAddress.getText().toString();
+                    final Intent intent = new Intent();
+                    intent.setAction("one.anom.receive_address");
+                    intent.setComponent(new ComponentName("one.anom.ent",
+                            "one.anom.BitcoinAddressBroadcastReceiver"));
+                    intent.putExtra("get_address", address);
+                    sendBroadcast(intent);
+                }, 1000);
+            }
+        }
     }
 
     private boolean isBIP84Selected() {
@@ -580,10 +614,10 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
                 break;
             }
-            case R.id.action_support: {
+            /*case R.id.action_support: {
                 doSupport();
                 break;
-            }
+            }*/
 
 //           Handle Toolbar back button press
             case android.R.id.home: {
@@ -636,14 +670,14 @@ public class ReceiveActivity extends AppCompatActivity {
 
         tvAddress.setText(addr);
         displayPath();
-        if(!AppUtil.getInstance(ReceiveActivity.this).isOfflineMode())    {
+        if (!AppUtil.getInstance(ReceiveActivity.this).isOfflineMode()) {
             checkPrevUse();
         }
 
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+                Intent _intent = new Intent("MainActivity2.RESTART_SERVICE");
                 LocalBroadcastManager.getInstance(ReceiveActivity.this).sendBroadcast(_intent);
             }
         }).start();
@@ -740,13 +774,13 @@ public class ReceiveActivity extends AppCompatActivity {
         }).start();
     }
 
-    private void displayPath()  {
+    private void displayPath() {
 
         int sel = addressTypesSpinner.getSelectedItemPosition();
         String path = "m/";
-        int idx = 0 ;
+        int idx = 0;
 
-        switch(sel)    {
+        switch (sel) {
             case 0:
                 path += "49'";
                 idx = BIP49Util.getInstance(ReceiveActivity.this).getWallet().getAccount(0).getChain(0).getAddrIdx() - 1;
@@ -758,9 +792,8 @@ public class ReceiveActivity extends AppCompatActivity {
             default:
                 path += "44'";
                 try {
-                    idx = HD_WalletFactory.getInstance(ReceiveActivity.this).get().getAccount(0).getChain(0).getAddrIdx() -1;
-                }
-                catch(IOException | MnemonicException.MnemonicLengthException e) {
+                    idx = HD_WalletFactory.getInstance(ReceiveActivity.this).get().getAccount(0).getChain(0).getAddrIdx() - 1;
+                } catch (IOException | MnemonicException.MnemonicLengthException e) {
                     ;
                 }
         }
