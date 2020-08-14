@@ -27,11 +27,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import one.anom.wallet.access.AccessFactory;
-import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.hd.HD_Wallet;
+import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.network.dojo.DojoConfigureBottomSheet;
 import one.anom.wallet.network.dojo.DojoUtil;
@@ -40,7 +42,6 @@ import one.anom.wallet.permissions.PermissionsUtil;
 import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.AppUtil;
-import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.WebUtil;
 
@@ -61,7 +62,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class LandingActivity extends AppCompatActivity  {
+public class LandingActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog = null;
     private ProgressBar progressBarTor;
@@ -70,15 +71,16 @@ public class LandingActivity extends AppCompatActivity  {
     private ImageView torStatusCheck;
     private LinearLayout dojoConnectedStatus;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
-
     private boolean waitingForPairing = false;
     private String strPairingParams = null;
     private static final String TAG = "LandingActivity";
+    private Button createAccount;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landing);
-        Button createAccount = findViewById(R.id.button_create_new_wallet);
+        createAccount = findViewById(R.id.button_create_new_wallet);
         FrameLayout snackBarView = findViewById(R.id.snackbar_landing);
         TextView textView = findViewById(R.id.restore_textview);
         progressBarTor = findViewById(R.id.progressBar2);
@@ -89,13 +91,12 @@ public class LandingActivity extends AppCompatActivity  {
         setSupportActionBar(findViewById(R.id.landing_toolbar));
         textView.setOnClickListener(view -> RestoreWalletFromBackup());
         createAccount.setOnClickListener(view -> {
-            Intent intent = new Intent(LandingActivity.this, CreateWalletActivity.class);
-            startActivity(intent);
+            connectToDojo();
         });
         setAppVersion();
         if (PayloadUtil.getInstance(this).getBackupFile().exists()) {
             snackBarView.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             snackBarView.setVisibility(View.INVISIBLE);
 
         }
@@ -111,20 +112,79 @@ public class LandingActivity extends AppCompatActivity  {
         }
         */
 
+        if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
+            startTor();
+        } else {
+            createAccount.setVisibility(View.VISIBLE);
+        }
+
         torSwitch.setOnCheckedChangeListener((compoundButton, b) -> {
 
             if (b) {
                 startTor();
-                progressBarTor.setVisibility(View.VISIBLE);
-                torSwitch.setVisibility(View.INVISIBLE);
             } else {
                 stopTor();
             }
         });
+
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false)) {
             torSwitch.setChecked(true);
         }
+    }
 
+    private void connectToDojo() {
+        progressBarTor.setVisibility(View.VISIBLE);
+        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
+            DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
+        } else {
+            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+            startIntent.setAction(TorService.START_SERVICE);
+            startService(startIntent);
+            Disposable disposable = TorManager.getInstance(getApplicationContext())
+                    .torStatus
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(state -> {
+                        if (state == TorManager.CONNECTION_STATES.CONNECTING) {
+                        } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
+                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                            DojoUtil.getInstance(getApplicationContext()).clear();
+                            doPairing();
+
+                        }
+                    });
+            compositeDisposables.add(disposable);
+        }
+    }
+
+    private void doPairing() {
+
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
+                    torStatus.setVisibility(View.VISIBLE);
+                    torStatusCheck.setVisibility(View.VISIBLE);
+                    torStatus.setText("Tor Connected");
+                    progressBarTor.setVisibility(View.INVISIBLE);
+                    dojoConnectedStatus.setVisibility(View.VISIBLE);
+                    torSwitch.setChecked(true);
+                    torSwitch.setVisibility(View.GONE);
+                    new Handler().postDelayed(() -> {
+                        Intent intent = new Intent(LandingActivity.this, CreateWalletActivity.class);
+                        startActivity(intent);
+                    }, 400);
+                    new Handler().postDelayed(() -> {
+                        Toast.makeText(this, "Successfully connected to Dojo", Toast.LENGTH_SHORT).show();
+                        //  dismissAllowingStateLoss();
+                    }, 800);
+                }, error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
+                });
+        compositeDisposables.add(disposable);
 
     }
 
@@ -151,11 +211,8 @@ public class LandingActivity extends AppCompatActivity  {
                         torStatusCheck.setVisibility(View.VISIBLE);
                         torStatus.setText("Tor Connected");
                         progressBarTor.setVisibility(View.INVISIBLE);
+                        createAccount.setVisibility(View.VISIBLE);
                         torSwitch.setChecked(true);
-//                        if(waitingForPairing)    {
-//                            doDojoPairing1();
-//                        }
-
                     } else {
                         torStatus.setVisibility(View.INVISIBLE);
                         progressBarTor.setVisibility(View.INVISIBLE);
@@ -223,7 +280,7 @@ public class LandingActivity extends AppCompatActivity  {
     @Override
     protected void onDestroy() {
         compositeDisposables.dispose();
-        if( progressDialog !=null && progressDialog.isShowing()){
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
         super.onDestroy();
@@ -263,7 +320,7 @@ public class LandingActivity extends AppCompatActivity  {
         }
     }
 
-    private void doDojoPairing0()    {
+    private void doDojoPairing0() {
         waitingForPairing = true;
         DojoConfigureBottomSheet dojoConfigureBottomSheet = new DojoConfigureBottomSheet();
         dojoConfigureBottomSheet.show(getSupportFragmentManager(), dojoConfigureBottomSheet.getTag());
@@ -281,7 +338,7 @@ public class LandingActivity extends AppCompatActivity  {
                 new Handler().postDelayed(() -> {
                     Intent intent = new Intent(LandingActivity.this, CreateWalletActivity.class);
                     startActivity(intent);
-                },400);
+                }, 400);
             }
 
             @Override
@@ -290,7 +347,6 @@ public class LandingActivity extends AppCompatActivity  {
             }
         });
     }
-
 
 
     @Override
@@ -458,6 +514,13 @@ public class LandingActivity extends AppCompatActivity  {
             }
         }).start();
 
+    }
+
+
+    public interface DojoConfigurationListener {
+        void onConnect();
+
+        void onError();
     }
 
 }

@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.com.anom.wallet.LandingActivity">
+    tools:context="one.anom.wallet.LandingActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/landing_toolbar"
@@ -24,6 +24,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:tint="@color/white"
         android:src="@drawable/ic_samourai_logo_trans2x"
         app:layout_constraintBottom_toTopOf="@+id/button_create_new_wallet"
         app:layout_constraintEnd_toEndOf="parent"
@@ -70,6 +71,7 @@
         android:paddingBottom="18dp"
         android:text="@string/start_new_wallet"
         android:textColor="#FFFFFF"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -117,6 +119,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:visibility="gone"
         android:text="Enable Tor  "
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

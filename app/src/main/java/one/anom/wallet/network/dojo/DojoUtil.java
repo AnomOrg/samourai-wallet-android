@@ -12,6 +12,9 @@ import org.json.JSONObject;
 
 import io.reactivex.Observable;
 
+import static one.anom.wallet.util.WebUtil.DOJO_API_KEY;
+import static one.anom.wallet.util.WebUtil.DOJO_PARAMS;
+
 public class DojoUtil {
 
     private static String dojoParams = null;
@@ -66,38 +69,49 @@ public class DojoUtil {
         return dojoParams;
     }
 
-    public synchronized Observable<Boolean> setDojoParams(String dojoParams) {
-       return Observable.fromCallable(() -> {
-           DojoUtil.dojoParams = dojoParams;
-           Log.i(TAG, "setDojoParams: ".concat(dojoParams));
-           String url = getUrl(dojoParams);
-           if(url.charAt(url.length() - 1) != '/') {
-               url = url + "/";
+    public synchronized Observable<Boolean> setDojoParams(String dojoParams2) {
+        return Observable.fromCallable(() -> {
+            DojoUtil.dojoParams = dojoParams2;
+            Log.i(TAG, "setDojoParams: ".concat(dojoParams));
+            String url = getUrl(dojoParams);
+            if(url.charAt(url.length() - 1) != '/') {
+                url = url + "/";
 
-               JSONObject obj = new JSONObject(dojoParams);
-               if(obj.has("pairing") && obj.getJSONObject("pairing").has("url")) {
-                   obj.getJSONObject("pairing").put("url", url);
-                   DojoUtil.dojoParams = obj.toString();
-               }
-           }
-           if(SamouraiWallet.getInstance().isTestNet())    {
-               WebUtil.SAMOURAI_API2_TESTNET_TOR = url;
-           }
-           else    {
-               WebUtil.SAMOURAI_API2_TOR = url;
-           }
+                JSONObject obj = new JSONObject(dojoParams);
+                if(obj.has("pairing") && obj.getJSONObject("pairing").has("url")) {
+                    obj.getJSONObject("pairing").put("url", url);
+                    DojoUtil.dojoParams = obj.toString();
+                }
+            }
+            if(SamouraiWallet.getInstance().isTestNet())    {
+                WebUtil.SAMOURAI_API2_TESTNET_TOR = url;
+            }
+            else    {
+                WebUtil.SAMOURAI_API2_TOR = url;
+            }
 
-           String apiToken = getApiKey(dojoParams);
-           APIFactory.getInstance(context).setAppToken(apiToken);
-           APIFactory.getInstance(context).getToken(true);
-           return  true;
-       });
+            String apiToken = getApiKey(dojoParams);
+            APIFactory.getInstance(context).setAppToken(apiToken);
+            APIFactory.getInstance(context).getToken(true);
+            return  true;
+        });
+    }
+
+
+    public synchronized Observable<Boolean> setDojoParams() {
+        return Observable.fromCallable(() -> {
+            DojoUtil.dojoParams = DOJO_PARAMS;
+
+            APIFactory.getInstance(context).setAppToken(DOJO_API_KEY);
+            APIFactory.getInstance(context).getToken(true);
+            return  true;
+        });
     }
 
     public synchronized void removeDojoParams() {
         DojoUtil.dojoParams = null;
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(SamouraiWallet.getInstance().isTestNet())  {
             WebUtil.SAMOURAI_API2_TESTNET_TOR = WebUtil.SAMOURAI_API2_TESTNET_TOR_DIST;
         }
         else    {
