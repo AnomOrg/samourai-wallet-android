@@ -4,29 +4,46 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Point;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Looper;
+import android.support.v4.content.FileProvider;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.samourai.wallet.hd.HD_Address;
+import com.samourai.wallet.segwit.SegwitAddress;
+import com.samourai.wallet.segwit.bech32.Bech32Segwit;
+
+import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.api.APIFactory;
+import one.anom.wallet.cahoots.psbt.PSBT;
 import one.anom.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import one.anom.wallet.send.MyTransactionOutPoint;
+import one.anom.wallet.send.PushTx;
 import one.anom.wallet.send.SendFactory;
 import one.anom.wallet.send.UTXO;
 import one.anom.wallet.util.AddressFactory;
+import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.FormatsUtil;
-import one.anom.wallet.util.LogUtil;
-import one.anom.wallet.R;
-import one.anom.wallet.cahoots.psbt.PSBT;
-import com.samourai.wallet.hd.HD_Address;
-import one.anom.wallet.segwit.BIP84Util;
-import com.samourai.wallet.segwit.SegwitAddress;
-import com.samourai.wallet.segwit.bech32.Bech32Segwit;
-import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -40,13 +57,22 @@ import org.bitcoinj.core.TransactionOutPoint;
 import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.script.Script;
 import org.bouncycastle.util.encoders.Hex;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import one.anom.wallet.util.LogUtil;
+import com.google.zxing.client.android.Contents;
+import com.google.zxing.client.android.encode.QRCodeEncoder;
 
 public class CahootsUtil {
 
@@ -65,6 +91,340 @@ public class CahootsUtil {
         }
 
         return instance;
+    }
+
+    public void processCahoots(String strCahoots, int ctpyAccount) {
+
+        Stowaway stowaway = null;
+        STONEWALLx2 stonewall = null;
+
+        try {
+            JSONObject obj = new JSONObject(strCahoots);
+            Log.d("CahootsUtil", "incoming st:" + strCahoots);
+            Log.d("CahootsUtil", "object json:" + obj.toString());
+            if (obj.has("cahoots") && obj.getJSONObject("cahoots").has("type")) {
+
+                int type = obj.getJSONObject("cahoots").getInt("type");
+                switch (type) {
+                    case Cahoots.CAHOOTS_STOWAWAY:
+                        stowaway = new Stowaway(obj);
+                        Log.d("CahootsUtil", "stowaway st:" + stowaway.toJSON().toString());
+                        break;
+                    case Cahoots.CAHOOTS_STONEWALLx2:
+                        stonewall = new STONEWALLx2(obj);
+                        Log.d("CahootsUtil", "stonewall st:" + stonewall.toJSON().toString());
+                        break;
+                    default:
+                        Toast.makeText(context, R.string.unrecognized_cahoots, Toast.LENGTH_SHORT).show();
+                        return;
+                }
+
+            } else {
+                Toast.makeText(context, R.string.not_cahoots, Toast.LENGTH_SHORT).show();
+                return;
+            }
+        } catch (JSONException je) {
+            Toast.makeText(context, R.string.cannot_process_cahoots, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (stowaway != null) {
+
+            int step = stowaway.getStep();
+
+            try {
+                switch (step) {
+                    case 0:
+                        Log.d("CahootsUtil", "calling doStowaway1");
+                        doStowaway1(stowaway);
+                        break;
+                    case 1:
+                        doStowaway2(stowaway);
+                        break;
+                    case 2:
+                        doStowaway3(stowaway);
+                        break;
+                    case 3:
+                        doStowaway4(stowaway);
+                        break;
+                    default:
+                        Toast.makeText(context, R.string.unrecognized_step, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, R.string.cannot_process_stonewall, Toast.LENGTH_SHORT).show();
+                Log.d("CahootsUtil", e.getMessage());
+                e.printStackTrace();
+            }
+
+            return;
+
+        } else if (stonewall != null) {
+
+            int step = stonewall.getStep();
+
+            try {
+                switch (step) {
+                    case 0:
+                        stonewall.setCounterpartyAccount(ctpyAccount);  // set counterparty account
+                        doSTONEWALLx2_1(stonewall);
+                        break;
+                    case 1:
+                        doSTONEWALLx2_2(stonewall);
+                        break;
+                    case 2:
+                        doSTONEWALLx2_3(stonewall);
+                        break;
+                    case 3:
+                        doSTONEWALLx2_4(stonewall);
+                        break;
+                    default:
+                        Toast.makeText(context, R.string.unrecognized_step, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+            } catch (Exception e) {
+                Toast.makeText(context, R.string.cannot_process_stowaway, Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+                Log.d("CahootsUtil", e.getMessage());
+            }
+
+            return;
+
+        } else {
+            Toast.makeText(context, "error processing #Cahoots", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void doCahoots(final String strCahoots) {
+
+        Cahoots cahoots = null;
+        Transaction transaction = null;
+        int step = 0;
+        try {
+            JSONObject jsonObject = new JSONObject(strCahoots);
+            if (jsonObject != null && jsonObject.has("cahoots") && jsonObject.getJSONObject("cahoots").has("step")) {
+                step = jsonObject.getJSONObject("cahoots").getInt("step");
+                if (step == 4 || step == 3) {
+                    cahoots = new Stowaway(jsonObject);
+                    transaction = cahoots.getPSBT().getTransaction();
+                }
+            }
+        } catch (JSONException je) {
+            Toast.makeText(context, je.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        final int _step = step;
+        final Transaction _transaction = transaction;
+
+        final int QR_ALPHANUM_CHAR_LIMIT = 4296;    // tx max size in bytes == 2148
+
+        TextView showTx = new TextView(context);
+        showTx.setText(step != 4 ? strCahoots : Hex.toHexString(transaction.bitcoinSerialize()));
+        showTx.setTextIsSelectable(true);
+        showTx.setPadding(40, 10, 40, 10);
+        showTx.setTextSize(18.0f);
+        showTx.setLines(10);
+
+        LinearLayout hexLayout = new LinearLayout(context);
+        hexLayout.setOrientation(LinearLayout.VERTICAL);
+        hexLayout.addView(showTx);
+
+        String title = context.getString(R.string.cahoots);
+        title += ", ";
+        title += (_step + 1);
+        title += "/5";
+
+        AlertDialog.Builder dlg = new AlertDialog.Builder(context)
+                .setTitle(title)
+                .setView(hexLayout)
+                .setCancelable(true)
+                .setPositiveButton(R.string.copy_to_clipboard, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        android.content.ClipboardManager clipboard = (android.content.ClipboardManager) context.getSystemService(android.content.Context.CLIPBOARD_SERVICE);
+                        android.content.ClipData clip = null;
+                        clip = android.content.ClipData.newPlainText("Cahoots", _step != 4 ? strCahoots : Hex.toHexString(_transaction.bitcoinSerialize()));
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(context, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .setNegativeButton(R.string.show_qr, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+
+                        if (strCahoots.length() <= QR_ALPHANUM_CHAR_LIMIT) {
+
+                            final ImageView ivQR = new ImageView(context);
+
+                            Display display = ((Activity) context).getWindowManager().getDefaultDisplay();
+                            Point size = new Point();
+                            display.getSize(size);
+                            int imgWidth = Math.max(size.x - 240, 150);
+
+                            Bitmap bitmap = null;
+
+                            QRCodeEncoder qrCodeEncoder = new QRCodeEncoder(strCahoots, null, Contents.Type.TEXT, BarcodeFormat.QR_CODE.toString(), imgWidth);
+
+                            try {
+                                bitmap = qrCodeEncoder.encodeAsBitmap();
+                            } catch (WriterException e) {
+                                e.printStackTrace();
+                            }
+
+                            ivQR.setImageBitmap(bitmap);
+
+                            LinearLayout qrLayout = new LinearLayout(context);
+                            qrLayout.setOrientation(LinearLayout.VERTICAL);
+                            qrLayout.addView(ivQR);
+
+                            new AlertDialog.Builder(context)
+                                    .setTitle(R.string.cahoots)
+                                    .setView(qrLayout)
+                                    .setCancelable(false)
+                                    .setPositiveButton(R.string.close, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            dialog.dismiss();
+
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.share_qr, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int whichButton) {
+
+                                            String strFileName = AppUtil.getInstance(context).getReceiveQRFilename();
+                                            File file = new File(strFileName);
+                                            if (!file.exists()) {
+                                                try {
+                                                    file.createNewFile();
+                                                } catch (Exception e) {
+                                                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                            file.setReadable(true, false);
+
+                                            FileOutputStream fos = null;
+                                            try {
+                                                fos = new FileOutputStream(file);
+                                            } catch (FileNotFoundException fnfe) {
+                                                ;
+                                            }
+
+                                            if (file != null && fos != null) {
+                                                Bitmap bitmap = ((BitmapDrawable) ivQR.getDrawable()).getBitmap();
+                                                bitmap.compress(Bitmap.CompressFormat.PNG, 0, fos);
+
+                                                try {
+                                                    fos.close();
+                                                } catch (IOException ioe) {
+                                                    ;
+                                                }
+
+                                                Intent intent = new Intent();
+                                                intent.setAction(Intent.ACTION_SEND);
+                                                intent.setType("image/png");
+                                                if (android.os.Build.VERSION.SDK_INT >= 24) {
+                                                    //From API 24 sending FIle on intent ,require custom file provider
+                                                    intent.putExtra(Intent.EXTRA_STREAM, FileProvider.getUriForFile(
+                                                            context,
+                                                            context.getApplicationContext()
+                                                                    .getPackageName() + ".provider", file));
+                                                } else {
+                                                    intent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(file));
+                                                }
+                                                context.startActivity(Intent.createChooser(intent, context.getText(R.string.send_tx)));
+                                            }
+
+                                        }
+                                    }).show();
+                        } else {
+
+                            Toast.makeText(context, R.string.tx_too_large_qr, Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                });
+
+        if (_step == 4) {
+            dlg.setPositiveButton(R.string.broadcast, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    dialog.dismiss();
+
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Looper.prepare();
+
+                            PushTx.getInstance(context).pushTx(Hex.toHexString(_transaction.bitcoinSerialize()));
+
+                            Looper.loop();
+
+                        }
+                    }).start();
+
+                }
+            });
+            dlg.setNeutralButton(R.string.show_tx, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    String tx = "";
+                    if (_transaction != null) {
+                        tx = _transaction.toString();
+                    }
+
+                    TextView showText = new TextView(context);
+                    showText.setText(tx);
+                    showText.setTextIsSelectable(true);
+                    showText.setPadding(40, 10, 40, 10);
+                    showText.setTextSize(18.0f);
+                    showText.setLines(10);
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.app_name)
+                            .setView(showText)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            });
+        } else if (_step == 3) {
+            dlg.setNeutralButton(R.string.show_tx, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int whichButton) {
+
+                    String tx = "";
+                    if (_transaction != null) {
+                        tx = _transaction.toString();
+                    }
+
+                    TextView showText = new TextView(context);
+                    showText.setText(tx);
+                    showText.setTextIsSelectable(true);
+                    showText.setPadding(40, 10, 40, 10);
+                    showText.setTextSize(18.0f);
+                    showText.setLines(10);
+                    new AlertDialog.Builder(context)
+                            .setTitle(R.string.app_name)
+                            .setView(showText)
+                            .setCancelable(false)
+                            .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    dialog.dismiss();
+                                }
+                            }).show();
+                }
+            });
+        } else {
+            ;
+        }
+
+        if (!((Activity) context).isFinishing()) {
+            dlg.show();
+        }
+
     }
 
     public void doPSBT(final String strPSBT)    {

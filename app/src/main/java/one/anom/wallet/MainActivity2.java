@@ -490,7 +490,7 @@ public class MainActivity2 extends Activity {
 
     private void doPairing() {
 
-        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams()
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams("")
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(aBoolean -> {
