@@ -2,15 +2,15 @@ package com.samourai.whirlpool.client.wallet;
 
 import com.samourai.http.client.AndroidHttpClient;
 import com.samourai.http.client.IHttpClient;
-import com.samourai.wallet.api.APIFactory;
+import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.api.backend.BackendApi;
 import com.samourai.wallet.api.backend.BackendServer;
 import com.samourai.wallet.api.backend.beans.HttpException;
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.segwit.SegwitAddress;
-import com.samourai.wallet.tor.TorManager;
-import com.samourai.wallet.util.WebUtil;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.WebUtil;
 import com.samourai.whirlpool.client.exception.NotifiableException;
 import com.samourai.whirlpool.client.tx0.AndroidTx0Service;
 import com.samourai.whirlpool.client.tx0.Tx0;

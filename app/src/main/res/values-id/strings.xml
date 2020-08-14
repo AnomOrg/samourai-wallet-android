@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="alpha_create_wallet">Tulis dan simpan kata-kata ini dengan aman. Kata-kata tersebut jangan sampai hilang atau lupa kata sandi anda.</string>
+    <string name="alpha_create_wallet">Tulis dan simpan kata-kata ini dengan aman. Kata-kata tersebut jangan sampai hilang atau lupa kata sandi anda.</string>
     <string name="alpha_create_confirm_backup">Saya telah menuliskan kata-kata saya</string>
 
     <string name="creating_wallet">Membuat wallet. Harap tunggu...</string>
@@ -15,12 +15,12 @@
     <string name="action_unarchive">Aktifkan seluruh kode pembayaran tersimpan</string>
     <string name="action_sync_all">Singkronisasi seluruh kode pembayayan</string>
 
-    <string name="about_us">Tentang Wallet Samourai</string>
+    <string name="about_us">Tentang Wallet Anom</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Batal</string>
 
-    <string name="options_cat_prefs">Block explorer</string>
+    <string name="options_cat_prefs">Mata uang, Block explorer</string>
     <string name="options_cat_stealth">Mode Sembunyi</string>
     <string name="options_cat_remote">Remote</string>
     <string name="options_cat_wallet">Wallet</string>
@@ -41,8 +41,8 @@
     <string name="options_stealth_display2">Hapus Samourai dari launcher dan home screen. Anda harus menelepon **KODE_PIN_ANDA# dari aplikasi panggilan telepon anda untuk menjalankan Samourai.</string>
     <string name="options_remote_commands">Ijinkan perintah remote</string>
     <string name="options_remote_commands2">Bolehkan perintah remote melalui SMS.</string>
-    <string name="options_currency">Harga bursa</string>
-    <string name="options_currency2">Pilih bursa dan mata uang lokal anda.</string>
+    <string name="options_currency">Harga jalanan</string>
+    <string name="options_currency2">Pilih pertukaran Anda dan mata uang fiat lokal Anda.</string>
     <string name="options_blockexplorer">Block explorer</string>
     <string name="options_blockexplorer2">Block explorer digunakan untuk melihat detail transaksi.</string>
     <string name="options_sim_switch">Perlindungan perubahan SIM</string>

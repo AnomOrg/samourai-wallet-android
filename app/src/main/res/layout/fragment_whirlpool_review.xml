@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.whirlpool.newPool.fragments.ReviewPoolFragment">
+    tools:context="com.samourai.wallet.com.anom.wallet.whirlpool.newPool.fragments.ReviewPoolFragment">
 
     <TextView
         android:id="@+id/textView51"
@@ -130,7 +130,7 @@
         app:layout_constraintStart_toStartOf="@+id/textView57"
         app:layout_constraintTop_toBottomOf="@+id/textView57" />
 
-    <com.samourai.wallet.widgets.EntropyBar
+    <one.anom.wallet.widgets.EntropyBar
         android:id="@+id/pool_review_entropy_bar"
         android:layout_width="24dp"
         android:layout_height="0dp"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.utxos.UTXODetailsActivity">
+    tools:context="com.samourai.wallet.com.anom.wallet.utxos.UTXODetailsActivity">
 
 
     <android.support.design.widget.AppBarLayout

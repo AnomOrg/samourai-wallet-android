@@ -1,9 +1,9 @@
 package com.samourai.whirlpool.client.wallet;
 
-import com.samourai.wallet.api.APIFactory;
+import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
-import com.samourai.wallet.send.MyTransactionOutPoint;
-import com.samourai.wallet.send.UTXO;
+import one.anom.wallet.send.MyTransactionOutPoint;
+import one.anom.wallet.send.UTXO;
 import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount;
 
 import org.slf4j.Logger;

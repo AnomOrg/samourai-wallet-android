@@ -1,13 +1,13 @@
 package com.samourai.whirlpool.client.tx0;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.wallet.segwit.SegwitAddress;
-import com.samourai.wallet.segwit.bech32.Bech32Util;
-import com.samourai.wallet.send.MyTransactionInput;
-import com.samourai.wallet.send.MyTransactionOutPoint;
+import one.anom.wallet.segwit.bech32.Bech32Util;
+import one.anom.wallet.send.MyTransactionInput;
+import one.anom.wallet.send.MyTransactionOutPoint;
 import com.samourai.wallet.util.FeeUtil;
-import com.samourai.wallet.util.FormatsUtil;
+import one.anom.wallet.util.FormatsUtil;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWalletConfig;
 
 import org.bitcoinj.core.Address;
