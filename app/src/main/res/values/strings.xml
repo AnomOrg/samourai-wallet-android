@@ -212,7 +212,7 @@
     <string name="custom_fee">Custom</string>
     <string name="sat_b">sat/b</string>
 
-    <string name="account_Samourai">Wallet</string>
+    <string name="account_Samourai" translatable="false">Wallet</string>
     <string name="account_shuffling">Shifted</string>
 
     <string name="max_available">Max. available:</string>

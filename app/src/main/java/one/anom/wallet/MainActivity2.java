@@ -27,6 +27,7 @@ import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -46,17 +47,17 @@ import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.ExchangeRateFactory;
+import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.TimeOutUtil;
 
 public class MainActivity2 extends Activity {
 
     private ProgressDialog progress = null;
-
-    public static final String ACTION_RESTART = "MainActivity2.RESTART_SERVICE";
+    public static final String ACTION_RESTART = "com.samourai.wallet.MainActivity2.RESTART_SERVICE";
     private AlertDialog.Builder dlg;
     private boolean pinEntryActivityLaunched = false;
-
+    private static final String TAG = "MainActivity2";
     private TextView loaderTxView;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
 
@@ -74,20 +75,23 @@ public class MainActivity2 extends Activity {
                     }
                     startService(new Intent(MainActivity2.this.getApplicationContext(), WebSocketService.class));
                 }
+
             }
+
         }
     };
 
     protected BackgroundManager.Listener bgListener = new BackgroundManager.Listener() {
 
         public void onBecameForeground() {
+//
+//            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+//            intent.putExtra("notifTx", false);
+//            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
+//
+//            Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+//            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
 
-            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
-            intent.putExtra("notifTx", false);
-            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
-
-            Intent _intent = new Intent("MainActivity2.RESTART_SERVICE");
-            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
         }
 
         public void onBecameBackground() {
@@ -112,7 +116,9 @@ public class MainActivity2 extends Activity {
                     }
                 }).start();
             }
+
         }
+
     };
 
     @Override
@@ -123,6 +129,7 @@ public class MainActivity2 extends Activity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         loaderTxView = findViewById(R.id.loader_text);
+
 
         if (PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.TESTNET, false) == true) {
             SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
@@ -148,13 +155,13 @@ public class MainActivity2 extends Activity {
                     .subscribe(connection_states -> {
                         if (connection_states == TorManager.CONNECTION_STATES.CONNECTED) {
                             initAppOnCreate();
-                            compositeDisposables.dispose();
                         }
                     });
             compositeDisposables.add(disposable);
         } else {
             initAppOnCreate();
         }
+
     }
 
     private void initAppOnCreate() {
@@ -190,7 +197,9 @@ public class MainActivity2 extends Activity {
             }
 
             doAppInit0(isDial, strUri, strPCode);
+
         }
+
     }
 
     @Override
@@ -211,11 +220,10 @@ public class MainActivity2 extends Activity {
                     });
             compositeDisposables.add(disposable);
         } else {
-
             initAppOnResume();
         }
-
         super.onResume();
+
     }
 
     private void initAppOnResume() {
@@ -256,8 +264,8 @@ public class MainActivity2 extends Activity {
 
     private void initDialog() {
         Intent intent = new Intent(MainActivity2.this, LandingActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+        finish();
     }
 
     private void validatePIN(String strUri) {
@@ -269,7 +277,6 @@ public class MainActivity2 extends Activity {
 
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             Intent intent = new Intent(MainActivity2.this, PinEntryActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             if (strUri != null) {
                 intent.putExtra("uri", strUri);
                 PrefsUtil.getInstance(MainActivity2.this).setValue("SCHEMED_URI", strUri);
@@ -333,46 +340,47 @@ public class MainActivity2 extends Activity {
 
     private void doAppInit0(final boolean isDial, final String strUri, final String strPCode) {
 
-        if (!APIFactory.getInstance(MainActivity2.this).APITokenRequired()) {
-            doAppInit1(isDial, strUri, strPCode);
-            return;
-        }
+        Disposable disposable = Completable.fromCallable(() -> {
 
-
-        Disposable disposable = Observable.fromCallable(() -> {
+            if (!APIFactory.getInstance(MainActivity2.this).APITokenRequired()) {
+                doAppInit1(isDial, strUri, strPCode);
+                return false;
+            }
+            boolean needToken = false;
             if (APIFactory.getInstance(MainActivity2.this).getAccessToken() == null) {
-                return true;
+                needToken = true;
             } else {
                 JWT jwt = new JWT(APIFactory.getInstance(MainActivity2.this).getAccessToken());
                 if (jwt.isExpired(APIFactory.getInstance(MainActivity2.this).getAccessTokenRefresh())) {
                     APIFactory.getInstance(MainActivity2.this).getToken(true);
-                    return true;
+                    needToken = true;
                 }
             }
-            return false;
+            if (needToken && !AppUtil.getInstance(MainActivity2.this).isOfflineMode()) {
+
+                APIFactory.getInstance(MainActivity2.this).stayingAlive();
+
+                doAppInit1(isDial, strUri, strPCode);
+
+                return true;
+
+            } else {
+                doAppInit1(isDial, strUri, strPCode);
+            }
+            return true;
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(needToken -> {
-
-                    if (needToken && !AppUtil.getInstance(MainActivity2.this).isOfflineMode()) {
-
-                        APIFactory.getInstance(MainActivity2.this).stayingAlive();
-
-                        doAppInit1(isDial, strUri, strPCode);
-
-                        return;
-
-                    } else {
-                        doAppInit1(isDial, strUri, strPCode);
-                    }
-
-                }, error -> {
-                    error.printStackTrace();
+                .subscribe(() -> {
+                }, e -> {
+                    LogUtil.error(TAG, e.getMessage());
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                 });
         compositeDisposables.add(disposable);
 
-        return;
+
     }
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -385,23 +393,16 @@ public class MainActivity2 extends Activity {
         if (bundle == null) {
             return null;
         }
-
         if (Intent.ACTION_VIEW.equals(getIntent().getAction()) && getIntent().getScheme() != null && getIntent().getScheme().equals("bitcoin")) {
-
             bundle.putString("uri", getIntent().getData().toString());
         } else {
             if (bundle.containsKey("uri")) {
                 bundle.putString("uri", bundle.getString("uri"));
-            } else if (bundle.containsKey("get_address")) {
-                bundle.putString("get_address", "");
-            } else if (bundle.containsKey("get_paynym_code")) {
-                bundle.putString("get_paynym_code", "");
-            } else if (bundle.containsKey("send_address")) {
-                bundle.putString("send_address", bundle.getString("send_address"));
             }
         }
 
         return bundle;
+
     }
 
     private void doAppInit1(boolean isDial, final String strUri, final String strPCode) {
@@ -409,108 +410,30 @@ public class MainActivity2 extends Activity {
         if (AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists()) {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             if (AppUtil.getInstance(MainActivity2.this).isSideLoaded()) {
-                doSelectNet();
+                runOnUiThread(this::doSelectNet);
             } else {
-                initDialog();
+                runOnUiThread(this::initDialog);
             }
         } else if (isDial && AccessFactory.getInstance(MainActivity2.this).validateHash(PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.ACCESS_HASH, ""), AccessFactory.getInstance(MainActivity2.this).getGUID(), new CharSequenceX(AccessFactory.getInstance(MainActivity2.this).getPIN()), AESUtil.DefaultPBKDF2Iterations)) {
             TimeOutUtil.getInstance().updatePin();
             launchFromDialer(AccessFactory.getInstance(MainActivity2.this).getPIN());
         } else if (TimeOutUtil.getInstance().isTimedOut()) {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
-            validatePIN(strUri == null ? null : strUri);
+            validatePIN(strUri);
         } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() && !TimeOutUtil.getInstance().isTimedOut()) {
-            if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
-                startTor();
-                if (DojoUtil.getInstance(this).getDojoParams() == null) {
-                    connectToDojo();
-                }
-            } else if (DojoUtil.getInstance(this).getDojoParams() == null) {
-                connectToDojo();
-            } else {
-                TimeOutUtil.getInstance().updatePin();
-                Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-                intent.putExtra("notifTx", true);
-                intent.putExtra("fetch", true);
-                if (getBundleExtras() != null) {
-                    intent.putExtras(getBundleExtras());
-                }
-                startActivity(intent);
+            TimeOutUtil.getInstance().updatePin();
+
+            Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
+            intent.putExtra("notifTx", true);
+            intent.putExtra("fetch", true);
+            if (getBundleExtras() != null) {
+                intent.putExtras(getBundleExtras());
             }
+            startActivity(intent);
         } else {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
             validatePIN(strUri == null ? null : strUri);
         }
-    }
-
-    private void startTor() {
-        Disposable disposable = TorManager.getInstance(this)
-                .torStatus
-                .subscribeOn(Schedulers.newThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(state -> {
-                    if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-
-                    } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
-                        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
-                    } else {
-                    }
-                });
-        compositeDisposables.add(disposable);
-        Intent startIntent = new Intent(getApplicationContext(), TorService.class);
-        startIntent.setAction(TorService.START_SERVICE);
-        startService(startIntent);
-    }
-
-    private void connectToDojo() {
-        loaderTxView.setText(getText(R.string.connecting_dojo));
-        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
-            DojoUtil.getInstance(getApplicationContext()).clear();
-            doPairing();
-        } else {
-            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
-            startIntent.setAction(TorService.START_SERVICE);
-            startService(startIntent);
-            Disposable disposable = TorManager.getInstance(getApplicationContext())
-                    .torStatus
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(state -> {
-                        if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-                        } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
-                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
-                            DojoUtil.getInstance(getApplicationContext()).clear();
-                            doPairing();
-
-                        }
-                    });
-            compositeDisposables.add(disposable);
-        }
-    }
-
-    private void doPairing() {
-
-        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams("")
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(aBoolean -> {
-                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
-                    loaderTxView.setText(getText(R.string.connected_dojo));
-                    TimeOutUtil.getInstance().updatePin();
-                    Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-                    intent.putExtra("notifTx", true);
-                    intent.putExtra("fetch", true);
-                    if (getBundleExtras() != null) {
-                        intent.putExtras(getBundleExtras());
-                    }
-                    startActivity(intent);
-                }, error -> {
-                    error.printStackTrace();
-                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
-                    loaderTxView.setText(getText(R.string.error_dojo));
-
-                });
-        compositeDisposables.add(disposable);
 
     }
 
@@ -518,7 +441,6 @@ public class MainActivity2 extends Activity {
         if (dlg != null) {
             return;
         }
-
         dlg = new AlertDialog.Builder(this)
                 .setTitle(R.string.app_name)
                 .setMessage(R.string.select_network)
@@ -543,9 +465,10 @@ public class MainActivity2 extends Activity {
 
                     }
                 });
-
         if (!isFinishing()) {
             dlg.show();
         }
+
     }
+
 }

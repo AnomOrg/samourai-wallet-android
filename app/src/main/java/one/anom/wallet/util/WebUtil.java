@@ -3,7 +3,8 @@ package one.anom.wallet.util;
 import android.content.Context;
 import android.util.Log;
 
-import one.anom.wallet.BuildConfig;
+import com.msopentech.thali.toronionproxy.android.BuildConfig;
+
 import one.anom.wallet.R;
 import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.tor.TorManager;
@@ -51,20 +52,8 @@ public class WebUtil {
     public static final String SAMOURAI_API2 = "https://api.samouraiwallet.com/v2/";
     public static final String SAMOURAI_API2_TESTNET = "https://api.samouraiwallet.com/test/v2/";
 
-
-    //to change a dojo node only change these  parameter
-    public static final String SAMOURAI_API2_TOR_DIST = "http://yzlz4vav7igywlsjvr2xeixrt3ejemkmmzmk2or7xb7ds6rg2gwgb4ad.onion/v2";
-    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = SAMOURAI_API2_TOR_DIST;
-    public static final String DOJO_API_KEY = "apiz7FesfThMsXzU";
-    public static final String DOJO_PARAMS = "{\n" +
-            "        \"pairing\": {\n" +
-            "            \"type\": \"dojo.api\",\n" +
-            "            \"version\": \"1.6.0\",\n" +
-            "            \"apikey\": \"apiz7FesfThMsXzU\",\n" +
-            "            \"url\": \"http://yzlz4vav7igywlsjvr2xeixrt3ejemkmmzmk2or7xb7ds6rg2gwgb4ad.onion/v2\"\n" +
-            "        }\n" +
-            "    }";
-
+    public static final String SAMOURAI_API2_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/v2/";
+    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/test/v2/";
 
     public static String SAMOURAI_API2_TOR = SAMOURAI_API2_TOR_DIST;
     public static String SAMOURAI_API2_TESTNET_TOR = SAMOURAI_API2_TESTNET_TOR_DIST;
@@ -75,6 +64,7 @@ public class WebUtil {
     public static final String VALIDATE_SSL_URL = SAMOURAI_API;
 
     public static final String CONTENT_TYPE_APPLICATION_JSON = "application/json";
+
     private static final int DefaultRequestRetry = 2;
     private static final int DefaultRequestTimeout = 60000;
 
