@@ -159,7 +159,7 @@ Make every spend a CoinJoin."
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="A transaction between two Samourai Wallet users that
+                android:text="A transaction between two Anom Wallet users that
 is designed to leave no distinguishing fingerprint on the
 blockchain including amount spent."
                 app:layout_constraintBottom_toBottomOf="parent"
