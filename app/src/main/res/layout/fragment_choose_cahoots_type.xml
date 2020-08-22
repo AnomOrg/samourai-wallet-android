@@ -328,7 +328,7 @@ and quickest option."
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="Manually compose this transaction with another
-participant who is using Samourai Wallet. Perfect for
+participant who is using Anom Wallet. Perfect for
 face-to-face interaction."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView12"
