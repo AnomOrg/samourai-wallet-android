@@ -58,6 +58,7 @@ public class PrefsUtil {
 	public static final String RICOCHET_STAGGERED = "ricochetStaggeredDelivery";
 	public static final String ENABLE_TOR = "enable_tor";
 	public static final String OFFLINE = "offline";
+	public static final String IS_FIRST_TIME = "first_time";
 
 	private static Context context = null;
 	private static PrefsUtil instance = null;

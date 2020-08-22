@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -11,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -126,6 +128,14 @@ public class LandingActivity extends AppCompatActivity  {
             torSwitch.setChecked(true);
         }
 
+        boolean hasRun = PrefsUtil.getInstance(this).getValue(PrefsUtil.IS_FIRST_TIME, false);
+        if (!hasRun) {
+            PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.IS_FIRST_TIME, true);
+            if(DojoUtil.getInstance(getApplicationContext()).getDojoParams() != null ){
+                //remove dojo node on first run
+                DojoUtil.getInstance(getApplicationContext()).clear();
+            }
+        }
 
     }
 
