@@ -137,11 +137,9 @@ public class MainActivity2 extends Activity {
         boolean hasRun = PrefsUtil.getInstance(this).getValue(PrefsUtil.IS_FIRST_TIME, false);
         if (!hasRun) {
             PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.IS_FIRST_TIME, true);
-            if(DojoUtil.getInstance(getApplicationContext()).getDojoParams() != null ){
                 //remove dojo node on first run
                 DojoUtil.getInstance(getApplicationContext()).clear();
                 PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, false);
-            }
         }
 
 //        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
