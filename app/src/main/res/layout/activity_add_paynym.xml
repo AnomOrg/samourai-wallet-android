@@ -68,7 +68,7 @@
                     android:layout_marginTop="4dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view3"
-                    app:srcCompat="@drawable/ic_launcher" />
+                    app:srcCompat="@drawable/ic_samourai_logo_toolbar" />
 
                 <TextView
                     android:id="@+id/textView11"
