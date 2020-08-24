@@ -128,15 +128,6 @@ public class LandingActivity extends AppCompatActivity  {
             torSwitch.setChecked(true);
         }
 
-        boolean hasRun = PrefsUtil.getInstance(this).getValue(PrefsUtil.IS_FIRST_TIME, false);
-        if (!hasRun) {
-            PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.IS_FIRST_TIME, true);
-            if(DojoUtil.getInstance(getApplicationContext()).getDojoParams() != null ){
-                //remove dojo node on first run
-                DojoUtil.getInstance(getApplicationContext()).clear();
-            }
-        }
-
     }
 
     private void stopTor() {
