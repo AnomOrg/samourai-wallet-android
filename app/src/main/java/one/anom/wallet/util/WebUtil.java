@@ -52,8 +52,8 @@ public class WebUtil {
     public static final String SAMOURAI_API2 = "https://api.samouraiwallet.com/v2/";
     public static final String SAMOURAI_API2_TESTNET = "https://api.samouraiwallet.com/test/v2/";
 
-    public static final String SAMOURAI_API2_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/v2/";
-    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/test/v2/";
+    public static final String SAMOURAI_API2_TOR_DIST = "http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2/";
+    public static final String SAMOURAI_API2_TESTNET_TOR_DIST = "http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2/";
 
     public static String SAMOURAI_API2_TOR = SAMOURAI_API2_TOR_DIST;
     public static String SAMOURAI_API2_TESTNET_TOR = SAMOURAI_API2_TESTNET_TOR_DIST;
@@ -74,6 +74,15 @@ public class WebUtil {
 
     private static WebUtil instance = null;
     private Context context = null;
+
+    public static final String DOJO_PARAMS = "{\n" +
+            "        \"pairing\": {\n" +
+            "            \"type\": \"dojo.api\",\n" +
+            "            \"version\": \"1.8.0\",\n" +
+            "            \"apikey\": \"myApiKey\",\n" +
+            "            \"url\": \"http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2\"\n" +
+            "        }\n" +
+            "    }";
 
     private WebUtil(Context context) {
         this.context = context;
