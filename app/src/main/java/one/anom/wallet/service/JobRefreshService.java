@@ -152,8 +152,8 @@ public class JobRefreshService extends JobIntentService {
                 try {
                     String[] s = HD_WalletFactory.getInstance(this.getApplicationContext()).get().getXPUBs();
                     APIFactory.getInstance(this.getApplicationContext()).lockXPUB(s[0], 44, null);
-                } catch (IOException | MnemonicException.MnemonicLengthException e) {
-                    ;
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
 
             }

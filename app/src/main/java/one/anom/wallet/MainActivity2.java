@@ -141,7 +141,6 @@ public class MainActivity2 extends Activity {
             PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.IS_FIRST_TIME, true);
                 //remove dojo node on first run
                 DojoUtil.getInstance(getApplicationContext()).clear();
-                PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, false);
         }
 
 //        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -178,11 +177,9 @@ public class MainActivity2 extends Activity {
 
         if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
             startTor();
-            if (DojoUtil.getInstance(this).getDojoParams() == null) {
-                connectToDojo2();
-            }
-        } else if (DojoUtil.getInstance(this).getDojoParams() == null) {
-            connectToDojo2();
+            connectToDojo();
+        } else {
+            connectToDojo();
         }
 
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
@@ -525,32 +522,6 @@ public class MainActivity2 extends Activity {
 
     }
 
-    private void doPairing2() {
-
-        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams(DOJO_PARAMS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe(aBoolean -> {
-                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
-                    loaderTxView.setText(getText(R.string.connected_dojo));
-                    TimeOutUtil.getInstance().updatePin();
-                    /*Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-                    intent.putExtra("notifTx", true);
-                    intent.putExtra("fetch", true);
-                    if (getBundleExtras() != null) {
-                        intent.putExtras(getBundleExtras());
-                    }
-                    startActivity(intent);*/
-                }, error -> {
-                    error.printStackTrace();
-                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
-                    loaderTxView.setText(getText(R.string.error_dojo));
-
-                });
-        compositeDisposables.add(disposable);
-
-    }
-
     private void connectToDojo() {
         loaderTxView.setText(getText(R.string.connecting_dojo));
         if (TorManager.getInstance(getApplicationContext()).isConnected()) {
@@ -577,31 +548,6 @@ public class MainActivity2 extends Activity {
         }
     }
 
-    private void connectToDojo2() {
-        loaderTxView.setText(getText(R.string.connecting_dojo));
-        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
-            DojoUtil.getInstance(getApplicationContext()).clear();
-            doPairing2();
-        } else {
-            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
-            startIntent.setAction(TorService.START_SERVICE);
-            startService(startIntent);
-            Disposable disposable = TorManager.getInstance(getApplicationContext())
-                    .torStatus
-                    .subscribeOn(Schedulers.newThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(state -> {
-                        if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-                        } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
-                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
-                            DojoUtil.getInstance(getApplicationContext()).clear();
-                            doPairing2();
-
-                        }
-                    });
-            compositeDisposables.add(disposable);
-        }
-    }
 
     private void startTor() {
         Disposable disposable = TorManager.getInstance(this)

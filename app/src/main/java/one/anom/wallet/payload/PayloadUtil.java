@@ -543,14 +543,8 @@ public class PayloadUtil	{
 
             return obj;
         }
-        catch(JSONException ex) {
+        catch(Exception ex) {
             throw new RuntimeException(ex);
-        }
-        catch(IOException ioe) {
-            throw new RuntimeException(ioe);
-        }
-        catch(MnemonicException.MnemonicLengthException mle) {
-            throw new RuntimeException(mle);
         }
     }
 
