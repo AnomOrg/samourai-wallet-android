@@ -8,9 +8,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Environment;
+import android.support.annotation.NonNull;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
 import io.fabric.sdk.android.Fabric;
 import one.anom.wallet.tor.TorService;
@@ -20,6 +25,8 @@ import one.anom.wallet.BuildConfig;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AnomApplication extends Application {
 
@@ -27,6 +34,11 @@ public class AnomApplication extends Application {
     public static String FOREGROUND_SERVICE_CHANNEL_ID = "FOREGROUND_SERVICE_CHANNEL_ID";
     public static String WHIRLPOOL_CHANNEL = "WHIRLPOOL_CHANNEL";
     public static String WHIRLPOOL_NOTIFICATIONS = "WHIRLPOOL_NOTIFICATIONS";
+
+    public static  String DOJO_TYPE;
+    public static  String DOJO_VERSION;
+    public static  String DOJO_API_KEY;
+    public static  String DOJO_URL;
 
     @Override
     public void onCreate() {
@@ -53,6 +65,36 @@ public class AnomApplication extends Application {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+
+        final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        // set in-app defaults
+      //  Map<String, Object> remoteConfigDefaults = new HashMap();
+      //  remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_REQUIRED, false);
+        //emoteConfigDefaults.put(ForceUpdateChecker.KEY_CURRENT_VERSION, "1.0.0");
+        //remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_URL,
+
+
+        //firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
+        firebaseRemoteConfig.fetch(60) // fetch every minutes
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d("saad", "remote config is fetched.");
+                            firebaseRemoteConfig.activateFetched();
+                        }
+                    }
+                });
+
+        //final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
+
+        if (firebaseRemoteConfig.getString("type") != null) {
+            DOJO_TYPE = firebaseRemoteConfig.getString("type");
+            DOJO_VERSION = firebaseRemoteConfig.getString("version");
+            DOJO_API_KEY = firebaseRemoteConfig.getString("apikey");
+            DOJO_URL = firebaseRemoteConfig.getString("url");
         }
 
     }
