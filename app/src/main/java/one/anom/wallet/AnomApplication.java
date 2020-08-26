@@ -68,16 +68,16 @@ public class AnomApplication extends Application {
         }
 
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+        
+        Map<String, Object> remoteConfigDefaults = new HashMap();
+        remoteConfigDefaults.put("type", "dojo.api");
+        remoteConfigDefaults.put("version", "1.8.0");
+        remoteConfigDefaults.put("apikey", "myApiKey");
+        remoteConfigDefaults.put("url", "http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2");
 
-        // set in-app defaults
-      //  Map<String, Object> remoteConfigDefaults = new HashMap();
-      //  remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_REQUIRED, false);
-        //emoteConfigDefaults.put(ForceUpdateChecker.KEY_CURRENT_VERSION, "1.0.0");
-        //remoteConfigDefaults.put(ForceUpdateChecker.KEY_UPDATE_URL,
 
-
-        //firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
-        firebaseRemoteConfig.fetch(60) // fetch every minutes
+        firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
+        firebaseRemoteConfig.fetch(30)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
@@ -86,8 +86,6 @@ public class AnomApplication extends Application {
                         }
                     }
                 });
-
-        //final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.getInstance();
 
         if (firebaseRemoteConfig.getString("type") != null) {
             DOJO_TYPE = firebaseRemoteConfig.getString("type");
