@@ -415,18 +415,20 @@ public class PayloadUtil	{
 
             wallet.put("testnet", SamouraiWallet.getInstance().isTestNet() ? true : false);
 
-            if(HD_WalletFactory.getInstance(context).get().getSeedHex() != null) {
-                wallet.put("seed", HD_WalletFactory.getInstance(context).get().getSeedHex());
-                wallet.put("passphrase", HD_WalletFactory.getInstance(context).get().getPassphrase());
+                if (HD_WalletFactory.getInstance(context).get()!=null && HD_WalletFactory.getInstance(context).get().getSeedHex() != null) {
+                    wallet.put("seed", HD_WalletFactory.getInstance(context).get().getSeedHex());
+                    wallet.put("passphrase", HD_WalletFactory.getInstance(context).get().getPassphrase());
 //                obj.put("mnemonic", getMnemonic());
-                wallet.put("fingerprint", Hex.toHexString(HD_WalletFactory.getInstance(context).getFingerprint()));
-            }
+                    wallet.put("fingerprint", Hex.toHexString(HD_WalletFactory.getInstance(context).getFingerprint()));
+                }
 
             JSONArray accts = new JSONArray();
-            for(HD_Account acct : HD_WalletFactory.getInstance(context).get().getAccounts()) {
-                accts.put(acct.toJSON(44));
+            if (HD_WalletFactory.getInstance(context).get()!=null) {
+                for (HD_Account acct : HD_WalletFactory.getInstance(context).get().getAccounts()) {
+                    accts.put(acct.toJSON(44));
+                }
+                wallet.put("accounts", accts);
             }
-            wallet.put("accounts", accts);
 
             //
             // export BIP47 payment codes for debug payload

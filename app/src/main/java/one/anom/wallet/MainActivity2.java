@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -175,13 +176,6 @@ public class MainActivity2 extends Activity {
 
     private void initAppOnCreate() {
 
-        if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
-            startTor();
-            connectToDojo();
-        } else {
-            connectToDojo();
-        }
-
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
             Toast.makeText(MainActivity2.this, R.string.in_offline_mode, Toast.LENGTH_SHORT).show();
@@ -189,7 +183,6 @@ public class MainActivity2 extends Activity {
         } else {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
-
             ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
@@ -384,6 +377,8 @@ public class MainActivity2 extends Activity {
             } else {
                 doAppInit1(isDial, strUri, strPCode);
             }
+
+
             return true;
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -440,10 +435,6 @@ public class MainActivity2 extends Activity {
         } else if (AccessFactory.getInstance(MainActivity2.this).isLoggedIn() && !TimeOutUtil.getInstance().isTimedOut()) {
             if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
                 startTor();
-                if (DojoUtil.getInstance(this).getDojoParams() == null) {
-                    connectToDojo();
-                }
-            } else if (DojoUtil.getInstance(this).getDojoParams() == null) {
                 connectToDojo();
             } else {
                 TimeOutUtil.getInstance().updatePin();

@@ -82,7 +82,6 @@ public class AnomApplication extends Application {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d("saad", "remote config is fetched.");
                             firebaseRemoteConfig.activateFetched();
                         }
                     }
