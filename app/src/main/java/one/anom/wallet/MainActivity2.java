@@ -62,7 +62,7 @@ public class MainActivity2 extends Activity {
     private static final String TAG = "MainActivity2";
     private TextView loaderTxView;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
-
+    private boolean isBalanceActivityCalled = false;
     protected BroadcastReceiver receiver_restart = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -175,6 +175,13 @@ public class MainActivity2 extends Activity {
     }
 
     private void initAppOnCreate() {
+
+        if (!TorManager.getInstance(getApplicationContext()).isConnected()) {
+            startTor();
+            connectToDojo();
+        } else {
+            connectToDojo();
+        }
 
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
@@ -438,13 +445,16 @@ public class MainActivity2 extends Activity {
                 connectToDojo();
             } else {
                 TimeOutUtil.getInstance().updatePin();
-                Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-                intent.putExtra("notifTx", true);
-                intent.putExtra("fetch", true);
-                if (getBundleExtras() != null) {
-                    intent.putExtras(getBundleExtras());
+                if(!isBalanceActivityCalled) {
+                    Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
+                    intent.putExtra("notifTx", true);
+                    intent.putExtra("fetch", true);
+                    if (getBundleExtras() != null) {
+                        intent.putExtras(getBundleExtras());
+                    }
+                    isBalanceActivityCalled = true;
+                    startActivity(intent);
                 }
-                startActivity(intent);
             }
         } else {
             AccessFactory.getInstance(MainActivity2.this).setIsLoggedIn(false);
@@ -496,13 +506,16 @@ public class MainActivity2 extends Activity {
                     PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
                     loaderTxView.setText(getText(R.string.connected_dojo));
                     TimeOutUtil.getInstance().updatePin();
-                    Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
-                    intent.putExtra("notifTx", true);
-                    intent.putExtra("fetch", true);
-                    if (getBundleExtras() != null) {
-                        intent.putExtras(getBundleExtras());
+                    if(!isBalanceActivityCalled) {
+                        Intent intent = new Intent(MainActivity2.this, BalanceActivity.class);
+                        intent.putExtra("notifTx", true);
+                        intent.putExtra("fetch", true);
+                        if (getBundleExtras() != null) {
+                            intent.putExtras(getBundleExtras());
+                        }
+                        isBalanceActivityCalled = true;
+                        startActivity(intent);
                     }
-                    startActivity(intent);
                 }, error -> {
                     error.printStackTrace();
                     Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
