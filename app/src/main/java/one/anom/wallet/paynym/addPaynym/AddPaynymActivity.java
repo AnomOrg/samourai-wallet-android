@@ -47,12 +47,14 @@ public class AddPaynymActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_paynym);
-        setSupportActionBar(findViewById(R.id.toolbar_addpaynym));
+       // setSupportActionBar(findViewById(R.id.toolbar_addpaynym));
         viewSwitcher = findViewById(R.id.viewswitcher_addpaynym);
         searchPaynymList = findViewById(R.id.search_list_addpaynym);
         searchPaynymList.setLayoutManager(new LinearLayoutManager(this));
         searchPaynymList.setAdapter(new SearchAdapter());
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  if(getSupportActionBar()!=null) {
+         //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       // }
 
         findViewById(R.id.add_paynym_scan_qr).setOnClickListener(view -> {
             CameraFragmentBottomSheet cameraFragmentBottomSheet = new CameraFragmentBottomSheet();
@@ -61,6 +63,10 @@ public class AddPaynymActivity extends AppCompatActivity {
                 cameraFragmentBottomSheet.dismissAllowingStateLoss();
                 processScan(code);
             });
+        });
+
+        findViewById(R.id.ic_back).setOnClickListener(view -> {
+            finish();
         });
 
         findViewById(R.id.add_paynym_paste).setOnClickListener(view -> {
