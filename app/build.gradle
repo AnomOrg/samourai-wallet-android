@@ -47,6 +47,9 @@ android {
         applicationVariants.all { variant ->
             variant.buildConfigField "String", "XOR_1", "\""+getApiKey("XOR_1")+"\""
             variant.buildConfigField "String", "XOR_2", "\""+getApiKey("XOR_2")+"\""
+            variant.outputs.all {
+                outputFileName = "Wallet_Arcane_${defaultConfig.versionName}_prod.apk"
+            }
         }
     }
     lintOptions {
