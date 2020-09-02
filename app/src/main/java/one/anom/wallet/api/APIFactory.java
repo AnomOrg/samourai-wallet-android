@@ -445,7 +445,7 @@ public class APIFactory	{
                 args.append("xpub=");
                 args.append(xpub);
                 args.append("&type=");
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, true))    {
                     args.append("restore");
                 }
                 else    {
@@ -471,7 +471,7 @@ public class APIFactory	{
             else    {
                 HashMap<String,String> args = new HashMap<String,String>();
                 args.put("xpub", xpub);
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, true))    {
                     args.put("type", "restore");
                 }
                 else    {
@@ -806,7 +806,7 @@ public class APIFactory	{
         }
     }
 
-    /*
+/*
         public synchronized JSONObject deleteXPUB(String xpub, boolean bip49) {
 
             String _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : WebUtil.SAMOURAI_API2;
@@ -841,7 +841,7 @@ public class APIFactory	{
                             address = ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
 
-                        if(!TorUtil.getInstance(context).statusFromBroadcast())    {
+                        if(!TorManager.getInstance(context).isRequired())    {
                             StringBuilder args = new StringBuilder();
                             args.append("message=");
                             args.append(xpub);
@@ -886,8 +886,8 @@ public class APIFactory	{
             }
 
             return jsonObject;
-        }
-    */
+        }*/
+
     public synchronized JSONObject lockXPUB(String xpub, int purpose, String tag) {
 
         String _url =  WebUtil.getAPIUrl(context);

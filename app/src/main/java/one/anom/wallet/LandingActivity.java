@@ -118,7 +118,7 @@ public class LandingActivity extends AppCompatActivity  {
 
             if (b) {
                 startTor();
-                progressBarTor.setVisibility(View.VISIBLE);
+                progressBarTor.setVisibility(View.INVISIBLE);
                 torSwitch.setVisibility(View.INVISIBLE);
             } else {
                 stopTor();
@@ -144,7 +144,7 @@ public class LandingActivity extends AppCompatActivity  {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(state -> {
                     if (state == TorManager.CONNECTION_STATES.CONNECTING) {
-                        progressBarTor.setVisibility(View.VISIBLE);
+                        progressBarTor.setVisibility(View.INVISIBLE);
                         torStatus.setVisibility(View.VISIBLE);
                         torStatus.setText("Tor service connecting...");
                     } else if (state == TorManager.CONNECTION_STATES.CONNECTED) {
