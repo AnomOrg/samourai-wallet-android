@@ -21,6 +21,15 @@ repositories {
 
 
 android {
+
+    signingConfigs {
+        release {
+            storeFile file('/Users/mdtanvirhossain/Desktop/AnomWalletSigningKey')
+            storePassword 'AnomWallet'
+            keyAlias 'anomwallet'
+            keyPassword 'anomwallet'
+        }
+    }
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
     useLibrary 'org.apache.http.legacy'
@@ -30,10 +39,11 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 165
-        versionName "1.99.95"
+        versionName "2.99.93"
 
         // Enabling multidex support.
         multiDexEnabled true
+        signingConfig signingConfigs.release
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -50,6 +60,9 @@ android {
             variant.outputs.all {
                 outputFileName = "Wallet_Arcane_${defaultConfig.versionName}_prod.apk"
             }
+          /*  variant.outputs.all {
+                outputFileName = "Wallet_Playstore_${defaultConfig.versionName}_prod.apk"
+            }*/
         }
     }
     lintOptions {
