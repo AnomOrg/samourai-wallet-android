@@ -4,8 +4,8 @@ import android.content.Context;
 
 import com.samourai.http.client.AndroidHttpClient;
 import com.samourai.http.client.IHttpClient;
-import com.samourai.wallet.tor.TorManager;
-import com.samourai.wallet.util.WebUtil;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.WebUtil;
 import com.samourai.xmanager.protocol.XManagerService;
 
 public class XManagerExample {

@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.util.Log;
 
-import com.samourai.wallet.tor.TorManager;
+import one.anom.wallet.tor.TorManager;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;

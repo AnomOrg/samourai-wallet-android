@@ -1,7 +1,7 @@
 package com.samourai.http.client;
 
-import com.samourai.wallet.tor.TorManager;
-import com.samourai.wallet.util.WebUtil;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.WebUtil;
 
 /**
  * HTTP client manager for Whirlpool.

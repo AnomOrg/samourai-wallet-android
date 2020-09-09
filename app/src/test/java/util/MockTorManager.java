@@ -1,6 +1,6 @@
 package util;
 
-import com.samourai.wallet.tor.TorManager;
+import one.anom.wallet.tor.TorManager;
 
 public class MockTorManager extends TorManager {
 
