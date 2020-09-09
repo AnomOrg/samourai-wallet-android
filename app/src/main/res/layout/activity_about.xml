@@ -7,7 +7,9 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
-        android:src="@drawable/samourai_splash"
+        android:padding="30dp"
+        android:tint="@color/white"
+        android:src="@drawable/ic_samourai_logo_trans2x"
         />
 
 </RelativeLayout>

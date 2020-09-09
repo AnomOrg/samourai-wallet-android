@@ -48,4 +48,6 @@
 
     <color name="select_overlay">#343B48</color>
 
+    <color name="ic_launcher_background">#415893</color>
+
 </resources>

@@ -223,7 +223,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                                 String strMsg = SettingsActivity2.this.getString(R.string.options_stealth_display2);
 
                                 new AlertDialog.Builder(SettingsActivity2.this)
-                                        .setIcon(R.drawable.ic_launcher).setTitle(R.string.options_stealth_display)
+                                        .setIcon(R.mipmap.ic_launcher).setTitle(R.string.options_stealth_display)
                                         .setMessage(strMsg)
                                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                                             //@Override
