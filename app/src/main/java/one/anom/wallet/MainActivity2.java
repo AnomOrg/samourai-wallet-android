@@ -127,7 +127,7 @@ public class MainActivity2 extends Activity {
 
 
         if (PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.TESTNET, false) == true) {
-            SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+            AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
         }
 
 //        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -142,7 +142,7 @@ public class MainActivity2 extends Activity {
 
         if (TorManager.getInstance(getApplicationContext()).isRequired() && ConnectivityStatus.hasConnectivity(getApplicationContext()) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
             loaderTxView.setText(getText(R.string.initializing_tor));
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
             Disposable disposable = TorManager.getInstance(this)
                     .getTorStatus()
                     .subscribeOn(Schedulers.io())
@@ -199,7 +199,7 @@ public class MainActivity2 extends Activity {
     protected void onResume() {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
 
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
 
             Disposable disposable = TorManager.getInstance(getApplicationContext())
                     .getTorStatus()
@@ -443,7 +443,7 @@ public class MainActivity2 extends Activity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).removeValue(PrefsUtil.TESTNET);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
                         initDialog();
 
                     }
@@ -453,7 +453,7 @@ public class MainActivity2 extends Activity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).setValue(PrefsUtil.TESTNET, true);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
                         initDialog();
 
                     }

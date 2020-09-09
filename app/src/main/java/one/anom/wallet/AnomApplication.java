@@ -20,7 +20,7 @@ import one.anom.wallet.util.PrefsUtil;
 import java.io.File;
 import java.io.PrintWriter;
 
-public class SamouraiApplication extends Application {
+public class AnomApplication extends Application {
 
     public static String TOR_CHANNEL_ID = "TOR_CHANNEL";
     public static String FOREGROUND_SERVICE_CHANNEL_ID = "FOREGROUND_SERVICE_CHANNEL_ID";

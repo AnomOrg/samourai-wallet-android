@@ -2,7 +2,7 @@ package one.anom.wallet.send;
 
 import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.util.FormatsUtil;
 
 import java.math.BigInteger;
@@ -182,7 +182,7 @@ public class FeeUtil  {
             if(FormatsUtil.getInstance().isValidBech32(out.getAddress()))    {
                 p2wpkh++;
             }
-            else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), out.getAddress()).isP2SHAddress())    {
+            else if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), out.getAddress()).isP2SHAddress())    {
                 p2sh_p2wpkh++;
             }
             else   {

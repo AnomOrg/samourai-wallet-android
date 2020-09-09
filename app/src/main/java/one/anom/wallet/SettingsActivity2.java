@@ -712,7 +712,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                 });
 
                 final CheckBoxPreference cbPref6 = (CheckBoxPreference) findPreference("autoBackup");
-                if(!SamouraiWallet.getInstance().hasPassphrase(SettingsActivity2.this)) {
+                if(!AnomWallet.getInstance().hasPassphrase(SettingsActivity2.this)) {
                     cbPref6.setChecked(false);
                     cbPref6.setEnabled(false);
                 }
@@ -1425,7 +1425,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
 
     private void doBroadcastHex(final String strHexTx)    {
 
-        Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams(), Hex.decode(strHexTx));
+        Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams(), Hex.decode(strHexTx));
 
         String msg = SettingsActivity2.this.getString(R.string.broadcast) + ":" + tx.getHashAsString() + " ?";
 
@@ -1547,10 +1547,10 @@ public class SettingsActivity2 extends PreferenceActivity	{
 
             jsonObj.put("type", "whirlpool.gui");
             jsonObj.put("version", "3.0.0");
-            jsonObj.put("network", SamouraiWallet.getInstance().isTestNet() ? "testnet" : "mainnet");
+            jsonObj.put("network", AnomWallet.getInstance().isTestNet() ? "testnet" : "mainnet");
 
             String mnemonic = HD_WalletFactory.getInstance(SettingsActivity2.this).get().getMnemonic();
-            if(SamouraiWallet.getInstance().hasPassphrase(SettingsActivity2.this))    {
+            if(AnomWallet.getInstance().hasPassphrase(SettingsActivity2.this))    {
                 String encrypted = AESUtil.encrypt(mnemonic, new CharSequenceX(HD_WalletFactory.getInstance(SettingsActivity2.this).get().getPassphrase()), AESUtil.DefaultPBKDF2Iterations);
                 jsonObj.put("mnemonic", encrypted);
                 jsonObj.put("passphrase", true);

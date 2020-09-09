@@ -34,7 +34,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import one.anom.wallet.cahoots.Cahoots;
 import one.anom.wallet.cahoots.CahootsUtil;
 import one.anom.wallet.cahoots.STONEWALLx2;
@@ -54,7 +54,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ManualCahootsActivity extends SamouraiActivity {
+public class ManualCahootsActivity extends AnomActivity {
 
     private ViewPager viewPager;
     private HorizontalStepsViewIndicator stepsViewGroup;

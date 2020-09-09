@@ -197,7 +197,7 @@ public class OpenDimeActivity extends Activity {
 
                 if(strAddress != null)    {
                     String blockExplorer = "https://m.oxt.me/transaction/";
-                    if (SamouraiWallet.getInstance().isTestNet()) {
+                    if (AnomWallet.getInstance().isTestNet()) {
                         blockExplorer = "https://blockstream.info/testnet/";
                     }
 

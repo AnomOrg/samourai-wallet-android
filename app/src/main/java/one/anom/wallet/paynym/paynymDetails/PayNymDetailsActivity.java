@@ -37,7 +37,7 @@ import android.widget.Toast;
 import com.samourai.http.client.AndroidHttpClient;
 import com.samourai.http.client.IHttpClient;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.send.SendActivity;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
@@ -539,7 +539,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
     private Single<String> getPayNymAddress() {
         TorManager torManager = TorManager.getInstance(getApplicationContext());
         IHttpClient httpClient = new AndroidHttpClient(WebUtil.getInstance(getApplicationContext()), torManager);
-        XManagerClient xManagerClient = new XManagerClient(SamouraiWallet.getInstance().isTestNet(), torManager.isConnected(), httpClient);
+        XManagerClient xManagerClient = new XManagerClient(AnomWallet.getInstance().isTestNet(), torManager.isConnected(), httpClient);
         return Single.fromCallable(() -> xManagerClient.getAddressOrDefault(XManagerService.BIP47));
     }
 
@@ -593,7 +593,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
         // get smallest 1 UTXO > than spend + fee + sw fee + dust
         //
         for (UTXO u : _utxos) {
-            if (u.getValue() >= (amount + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(1, 4).longValue())) {
+            if (u.getValue() >= (amount + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(1, 4).longValue())) {
                 selectedUTXO.add(u);
                 totalValueSelected += u.getValue();
                 Log.d("PayNymDetailsActivity", "single output");
@@ -635,7 +635,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
                 totalValueSelected += u.getValue();
                 selected += u.getOutpoints().size();
 
-                if (totalValueSelected >= (amount + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 4).longValue())) {
+                if (totalValueSelected >= (amount + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 4).longValue())) {
                     Log.d("PayNymDetailsActivity", "multiple outputs");
                     Log.d("PayNymDetailsActivity", "total value selected:" + totalValueSelected);
                     Log.d("PayNymDetailsActivity", "nb inputs:" + u.getOutpoints().size());
@@ -725,7 +725,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
                 continue;
             }
 
-            MyTransactionInput input = new MyTransactionInput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], o, o.getTxHash().toString(), o.getTxOutputN());
+            MyTransactionInput input = new MyTransactionInput(AnomWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], o, o.getTxHash().toString(), o.getTxOutputN());
             inputs.add(input);
         }
         //
@@ -759,7 +759,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
             if (Bech32Util.getInstance().isBech32Script(Hex.toHexString(scriptBytes))) {
                 address = Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(scriptBytes));
             } else {
-                address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
             }
 //            String address = inputScript.getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
             ECKey ecKey = SendFactory.getPrivKey(address, 0);
@@ -772,7 +772,7 @@ public class PayNymDetailsActivity extends AppCompatActivity {
             // use outpoint for payload masking
             //
             byte[] privkey = ecKey.getPrivKeyBytes();
-            byte[] pubkey = payment_code.notificationAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).getPubKey();
+            byte[] pubkey = payment_code.notificationAddress(AnomWallet.getInstance().getCurrentNetworkParams()).getPubKey();
             byte[] outpoint = outPoint.bitcoinSerialize();
 //                Log.i("PayNymDetailsActivity", "outpoint:" + Hex.toHexString(outpoint));
 //                Log.i("PayNymDetailsActivity", "payer shared secret:" + Hex.toHexString(new SecretPoint(privkey, pubkey).ECDHSecretAsBytes()));
@@ -801,8 +801,8 @@ public class PayNymDetailsActivity extends AppCompatActivity {
 
         final HashMap<String, BigInteger> receivers = new HashMap<String, BigInteger>();
         receivers.put(Hex.toHexString(op_return), BigInteger.ZERO);
-        receivers.put(payment_code.notificationAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).getAddressString(), SendNotifTxFactory._bNotifTxValue);
-        receivers.put(SamouraiWallet.getInstance().isTestNet() ? SendNotifTxFactory.getInstance().TESTNET_SAMOURAI_NOTIF_TX_FEE_ADDRESS :  SendNotifTxFactory.getInstance().SAMOURAI_NOTIF_TX_FEE_ADDRESS, SendNotifTxFactory._bSWFee);
+        receivers.put(payment_code.notificationAddress(AnomWallet.getInstance().getCurrentNetworkParams()).getAddressString(), SendNotifTxFactory._bNotifTxValue);
+        receivers.put(AnomWallet.getInstance().isTestNet() ? SendNotifTxFactory.getInstance().TESTNET_SAMOURAI_NOTIF_TX_FEE_ADDRESS :  SendNotifTxFactory.getInstance().SAMOURAI_NOTIF_TX_FEE_ADDRESS, SendNotifTxFactory._bSWFee);
 
         final long change = totalValueSelected - (amount + fee.longValue());
         if (change > 0L) {

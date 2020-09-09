@@ -642,7 +642,7 @@ public class ReceiveActivity extends AppCompatActivity {
             long lamount = (long) (amount.doubleValue() * 1e8);
             if (lamount != 0L) {
                 if (!FormatsUtil.getInstance().isValidBech32(_addr)) {
-                    ivQR.setImageBitmap(generateQRCode(BitcoinURI.convertToBitcoinURI(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), _addr), Coin.valueOf(lamount), null, null)));
+                    ivQR.setImageBitmap(generateQRCode(BitcoinURI.convertToBitcoinURI(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), _addr), Coin.valueOf(lamount), null, null)));
                 } else {
                     String strURI = "bitcoin:" + _addr;
                     DecimalFormat df = new DecimalFormat("#");

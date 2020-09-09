@@ -399,7 +399,7 @@ public class PinEntryActivity extends AppCompatActivity {
                 if (create) {
 
                     try {
-                        HD_WalletFactory.getInstance(PinEntryActivity.this).newWallet(12, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(PinEntryActivity.this).newWallet(12, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (MnemonicException.MnemonicLengthException mle) {
@@ -413,7 +413,7 @@ public class PinEntryActivity extends AppCompatActivity {
                 } else {
 
                     try {
-                        HD_WalletFactory.getInstance(PinEntryActivity.this).restoreWallet(seed, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(PinEntryActivity.this).restoreWallet(seed, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (DecoderException de) {

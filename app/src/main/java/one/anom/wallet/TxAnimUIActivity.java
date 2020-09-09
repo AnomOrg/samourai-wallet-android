@@ -125,14 +125,14 @@ public class TxAnimUIActivity extends AppCompatActivity {
                             ;
                         }
                     } else {
-                        Address _address = input.getConnectedOutput().getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        Address _address = input.getConnectedOutput().getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
                         if (_address != null) {
                             _addr = _address.toString();
                             _isBIP49 = true;
                         }
                     }
                     if (_addr == null) {
-                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     }
 
                     String path = APIFactory.getInstance(TxAnimUIActivity.this).getUnspentPaths().get(_addr);
@@ -365,7 +365,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                     String _hex = hex;
                     Intent txTennaIntent = new Intent("com.samourai.txtenna.HEX");
-                    if (SamouraiWallet.getInstance().isTestNet()) {
+                    if (AnomWallet.getInstance().isTestNet()) {
                         _hex += "-t";
                     }
                     txTennaIntent.putExtra(Intent.EXTRA_TEXT, _hex);
@@ -420,12 +420,12 @@ public class TxAnimUIActivity extends AppCompatActivity {
                             if (Bech32Util.getInstance().isBech32Script(Hex.toHexString(out.getScriptBytes())) && !SendParams.getInstance().getDestAddress().equals(Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())))) {
                                 rbf.addChangeAddr(Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())));
                                 LogUtil.debug("SendActivity", "added change output:" + Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())));
-                            } else if (SendParams.getInstance().getChangeType() == 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString())) {
-                                rbf.addChangeAddr(out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                                LogUtil.debug("SendActivity", "added change output:" + out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                            } else if (SendParams.getInstance().getChangeType() != 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString())) {
-                                rbf.addChangeAddr(out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                                LogUtil.debug("SendActivity", "added change output:" + out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
+                            } else if (SendParams.getInstance().getChangeType() == 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString())) {
+                                rbf.addChangeAddr(out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                                LogUtil.debug("SendActivity", "added change output:" + out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                            } else if (SendParams.getInstance().getChangeType() != 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString())) {
+                                rbf.addChangeAddr(out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                                LogUtil.debug("SendActivity", "added change output:" + out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
                             } else {
                                 ;
                             }

@@ -1,6 +1,6 @@
 package one.anom.wallet.segwit.bech32;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.segwit.bech32.Bech32Segwit;
 
@@ -42,7 +42,7 @@ public class Bech32Util {
     public String getAddressFromScript(String script) throws Exception    {
 
         String hrp = null;
-        if(SamouraiWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params)    {
+        if(AnomWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params)    {
             hrp = "tb";
         }
         else    {
@@ -55,7 +55,7 @@ public class Bech32Util {
     public String getAddressFromScript(Script script) throws Exception    {
 
         String hrp = null;
-        if(SamouraiWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params)    {
+        if(AnomWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params)    {
             hrp = "tb";
         }
         else    {
@@ -78,13 +78,13 @@ public class Bech32Util {
             byte[] scriptPubKey = null;
 
             try {
-                Pair<Byte, byte[]> pair = Bech32Segwit.decode(SamouraiWallet.getInstance().isTestNet() ? "tb" : "bc", address);
+                Pair<Byte, byte[]> pair = Bech32Segwit.decode(AnomWallet.getInstance().isTestNet() ? "tb" : "bc", address);
                 scriptPubKey = Bech32Segwit.getScriptPubkey(pair.getLeft(), pair.getRight());
             }
             catch(Exception e) {
                 return null;
             }
-            output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(value), scriptPubKey);
+            output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(value), scriptPubKey);
         }
 
         return output;

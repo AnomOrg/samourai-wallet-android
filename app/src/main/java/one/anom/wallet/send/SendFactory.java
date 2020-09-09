@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
@@ -104,7 +104,7 @@ public class SendFactory	{
                     address = Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(scriptBytes));
                 }
                 else    {
-                    address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                    address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                 }
 //                Log.i("SendFactory", "address from script:" + address);
                 ECKey ecKey = null;
@@ -161,14 +161,14 @@ public class SendFactory	{
                     }
                 }
                 else    {
-                    address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                    address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                 }
 
                 Log.i("address from script", address);
 
                 ECKey ecKey = null;
                 try {
-                    DumpedPrivateKey pk = new DumpedPrivateKey(SamouraiWallet.getInstance().getCurrentNetworkParams(), privKeyReader.getKey().getPrivateKeyAsWiF(SamouraiWallet.getInstance().getCurrentNetworkParams()));
+                    DumpedPrivateKey pk = new DumpedPrivateKey(AnomWallet.getInstance().getCurrentNetworkParams(), privKeyReader.getKey().getPrivateKeyAsWiF(AnomWallet.getInstance().getCurrentNetworkParams()));
                     ecKey = pk.getKey();
 //                    Log.i("SendFactory", "ECKey address:" + ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
                 } catch (AddressFormatException afe) {
@@ -220,7 +220,7 @@ public class SendFactory	{
         }
 
         List<TransactionOutput> outputs = new ArrayList<TransactionOutput>();
-        Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams());
+        Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams());
 
         for(Iterator<Map.Entry<String, BigInteger>> iterator = receivers.entrySet().iterator(); iterator.hasNext();) {
             Map.Entry<String, BigInteger> mapEntry = iterator.next();
@@ -239,14 +239,14 @@ public class SendFactory	{
             Script toOutputScript = null;
             if(!FormatsUtil.getInstance().isValidBitcoinAddress(toAddress) && FormatsUtil.getInstance().isValidBIP47OpReturn(toAddress))    {
                 toOutputScript = new ScriptBuilder().op(ScriptOpCodes.OP_RETURN).data(Hex.decode(toAddress)).build();
-                output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(0L), toOutputScript.getProgram());
+                output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(0L), toOutputScript.getProgram());
             }
             else if(FormatsUtil.getInstance().isValidBech32(toAddress))   {
                 output = Bech32Util.getInstance().getTransactionOutput(toAddress, value.longValue());
             }
             else    {
-                toOutputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), toAddress));
-                output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(value.longValue()), toOutputScript.getProgram());
+                toOutputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), toAddress));
+                output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(value.longValue()), toOutputScript.getProgram());
             }
 
             outputs.add(output);
@@ -260,9 +260,9 @@ public class SendFactory	{
                 continue;
             }
 
-            MyTransactionInput input = new MyTransactionInput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], outPoint, outPoint.getTxHash().toString(), outPoint.getTxOutputN());
+            MyTransactionInput input = new MyTransactionInput(AnomWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], outPoint, outPoint.getTxHash().toString(), outPoint.getTxOutputN());
             if(PrefsUtil.getInstance(context).getValue(PrefsUtil.RBF_OPT_IN, false) == true)    {
-                input.setSequenceNumber(SamouraiWallet.RBF_SEQUENCE_VAL.longValue());
+                input.setSequenceNumber(AnomWallet.RBF_SEQUENCE_VAL.longValue());
             }
             inputs.add(input);
         }
@@ -314,12 +314,12 @@ public class SendFactory	{
                 }
             }
             else    {
-                address = new Script(connectedPubKeyScript).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                address = new Script(connectedPubKeyScript).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
             }
 
-            if(FormatsUtil.getInstance().isValidBech32(address) || Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+            if(FormatsUtil.getInstance().isValidBech32(address) || Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
 
-                final SegwitAddress segwitAddress = new SegwitAddress(key.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                final SegwitAddress segwitAddress = new SegwitAddress(key.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
 //                System.out.println("pubKey:" + Hex.toHexString(key.getPubKey()));
 //                final Script scriptPubKey = p2shp2wpkh.segWitOutputScript();
 //                System.out.println("scriptPubKey:" + Hex.toHexString(scriptPubKey.getProgram()));
@@ -335,7 +335,7 @@ public class SendFactory	{
                 witness.setPush(1, key.getPubKey());
                 transaction.setWitness(i, witness);
 
-                if(!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+                if(!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
                     final ScriptBuilder sigScript = new ScriptBuilder();
                     sigScript.data(redeemScript.getProgram());
                     transaction.getInput(i).setScriptSig(sigScript.build());
@@ -444,7 +444,7 @@ public class SendFactory	{
             if(FormatsUtil.getInstance().isValidBech32(utxoAddress))    {
                 changeType = 84;
             }
-            else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), utxoAddress).isP2SHAddress())   {
+            else if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), utxoAddress).isP2SHAddress())   {
                 changeType = 49;
             }
             else    {
@@ -457,7 +457,7 @@ public class SendFactory	{
             if(FormatsUtil.getInstance().isValidBech32(address))    {
                 mixedType = 84;
             }
-            else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())   {
+            else if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())   {
                 mixedType = 49;
             }
             else    {
@@ -498,7 +498,7 @@ public class SendFactory	{
         List<MyTransactionOutPoint> recycleOutPoints = new ArrayList<MyTransactionOutPoint>();
         List<UTXO> recycleUTXOs = new ArrayList<UTXO>();
 
-        BigInteger bDust = firstPassOutpoints == null ? BigInteger.ZERO : SamouraiWallet.bDust;
+        BigInteger bDust = firstPassOutpoints == null ? BigInteger.ZERO : AnomWallet.bDust;
 
         // select utxos until > spendAmount * 2
         // create additional change output(s)
@@ -599,7 +599,7 @@ public class SendFactory	{
             debug("SendFactory", "biFee pair:" + biFee.toString());
         }
 
-        if(changeDue.subtract(biFee.divide(BigInteger.valueOf(2L))).compareTo(SamouraiWallet.bDust) > 0)    {
+        if(changeDue.subtract(biFee.divide(BigInteger.valueOf(2L))).compareTo(AnomWallet.bDust) > 0)    {
             changeDue = changeDue.subtract(biFee.divide(BigInteger.valueOf(2L)));
             debug("SendFactory", "fee set1:" + biFee.divide(BigInteger.valueOf(2L)).toString());
         }
@@ -610,7 +610,7 @@ public class SendFactory	{
         if(outputs0 != null && outputs0.size() == 2)    {
             TransactionOutput changeOutput0 = outputs0.get(1);
             BigInteger changeDue0 = BigInteger.valueOf(changeOutput0.getValue().longValue());
-            if(changeDue0.subtract(biFee.divide(BigInteger.valueOf(2L))).compareTo(SamouraiWallet.bDust) > 0)    {
+            if(changeDue0.subtract(biFee.divide(BigInteger.valueOf(2L))).compareTo(AnomWallet.bDust) > 0)    {
                 changeDue0 = changeDue0.subtract(biFee.divide(BigInteger.valueOf(2L)));
                 debug("SendFactory", "fee set0:" + biFee.divide(BigInteger.valueOf(2L)).toString());
             }
@@ -634,8 +634,8 @@ public class SendFactory	{
                 txSpendOutput = Bech32Util.getInstance().getTransactionOutput(_address, spendAmount.longValue());
             }
             else    {
-                outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), _address));
-                txSpendOutput = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount.longValue()), outputScript.getProgram());
+                outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), _address));
+                txSpendOutput = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount.longValue()), outputScript.getProgram());
             }
             txOutputs.add(txSpendOutput);
 
@@ -644,8 +644,8 @@ public class SendFactory	{
                 txChangeOutput = Bech32Util.getInstance().getTransactionOutput(changeAddress, changeDue.longValue());
             }
             else    {
-                outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), changeAddress));
-                txChangeOutput = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(changeDue.longValue()), outputScript.getProgram());
+                outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), changeAddress));
+                txChangeOutput = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(changeDue.longValue()), outputScript.getProgram());
             }
             txOutputs.add(txChangeOutput);
         }
@@ -744,7 +744,7 @@ public class SendFactory	{
                     }
                     ecKey = addr.getECKey();
                 }
-                else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+                else if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
                     debug("SendFactory", "address type:" + "bip49");
                     HD_Address addr = BIP49Util.getInstance(context).getWallet().getAccount(0).getChain(Integer.parseInt(s[1])).getAddressAt(Integer.parseInt(s[2]));
                     ecKey = addr.getECKey();
@@ -754,7 +754,7 @@ public class SendFactory	{
                     int account_no = APIFactory.getInstance(context).getUnspentAccounts().get(address);
                     HD_Address hd_address = AddressFactory.getInstance(context).get(account_no, Integer.parseInt(s[1]), Integer.parseInt(s[2]));
                     String strPrivKey = hd_address.getPrivateKeyString();
-                    DumpedPrivateKey pk = new DumpedPrivateKey(SamouraiWallet.getInstance().getCurrentNetworkParams(), strPrivKey);
+                    DumpedPrivateKey pk = new DumpedPrivateKey(AnomWallet.getInstance().getCurrentNetworkParams(), strPrivKey);
                     ecKey = pk.getKey();
                 }
             }

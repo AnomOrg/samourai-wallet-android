@@ -12,7 +12,7 @@ import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
 import one.anom.wallet.MainActivity2;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
@@ -150,7 +150,7 @@ public class WebSocketHandler {
             try {
 
                 mConnection = new WebSocketFactory()
-                        .createSocket(SamouraiWallet.getInstance().isTestNet() ? "wss://api.samourai.io/test/v2/inv" : "wss://api.samourai.io/v2/inv")
+                        .createSocket(AnomWallet.getInstance().isTestNet() ? "wss://api.samourai.io/test/v2/inv" : "wss://api.samourai.io/v2/inv")
                         .addListener(new WebSocketAdapter() {
 
                             public void onTextMessage(WebSocket websocket, String message) {
@@ -371,7 +371,7 @@ public class WebSocketHandler {
                     JSONObject inputObj = inputs.getJSONObject(i);
                     if(inputObj.has("seq"))    {
                         long sequence = inputObj.getLong("seq");
-                        if(BigInteger.valueOf(sequence).compareTo(SamouraiWallet.RBF_SEQUENCE_VAL) <= 0)    {
+                        if(BigInteger.valueOf(sequence).compareTo(AnomWallet.RBF_SEQUENCE_VAL) <= 0)    {
                             ret = true;
                             LogUtil.debug("WebSocketHandler", "return value:" + ret);
                             break;

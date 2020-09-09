@@ -9,7 +9,7 @@ import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 
 @SuppressLint("Registered")
-public class SamouraiActivity extends AppCompatActivity {
+public class AnomActivity extends AppCompatActivity {
 
     protected int account = 0;
 

@@ -28,7 +28,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.SamouraiApplication;
+import one.anom.wallet.AnomApplication;
 import one.anom.wallet.util.FormatsUtil;
 
 import static androidx.core.app.NotificationCompat.GROUP_ALERT_SUMMARY;
@@ -46,7 +46,7 @@ public class WhirlpoolNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Notification notification = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_CHANNEL)
+        Notification notification = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
                 .setContentTitle("Samourai Whirlpool")
                 .setContentText("Waiting...")
                 .setOngoing(true)
@@ -109,7 +109,7 @@ public class WhirlpoolNotificationService extends Service {
 
     private void showMixSuccessNotification(WhirlpoolUtxo utxo) {
         String message = FormatsUtil.getBTCDecimalFormat(utxo.getUtxo().value).concat(" BTC").concat(" ").concat(" mix completed");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_NOTIFICATIONS)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_NOTIFICATIONS)
                 .setContentTitle("Mix completed")
                 .setTicker("Mix completed")
                 .setColorized(true)
@@ -155,7 +155,7 @@ public class WhirlpoolNotificationService extends Service {
 
 
     void updateNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_CHANNEL)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
                 .setGroupAlertBehavior(GROUP_ALERT_SUMMARY)
                 .setContentTitle("Samourai Whirlpool")
                 .setOngoing(true)

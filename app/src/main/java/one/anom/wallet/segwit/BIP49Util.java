@@ -3,7 +3,7 @@ package one.anom.wallet.segwit;
 import android.content.Context;
 import android.widget.Toast;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
 import one.anom.wallet.hd.HD_WalletFactory;
@@ -57,7 +57,7 @@ public class BIP49Util {
 
     public SegwitAddress getAddressAt(int chain, int idx) {
         HD_Address addr = getWallet().getAccount(0).getChain(chain).getAddressAt(idx);
-        SegwitAddress p2shp2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress p2shp2wpkh = new SegwitAddress(addr.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
         return p2shp2wpkh;
     }
 

@@ -12,7 +12,7 @@ import org.bitcoinj.params.MainNetParams;
 import java.io.IOException;
 import java.math.BigInteger;
 
-public class SamouraiWallet {
+public class AnomWallet {
 
     private static NetworkParameters networkParams = null;
 
@@ -29,17 +29,17 @@ public class SamouraiWallet {
     public static final BigInteger RBF_SEQUENCE_VAL = BigInteger.valueOf(0xffffffffL - 2L);
     public static final BigInteger NLOCKTIME_SEQUENCE_VAL = BigInteger.valueOf(0xffffffffL - 3L);
 
-    private static SamouraiWallet instance = null;
+    private static AnomWallet instance = null;
 
     private static int currentSelectedAccount = 0;
     private static boolean showTotalBalance = false;
 
-    private SamouraiWallet()    { ; }
+    private AnomWallet()    { ; }
 
-    public static SamouraiWallet getInstance()  {
+    public static AnomWallet getInstance()  {
 
         if(instance == null)    {
-            instance = new SamouraiWallet();
+            instance = new AnomWallet();
         }
 
         return instance;

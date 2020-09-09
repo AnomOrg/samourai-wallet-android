@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.send.boost.RBFTask;
 import one.anom.wallet.api.Tx;
@@ -330,7 +330,7 @@ public class TxDetailsActivity extends AppCompatActivity {
     private void doExplorerView() {
 
         String blockExplorer = "https://m.oxt.me/transaction/";
-        if (SamouraiWallet.getInstance().isTestNet()) {
+        if (AnomWallet.getInstance().isTestNet()) {
             blockExplorer = "https://blockstream.info/testnet/";
         }
 

@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.hd.HD_WalletFactory;
 import one.anom.wallet.segwit.BIP49Util;
@@ -98,11 +98,11 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                                 ;
                             }
                         } else {
-                            address = script.getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                            address = script.getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
                         if (FormatsUtil.getInstance().isValidBech32(address)) {
                             p2wpkh++;
-                        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+                        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                             p2sh_p2wpkh++;
                         } else {
                             p2pkh++;
@@ -175,7 +175,7 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                     final String ownReceiveAddr;
                     if (FormatsUtil.getInstance().isValidBech32(addr)) {
                         ownReceiveAddr = AddressFactory.getInstance(activity).getBIP84Receive().getRight().getBech32AsString();
-                    } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
+                    } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
                         ownReceiveAddr = AddressFactory.getInstance(activity).getBIP49Receive().getRight().getAddressAsString();
                     } else {
                         ownReceiveAddr = AddressFactory.getInstance(activity).getReceive().getRight().getAddressString();
@@ -204,11 +204,11 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                             p2sh_p2wpkh += outpointTypes.getMiddle();
                             p2wpkh += outpointTypes.getRight();
                             cpfpFee = FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, 1);
-                            if (totalAmount > (cpfpFee.longValue() + remainingFee + SamouraiWallet.bDust.longValue())) {
+                            if (totalAmount > (cpfpFee.longValue() + remainingFee + AnomWallet.bDust.longValue())) {
                                 break;
                             }
                         }
-                        if (totalAmount < (cpfpFee.longValue() + remainingFee + SamouraiWallet.bDust.longValue())) {
+                        if (totalAmount < (cpfpFee.longValue() + remainingFee + AnomWallet.bDust.longValue())) {
                             handler.post(new Runnable() {
                                 public void run() {
                                     Toast.makeText(activity, R.string.insufficient_funds, Toast.LENGTH_SHORT).show();
@@ -237,7 +237,7 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                     long amount = totalAmount - cpfpFee.longValue();
                     Log.d("activity", "amount after fee:" + amount);
 
-                    if (amount < SamouraiWallet.bDust.longValue()) {
+                    if (amount < AnomWallet.bDust.longValue()) {
                         Log.d("activity", "dust output");
                         Toast.makeText(activity, R.string.cannot_output_dust, Toast.LENGTH_SHORT).show();
                     }
@@ -303,7 +303,7 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                                                 if (FormatsUtil.getInstance().isValidBech32(addr)) {
                                                     int prevIdx = BIP84Util.getInstance(activity).getWallet().getAccount(0).getReceive().getAddrIdx() - 1;
                                                     BIP84Util.getInstance(activity).getWallet().getAccount(0).getReceive().setAddrIdx(prevIdx);
-                                                } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
+                                                } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
                                                     int prevIdx = BIP49Util.getInstance(activity).getWallet().getAccount(0).getReceive().getAddrIdx() - 1;
                                                     BIP49Util.getInstance(activity).getWallet().getAccount(0).getReceive().setAddrIdx(prevIdx);
                                                 } else {
@@ -332,7 +332,7 @@ public class CPFPTask extends AsyncTask<String, Void, String> {
                                         if (Bech32Util.getInstance().isBech32Script(addr)) {
                                             int prevIdx = BIP84Util.getInstance(activity).getWallet().getAccount(0).getReceive().getAddrIdx() - 1;
                                             BIP84Util.getInstance(activity).getWallet().getAccount(0).getReceive().setAddrIdx(prevIdx);
-                                        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
+                                        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
                                             int prevIdx = BIP49Util.getInstance(activity).getWallet().getAccount(0).getReceive().getAddrIdx() - 1;
                                             BIP49Util.getInstance(activity).getWallet().getAccount(0).getReceive().setAddrIdx(prevIdx);
                                         } else {

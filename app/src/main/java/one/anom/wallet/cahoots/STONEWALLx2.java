@@ -1,6 +1,6 @@
 package one.anom.wallet.cahoots;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.bip69.BIP69InputComparator;
 import com.samourai.wallet.bip69.BIP69OutputComparator;
 import one.anom.wallet.cahoots.psbt.PSBT;
@@ -141,8 +141,8 @@ public class STONEWALLx2 extends Cahoots {
                 _output = new TransactionOutput(params, null, Coin.valueOf(spendAmount), scriptPubKey);
             }
             else    {
-                Script toOutputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), strDestination));
-                _output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), toOutputScript.getProgram());
+                Script toOutputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), strDestination));
+                _output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), toOutputScript.getProgram());
             }
             transaction.addOutput(_output);
         }

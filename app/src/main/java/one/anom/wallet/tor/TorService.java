@@ -18,7 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiApplication;
+import one.anom.wallet.AnomApplication;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -65,7 +65,7 @@ public class TorService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        Notification notification = new Builder(this, SamouraiApplication.TOR_CHANNEL_ID)
+        Notification notification = new Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setContentTitle(title)
                 .setContentText("Tor: Waiting...")
                 .setSound(null)
@@ -225,7 +225,7 @@ public class TorService extends Service {
                 0, 8,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, SamouraiApplication.TOR_CHANNEL_ID)
+        NotificationCompat.Builder notification = new NotificationCompat.Builder(this, AnomApplication.TOR_CHANNEL_ID)
                 .setOngoing(true)
                 .setOnlyAlertOnce(true)
                 .setGroupAlertBehavior(GROUP_ALERT_SUMMARY)

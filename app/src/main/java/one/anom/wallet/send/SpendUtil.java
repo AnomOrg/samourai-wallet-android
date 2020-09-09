@@ -2,7 +2,7 @@ package one.anom.wallet.send;
 
 import android.content.Context;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
@@ -40,10 +40,10 @@ public class SpendUtil {
         } else if (FormatsUtil.getInstance().isValidBech32(address) && (UTXOFactory.getInstance().getAllP2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2WPKH() > neededAmount)) {
             utxos = new ArrayList<UTXO>(UTXOFactory.getInstance().getAllP2WPKH().values());
 //                    Log.d("SendActivity", "segwit utxos:" + utxos.size());
-        } else if (!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress() && (UTXOFactory.getInstance().getAllP2SH_P2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2SH_P2WPKH() > neededAmount)) {
+        } else if (!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress() && (UTXOFactory.getInstance().getAllP2SH_P2WPKH().size() > 0 && UTXOFactory.getInstance().getTotalP2SH_P2WPKH() > neededAmount)) {
             utxos = new ArrayList<UTXO>(UTXOFactory.getInstance().getAllP2SH_P2WPKH().values());
 //                    Log.d("SendActivity", "segwit utxos:" + utxos.size());
-        } else if ((!FormatsUtil.getInstance().isValidBech32(address) && !Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) && (UTXOFactory.getInstance().getAllP2PKH().size() > 0) && (UTXOFactory.getInstance().getTotalP2PKH() > neededAmount)) {
+        } else if ((!FormatsUtil.getInstance().isValidBech32(address) && !Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) && (UTXOFactory.getInstance().getAllP2PKH().size() > 0) && (UTXOFactory.getInstance().getTotalP2PKH() > neededAmount)) {
             utxos = new ArrayList<UTXO>(UTXOFactory.getInstance().getAllP2PKH().values());
 //                    Log.d("SendActivity", "p2pkh utxos:" + utxos.size());
         } else {

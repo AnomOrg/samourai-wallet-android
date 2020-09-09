@@ -1,6 +1,6 @@
 package one.anom.wallet.send;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.ProtocolException;
@@ -22,7 +22,7 @@ public class MyTransactionOutPoint extends TransactionOutPoint {
     private boolean isChange = false;
 
     public MyTransactionOutPoint(Sha256Hash txHash, int txOutputN, BigInteger value, byte[] scriptBytes, String address) throws ProtocolException {
-        super(SamouraiWallet.getInstance().getCurrentNetworkParams(), txOutputN, new Sha256Hash(txHash.getBytes()));
+        super(AnomWallet.getInstance().getCurrentNetworkParams(), txOutputN, new Sha256Hash(txHash.getBytes()));
         this.scriptBytes = scriptBytes;
         this.value = value;
         this.txOutputN = txOutputN;

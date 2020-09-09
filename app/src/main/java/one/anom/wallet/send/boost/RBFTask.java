@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import one.anom.wallet.MainActivity2;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
@@ -94,7 +94,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
 
         rbf = RBFUtil.getInstance().get(params[0]);
         Log.d("RBF", "rbf:" + rbf.toJSON().toString());
-        final Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams(), Hex.decode(rbf.getSerializedTx()));
+        final Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams(), Hex.decode(rbf.getSerializedTx()));
         Log.d("RBF", "tx serialized:" + rbf.getSerializedTx());
         Log.d("RBF", "tx inputs:" + tx.getInputs().size());
         Log.d("RBF", "tx outputs:" + tx.getOutputs().size());
@@ -120,11 +120,11 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                                 ;
                             }
                         } else {
-                            address = script.getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                            address = script.getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
                         if (FormatsUtil.getInstance().isValidBech32(address)) {
                             p2wpkh++;
-                        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+                        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                             p2sh_p2wpkh++;
                         } else {
                             p2pkh++;
@@ -195,11 +195,11 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                     for (TransactionOutput output : txOutputs) {
                         Script script = output.getScriptPubKey();
                         String scriptPubKey = Hex.toHexString(script.getProgram());
-                        Address _p2sh = output.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
-                        Address _p2pkh = output.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        Address _p2sh = output.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
+                        Address _p2pkh = output.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams());
                         try {
                             if ((Bech32Util.getInstance().isBech32Script(scriptPubKey) && rbf.getChangeAddrs().contains(Bech32Util.getInstance().getAddressFromScript(scriptPubKey))) || (_p2sh != null && rbf.getChangeAddrs().contains(_p2sh.toString())) || (_p2pkh != null && rbf.getChangeAddrs().contains(_p2pkh.toString()))) {
-                                if (output.getValue().longValue() >= (remainder + SamouraiWallet.bDust.longValue())) {
+                                if (output.getValue().longValue() >= (remainder + AnomWallet.bDust.longValue())) {
                                     output.setValue(Coin.valueOf(output.getValue().longValue() - remainder));
                                     remainder = 0L;
                                     break;
@@ -222,8 +222,8 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                 List<MyTransactionInput> _inputs = new ArrayList<MyTransactionInput>();
                 List<TransactionInput> txInputs = tx.getInputs();
                 for (TransactionInput input : txInputs) {
-                    MyTransactionInput _input = new MyTransactionInput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], input.getOutpoint(), input.getOutpoint().getHash().toString(), (int) input.getOutpoint().getIndex());
-                    _input.setSequenceNumber(SamouraiWallet.RBF_SEQUENCE_VAL.longValue());
+                    MyTransactionInput _input = new MyTransactionInput(AnomWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], input.getOutpoint(), input.getOutpoint().getHash().toString(), (int) input.getOutpoint().getIndex());
+                    _input.setSequenceNumber(AnomWallet.RBF_SEQUENCE_VAL.longValue());
                     _inputs.add(_input);
                     Log.d("RBF", "add outpoint:" + _input.getOutpoint().toString());
                 }
@@ -273,12 +273,12 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                         p2wpkh += outpointTypes.getRight();
                         _remainingFee = FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, outputs.length() == 1 ? 2 : outputs.length()).longValue();
                         Log.d("RBF", "_remaining fee:" + _remainingFee);
-                        if (selectedAmount >= (_remainingFee + SamouraiWallet.bDust.longValue())) {
+                        if (selectedAmount >= (_remainingFee + AnomWallet.bDust.longValue())) {
                             break;
                         }
                     }
                     long extraChange = 0L;
-                    if (selectedAmount < (_remainingFee + SamouraiWallet.bDust.longValue())) {
+                    if (selectedAmount < (_remainingFee + AnomWallet.bDust.longValue())) {
                         handler.post(new Runnable() {
                             public void run() {
                                 Toast.makeText(activity, R.string.insufficient_funds, Toast.LENGTH_SHORT).show();
@@ -294,7 +294,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                     // parent tx didn't have change output
                     if (outputs.length() == 1 && extraChange > 0L) {
                         try {
-                            boolean isSegwitChange = (FormatsUtil.getInstance().isValidBech32(outputs.getJSONObject(0).getString("address")) || Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), outputs.getJSONObject(0).getString("address")).isP2SHAddress()) || PrefsUtil.getInstance(activity).getValue(PrefsUtil.USE_LIKE_TYPED_CHANGE, true) == false;
+                            boolean isSegwitChange = (FormatsUtil.getInstance().isValidBech32(outputs.getJSONObject(0).getString("address")) || Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), outputs.getJSONObject(0).getString("address")).isP2SHAddress()) || PrefsUtil.getInstance(activity).getValue(PrefsUtil.USE_LIKE_TYPED_CHANGE, true) == false;
 
                             String change_address = null;
                             if (isSegwitChange) {
@@ -305,8 +305,8 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                                 change_address = HD_WalletFactory.getInstance(activity).get().getAccount(0).getChange().getAddressAt(changeIdx).getAddressString();
                             }
 
-                            Script toOutputScript = ScriptBuilder.createOutputScript(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), change_address));
-                            TransactionOutput output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(extraChange), toOutputScript.getProgram());
+                            Script toOutputScript = ScriptBuilder.createOutputScript(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), change_address));
+                            TransactionOutput output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(extraChange), toOutputScript.getProgram());
                             txOutputs.add(output);
                             addedChangeOutput = true;
                         } catch (MnemonicException.MnemonicLengthException | IOException e) {
@@ -334,9 +334,9 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                                 }
                             }
                             if (_addr == null) {
-                                Address _address = output.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                                Address _address = output.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams());
                                 if (_address == null) {
-                                    _address = output.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                                    _address = output.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
                                 }
                                 _addr = _address.toString();
                             }
@@ -369,8 +369,8 @@ public class RBFTask extends AsyncTask<String, Void, String> {
 
                         for (MyTransactionOutPoint outpoint : _utxo.getOutpoints()) {
 
-                            MyTransactionInput _input = new MyTransactionInput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], outpoint, outpoint.getTxHash().toString(), outpoint.getTxOutputN());
-                            _input.setSequenceNumber(SamouraiWallet.RBF_SEQUENCE_VAL.longValue());
+                            MyTransactionInput _input = new MyTransactionInput(AnomWallet.getInstance().getCurrentNetworkParams(), null, new byte[0], outpoint, outpoint.getTxHash().toString(), outpoint.getTxOutputN());
+                            _input.setSequenceNumber(AnomWallet.RBF_SEQUENCE_VAL.longValue());
                             _inputs.add(_input);
                             Log.d("RBF", "add selected outpoint:" + _input.getOutpoint().toString());
 
@@ -378,7 +378,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                             if (path != null) {
                                 if (FormatsUtil.getInstance().isValidBech32(outpoint.getAddress())) {
                                     rbf.addKey(outpoint.toString(), path + "/84");
-                                } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), outpoint.getAddress()) != null && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), outpoint.getAddress()).isP2SHAddress()) {
+                                } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), outpoint.getAddress()) != null && Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), outpoint.getAddress()).isP2SHAddress()) {
                                     rbf.addKey(outpoint.toString(), path + "/49");
                                 } else {
                                     rbf.addKey(outpoint.toString(), path);
@@ -400,7 +400,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                 //
                 // BIP69 sort of outputs/inputs
                 //
-                final Transaction _tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                final Transaction _tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams());
                 List<TransactionOutput> _txOutputs = new ArrayList<TransactionOutput>();
                 _txOutputs.addAll(txOutputs);
                 Collections.sort(_txOutputs, new BIP69OutputComparator());
@@ -550,7 +550,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
             } else if (s.length == 3) {
                 HD_Address hd_address = AddressFactory.getInstance(activity).get(0, Integer.parseInt(s[1]), Integer.parseInt(s[2]));
                 String strPrivKey = hd_address.getPrivateKeyString();
-                DumpedPrivateKey pk = new DumpedPrivateKey(SamouraiWallet.getInstance().getCurrentNetworkParams(), strPrivKey);
+                DumpedPrivateKey pk = new DumpedPrivateKey(AnomWallet.getInstance().getCurrentNetworkParams(), strPrivKey);
                 ecKey = pk.getKey();
             } else if (s.length == 2) {
                 try {
@@ -592,23 +592,23 @@ public class RBFTask extends AsyncTask<String, Void, String> {
             if (inputs.get(i).getValue() != null || keyBag49.containsKey(inputs.get(i).getOutpoint().toString()) || keyBag84.containsKey(inputs.get(i).getOutpoint().toString())) {
                 if (keyBag84.containsKey(inputs.get(i).getOutpoint().toString())) {
                     ecKey = keyBag84.get(inputs.get(i).getOutpoint().toString());
-                    SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                    SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     address = segwitAddress.getBech32AsString();
                 } else {
                     ecKey = keyBag49.get(inputs.get(i).getOutpoint().toString());
-                    SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                    SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     address = segwitAddress.getAddressAsString();
                 }
             } else {
                 ecKey = keyBag.get(inputs.get(i).getOutpoint().toString());
-                address = ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                address = ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
             }
             Log.d("RBF", "pubKey:" + Hex.toHexString(ecKey.getPubKey()));
             Log.d("RBF", "address:" + address);
 
             if (inputs.get(i).getValue() != null || keyBag49.containsKey(inputs.get(i).getOutpoint().toString()) || keyBag84.containsKey(inputs.get(i).getOutpoint().toString())) {
 
-                final SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                final SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                 Script scriptPubKey = segwitAddress.segWitOutputScript();
                 final Script redeemScript = segwitAddress.segWitRedeemScript();
                 System.out.println("redeem script:" + Hex.toHexString(redeemScript.getProgram()));
@@ -621,7 +621,7 @@ public class RBFTask extends AsyncTask<String, Void, String> {
                 witness.setPush(1, ecKey.getPubKey());
                 tx.setWitness(i, witness);
 
-                if (!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+                if (!FormatsUtil.getInstance().isValidBech32(address) && Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                     final ScriptBuilder sigScript = new ScriptBuilder();
                     sigScript.data(redeemScript.getProgram());
                     tx.getInput(i).setScriptSig(sigScript.build());
@@ -630,11 +630,11 @@ public class RBFTask extends AsyncTask<String, Void, String> {
 
             } else {
                 Log.i("RBF", "sign outpoint:" + inputs.get(i).getOutpoint().toString());
-                Log.i("RBF", "ECKey address from keyBag:" + ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
+                Log.i("RBF", "ECKey address from keyBag:" + ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
 
-                Log.i("RBF", "script:" + ScriptBuilder.createOutputScript(ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams())));
-                Log.i("RBF", "script:" + Hex.toHexString(ScriptBuilder.createOutputScript(ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams())).getProgram()));
-                TransactionSignature sig = tx.calculateSignature(i, ecKey, ScriptBuilder.createOutputScript(ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams())).getProgram(), Transaction.SigHash.ALL, false);
+                Log.i("RBF", "script:" + ScriptBuilder.createOutputScript(ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams())));
+                Log.i("RBF", "script:" + Hex.toHexString(ScriptBuilder.createOutputScript(ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams())).getProgram()));
+                TransactionSignature sig = tx.calculateSignature(i, ecKey, ScriptBuilder.createOutputScript(ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams())).getProgram(), Transaction.SigHash.ALL, false);
                 tx.getInput(i).setScriptSig(ScriptBuilder.createInputScript(sig, ecKey));
             }
 

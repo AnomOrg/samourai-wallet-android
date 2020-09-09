@@ -13,7 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
@@ -196,7 +196,7 @@ public class PSBTUtil {
                 // BIP84Util returns pubkey only, use bip84Wallet to get privkey
                 HD_Wallet bip84Wallet = BIP84Util.getInstance(context).getWallet();
                 HD_Address addr = bip84Wallet.getAccountAt(Integer.parseInt(s[3])).getChain(Integer.parseInt(s[4])).getAddressAt(Integer.parseInt(s[5]));
-                address = new SegwitAddress(addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                address = new SegwitAddress(addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                 LogUtil.debug("PSBTUtil", "address:" + address.getBech32AsString());
                 eckeyPriv = address.getECKey();
                 LogUtil.debug("PSBTUtil", "hasPrivKey:" + eckeyPriv.hasPrivKey());
@@ -227,7 +227,7 @@ public class PSBTUtil {
                 LogUtil.debug("PSBTUtil", "signTx outpoint:" + outpoint.toString());
 
                 ECKey key = keyBag.get(outpoint.toString());
-                SegwitAddress segwitAddress = new SegwitAddress(key.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                SegwitAddress segwitAddress = new SegwitAddress(key.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
 
                 LogUtil.debug("PSBTUtil", "signTx bech32:" + segwitAddress.getBech32AsString());
 
