@@ -7,14 +7,17 @@
         />
 
     <Preference
-        android:title="@string/options_txs"
-        android:key="txs"
-        />
-<!--
+        android:key="prefs"
+        android:title="@string/options_cat_prefs" />
+
     <Preference
-        android:title="@string/options_cat_stealth"
-        android:key="stealth"
-        />
+        android:key="txs"
+        android:title="@string/options_txs" />
+    <!--
+        <Preference
+            android:title="@string/options_cat_stealth"
+            android:key="stealth"
+            />
 
     <Preference
         android:title="@string/options_cat_remote"

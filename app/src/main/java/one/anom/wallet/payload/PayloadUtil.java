@@ -91,6 +91,13 @@ public class PayloadUtil	{
     private final static String strOptionalBackupDir = "/samourai";
     private final static String strOptionalFilename = "samourai.txt";
 
+    private final static String strFX_LBC = "samourai.fx_lbc";
+    private final static String strFX_BFX = "samourai.fx_bfx";
+    private final static String strFX_BTCe_USD = "samourai.fx_btce_usd";
+    private final static String strFX_BTCe_RUR = "samourai.fx_btce_rur";
+    private final static String strFX_BTCe_EUR = "samourai.fx_btce_eur";
+
+
     private static Context context = null;
 
     private static PayloadUtil instance = null;
@@ -205,6 +212,37 @@ public class PayloadUtil	{
         }
     }
 
+    public void serializeFX_LBC(JSONObject obj) throws IOException, JSONException, DecryptionException, UnsupportedEncodingException {
+        if (!AppUtil.getInstance(context).isOfflineMode()) {
+            serializeAux(obj, null, strFX_LBC);
+        }
+    }
+
+
+    public void serializeFX_BTCe_USD(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_USD);
+        }
+    }
+
+    public void serializeFX_BTCe_RUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_RUR);
+        }
+    }
+
+    public void serializeFX_BTCe_EUR(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BTCe_EUR);
+        }
+    }
+
+    public void serializeFX_BFX(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
+        if(!AppUtil.getInstance(context).isOfflineMode())    {
+            serializeAux(obj, null, strFX_BFX);
+        }
+    }
+
     public void serializeUTXOPost(JSONObject obj)  throws IOException, JSONException, DecryptionException, UnsupportedEncodingException    {
 
         if(!AppUtil.getInstance(context).isOfflineMode())    {
@@ -276,6 +314,27 @@ public class PayloadUtil	{
     public JSONObject deserializePayNyms()  throws IOException, JSONException  {
         return deserializeAux(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance().getPIN()), strPayNymFilename);
     }
+
+    public JSONObject deserializeFX_LBC() throws IOException, JSONException {
+        return deserializeAux(null, strFX_LBC);
+    }
+
+    public JSONObject deserializeFX_BTCe_USD()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_USD);
+    }
+
+    public JSONObject deserializeFX_BTCe_RUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_RUR);
+    }
+
+    public JSONObject deserializeFX_BTCe_EUR()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BTCe_EUR);
+    }
+
+    public JSONObject deserializeFX_BFX()  throws IOException, JSONException  {
+        return deserializeAux(null, strFX_BFX);
+    }
+
 
     public synchronized void wipe() throws IOException	{
 

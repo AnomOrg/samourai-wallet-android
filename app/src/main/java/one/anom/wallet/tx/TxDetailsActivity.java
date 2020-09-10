@@ -26,7 +26,9 @@ import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.send.RBFUtil;
 import one.anom.wallet.send.boost.CPFPTask;
 import one.anom.wallet.send.SendActivity;
+import one.anom.wallet.util.BlockExplorerUtil;
 import one.anom.wallet.util.DateUtil;
+import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.widgets.CircleImageView;
 import com.squareup.picasso.Picasso;
 
@@ -328,8 +330,13 @@ public class TxDetailsActivity extends AppCompatActivity {
      * Opens external BlockExplorer
      */
     private void doExplorerView() {
+        int sel = PrefsUtil.getInstance(TxDetailsActivity.this).getValue(PrefsUtil.BLOCK_EXPLORER, 0);
+        if (sel >= BlockExplorerUtil.getInstance().getBlockExplorerTxUrls().length) {
+            sel = 0;
+        }
 
-        String blockExplorer = "https://m.oxt.me/transaction/";
+        CharSequence blockExplorer = BlockExplorerUtil.getInstance().getBlockExplorerTxUrls()[sel];
+
         if (AnomWallet.getInstance().isTestNet()) {
             blockExplorer = "https://blockstream.info/testnet/";
         }

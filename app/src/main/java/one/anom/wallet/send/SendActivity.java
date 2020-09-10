@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.base.Splitter;
 import com.samourai.boltzmann.beans.BoltzmannSettings;
 import com.samourai.boltzmann.beans.Txos;
@@ -82,6 +83,7 @@ import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.util.DecimalDigitsInputFilter;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.PrefsUtil;
@@ -141,7 +143,10 @@ public class SendActivity extends AnomActivity {
 
     private SendTransactionDetailsView sendTransactionDetailsView;
     private ViewSwitcher amountViewSwitcher;
-    private EditText toAddressEditText, btcEditText, satEditText;
+    private EditText toAddressEditText, btcEditText, satEditText, mFiatEditText;
+    private TextInputLayout mFiatTextInputLayout;
+    private String defaultSeparator = null;
+
     private TextView tvMaxAmount, tvReviewSpendAmount, tvReviewSpendAmountInSats, tvTotalFee, tvToAddress, tvEstimatedBlockWait, tvSelectedFeeRate, tvSelectedFeeRateLayman, ricochetTitle, ricochetDesc, cahootsStatusText, cahootsNotice;
     private Button btnReview, btnSend;
     private SwitchCompat ricochetHopsSwitch, ricochetStaggeredDelivery;
@@ -195,6 +200,25 @@ public class SendActivity extends AnomActivity {
 
     private List<UTXOCoin> preselectedUTXOs = null;
 
+    private String strFiat = null;
+    private double btc_fx = 286.0;
+
+    private String getFiatDisplayUnits() {
+
+        return PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+    }
+
+    private String getFiatDisplayAmount(long value) {
+
+        String strFiat = PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+        double btc_fx = ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
+        String strAmount = MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
+
+        return strAmount;
+    }
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -217,6 +241,9 @@ public class SendActivity extends AnomActivity {
         tvReviewSpendAmount = findViewById(R.id.send_review_amount);
         tvReviewSpendAmountInSats = findViewById(R.id.send_review_amount_in_sats);
         tvMaxAmount = findViewById(R.id.totalBTC);
+        mFiatEditText = findViewById(R.id.et_amount_fiat);
+        mFiatTextInputLayout = findViewById(R.id.textInputLayout4);
+
 
 
         //view elements from review segment and transaction segment can be access through respective
@@ -240,6 +267,18 @@ public class SendActivity extends AnomActivity {
         totalMinerFeeLayout = sendTransactionDetailsView.getTransactionReview().findViewById(R.id.total_miner_fee_group);
         cahootsNotice = sendTransactionDetailsView.findViewById(R.id.cahoots_not_enabled_notice);
         progressBar = findViewById(R.id.send_activity_progress);
+
+        DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
+        DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+        defaultSeparator = Character.toString(symbols.getDecimalSeparator());
+
+        strFiat = PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+        btc_fx = ExchangeRateFactory.getInstance(SendActivity.this).getAvgPrice(strFiat);
+
+        mFiatEditText.addTextChangedListener(mFiatWatcher);
+        mFiatTextInputLayout.setHint(strFiat);
+
+
 
         btcEditText.addTextChangedListener(BTCWatcher);
         btcEditText.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(8, 8)});
@@ -849,14 +888,19 @@ public class SendActivity extends AnomActivity {
                     return;
                 }
 
-                Double btc = Double.parseDouble(String.valueOf(editable));
+                double btc = Double.parseDouble(String.valueOf(editable));
 
                 if (btc > 21000000.0) {
                     btcEditText.setText("0.00");
                     btcEditText.setSelection(btcEditText.getText().length());
                     satEditText.setText("0");
                     satEditText.setSelection(satEditText.getText().length());
-                    Toast.makeText(SendActivity.this, R.string.invalid_amount, Toast.LENGTH_SHORT).show();
+                    mFiatEditText.setText("0");
+                    mFiatEditText.setSelection(mFiatEditText.getText().length());
+
+                    Toast.makeText(SendActivity.this, R.string.invalid_amount,
+                            Toast.LENGTH_SHORT).show();
+
                 } else {
                     DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
                     DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
@@ -864,9 +908,13 @@ public class SendActivity extends AnomActivity {
                     int max_len = 8;
                     NumberFormat btcFormat = NumberFormat.getInstance(Locale.US);
                     btcFormat.setMaximumFractionDigits(max_len + 1);
+                    btcFormat.setMinimumFractionDigits(0);
+
 
                     try {
-                        double d = NumberFormat.getInstance(Locale.US).parse(editable.toString()).doubleValue();
+                        double d = NumberFormat.getInstance(Locale.US).parse(
+                                editable.toString()).doubleValue();
+
                         String s1 = btcFormat.format(d);
                         if (s1.indexOf(defaultSeparator) != -1) {
                             String dec = s1.substring(s1.indexOf(defaultSeparator));
@@ -942,13 +990,22 @@ public class SendActivity extends AnomActivity {
         public void afterTextChanged(Editable editable) {
             satEditText.removeTextChangedListener(this);
             btcEditText.removeTextChangedListener(BTCWatcher);
+            mFiatEditText.removeTextChangedListener(mFiatWatcher);
+            satEditText.removeTextChangedListener(this);
+
 
             try {
                 if (editable.toString().length() == 0) {
-                    btcEditText.setText("0.00");
+                    mFiatEditText.setText("0");
+                    mFiatEditText.setSelection(mFiatEditText.getText().length());
+                    btcEditText.setText("0");
+                    btcEditText.setSelection(btcEditText.getText().length());
                     satEditText.setText("");
                     satEditText.addTextChangedListener(this);
                     btcEditText.addTextChangedListener(BTCWatcher);
+                    mFiatEditText.addTextChangedListener(mFiatWatcher);
+                    satEditText.addTextChangedListener(this);
+
                     return;
                 }
                 String cleared_space = editable.toString().replace(" ", "");
@@ -960,6 +1017,12 @@ public class SendActivity extends AnomActivity {
 
                 satEditText.setText(formatted);
                 satEditText.setSelection(formatted.length());
+
+                mFiatEditText.setText(MonetaryUtil.getInstance().getFiatFormat(strFiat).format(
+                        btc * btc_fx));
+                mFiatEditText.setSelection(mFiatEditText.getText().length());
+
+
                 btcEditText.setText(String.format(Locale.ENGLISH, "%.8f", btc));
                 if (btc > 21000000.0) {
                     btcEditText.setText("0.00");
@@ -974,6 +1037,7 @@ public class SendActivity extends AnomActivity {
             }
             satEditText.addTextChangedListener(this);
             btcEditText.addTextChangedListener(BTCWatcher);
+            mFiatEditText.addTextChangedListener(mFiatWatcher);
             checkRicochetPossibility();
             validateSpend();
 
@@ -2399,6 +2463,129 @@ public class SendActivity extends AnomActivity {
         });
 
     }
+
+    private TextWatcher mFiatWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+            mFiatEditText.removeTextChangedListener(this);
+            btcEditText.removeTextChangedListener(BTCWatcher);
+            satEditText.removeTextChangedListener(satWatcher);
+
+            try {
+                if (editable.toString().length() == 0) {
+                    satEditText.setText("0");
+                    satEditText.setSelection(satEditText.getText().length());
+
+                    btcEditText.setText("0");
+                    btcEditText.setSelection(btcEditText.getText().length());
+
+                    mFiatEditText.setText("");
+
+                    btcEditText.addTextChangedListener(BTCWatcher);
+
+                    mFiatEditText.setText("0");
+                    mFiatEditText.setSelection(mFiatEditText.getText().length());
+
+                    btcEditText.setText("");
+
+
+                    satEditText.addTextChangedListener(satWatcher);
+                    mFiatEditText.addTextChangedListener(mFiatWatcher);
+
+                    mFiatEditText.addTextChangedListener(this);
+
+                    return;
+                }
+
+                double d = 0.0;
+
+                DecimalFormat format = (DecimalFormat) DecimalFormat.getInstance(Locale.US);
+                DecimalFormatSymbols symbols = format.getDecimalFormatSymbols();
+                String defaultSeparator = Character.toString(symbols.getDecimalSeparator());
+
+                int max_len = 2;
+                NumberFormat fiatFormat = NumberFormat.getInstance(Locale.US);
+                fiatFormat.setMaximumFractionDigits(max_len + 1);
+                fiatFormat.setMinimumFractionDigits(0);
+
+                try {
+                    d = NumberFormat.getInstance(Locale.US).parse(editable.toString()).doubleValue();
+                    String s1 = fiatFormat.format(d);
+                    if (s1.indexOf(defaultSeparator) != -1) {
+                        String dec = s1.substring(s1.indexOf(defaultSeparator));
+                        if (dec.length() > 0) {
+                            dec = dec.substring(1);
+                            if (dec.length() > max_len) {
+
+                                mFiatEditText.setText(s1.substring(0, s1.length() - 1));
+                                mFiatEditText.setSelection(mFiatEditText.getText().length());
+                            }
+                        }
+                    }
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                if ((d / btc_fx) > 21000000.0) {
+
+                    btcEditText.setText("0");
+                    btcEditText.setSelection(btcEditText.getText().length());
+
+                    satEditText.setText("0");
+                    satEditText.setSelection(satEditText.getText().length());
+
+                    mFiatEditText.setText("0.0");
+                    mFiatEditText.setSelection(mFiatEditText.getText().length());
+
+                    Toast.makeText(SendActivity.this, R.string.invalid_amount,
+                            Toast.LENGTH_SHORT).show();
+                } else {
+
+                    final String btc = MonetaryUtil.getInstance().getBTCFormat().format(
+                            d / btc_fx).replace(",", "");
+
+                    Double sats = getSatValue(Double.parseDouble(btc));
+                    satEditText.setText(formattedSatValue(sats));
+                    satEditText.setSelection(satEditText.getText().length());
+
+                    btcEditText.setText(btc);
+                    btcEditText.setSelection(btcEditText.getText().length());
+
+                    mFiatEditText.setText(MonetaryUtil.getInstance().getFiatFormat(strFiat).format(
+                            Double.parseDouble(btc) * btc_fx));
+                    mFiatEditText.setSelection(mFiatEditText.getText().length());
+
+
+                    checkRicochetPossibility();
+                }
+            } catch (NumberFormatException e) {
+
+                e.printStackTrace();
+            }
+
+            mFiatEditText.addTextChangedListener(this);
+            satEditText.addTextChangedListener(satWatcher);
+            btcEditText.addTextChangedListener(BTCWatcher);
+
+            validateSpend();
+        }
+    };
+
+
 
 }
 

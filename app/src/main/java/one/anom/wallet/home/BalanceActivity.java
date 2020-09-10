@@ -22,6 +22,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.Nullable;
+
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import androidx.transition.ChangeBounds;
 import androidx.transition.TransitionManager;
@@ -86,6 +88,8 @@ import one.anom.wallet.tor.TorService;
 import one.anom.wallet.tx.TxDetailsActivity;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
 import one.anom.wallet.util.MonetaryUtil;
@@ -149,6 +153,9 @@ public class BalanceActivity extends AnomActivity {
     private ImageView menuTorIcon;
     private ProgressBar progressBarMenu;
     private View whirlpoolFab, sendFab, receiveFab, paynymFab;
+    private AppBarLayout mAppBarLayout;
+    private TextView mFiatAmount;
+
 
     public static final String ACTION_INTENT = "com.samourai.wallet.BalanceFragment.REFRESH";
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -323,6 +330,20 @@ public class BalanceActivity extends AnomActivity {
         sendFab =  findViewById(R.id.send_fab);
         receiveFab =  findViewById(R.id.receive_fab);
         paynymFab =  findViewById(R.id.paynym_fab);
+        mAppBarLayout = findViewById(R.id.app_bar);
+        mFiatAmount = findViewById(R.id.tv_fiat_amount);
+
+        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+
+            if (verticalOffset == 0) {
+
+                mFiatAmount.setVisibility(View.VISIBLE);
+            } else {
+
+                mFiatAmount.setVisibility(View.INVISIBLE);
+            }
+        });
+
 
         findViewById(R.id.whirlpool_fab).setOnClickListener(view -> {
             Intent intent = new Intent(BalanceActivity.this, WhirlpoolMain.class);
@@ -553,6 +574,9 @@ public class BalanceActivity extends AnomActivity {
             toolbar.setTitle(displayAmount);
             setTitle(displayAmount);
             mCollapsingToolbar.setTitle(displayAmount);
+            mFiatAmount.setText(String.format("%s %s", getFiatDisplayAmount(balance),
+                    getFiatDisplayUnits()));
+
 
         }
 
@@ -560,6 +584,21 @@ public class BalanceActivity extends AnomActivity {
         Log.i(TAG, "setBalance: ".concat(getBTCDisplayAmount(balance)));
 
     }
+
+    private String getFiatDisplayAmount(long value) {
+
+        String strFiat = PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+        double btc_fx = ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
+        String strAmount = MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
+
+        return strAmount;
+    }
+
+    private String getFiatDisplayUnits() {
+
+        return PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+    }
+
 
     @Override
     public void onResume() {

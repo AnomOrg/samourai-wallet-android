@@ -31,6 +31,7 @@ import one.anom.wallet.tor.TorManager;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.util.ConnectivityStatus;
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.TimeOutUtil;
@@ -168,6 +169,7 @@ public class MainActivity2 extends Activity {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
 
+            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
             String strUri = null;
