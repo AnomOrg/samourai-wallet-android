@@ -203,7 +203,7 @@ public class CahootReviewFragment extends Fragment {
     }
 
     private void notifyWalletAndFinish() {
-        Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+        Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
         intent.putExtra("notifTx", false);
         intent.putExtra("fetch", true);
         LocalBroadcastManager.getInstance(getActivity().getApplicationContext()).sendBroadcast(intent);

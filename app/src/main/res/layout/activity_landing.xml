@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.samourai.wallet.one.anom.wallet.LandingActivity">
+    tools:context="one.anom.wallet.LandingActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/landing_toolbar"

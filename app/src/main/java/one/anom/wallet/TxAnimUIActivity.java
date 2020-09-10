@@ -486,7 +486,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
                 }
 
                 if (SendParams.getInstance().getChangeAmount() == 0L) {
-                    Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                    Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                     intent.putExtra("notifTx", false);
                     intent.putExtra("fetch", true);
                     LocalBroadcastManager.getInstance(TxAnimUIActivity.this).sendBroadcast(intent);
@@ -559,7 +559,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                         if (cbMarkInputsUnspent.isChecked()) {
                             UTXOFactory.getInstance(TxAnimUIActivity.this).markUTXOAsNonSpendable(hexTx,SendParams.getInstance().getAccount());
-                            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                             intent.putExtra("notifTx", false);
                             intent.putExtra("fetch", true);
                             LocalBroadcastManager.getInstance(TxAnimUIActivity.this).sendBroadcast(intent);
@@ -575,7 +575,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                         if (cbMarkInputsUnspent.isChecked()) {
                             UTXOFactory.getInstance(TxAnimUIActivity.this).markUTXOAsNonSpendable(hexTx,SendParams.getInstance().getAccount());
-                            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                             intent.putExtra("notifTx", false);
                             intent.putExtra("fetch", true);
                             LocalBroadcastManager.getInstance(TxAnimUIActivity.this).sendBroadcast(intent);
@@ -595,7 +595,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                         if (cbMarkInputsUnspent.isChecked()) {
                             UTXOFactory.getInstance(TxAnimUIActivity.this).markUTXOAsNonSpendable(hexTx,SendParams.getInstance().getAccount());
-                            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                             intent.putExtra("notifTx", false);
                             intent.putExtra("fetch", true);
                             LocalBroadcastManager.getInstance(TxAnimUIActivity.this).sendBroadcast(intent);

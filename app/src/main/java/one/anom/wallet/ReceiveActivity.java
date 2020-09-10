@@ -102,7 +102,7 @@ public class ReceiveActivity extends AppCompatActivity {
     private boolean canRefresh84 = false;
     private Menu _menu = null;
 
-    public static final String ACTION_INTENT = "com.samourai.wallet.ReceiveFragment.REFRESH";
+    public static final String ACTION_INTENT = "one.anom.wallet.ReceiveFragment.REFRESH";
 
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
@@ -669,7 +669,7 @@ public class ReceiveActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+                Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
                 LocalBroadcastManager.getInstance(ReceiveActivity.this).sendBroadcast(_intent);
             }
         }).start();

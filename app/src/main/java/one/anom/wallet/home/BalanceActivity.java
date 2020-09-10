@@ -157,7 +157,7 @@ public class BalanceActivity extends AnomActivity {
     private TextView mFiatAmount;
 
 
-    public static final String ACTION_INTENT = "com.samourai.wallet.BalanceFragment.REFRESH";
+    public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -216,7 +216,7 @@ public class BalanceActivity extends AnomActivity {
         }
     };
 
-    public static final String DISPLAY_INTENT = "com.samourai.wallet.BalanceFragment.DISPLAY";
+    public static final String DISPLAY_INTENT = "one.anom.wallet.BalanceFragment.DISPLAY";
     protected BroadcastReceiver receiverDisplay = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {

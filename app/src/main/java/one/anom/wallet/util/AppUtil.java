@@ -127,7 +127,7 @@ public class AppUtil {
         deleteBackup();
         deleteQR();
 
-        final ComponentName component = new ComponentName(context.getApplicationContext().getPackageName(), "com.samourai.wallet.MainActivity");
+        final ComponentName component = new ComponentName(context.getApplicationContext().getPackageName(), "one.anom.wallet.MainActivity");
         try {
             context.getPackageManager().setComponentEnabledSetting(component, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
             PrefsUtil.getInstance(context).setValue(PrefsUtil.ICON_HIDDEN, false);

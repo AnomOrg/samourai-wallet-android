@@ -804,7 +804,7 @@ public class UTXOSActivity extends AnomActivity implements ActionMode.Callback {
     @Override
     protected void onDestroy() {
         if (utxoChange) {
-            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
             intent.putExtra("notifTx", false);
             intent.putExtra("fetch", true);
             LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);

@@ -223,7 +223,7 @@ public class SettingsActivity2 extends PreferenceActivity {
                 cbPref1.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                     public boolean onPreferenceChange(Preference preference, Object newValue) {
 
-                        final ComponentName component = new ComponentName(getApplicationContext().getPackageName(), "com.samourai.wallet.Launcher");
+                        final ComponentName component = new ComponentName(getApplicationContext().getPackageName(), "one.anom.wallet.Launcher");
 
                         if (component != null) {
 

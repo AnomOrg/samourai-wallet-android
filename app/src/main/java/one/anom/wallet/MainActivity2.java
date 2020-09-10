@@ -50,7 +50,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainActivity2 extends Activity {
 
     private ProgressDialog progress = null;
-    public static final String ACTION_RESTART = "com.samourai.wallet.MainActivity2.RESTART_SERVICE";
+    public static final String ACTION_RESTART = "one.anom.wallet.MainActivity2.RESTART_SERVICE";
     private AlertDialog.Builder dlg;
     private boolean pinEntryActivityLaunched = false;
     private static final String TAG = "MainActivity2";
