@@ -42,6 +42,11 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+import static one.anom.wallet.AnomApplication.DOJO_API_KEY;
+import static one.anom.wallet.AnomApplication.DOJO_TYPE;
+import static one.anom.wallet.AnomApplication.DOJO_URL;
+import static one.anom.wallet.AnomApplication.DOJO_VERSION;
+
 //import android.util.Log;
 
 public class WebUtil {
@@ -75,6 +80,17 @@ public class WebUtil {
 
     private static WebUtil instance = null;
     private Context context = null;
+
+
+
+    public static final String DOJO_PARAMS = "{\n" +
+            "        \"pairing\": {\n" +
+            "            \"type\": \""+ DOJO_TYPE +"\",\n" +
+            "            \"version\": \""+DOJO_VERSION+"\",\n" +
+            "            \"apikey\": \""+DOJO_API_KEY+"\",\n" +
+            "            \"url\": \""+DOJO_URL+"\"\n" +
+            "        }\n" +
+            "    }";
 
     private WebUtil(Context context) {
         this.context = context;

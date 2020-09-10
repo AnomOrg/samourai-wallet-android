@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "421336451786",
+    "firebase_url": "https://anom-wallet.firebaseio.com",
+    "project_id": "anom-wallet",
+    "storage_bucket": "anom-wallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421336451786:android:6524332219955deb3a4233",
+        "android_client_info": {
+          "package_name": "one.anom.wallet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421336451786-gkhivtute5j8ffmoogtcjj5bfvau19se.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "one.anom.wallet",
+            "certificate_hash": "3944b95d6f9d8b6424dffd71aa48fa0a868707db"
+          }
+        },
+        {
+          "client_id": "421336451786-jb7j3miijl2jd7plmfufk5ts6dmf1d3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDRzCe5sj2hrXzBGuyl0ZH5GlfZeJNOk1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421336451786-jb7j3miijl2jd7plmfufk5ts6dmf1d3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
