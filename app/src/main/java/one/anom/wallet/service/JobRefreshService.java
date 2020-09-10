@@ -91,7 +91,7 @@ public class JobRefreshService extends JobIntentService {
         } finally {
             Intent _intent = new Intent("one.anom.wallet.BalanceFragment.DISPLAY");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
-            ExchangeRateFactory.getInstance(JobRefreshService.this).exchangeRateThread();
+           ExchangeRateFactory.getInstance(JobRefreshService.this).exchangeRateThread();
         }
 
         PrefsUtil.getInstance(this.getApplicationContext()).setValue(PrefsUtil.FIRST_RUN, false);

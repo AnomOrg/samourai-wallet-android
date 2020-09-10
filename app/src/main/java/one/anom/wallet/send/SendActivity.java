@@ -1682,7 +1682,7 @@ public class SendActivity extends AnomActivity {
                     break;
                 }
                 case STONEWALLX2_SAMOURAI: {
-                    sendTransactionDetailsView.showStonewallX2Layout("Samourai Wallet", 1000);
+                    sendTransactionDetailsView.showStonewallX2Layout("Anom Wallet", 1000);
                     break;
                 }
                 case STOWAWAY: {
@@ -2331,9 +2331,9 @@ public class SendActivity extends AnomActivity {
             doFees();
         } else if (id == R.id.action_batch) {
             doBatchSpend();
-        } else if (id == R.id.action_support) {
+        }/* else if (id == R.id.action_support) {
             doSupport();
-        } else {
+        } */else {
             ;
         }
 

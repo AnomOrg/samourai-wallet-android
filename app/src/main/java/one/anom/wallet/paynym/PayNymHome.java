@@ -275,10 +275,10 @@ public class PayNymHome extends AppCompatActivity {
                 finish();
                 break;
             }
-            case R.id.action_support: {
+           /* case R.id.action_support: {
                 doSupport();
                 break;
-            }
+            }*/
             case R.id.action_scan_qr: {
 
                 CameraFragmentBottomSheet cameraFragmentBottomSheet = new CameraFragmentBottomSheet();

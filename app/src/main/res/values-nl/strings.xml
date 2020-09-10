@@ -122,7 +122,7 @@
     <string name="no">Nee</string>
     <string name="close">Sluiten</string>
 
-    <string name="sim_warning">Jouw Samourai Wallet-apparaat heeft nu een andere simkaart, overeenkomend met het nummer van de afzender van dit sms-bericht.</string>
+    <string name="sim_warning">Jouw Anom Wallet-apparaat heeft nu een andere simkaart, overeenkomend met het nummer van de afzender van dit sms-bericht.</string>
 
     <string name="pin_5_8">Bedenk een pincode tussen de 5 en 8 tekens.</string>
     <string name="pin_5_8_confirm">Pincode bevestigen</string>
@@ -220,7 +220,7 @@
 
     <string name="choose_email_client">Kies een e-mailclient:</string>
 
-    <string name="cannot_launch_app">Samourai Wallet kan niet worden uitgevoerd op dit apparaat</string>
+    <string name="cannot_launch_app">Anom Wallet kan niet worden uitgevoerd op dit apparaat</string>
     <string name="confirm_change_pin">Weet je zeker dat je je PIN wilt wijzigen?</string>
     <string name="success_change_pin">PIN gewijzigd</string>
     <string name="alternative_pin_create">Weet je zeker dat je een alternatieve PIN wilt aanmaken voor onzichtbaar starten en commando\'s op afstand?</string>
@@ -262,7 +262,7 @@
 
     <string name="invalid_passphrase">Ongeldige wachtwoordzin</string>
     <string name="passphrase">Wachtwoordzin</string>
-    <string name="passphrase_needed_for_backup">Je portemonnee is niet beveiligd met een wachtwoordzin. Portemonneeback-ups worden met een wachtwoordzin versleuteld. Als je deze en andere Samourai Wallet-functies wilt gebruiken, maak je portemonnee dan aan met Samourai Wallet en maak je saldo ernaar over.</string>
+    <string name="passphrase_needed_for_backup">Je portemonnee is niet beveiligd met een wachtwoordzin. Portemonneeback-ups worden met een wachtwoordzin versleuteld. Als je deze en andere Anom Wallet-functies wilt gebruiken, maak je portemonnee dan aan met Anom Wallet en maak je saldo ernaar over.</string>
     <string name="passphrase_required">Een wachtwoordzin is vereist om deze functie te gebruiken. Overweeg om een nieuwe portemonnee aan te maken, die automatisch een wachtwoordzin zal bevatten.</string>
 
     <string name="cannot_reach_api">Samourai-API\'s kunnen niet worden bereikt. Zorg dat je verbinding hebt en probeer het later opnieuw.</string>
@@ -312,7 +312,7 @@
     <string name="trusted_node_ko">Vertrouwde node niet herkend. Controleer de installatie.</string>
     <string name="trusted_node_error">Fout bij het bereiken van de vertrouwde node.</string>
     <string name="trusted_node_tx_error">Transactie via vertrouwde node mislukt.</string>
-    <string name="trusted_node_not_core_131">Vertrouwde node is ingesteld. Samourai Wallet ondersteunt Bitcoin Core 0.13.1 en hoger.</string>
+    <string name="trusted_node_not_core_131">Vertrouwde node is ingesteld. Anom Wallet ondersteunt Bitcoin Core 0.13.1 en hoger.</string>
     <string name="trusted_node_tx_sent">Transactie verzonden via vertrouwde node.</string>
     <string name="trusted_node_not_responding">Vertrouwde node reageert niet. Controleer de installatie.</string>
     <string name="trusted_node_breaks_consensus">Vertrouwde node kan geen bitcoin-client zijn die consensus negeert.</string>
@@ -558,7 +558,7 @@
         <item>Oud formaat (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">Samourai Wallet is in offline-modus.</string>
+    <string name="in_offline_mode">Anom Wallet is in offline-modus.</string>
     <string name="tx_standby">Transactie in stand-by</string>
     <string name="show_hex">Hex-code tonen</string>
     <string name="tx_tenna_coming_soon">txTenna binnenkort beschikbaar op Android</string>

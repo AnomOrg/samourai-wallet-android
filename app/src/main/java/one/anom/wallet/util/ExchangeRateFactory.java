@@ -169,62 +169,62 @@ public class ExchangeRateFactory {
 
     public void exchangeRateThread() {
 
-        final Handler handler = new Handler();
+        /*final Handler handler = new Handler();
 
-        new Thread(new Runnable() {
+        handler.post(new Runnable() {
             @Override
-            public void run() {
-                Looper.prepare();
+            public void run() {*/
+                        //Looper.prepare();
 
-                String response = null;
-                try {
-                    if (!AppUtil.getInstance(context).isOfflineMode()) {
-                        response = WebUtil.getInstance(null).getURL(WebUtil.LBC_EXCHANGE_URL);
-                    } else {
-                        response = PayloadUtil.getInstance(context).deserializeFX_LBC().toString();
-                    }
-                    ExchangeRateFactory.getInstance(context).setDataLBC(response);
-                    ExchangeRateFactory.getInstance(context).parseLBC();
+                        String response = null;
+                        try {
+                            if (!AppUtil.getInstance(context).isOfflineMode()) {
+                                response = WebUtil.getInstance(null).getURL(WebUtil.LBC_EXCHANGE_URL);
+                            } else {
+                                response = PayloadUtil.getInstance(context).deserializeFX_LBC().toString();
+                            }
+                            ExchangeRateFactory.getInstance(context).setDataLBC(response);
+                            ExchangeRateFactory.getInstance(context).parseLBC();
 
-                    if (!AppUtil.getInstance(context).isOfflineMode()) {
-                        response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_usd");
-                    } else {
-                        response = PayloadUtil.getInstance(context).deserializeFX_BTCe_USD().toString();
-                    }
-                    ExchangeRateFactory.getInstance(context).setDataBTCe(response);
-                    ExchangeRateFactory.getInstance(context).parseBTCe();
+                            if (!AppUtil.getInstance(context).isOfflineMode()) {
+                                response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_usd");
+                            } else {
+                                response = PayloadUtil.getInstance(context).deserializeFX_BTCe_USD().toString();
+                            }
+                            ExchangeRateFactory.getInstance(context).setDataBTCe(response);
+                            ExchangeRateFactory.getInstance(context).parseBTCe();
 
-                    if (!AppUtil.getInstance(context).isOfflineMode()) {
-                        response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_rur");
-                    } else {
-                        response = PayloadUtil.getInstance(context).deserializeFX_BTCe_RUR().toString();
-                    }
-                    ExchangeRateFactory.getInstance(context).setDataBTCe(response);
-                    ExchangeRateFactory.getInstance(context).parseBTCe();
+                            if (!AppUtil.getInstance(context).isOfflineMode()) {
+                                response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_rur");
+                            } else {
+                                response = PayloadUtil.getInstance(context).deserializeFX_BTCe_RUR().toString();
+                            }
+                            ExchangeRateFactory.getInstance(context).setDataBTCe(response);
+                            ExchangeRateFactory.getInstance(context).parseBTCe();
 
-                    if (!AppUtil.getInstance(context).isOfflineMode()) {
-                        response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_eur");
-                    } else {
-                        response = PayloadUtil.getInstance(context).deserializeFX_BTCe_EUR().toString();
-                    }
-                    ExchangeRateFactory.getInstance(context).setDataBTCe(response);
-                    ExchangeRateFactory.getInstance(context).parseBTCe();
+                            if (!AppUtil.getInstance(context).isOfflineMode()) {
+                                response = WebUtil.getInstance(null).getURL(WebUtil.BTCe_EXCHANGE_URL + "btc_eur");
+                            } else {
+                                response = PayloadUtil.getInstance(context).deserializeFX_BTCe_EUR().toString();
+                            }
+                            ExchangeRateFactory.getInstance(context).setDataBTCe(response);
+                            ExchangeRateFactory.getInstance(context).parseBTCe();
 
-                    if (!AppUtil.getInstance(context).isOfflineMode()) {
-                        response = WebUtil.getInstance(null).getURL(WebUtil.BFX_EXCHANGE_URL);
-                    } else {
-                        response = PayloadUtil.getInstance(context).deserializeFX_BFX().toString();
-                    }
-                    ExchangeRateFactory.getInstance(context).setDataBFX(response);
-                    ExchangeRateFactory.getInstance(context).parseBFX();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                            if (!AppUtil.getInstance(context).isOfflineMode()) {
+                                response = WebUtil.getInstance(null).getURL(WebUtil.BFX_EXCHANGE_URL);
+                            } else {
+                                response = PayloadUtil.getInstance(context).deserializeFX_BFX().toString();
+                            }
+                            ExchangeRateFactory.getInstance(context).setDataBFX(response);
+                            ExchangeRateFactory.getInstance(context).parseBFX();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                       // Looper.loop();
+     /*               }
+        });*/
 
-                Looper.loop();
 
-            }
-        }).start();
     }
 
     private void getLBC(String currency) {

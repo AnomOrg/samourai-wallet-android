@@ -751,9 +751,9 @@ public class BalanceActivity extends AnomActivity {
         }
         if (id == R.id.action_settings) {
             doSettings();
-        } else if (id == R.id.action_support) {
+        }/* else if (id == R.id.action_support) {
             doSupport();
-        } else if (id == R.id.action_sweep) {
+        }*/ else if (id == R.id.action_sweep) {
             if (!AppUtil.getInstance(BalanceActivity.this).isOfflineMode()) {
                 doSweep();
             } else {
@@ -1290,7 +1290,7 @@ public class BalanceActivity extends AnomActivity {
                                         Toast.makeText(BalanceActivity.this, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
                                     } else {
                                         Intent email = new Intent(Intent.ACTION_SEND);
-                                        email.putExtra(Intent.EXTRA_SUBJECT, "Samourai Wallet backup");
+                                        email.putExtra(Intent.EXTRA_SUBJECT, "Anom Wallet backup");
                                         email.putExtra(Intent.EXTRA_TEXT, obj.toString());
                                         email.setType("message/rfc822");
                                         startActivity(Intent.createChooser(email, BalanceActivity.this.getText(R.string.choose_email_client)));

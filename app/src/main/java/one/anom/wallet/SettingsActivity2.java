@@ -823,7 +823,7 @@ public class SettingsActivity2 extends PreferenceActivity {
                 addPreferencesFromResource(R.xml.settings_other);
 
                 Preference aboutPref = (Preference) findPreference("about");
-                aboutPref.setSummary("Samourai," + " " + getResources().getString(R.string.version_name));
+                aboutPref.setSummary("Anom Wallet," + " " + getResources().getString(R.string.version_name));
                 aboutPref.setOnPreferenceClickListener(new OnPreferenceClickListener() {
                     public boolean onPreferenceClick(Preference preference) {
                         Intent intent = new Intent(SettingsActivity2.this, AboutActivity.class);
@@ -1160,7 +1160,7 @@ public class SettingsActivity2 extends PreferenceActivity {
 
             Intent email = new Intent(Intent.ACTION_SEND);
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{"support@samouraiwallet.com"});
-            email.putExtra(Intent.EXTRA_SUBJECT, "Samourai Wallet support backup");
+            email.putExtra(Intent.EXTRA_SUBJECT, "Anom Wallet support backup");
             email.putExtra(Intent.EXTRA_TEXT, jsonObject.toString());
             email.setType("message/rfc822");
             startActivity(Intent.createChooser(email, SettingsActivity2.this.getText(R.string.choose_email_client)));

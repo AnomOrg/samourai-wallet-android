@@ -36,7 +36,7 @@
     <string name="options_wipe">Apagar carteira de forma segura</string>
     <string name="options_wipe2">Apagar seguramente essa carteira do aparelho.</string>
     <string name="options_stealth_display">Launcher Furtivo</string>
-    <string name="options_stealth_display2">Remove a Samourai do launcher e da tela inicial. Você deve discar **SEU_CÓDIGO_PIN# do discador do telefone para iniciar a Samourai.</string>
+    <string name="options_stealth_display2">Remove a Anom Walllet do launcher e da tela inicial. Você deve discar **SEU_CÓDIGO_PIN# do discador do telefone para iniciar a Anom Wallet.</string>
     <string name="options_remote_commands">Habilita controles remotos</string>
     <string name="options_remote_commands2">Permite comandos remotos por SMS.</string>
     <string name="options_blockexplorer">Explorador de blocos</string>
@@ -470,9 +470,9 @@
     <string name="set_pin_code">Definir código Pin</string>
     <string name="accept_disclaimer_error">Você predcisa aceitar o aviso legal</string>
     <string name="import_external_wallet">Importar carteira externa</string>
-    <string name="import_samourai_wallet">Importar backup de carteira samourai</string>
+    <string name="import_samourai_wallet">Importar backup de carteira Anom Wallet</string>
     <string name="backup_file">Arquivo de backup</string>
-    <string name="import_an_encrypted_samourai_wallet">importe o backup criptografado para restaurar a sua carteira samourai com todos os metadados intactos</string>
+    <string name="import_an_encrypted_samourai_wallet">importe o backup criptografado para restaurar a sua carteira anom wallet com todos os metadados intactos</string>
     <string name="back">VOLTAR</string>
     <string name="finish">fim</string>
     <string name="choose_file">selecione o arquivo</string>

@@ -15,7 +15,7 @@
     <string name="action_unarchive">Attiva tutti i codici di pagamento archiviati</string>
     <string name="action_sync_all">Sincronizza tutti i codici di pagamento</string>
 
-    <string name="about_us">Info su Samourai Wallet</string>
+    <string name="about_us">Info su Anom Wallet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Annulla</string>
@@ -124,7 +124,7 @@
     <string name="no">No</string>
     <string name="close">Chiudi</string>
 
-    <string name="sim_warning">Il tuo dispositivo su cui è installato Samourai Wallet ha ora una SIM differente che corrisponde al mittente di questo messaggio.</string>
+    <string name="sim_warning">Il tuo dispositivo su cui è installato Anom Wallet ha ora una SIM differente che corrisponde al mittente di questo messaggio.</string>
 
     <string name="pin_5_8">Crea un codice PIN da 5 a 8 caratteri.</string>
     <string name="pin_5_8_confirm">Conferma codice PIN</string>
@@ -223,7 +223,7 @@
 
     <string name="choose_email_client">Scegli un client email:</string>
 
-    <string name="cannot_launch_app">Samourai Wallet non può essere avviato su questo dispositivo.</string>
+    <string name="cannot_launch_app">Anom Wallet non può essere avviato su questo dispositivo.</string>
     <string name="confirm_change_pin">Sei sicuro di voler cambiare il tuo PIN?</string>
     <string name="success_change_pin">PIN cambiato</string>
     <string name="alternative_pin_create">Sei sicuro di voler creare un PIN alternativo usato per la modalità segreta e comandi remoti?</string>
@@ -265,7 +265,7 @@
 
     <string name="invalid_passphrase">Passphrase non valida</string>
     <string name="passphrase">Passphrase</string>
-    <string name="passphrase_needed_for_backup">Il tuo wallet non è protetto da passphrase. I backup del wallet sono criptati usando la tua passphrase. Se vuoi criptare i tuoi backup del wallet ed usare altre feature di Samourai, crea un nuovo wallet con Samourai Wallet e trasferisci i fondi su di esso.</string>
+    <string name="passphrase_needed_for_backup">Il tuo wallet non è protetto da passphrase. I backup del wallet sono criptati usando la tua passphrase. Se vuoi criptare i tuoi backup del wallet ed usare altre feature di Anom Wallet, crea un nuovo wallet con Anom Wallet e trasferisci i fondi su di esso.</string>
     <string name="passphrase_required">Una passphrase è richiesta per questa funzione. Si consiglia di creare un nuovo wallet che includerà automaticamente una passphrase.</string>
 
     <string name="cannot_reach_api">Le API di Samourai non sono raggiungibili. Controlla la connessione e riprova o riprova più tardi.</string>
@@ -317,7 +317,7 @@
     <string name="trusted_node_ko">Nodo affidabile non riconosciuto. Controlla l\'installazione.</string>
     <string name="trusted_node_error">Errore nel raggiungere nodo affidabile.</string>
     <string name="trusted_node_tx_error">Transazione fallita sul nodo affidabile.</string>
-    <string name="trusted_node_not_core_131">Nodo affidabile impostato. Nota: Samourai Wallet supporta Bitcoin Core 0.13.1 e successivi.</string>
+    <string name="trusted_node_not_core_131">Nodo affidabile impostato. Nota: Anom Wallet supporta Bitcoin Core 0.13.1 e successivi.</string>
     <string name="trusted_node_tx_sent">Transazione inviata tramite nodo affidabile</string>
     <string name="trusted_node_not_responding">Il nodo affidabile non risponde. Controlla l\'installazione.</string>
     <string name="trusted_node_breaks_consensus">Il nodo affidabile non può essere impostato su un client Bitcoin che va contro il consenso.</string>
@@ -563,8 +563,8 @@
         <item>Legacy (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">Samourai Wallet è in modalità offline.</string>
-    <string name="broadcast_off">La trasmissione delle transazioni di Samourai Wallet è disattivata.</string>
+    <string name="in_offline_mode">Anom Wallet è in modalità offline.</string>
+    <string name="broadcast_off">La trasmissione delle transazioni di Anom Wallet è disattivata.</string>
     <string name="tx_standby">Transazione in stand-by</string>
     <string name="show_hex">Visualizza Hex Code</string>
     <string name="tx_tenna_coming_soon">txTenna su Android in arrivo presto!</string>

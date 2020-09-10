@@ -59,6 +59,11 @@ public class AnomApplication extends Application {
         if (ConnectivityStatus.hasConnectivity(getApplicationContext()) && PrefsUtil.getInstance(getApplicationContext()).getValue(PrefsUtil.ENABLE_TOR, false)) {
             Intent startIntent = new Intent(this, TorService.class);
             startIntent.setAction(TorService.START_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                startForegroundService(startIntent);
+            } else {
+                startService(startIntent);
+            }
             startService(startIntent);
         }
     }
