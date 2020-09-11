@@ -1083,7 +1083,7 @@ public class BalanceActivity extends AnomActivity {
                     } else if (FormatsUtil.getInstance().isPSBT(code.trim())) {
                         PSBTUtil.getInstance(BalanceActivity.this).doPSBT(code.trim());
                 } else if (DojoUtil.getInstance(BalanceActivity.this).isValidPairingPayload(code.trim())) {
-                    Toast.makeText(BalanceActivity.this, "Samourai Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BalanceActivity.this, "Anom Wallet Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(BalanceActivity.this, SendActivity.class);
                     intent.putExtra("uri", code.trim());

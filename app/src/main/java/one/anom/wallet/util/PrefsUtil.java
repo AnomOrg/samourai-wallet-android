@@ -58,6 +58,7 @@ public class PrefsUtil {
 	public static final String ENABLE_TOR = "enable_tor";
 	public static final String OFFLINE = "offline";
 	public static final String STRICT_OUTPUTS = "strictOutputs";
+	public static final String ENABLE_DOJO = "enable_dojo";
 
 	private static Context context = null;
 	private static PrefsUtil instance = null;

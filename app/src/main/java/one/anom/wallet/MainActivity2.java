@@ -23,11 +23,13 @@ import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import one.anom.wallet.home.BalanceActivity;
+import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.prng.PRNGFixes;
 import one.anom.wallet.service.BackgroundManager;
 import one.anom.wallet.service.WebSocketService;
 import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.tor.TorService;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.util.ConnectivityStatus;
@@ -46,6 +48,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static one.anom.wallet.util.WebUtil.DOJO_PARAMS;
 
 public class MainActivity2 extends Activity {
 
@@ -161,6 +165,9 @@ public class MainActivity2 extends Activity {
     }
 
     private void initAppOnCreate() {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true)) {
+           // connectToDojo();
+        }
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
             Toast.makeText(MainActivity2.this, R.string.in_offline_mode, Toast.LENGTH_SHORT).show();
@@ -464,6 +471,72 @@ public class MainActivity2 extends Activity {
             dlg.show();
         }
 
+    }
+
+    private void doPairing() {
+
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams(DOJO_PARAMS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
+                    loaderTxView.setText(getText(R.string.connected_dojo));
+                    TimeOutUtil.getInstance().updatePin();
+                    PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO, false);
+                }, error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
+                    loaderTxView.setText(getText(R.string.error_dojo));
+
+                });
+        compositeDisposables.add(disposable);
+
+    }
+
+    private void connectToDojo() {
+        loaderTxView.setText(getText(R.string.connecting_dojo));
+        if (TorManager.getInstance(getApplicationContext()).isConnected()) {
+            DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
+        } else {
+            Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+            startIntent.setAction(TorService.START_SERVICE);
+            startService(startIntent);
+            Disposable disposable = TorManager.getInstance(getApplicationContext())
+                    .getTorStatus()
+                    .subscribeOn(Schedulers.newThread())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(state -> {
+                        if (state == TorProxyManager.ConnectionStatus.CONNECTING) {
+                        } else if (state == TorProxyManager.ConnectionStatus.CONNECTED) {
+                            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                            DojoUtil.getInstance(getApplicationContext()).clear();
+                            doPairing();
+
+                        }
+                    });
+            compositeDisposables.add(disposable);
+        }
+    }
+
+
+    private void startTor() {
+        Disposable disposable = TorManager.getInstance(this)
+                .getTorStatus()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(state -> {
+                    if (state == TorProxyManager.ConnectionStatus.CONNECTING) {
+
+                    } else if (state == TorProxyManager.ConnectionStatus.CONNECTED) {
+                        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                    } else {
+                    }
+                });
+        compositeDisposables.add(disposable);
+        Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+        startIntent.setAction(TorService.START_SERVICE);
+        startService(startIntent);
     }
 
 }

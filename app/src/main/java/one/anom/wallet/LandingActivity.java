@@ -70,6 +70,9 @@ public class LandingActivity extends AppCompatActivity  {
     private Switch torSwitch;
     private TextView torStatus;
     private ImageView torStatusCheck;
+    private TextView dojoStatus;
+    private ImageView dojoStatusCheck;
+
     private LinearLayout dojoConnectedStatus;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
 
@@ -87,6 +90,8 @@ public class LandingActivity extends AppCompatActivity  {
         torSwitch = findViewById(R.id.landing_tor_switch);
         torStatusCheck = findViewById(R.id.landing_tor_check);
         torStatus = findViewById(R.id.landing_tor_logs);
+        dojoStatusCheck = findViewById(R.id.landing_dojo_check);
+        dojoStatus = findViewById(R.id.landing_dojo_status);
         dojoConnectedStatus = findViewById(R.id.dojo_connected_status_layout);
         setSupportActionBar(findViewById(R.id.landing_toolbar));
         textView.setOnClickListener(view -> RestoreWalletFromBackup());
@@ -154,6 +159,11 @@ public class LandingActivity extends AppCompatActivity  {
                         torStatus.setText("Tor Connected");
                         progressBarTor.setVisibility(View.INVISIBLE);
                         torSwitch.setChecked(true);
+                        if (DojoUtil.getInstance(LandingActivity.this).getDojoParams() != null) {
+                            dojoStatus.setVisibility(View.VISIBLE);
+                            dojoStatusCheck.setVisibility(View.VISIBLE);
+                            dojoStatus.setText("Dojo Connected");
+                        }
 //                        if(waitingForPairing)    {
 //                            doDojoPairing1();
 //                        }
@@ -162,7 +172,7 @@ public class LandingActivity extends AppCompatActivity  {
                         torStatus.setVisibility(View.INVISIBLE);
                         progressBarTor.setVisibility(View.INVISIBLE);
                         torStatusCheck.setVisibility(View.INVISIBLE);
-                        torSwitch.setVisibility(View.VISIBLE);
+                        torSwitch.setVisibility(View.INVISIBLE);
                         torSwitch.setChecked(false);
                     }
                 });
