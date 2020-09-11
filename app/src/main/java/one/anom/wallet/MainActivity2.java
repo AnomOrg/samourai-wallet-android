@@ -166,7 +166,7 @@ public class MainActivity2 extends Activity {
 
     private void initAppOnCreate() {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true)) {
-           // connectToDojo();
+            connectToDojo();
         }
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {

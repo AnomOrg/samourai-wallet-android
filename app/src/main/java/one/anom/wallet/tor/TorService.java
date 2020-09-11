@@ -80,7 +80,12 @@ public class TorService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        String action = intent.getAction();
+        String action;
+        if (intent != null) {
+            action = intent.getAction();
+        } else{
+            action= null;
+        }
         if (action == null) {
             return START_NOT_STICKY;
         }

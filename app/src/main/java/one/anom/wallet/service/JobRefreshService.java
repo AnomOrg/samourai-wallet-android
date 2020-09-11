@@ -208,6 +208,8 @@ public class JobRefreshService extends JobIntentService {
                 }
             } catch (JSONException je) {
                 ;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
         } else {

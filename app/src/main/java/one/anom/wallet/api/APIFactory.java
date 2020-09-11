@@ -2889,7 +2889,7 @@ public class APIFactory	{
         }
     }
 
-    public synchronized boolean parseRicochetXPUB() throws JSONException  {
+    public synchronized boolean parseRicochetXPUB() throws Exception  {
 
         String[] s = new String[] { BIP84Util.getInstance(context).getWallet().getAccountAt(RicochetMeta.getInstance(context).getRicochetAccount()).zpubstr() };
         JSONObject jsonObject = getRawXPUB(s, XPUB_RICOCHET);
