@@ -48,6 +48,9 @@ import android.widget.Toast;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.invertedx.torservice.TorProxyManager;
+
+import io.reactivex.functions.Consumer;
+import one.anom.wallet.AnomApplication;
 import one.anom.wallet.R;
 import one.anom.wallet.ReceiveActivity;
 import one.anom.wallet.AnomActivity;
@@ -89,6 +92,7 @@ import one.anom.wallet.tx.TxDetailsActivity;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
 
+import one.anom.wallet.util.ConnectivityStatus;
 import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.MessageSignUtil;
@@ -122,6 +126,7 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -155,6 +160,7 @@ public class BalanceActivity extends AnomActivity {
     private View whirlpoolFab, sendFab, receiveFab, paynymFab;
     private AppBarLayout mAppBarLayout;
     private TextView mFiatAmount;
+    private static long loadedBalance = 0L;
 
 
     public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
@@ -372,11 +378,11 @@ public class BalanceActivity extends AnomActivity {
                 setBalance(payload.getLong("prev_balance"), false);
             }
             catch(Exception e)    {
-                setBalance(0L, false);
+                setBalance(loadedBalance, false);
             }
         }
         else    {
-            setBalance(0L, false);
+            setBalance(loadedBalance, false);
         }
 
         receiveFab.setOnClickListener(view -> {
@@ -611,6 +617,8 @@ public class BalanceActivity extends AnomActivity {
 //
 //        Intent intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
 //        LocalBroadcastManager.getInstance(BalanceActivity.this).sendBroadcast(intent);
+
+        checkInternetConnectionOnInterval();
 
     }
 
@@ -999,7 +1007,7 @@ public class BalanceActivity extends AnomActivity {
 
     private Single<Long> loadBalance(int account) {
         return Single.fromCallable(() -> {
-            long loadedBalance = 0L;
+
             if (account == 0) {
                 loadedBalance = APIFactory.getInstance(BalanceActivity.this).getXpubBalance();
             } else if (account == WhirlpoolMeta.getInstance(getApplicationContext()).getWhirlpoolPostmix()) {
@@ -1573,6 +1581,42 @@ public class BalanceActivity extends AnomActivity {
                 });
         compositeDisposable.add(disposable);
 
+
+    }
+
+    private void observeInternetConnectivity(boolean isInternetConnected) {
+        if (isInternetConnected) {
+            if (TorManager.getInstance(getApplicationContext()).isRequired() && !TorManager.getInstance(getApplicationContext()).isConnected()) {
+                ((AnomApplication) getApplication()).startService();
+                Disposable disposable = TorManager.getInstance(this)
+                        .getTorStatus()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(connection_states -> {
+                            if (connection_states == TorProxyManager.ConnectionStatus.CONNECTED) {
+
+                            } else if (connection_states == TorProxyManager.ConnectionStatus.DISCONNECTED) {
+
+                            }
+                        });
+                compositeDisposable.add(disposable);
+            }
+
+        } else {
+            if (TorManager.getInstance(getApplicationContext()).isRequired()) {
+                Intent startIntent = new Intent(getApplicationContext(), TorService.class);
+                startIntent.setAction(TorService.STOP_SERVICE);
+                startIntent.putExtra("KILL_TOR", true);
+                startService(startIntent);
+            }
+        }
+    }
+
+
+    private void checkInternetConnectionOnInterval() {
+        compositeDisposable.add(Observable.interval(0, 5, TimeUnit.SECONDS)
+                .flatMap(aLong -> Observable.just(ConnectivityStatus.hasConnectivity(BalanceActivity.this)))
+                .subscribe((Consumer<Boolean>) this::observeInternetConnectivity));
 
     }
 
