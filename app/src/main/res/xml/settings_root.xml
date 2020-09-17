@@ -24,10 +24,10 @@
         android:key="remote"
         />
 -->
-    <Preference
+  <!--  <Preference
         android:title="@string/options_cat_networking"
         android:key="networking"
-        />
+        />-->
 
     <Preference
         android:title="@string/options_troubleshoot"
