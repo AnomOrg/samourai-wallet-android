@@ -265,6 +265,10 @@ public class LandingActivity extends AppCompatActivity  {
                 doSupportRestore();
                 return false;
             }
+            case R.id.restore: {
+                RestoreWalletFromBackup();
+                return false;
+            }
             case R.id.dojo: {
                 doDojoPairing0();
                 return false;
