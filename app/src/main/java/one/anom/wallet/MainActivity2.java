@@ -145,6 +145,12 @@ public class MainActivity2 extends Activity {
             AppUtil.getInstance(MainActivity2.this).setPRNG_FIXED(true);
         }
 
+        startApp();
+    }
+
+
+    private void startApp() {
+
         if (TorManager.getInstance(getApplicationContext()).isRequired() && ConnectivityStatus.hasConnectivity(getApplicationContext()) && !TorManager.getInstance(getApplicationContext()).isConnected()) {
             loaderTxView.setText(getText(R.string.initializing_tor));
             ((AnomApplication) getApplication()).startService();
@@ -155,6 +161,12 @@ public class MainActivity2 extends Activity {
                     .subscribe(connection_states -> {
                         if (connection_states == TorProxyManager.ConnectionStatus.CONNECTED) {
                             initAppOnCreate();
+                        } else if (connection_states == TorProxyManager.ConnectionStatus.DISCONNECTED) {
+                            loaderTxView.setText("".concat(getText(R.string.unable_to_start_tor).toString()).concat(" Click here to restart"));
+                            loaderTxView.setOnClickListener(v -> {
+                                startApp();
+                                compositeDisposables.clear();
+                            });
                         }
                     });
             compositeDisposables.add(disposable);
@@ -163,6 +175,7 @@ public class MainActivity2 extends Activity {
         }
 
     }
+
 
     private void initAppOnCreate() {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true)) {
