@@ -848,8 +848,10 @@ public class TorProxyManager implements TorServiceConstants, TorPrefernceConstan
             } else {
                 logNotice("Tor authentication cookie does not exist yet");
                 conn = null;
-
+                addEventHandler();
             }
+        } else {
+            addEventHandler();
         }
 
         throw new Exception("Tor control port could not be found");

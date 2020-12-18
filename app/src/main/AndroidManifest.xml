@@ -270,10 +270,11 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
+
         <receiver android:name="one.anom.wallet.whirlpool.service.WhirlpoolBroadCastReceiver" />
         <receiver android:name="one.anom.wallet.tor.TorBroadCastReceiver" />
         <receiver
-            android:name="com.msopentech.thali.android.toronionproxy.ConnectionChangeReceiver"
+            android:name="one.anom.wallet.util.ConnectionChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -281,7 +282,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="one.anom.wallet.util.ConnectionChangeReceiver"
+            android:name="com.invertedx.torservice.ConnectionChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />

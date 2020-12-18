@@ -1594,7 +1594,26 @@ public class BalanceActivity extends AnomActivity {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(connection_states -> {
                             if (connection_states == TorProxyManager.ConnectionStatus.CONNECTED) {
+                                if (loadedBalance == 0L) {
+                                    JSONObject payload = null;
+                                    try {
+                                        payload = PayloadUtil.getInstance(BalanceActivity.this).getPayload();
+                                    } catch (Exception e) {
+                                        AppUtil.getInstance(getApplicationContext()).restartApp();
+                                        e.printStackTrace();
+                                        return;
+                                    }
+                                    if (account == 0 && payload != null && payload.has("prev_balance")) {
+                                        try {
+                                            setBalance(payload.getLong("prev_balance"), false);
+                                        } catch (Exception e) {
+                                            setBalance(loadedBalance, false);
+                                        }
+                                    } else {
+                                        setBalance(loadedBalance, false);
+                                    }
 
+                                }
                             } else if (connection_states == TorProxyManager.ConnectionStatus.DISCONNECTED) {
 
                             }
