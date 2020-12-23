@@ -51,4 +51,6 @@
 
     <!--Material theming-->
     <color name="primaryDarkColor">#404a5e</color>
+
+    <color name="ic_launcher_background">#415893</color>
 </resources>
