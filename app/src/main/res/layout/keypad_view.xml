@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:columnCount="3"
-    tools:context="com.samourai.wallet.fragments.PinEntryFragment">
+    tools:context="com.samourai.wallet.one.anom.wallet.fragments.PinEntryFragment">
 
     <Button
         android:id="@+id/ta"

@@ -1,6 +1,7 @@
 package com.samourai.stomp.client;
 
-import com.samourai.wallet.tor.TorManager;
+
+import one.anom.wallet.tor.TorManager;
 
 public class AndroidStompClientService implements IStompClientService {
     private TorManager torManager;

@@ -3,15 +3,15 @@ package com.samourai.whirlpool.client.wallet;
 import android.content.Context;
 
 import com.samourai.stomp.client.AndroidStompClient;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.api.APIFactory;
+import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.api.backend.MinerFeeTarget;
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
-import com.samourai.wallet.bip47.BIP47Util;
+import one.anom.wallet.bip47.BIP47Util;
 import com.samourai.wallet.client.Bip84Wallet;
 import com.samourai.wallet.client.indexHandler.MemoryIndexHandler;
 import com.samourai.wallet.hd.HD_Wallet;
-import com.samourai.wallet.hd.HD_WalletFactory;
+import one.anom.wallet.hd.HD_WalletFactory;
 import com.samourai.wallet.hd.HD_WalletFactoryGeneric;
 import com.samourai.whirlpool.client.utils.ClientUtils;
 

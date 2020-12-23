@@ -3,8 +3,8 @@ package com.samourai.xmanager.client;
 import android.content.Context;
 
 import com.samourai.http.client.AndroidHttpClient;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.tor.TorManager;
+import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.tor.TorManager;
 
 public class AndroidXManagerClient extends XManagerClient {
     private static AndroidXManagerClient instance;

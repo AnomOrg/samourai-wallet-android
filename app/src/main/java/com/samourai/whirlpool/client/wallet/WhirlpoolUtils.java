@@ -3,7 +3,7 @@ package com.samourai.whirlpool.client.wallet;
 import android.content.Context;
 
 import com.samourai.wallet.hd.HD_Wallet;
-import com.samourai.wallet.utxos.models.UTXOCoin;
+import one.anom.wallet.utxos.models.UTXOCoin;
 import com.samourai.whirlpool.client.exception.NotifiableException;
 import com.samourai.whirlpool.client.utils.ClientUtils;
 import com.samourai.whirlpool.client.wallet.beans.MixableStatus;

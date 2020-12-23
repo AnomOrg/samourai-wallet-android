@@ -39,7 +39,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
-        <com.samourai.wallet.widgets.SendTransactionDetailsView
+        <one.anom.wallet.widgets.SendTransactionDetailsView
             android:id="@+id/sendTransactionDetailsView"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

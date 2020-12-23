@@ -2,8 +2,8 @@ package com.samourai.http.client;
 
 import android.content.Context;
 
-import com.samourai.wallet.tor.TorManager;
-import com.samourai.wallet.util.WebUtil;
+import one.anom.wallet.tor.TorManager;
+import one.anom.wallet.util.WebUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

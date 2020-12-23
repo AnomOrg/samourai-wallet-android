@@ -44,7 +44,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
 
-            <com.samourai.wallet.widgets.CircleImageView
+            <one.anom.wallet.widgets.CircleImageView
                 android:id="@+id/img_paynym_avatar"
                 android:layout_width="60dp"
                 android:layout_height="60dp"

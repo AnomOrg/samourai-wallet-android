@@ -265,7 +265,7 @@
                     android:orientation="horizontal"
                     app:layout_constraintGuide_percent="1.006329" />
 
-                <com.samourai.wallet.widgets.EntropyBar
+                <one.anom.wallet.widgets.EntropyBar
                     android:id="@+id/entropy_bar"
                     android:layout_width="24dp"
                     android:layout_height="0dp"
@@ -464,7 +464,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-                <com.samourai.wallet.widgets.EntropyBar
+                <one.anom.wallet.widgets.EntropyBar
                     android:id="@+id/entropy_bar_stonewallx1"
                     android:layout_width="24dp"
                     android:layout_height="0dp"

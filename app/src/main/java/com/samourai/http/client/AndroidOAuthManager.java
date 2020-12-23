@@ -1,6 +1,6 @@
 package com.samourai.http.client;
 
-import com.samourai.wallet.api.APIFactory;
+import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.util.oauth.OAuthApi;
 import com.samourai.wallet.util.oauth.OAuthManager;
 
