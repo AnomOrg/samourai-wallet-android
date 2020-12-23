@@ -1,37 +1,31 @@
 package one.anom.wallet.ricochet;
 
 import android.content.Context;
-import android.os.Looper;
 import android.util.Log;
 //import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.access.AccessFactory;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import one.anom.wallet.bip47.SendNotifTxFactory;
 import com.samourai.wallet.bip47.rpc.PaymentAddress;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
-import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.hd.HD_Address;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.payload.PayloadUtil;
+
 import one.anom.wallet.segwit.BIP84Util;
 import com.samourai.wallet.segwit.SegwitAddress;
 import com.samourai.wallet.segwit.bech32.Bech32Segwit;
-import one.anom.wallet.segwit.BIP49Util;
+
 import one.anom.wallet.send.FeeUtil;
-import one.anom.wallet.send.MyTransactionInput;
+
 import com.samourai.wallet.send.MyTransactionOutPoint;
 import one.anom.wallet.send.SendFactory;
 import com.samourai.wallet.send.UTXO;
 import one.anom.wallet.util.AddressFactory;
-import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -50,23 +44,14 @@ import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutPoint;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.TransactionWitness;
-import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.crypto.TransactionSignature;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.script.ScriptBuilder;
-import org.bitcoinj.script.ScriptException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.spongycastle.util.encoders.Hex;
-
-import io.reactivex.Completable;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.send.FeeUtil;
-import one.anom.wallet.send.SendFactory;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 public class RicochetMeta {
 
@@ -126,7 +111,7 @@ public class RicochetMeta {
     }
 
     public void setRicochetFeeAddress(String address) {
-        if (SamouraiWallet.getInstance().isTestNet()) {
+        if (AnomWallet.getInstance().isTestNet()) {
             TESTNET_SAMOURAI_RICOCHET_TX_FEE_ADDRESS = address;
         } else {
             SAMOURAI_RICOCHET_TX_FEE_ADDRESS = address;
@@ -333,7 +318,7 @@ public class RicochetMeta {
                 String address = null;
                 if (Hex.toHexString(script.getProgram()).startsWith("0014")) {
                     String hrp = null;
-                    if (SamouraiWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params) {
+                    if (AnomWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params) {
                         hrp = "tb";
                     } else {
                         hrp = "bc";
@@ -346,7 +331,7 @@ public class RicochetMeta {
                     }
 //                    Log.d("RicochetMeta", "bech32:" + address);
                 } else {
-                    address = new Script(script.getProgram()).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                    address = new Script(script.getProgram()).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
 //                    Log.d("RicochetMeta", "address from script:" + address);
                 }
                 if (address.equals(getDestinationAddress(index))) {
@@ -406,7 +391,7 @@ public class RicochetMeta {
                         //
                         // derive as bech32
                         //
-                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey().getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey().getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                         String strAddress = segwitAddress.getBech32AsString();
 
                         samouraiFees.add(Pair.of(strAddress, feeVal));
@@ -510,7 +495,7 @@ public class RicochetMeta {
     private String getDestinationAddress(int idx) {
 
         HD_Address hd_addr = BIP84Util.getInstance(context).getWallet().getAccountAt(RICOCHET_ACCOUNT).getChain(AddressFactory.RECEIVE_CHAIN).getAddressAt(idx);
-        SegwitAddress segwitAddress = new SegwitAddress(hd_addr.getECKey().getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress segwitAddress = new SegwitAddress(hd_addr.getECKey().getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
         String address = segwitAddress.getBech32AsString();
 
         return address;
@@ -541,9 +526,9 @@ public class RicochetMeta {
 //            Log.d("RicochetMeta", "selected:" + u.getValue());
 
             if (samouraiFeeViaBIP47) {
-                totalSpendAmount = spendAmount + samouraiFeeAmountV2.longValue() + (feePerHop * nbHops) + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 3).longValue();
+                totalSpendAmount = spendAmount + samouraiFeeAmountV2.longValue() + (feePerHop * nbHops) + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 3).longValue();
             } else {
-                totalSpendAmount = spendAmount + samouraiFeeAmountV1.longValue() + (feePerHop * nbHops) + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 3).longValue();
+                totalSpendAmount = spendAmount + samouraiFeeAmountV1.longValue() + (feePerHop * nbHops) + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFee(selected, 3).longValue();
             }
 //            Log.d("RicochetMeta", "totalSpendAmount:" + totalSpendAmount);
 //            Log.d("RicochetMeta", "totalValueSelected:" + totalValueSelected);
@@ -595,7 +580,7 @@ public class RicochetMeta {
             // Samourai fee paid in the hops
             receivers.put(destination, BigInteger.valueOf(spendAmount));
         } else {
-            receivers.put(SamouraiWallet.getInstance().isTestNet() ? TESTNET_SAMOURAI_RICOCHET_TX_FEE_ADDRESS : SAMOURAI_RICOCHET_TX_FEE_ADDRESS, samouraiFeeAmount);
+            receivers.put(AnomWallet.getInstance().isTestNet() ? TESTNET_SAMOURAI_RICOCHET_TX_FEE_ADDRESS : SAMOURAI_RICOCHET_TX_FEE_ADDRESS, samouraiFeeAmount);
             receivers.put(destination, BigInteger.valueOf(spendAmount - samouraiFeeAmount.longValue()));
         }
 
@@ -616,23 +601,23 @@ public class RicochetMeta {
             byte[] bScriptPubKey = null;
 
             try {
-                Pair<Byte, byte[]> pair = Bech32Segwit.decode(SamouraiWallet.getInstance().isTestNet() ? "tb" : "bc", destination);
+                Pair<Byte, byte[]> pair = Bech32Segwit.decode(AnomWallet.getInstance().isTestNet() ? "tb" : "bc", destination);
                 bScriptPubKey = Bech32Segwit.getScriptPubkey(pair.getLeft(), pair.getRight());
             } catch (Exception e) {
                 return null;
             }
-            output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), bScriptPubKey);
+            output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), bScriptPubKey);
         } else {
-            Script outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), destination));
-            output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), outputScript.getProgram());
+            Script outputScript = ScriptBuilder.createOutputScript(org.bitcoinj.core.Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), destination));
+            output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(spendAmount), outputScript.getProgram());
         }
 
         HD_Address address = BIP84Util.getInstance(context).getWallet().getAccountAt(RICOCHET_ACCOUNT).getChain(AddressFactory.RECEIVE_CHAIN).getAddressAt(prevIndex);
         ECKey ecKey = address.getECKey();
-        SegwitAddress p2wpkh = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress p2wpkh = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
         Script redeemScript = p2wpkh.segWitRedeemScript();
 
-        Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams());
+        Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams());
         if (nTimeLock > 0L) {
             tx.setLockTime(nTimeLock);
         }
@@ -643,12 +628,12 @@ public class RicochetMeta {
             byte[] bScriptPubKey = null;
 
             try {
-                Pair<Byte, byte[]> pair = Bech32Segwit.decode(SamouraiWallet.getInstance().isTestNet() ? "tb" : "bc", samouraiFeePair.getLeft());
+                Pair<Byte, byte[]> pair = Bech32Segwit.decode(AnomWallet.getInstance().isTestNet() ? "tb" : "bc", samouraiFeePair.getLeft());
                 bScriptPubKey = Bech32Segwit.getScriptPubkey(pair.getLeft(), pair.getRight());
             } catch (Exception e) {
                 return null;
             }
-            TransactionOutput _output = new TransactionOutput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(samouraiFeePair.getRight()), bScriptPubKey);
+            TransactionOutput _output = new TransactionOutput(AnomWallet.getInstance().getCurrentNetworkParams(), null, Coin.valueOf(samouraiFeePair.getRight()), bScriptPubKey);
             tx.addOutput(_output);
         }
 
@@ -656,10 +641,10 @@ public class RicochetMeta {
 //        Log.d("RicochetMeta", "pubkey:" + Hex.toHexString(ecKey.getPubKey()));
 
         Sha256Hash txHash = Sha256Hash.wrap(prevTxHash);
-        TransactionOutPoint outPoint = new TransactionOutPoint(SamouraiWallet.getInstance().getCurrentNetworkParams(), prevTxN, txHash, Coin.valueOf(prevSpendAmount));
-        TransactionInput txInput = new TransactionInput(SamouraiWallet.getInstance().getCurrentNetworkParams(), null, new byte[]{}, outPoint, Coin.valueOf(prevSpendAmount));
+        TransactionOutPoint outPoint = new TransactionOutPoint(AnomWallet.getInstance().getCurrentNetworkParams(), prevTxN, txHash, Coin.valueOf(prevSpendAmount));
+        TransactionInput txInput = new TransactionInput(AnomWallet.getInstance().getCurrentNetworkParams(), null, new byte[]{}, outPoint, Coin.valueOf(prevSpendAmount));
         if (PrefsUtil.getInstance(context).getValue(PrefsUtil.RBF_OPT_IN, false) == true) {
-            txInput.setSequenceNumber(SamouraiWallet.RBF_SEQUENCE_VAL.longValue());
+            txInput.setSequenceNumber(AnomWallet.RBF_SEQUENCE_VAL.longValue());
         }
         tx.addInput(txInput);
 

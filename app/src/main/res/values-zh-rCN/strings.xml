@@ -203,7 +203,7 @@
 
     <string name="max_available">最多可发送:</string>
 
-    <string name="first_use_shuffle">这是你的兑换账户。来自Shapeshift的比特币将会收到此账户，此账户跟你的主要钱包不使用同一份地址</string>
+    <string name ="first_use_shuffle">这是你的兑换账户。来自Shapeshift的比特币将会收到此账户，此账户跟你的主要钱包不使用同一份地址</string>
 
     <string name="select_account">选择账户</string>
     <string name="received_bitcoin">已收比特币</string>
@@ -441,7 +441,7 @@
     <string name="do_not_repeat_sent_to">勾选不再提示曾发送款项到此收款地址</string>
 
     <string name="mark_inputs_as_unspendable">将此笔交易输入产生的未付出的交易输出标记为不可付款？</string>
-    
+
     <string name="copy_to_clipboard">拷贝到剪贴板</string>
 
     <string name="no_bitpay">错误：不是有效的比特币收款请求，武士钱包只支持发送款项到有效的比特币地址</string>

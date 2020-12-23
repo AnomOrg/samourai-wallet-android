@@ -34,7 +34,7 @@ import com.samourai.soroban.cahoots.TxBroadcastInteraction;
 import com.samourai.soroban.client.SorobanReply;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import one.anom.wallet.cahoots.AndroidSorobanCahootsService;
 import one.anom.wallet.cahoots.CahootsMode;
 import com.samourai.wallet.cahoots.CahootsType;
@@ -50,9 +50,7 @@ import java.io.IOException;
 import androidx.appcompat.app.AppCompatDialog;
 import androidx.core.content.FileProvider;
 
-import one.anom.wallet.SamouraiActivity;
-
-public class ManualCahootsActivity extends SamouraiActivity {
+public class ManualCahootsActivity extends AnomActivity {
     private static final String TAG = "ManualCahootsActivity";
 
     private ManualCahootsUi cahootsUi;

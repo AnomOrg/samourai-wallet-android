@@ -47,7 +47,7 @@
        this is because onion urls are not using https/ssl by default.
         -->
     <application
-        android:name="one.anom.wallet.SamouraiApplication"
+        android:name="one.anom.wallet.AnomApplication"
         android:allowBackup="false"
         tools:replace="android:allowBackup"
         android:icon="@drawable/ic_launcher"

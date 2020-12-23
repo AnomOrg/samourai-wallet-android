@@ -43,9 +43,6 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-import one.anom.wallet.hd.HD_WalletFactory;
-
-
 
 public class RestoreSeedWalletActivity extends FragmentActivity implements
         PinEntryFragment.onPinEntryListener,
@@ -411,7 +408,7 @@ public class RestoreSeedWalletActivity extends FragmentActivity implements
                 if (create) {
 
                     try {
-                        HD_WalletFactory.getInstance(RestoreSeedWalletActivity.this).newWallet(12, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(RestoreSeedWalletActivity.this).newWallet(12, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (MnemonicException.MnemonicLengthException mle) {
@@ -425,7 +422,7 @@ public class RestoreSeedWalletActivity extends FragmentActivity implements
                 } else {
 
                     try {
-                        HD_WalletFactory.getInstance(RestoreSeedWalletActivity.this).restoreWallet(seed, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(RestoreSeedWalletActivity.this).restoreWallet(seed, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (DecoderException de) {

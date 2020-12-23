@@ -1,13 +1,11 @@
 package one.anom.wallet.utxos;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,14 +25,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomActivity;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.crypto.DecryptionException;
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.send.BlockedUTXO;
 import com.samourai.wallet.send.MyTransactionOutPoint;
 import one.anom.wallet.send.SendActivity;
@@ -54,7 +51,6 @@ import com.samourai.whirlpool.client.wallet.WhirlpoolUtils;
 import org.bitcoinj.core.Address;
 import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -82,19 +78,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.utxos.models.UTXOCoin;
-import one.anom.wallet.utxos.models.UTXOCoinSegment;
-import one.anom.wallet.whirlpool.WhirlpoolMain;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
-import one.anom.wallet.widgets.ItemDividerDecorator;
 
 import static one.anom.wallet.util.LogUtil.debug;
 
-public class UTXOSActivity extends SamouraiActivity implements ActionMode.Callback {
+public class UTXOSActivity extends AnomActivity implements ActionMode.Callback {
 
 
     private boolean shownWalletLoadingMessage = false;
@@ -466,7 +453,7 @@ public class UTXOSActivity extends SamouraiActivity implements ActionMode.Callba
 //                    Log.d("UTXOActivity", "unmarked");
                         if (FormatsUtil.getInstance().isValidBech32(displayData.address)) {
                             totalP2WPKH += displayData.amount;
-                        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), displayData.address).isP2SHAddress()) {
+                        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), displayData.address).isP2SHAddress()) {
                             totalP2SH_P2WPKH += displayData.amount;
                         } else {
                             totalP2PKH += displayData.amount;

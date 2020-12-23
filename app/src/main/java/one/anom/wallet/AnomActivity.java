@@ -25,7 +25,7 @@ import io.reactivex.schedulers.Schedulers;
 
 
 @SuppressLint("Registered")
-public class SamouraiActivity extends AppCompatActivity {
+public class AnomActivity extends AppCompatActivity {
 
     protected int account = 0;
     private boolean switchThemes = false;

@@ -5,12 +5,10 @@ import android.content.Context;
 
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.crypto.HDKeyDerivation;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.wallet.hd.HD_Wallet;
@@ -25,8 +23,6 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,7 +69,7 @@ public class HD_WalletFactory	{
             passphrase = "";
         }
 
-        NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+        NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
 
         AppUtil.getInstance(context).applyPRNGFixes();
         SecureRandom random = new SecureRandom();
@@ -102,7 +98,7 @@ public class HD_WalletFactory	{
             passphrase = "";
         }
 
-        NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+        NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
 
         MnemonicCode mc = computeMnemonicCode();
         if(mc != null) {
@@ -154,7 +150,7 @@ public class HD_WalletFactory	{
         if (mc != null) {
             String seed = HD_WalletFactory.getInstance(context).get().getSeedHex();
             String passphrase = HD_WalletFactory.getInstance(context).get().getPassphrase();
-            hdw47 = new BIP47Wallet(47, mc, SamouraiWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
+            hdw47 = new BIP47Wallet(47, mc, AnomWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
         }
 
         return hdw47;
@@ -171,7 +167,7 @@ public class HD_WalletFactory	{
         if (mc != null) {
             String seed = HD_WalletFactory.getInstance(context).get().getSeedHex();
             String passphrase = HD_WalletFactory.getInstance(context).get().getPassphrase();
-            hdw49 = new HD_Wallet(49, mc, SamouraiWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
+            hdw49 = new HD_Wallet(49, mc, AnomWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
         }
 
         return hdw49;
@@ -188,7 +184,7 @@ public class HD_WalletFactory	{
         if (mc != null) {
             String seed = HD_WalletFactory.getInstance(context).get().getSeedHex();
             String passphrase = HD_WalletFactory.getInstance(context).get().getPassphrase();
-            hdw84 = new HD_Wallet(84, mc, SamouraiWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
+            hdw84 = new HD_Wallet(84, mc, AnomWallet.getInstance().getCurrentNetworkParams(), org.bouncycastle.util.encoders.Hex.decode(seed), passphrase, 1);
         }
 
         return hdw84;

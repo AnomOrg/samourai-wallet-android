@@ -1,6 +1,6 @@
 package one.anom.wallet.whirlpool;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 import one.anom.wallet.send.FeeUtil;
 import com.samourai.wallet.send.MyTransactionOutPoint;
@@ -17,13 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.segwit.bech32.Bech32Util;
-import one.anom.wallet.send.FeeUtil;
-import one.anom.wallet.utxos.models.UTXOCoin;
-
 import static one.anom.wallet.util.LogUtil.debug;
-import static one.anom.wallet.whirlpool.WhirlpoolMeta.WHIRLPOOL_FEE_RATE_POOL_DENOMINATION;
 
 public class WhirlpoolTx0 {
 
@@ -96,8 +90,8 @@ public class WhirlpoolTx0 {
                 nbP2WPKH++;
             }
             else    {
-                String address = new Script(outPoint.getScriptBytes()).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
-                if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+                String address = new Script(outPoint.getScriptBytes()).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
+                if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
                     nbP2SH++;
                 }
                 else    {
@@ -180,7 +174,7 @@ public class WhirlpoolTx0 {
         debug("WhirlpoolTx0", "change amount:" + getChange() / 1e8);
 
         // [WIP] stub;
-        tx0 = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params ? TestNet3Params.get() : MainNetParams.get());
+        tx0 = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams() instanceof TestNet3Params ? TestNet3Params.get() : MainNetParams.get());
 
     }
 

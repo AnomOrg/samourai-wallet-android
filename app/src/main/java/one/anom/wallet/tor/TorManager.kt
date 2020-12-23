@@ -2,13 +2,12 @@ package one.anom.wallet.tor
 
 import android.app.Application
 import android.content.Context
-import android.os.Process
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import one.anom.wallet.MainActivity2
-import one.anom.wallet.SamouraiApplication
+import one.anom.wallet.AnomApplication
 import one.anom.wallet.util.PrefsUtil
 import io.matthewnelson.topl_core_base.TorConfigFiles
 import io.matthewnelson.topl_service.TorServiceController
@@ -40,7 +39,7 @@ object TorManager {
         OFF
     }
 
-    var appContext: SamouraiApplication? = null
+    var appContext: AnomApplication? = null
     private val torStateLiveData: MutableLiveData<TorState> = MutableLiveData()
     private val torProgress: MutableLiveData<Int> = MutableLiveData()
 
@@ -61,7 +60,7 @@ object TorManager {
         return ServiceNotification.Builder(
                 channelName = "Tor service",
                 channelDescription = "Tor foreground service notification",
-                channelID = SamouraiApplication.TOR_CHANNEL_ID,
+                channelID = AnomApplication.TOR_CHANNEL_ID,
                 notificationID = 12
         )
                 .setActivityToBeOpenedOnTap(
@@ -136,7 +135,7 @@ object TorManager {
         return proxy;
     }
 
-    fun setUp(context: SamouraiApplication) {
+    fun setUp(context: AnomApplication) {
         appContext = context
         val builder = setupTorServices(context,
                 generateTorServiceNotificationBuilder(),

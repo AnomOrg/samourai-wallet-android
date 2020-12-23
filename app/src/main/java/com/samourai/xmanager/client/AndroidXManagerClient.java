@@ -3,7 +3,7 @@ package com.samourai.xmanager.client;
 import android.content.Context;
 
 import com.samourai.http.client.AndroidHttpClient;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.tor.TorManager;
 
 public class AndroidXManagerClient extends XManagerClient {
@@ -17,6 +17,6 @@ public class AndroidXManagerClient extends XManagerClient {
     }
 
     private AndroidXManagerClient(Context ctx) {
-        super(SamouraiWallet.getInstance().isTestNet(), TorManager.INSTANCE.isConnected(), AndroidHttpClient.getInstance(ctx));
+        super(AnomWallet.getInstance().isTestNet(), TorManager.INSTANCE.isConnected(), AndroidHttpClient.getInstance(ctx));
     }
 }

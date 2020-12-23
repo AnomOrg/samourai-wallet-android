@@ -27,13 +27,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java8.util.Optional;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiApplication;
+import one.anom.wallet.AnomApplication;
 
 import static androidx.core.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_CHANNEL;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_NOTIFICATIONS;
 import static one.anom.wallet.util.FormatsUtil.getBTCDecimalFormat;
 
 public class WhirlpoolNotificationService extends Service {
@@ -48,8 +45,8 @@ public class WhirlpoolNotificationService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        Notification notification = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_CHANNEL)
-                .setContentTitle("Samourai Whirlpool")
+        Notification notification = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
+                .setContentTitle("Anom Whirlpool")
                 .setContentText("Waiting...")
                 .setOngoing(true)
                 .setSound(null)
@@ -111,7 +108,7 @@ public class WhirlpoolNotificationService extends Service {
 
     private void showMixSuccessNotification(WhirlpoolUtxo utxo) {
         String message = getBTCDecimalFormat(utxo.getUtxo().value).concat(" BTC").concat(" ").concat(" mix completed");
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_NOTIFICATIONS)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_NOTIFICATIONS)
                 .setContentTitle("Mix completed")
                 .setTicker("Mix completed")
                 .setColorized(true)
@@ -157,9 +154,9 @@ public class WhirlpoolNotificationService extends Service {
 
 
     void updateNotification() {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, SamouraiApplication.WHIRLPOOL_CHANNEL)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
                 .setGroupAlertBehavior(GROUP_ALERT_SUMMARY)
-                .setContentTitle("Samourai Whirlpool")
+                .setContentTitle("Anom Whirlpool")
                 .setOngoing(true)
                 .setSound(null)
                 .setGroup("service")

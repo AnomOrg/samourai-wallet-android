@@ -13,8 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -41,7 +39,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -73,10 +70,7 @@ import org.bitcoinj.core.Coin;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.send.SweepUtil;
-
-public class OpenDimeActivity extends SamouraiActivity {
+public class OpenDimeActivity extends AnomActivity {
 
     static {
         FileSystemFactory.registerFileSystem(new JavaFsFileSystemCreator());
@@ -208,7 +202,7 @@ public class OpenDimeActivity extends SamouraiActivity {
 
                 if(strAddress != null)    {
                     String blockExplorer = "https://m.oxt.me/address/";
-                    if (SamouraiWallet.getInstance().isTestNet()) {
+                    if (AnomWallet.getInstance().isTestNet()) {
                         blockExplorer = "https://blockstream.info/testnet/address/";
                     }
 

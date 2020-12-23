@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Vibrator;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.InputType;
 import android.transition.ChangeBounds;
@@ -49,8 +49,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import one.anom.wallet.hd.HD_WalletFactory;
 
 public class PinEntryActivity extends AppCompatActivity {
 
@@ -396,7 +394,7 @@ public class PinEntryActivity extends AppCompatActivity {
                 if (create) {
 
                     try {
-                        HD_WalletFactory.getInstance(PinEntryActivity.this).newWallet(12, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(PinEntryActivity.this).newWallet(12, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (MnemonicException.MnemonicLengthException mle) {
@@ -410,7 +408,7 @@ public class PinEntryActivity extends AppCompatActivity {
                 } else {
 
                     try {
-                        HD_WalletFactory.getInstance(PinEntryActivity.this).restoreWallet(seed, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(PinEntryActivity.this).restoreWallet(seed, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (DecoderException de) {

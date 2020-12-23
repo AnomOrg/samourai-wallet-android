@@ -15,7 +15,7 @@
     <string name="action_unarchive">Ativar todos os códigos de pagamento arquivados.</string>
     <string name="action_sync_all">Sincronizar todos os códigos de pagamento</string>
 
-    <string name="about_us">Sobre Samourai Wallet</string>
+    <string name="about_us">Sobre Anom Wallet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancelar</string>
@@ -36,7 +36,7 @@
     <string name="options_wipe">Apagar carteira de forma segura</string>
     <string name="options_wipe2">Apagar seguramente essa carteira do aparelho.</string>
     <string name="options_stealth_display">Launcher Furtivo</string>
-    <string name="options_stealth_display2">Remove a Samourai do launcher e da tela inicial. Você deve discar **SEU_CÓDIGO_PIN# do discador do telefone para iniciar a Samourai.</string>
+    <string name="options_stealth_display2">Remove a Anom do launcher e da tela inicial. Você deve discar **SEU_CÓDIGO_PIN# do discador do telefone para iniciar a Anom.</string>
     <string name="options_remote_commands">Habilita controles remotos</string>
     <string name="options_remote_commands2">Permite comandos remotos por SMS.</string>
     <string name="options_blockexplorer">Explorador de blocos</string>
@@ -113,12 +113,12 @@
     <string name="copied_to_clipboard">Copiado para a área de transferência</string>
     <string name="send_payment_code">Enviar código de pagamento</string>
 
-    <string name="ask_you_sure_exit">Você tem certeza que deseja sair da Samourai?</string>
+    <string name="ask_you_sure_exit">Você tem certeza que deseja sair da Anom?</string>
     <string name="yes">Sim</string>
     <string name="no">Não</string>
     <string name="close">Fechar</string>
 
-    <string name="sim_warning">Seu dispositivo com a carteira Samourai agora tem um chip SIM diferente que corresponde ao número o qual enviou essa mensagem de texto.</string>
+    <string name="sim_warning">Seu dispositivo com a carteira Anom agora tem um chip SIM diferente que corresponde ao número o qual enviou essa mensagem de texto.</string>
 
     <string name="pin_5_8">Criar um código PIN contendo entre 5 e 8 caracteres.</string>
     <string name="pin_5_8_confirm">Confirmar código PIN</string>
@@ -162,7 +162,7 @@
     <string name="destination">Endereço ou canal de pagamento</string>
 
     <string name="insufficient_funds">Fundos insuficientes</string>
-    <string name="tx_length_error">A Samourai não trabalha com transações de mais de 100KB. Por favor tente dividir sua transação.</string>
+    <string name="tx_length_error">A Anom não trabalha com transações de mais de 100KB. Por favor tente dividir sua transação.</string>
     <string name="invalid_amount">Quantia inválida</string>
     <string name="amount">Quantia</string>
 
@@ -216,7 +216,7 @@
 
     <string name="choose_email_client">Escolha um cliente de e-mail:</string>
 
-    <string name="cannot_launch_app">A Carteira Samourai não pode rodar neste dispositivo</string>
+    <string name="cannot_launch_app">A Carteira Anom não pode rodar neste dispositivo</string>
     <string name="confirm_change_pin">Você tem certeza que deseja mudar seu PIN?</string>
     <string name="success_change_pin">PIN alterado</string>
     <string name="alternative_pin_create">Você tem certeza que deseja criar um PIN alternativo para ser usado no início furtivo e nos comandos remotos?</string>
@@ -258,11 +258,11 @@
 
     <string name="invalid_passphrase">Passphrase inválido</string>
     <string name="passphrase">Passphrase</string>
-    <string name="passphrase_needed_for_backup">Sua carteira não está protegida por um passphrase. Backups da carteira são encriptados utilizando sua senha. Se você gostaria de usar backups encriptados e outras funções da carteira Samourai crie sua carteira usando este aplicativo e transfira seus fundos.</string>
+    <string name="passphrase_needed_for_backup">Sua carteira não está protegida por um passphrase. Backups da carteira são encriptados utilizando sua senha. Se você gostaria de usar backups encriptados e outras funções da carteira Anom crie sua carteira usando este aplicativo e transfira seus fundos.</string>
     <string name="passphrase_required">Um passphrase é necessário para utilizar esta função. Por favor considere criar uma nova carteira que irá automaticamente conter uma senha.</string>
 
-    <string name="cannot_reach_api">Os APIs da Samourai não podem ser acessados. Por favor verifique sua conexão e tente novamente ou tente mais tarde.</string>
-    <string name="api_error">Os APIs da Samourai estão retornando um erro. Tente novamente ou mais tarde.</string>
+    <string name="cannot_reach_api">Os APIs da Anom não podem ser acessados. Por favor verifique sua conexão e tente novamente ou tente mais tarde.</string>
+    <string name="api_error">Os APIs da Anom estão retornando um erro. Tente novamente ou mais tarde.</string>
     <string name="api_key_error">Chave de API inválida.</string>
     <string name="api_token_error">Token API inválido.</string>
 
@@ -273,9 +273,9 @@
 
     <string name="change_is_dust">O troco desta transação é irrisório e será adicionado a taxa dos mineradores.</string>
 
-    <string name="tor_routing_on">Samourai está roteando através do Tor.</string>
-    <string name="tor_routing_off">Samourai não está roteando através do Tor. Pressione para ativar.</string>
-    <string name="tor_install">Pressione para instalar o Orbot e rotear a Samourai através do Tor.</string>
+    <string name="tor_routing_on">Anom está roteando através do Tor.</string>
+    <string name="tor_routing_off">Anom não está roteando através do Tor. Pressione para ativar.</string>
+    <string name="tor_install">Pressione para instalar o Orbot e rotear a Anom através do Tor.</string>
 
     <string name="premium_addons">Addons Premium</string>
 
@@ -283,7 +283,7 @@
     <string name="ricochet_hopping">Ricocheteado para</string>
     <string name="ricochet_spend1">Gasto Ricochet para</string>
     <string name="ricochet_spend2">totalizando</string>
-    <string name="ricochet_spend3">(inclui taxa de 0.001 BTC para Samourai e taxas de mineração)?</string>
+    <string name="ricochet_spend3">(inclui taxa de 0.001 BTC para Anom e taxas de mineração)?</string>
 
     <string name="action_ricochet">Replay Ricochet</string>
     <string name="action_empty_ricochet">Esvaziar fila Ricochet</string>
@@ -310,7 +310,7 @@
     <string name="trusted_node_ko">Node confiável não reconhecido. Por favor verifique a instalação.</string>
     <string name="trusted_node_error">Erro ao acessar o node confiável proposto.</string>
     <string name="trusted_node_tx_error">Transação falhou no node confiável.</string>
-    <string name="trusted_node_not_core_131">Node confiável está definido. Note que a Samourai suporta Bitcoin Core 0.13.1 e posteriores.</string>
+    <string name="trusted_node_not_core_131">Node confiável está definido. Note que a Anom suporta Bitcoin Core 0.13.1 e posteriores.</string>
     <string name="trusted_node_tx_sent">Transação enviada através de node confiável.</string>
     <string name="trusted_node_not_responding">Node confiável não está respondendo. Por favor verifique a instalação.</string>
     <string name="trusted_node_breaks_consensus">Node confiável não pode ser configurado num cliente bitcoin que quebre o consenso.</string>
@@ -372,7 +372,7 @@
     <string name="opendime_topup">COMPLETAR</string>
 
     <string name="select_app">Selecione o aplicativo</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">Desprotegido</string>
@@ -440,7 +440,7 @@
 
     <string name="copy_to_clipboard">Copiar para área de transferência</string>
 
-    <string name="no_bitpay">Erro: Este não é um pedido válido de Bitcoin. A Samourai suporta apenas envios para endereços Bitcoin válidos.</string>
+    <string name="no_bitpay">Erro: Este não é um pedido válido de Bitcoin. A Anom suporta apenas envios para endereços Bitcoin válidos.</string>
     <string name="learn_more">Aprenda Mais</string>
 
     <string name="paynym">PayNym</string>
@@ -461,7 +461,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC em sua carteira e tente novamente.</string>
     <string name="help">Ajuda</string>
 
-    <string name="passphrase_disclaimer">Eu entendo que Samourai não pode me ajudar em caso de esquecimento ou perda de passphrases. Samourai nunca tem conhecimento do meu passphrase.</string>
+    <string name="passphrase_disclaimer">Eu entendo que Anom não pode me ajudar em caso de esquecimento ou perda de passphrases. Anom nunca tem conhecimento do meu passphrase.</string>
     <string name="confirm_pin_code">Confirmar código pin</string>
     <string name="re_enter_your_pin_code">Digite o seu código PIN novamente</string>
     <string name="re_enter_a_passphrase">Digite a sua passphrase novamente</string>
@@ -470,9 +470,9 @@
     <string name="set_pin_code">Definir código Pin</string>
     <string name="accept_disclaimer_error">Você predcisa aceitar o aviso legal</string>
     <string name="import_external_wallet">Importar carteira externa</string>
-    <string name="import_samourai_wallet">Importar backup de carteira samourai</string>
+    <string name="import_samourai_wallet">Importar backup de carteira anom</string>
     <string name="backup_file">Arquivo de backup</string>
-    <string name="import_an_encrypted_samourai_wallet">importe o backup criptografado para restaurar a sua carteira samourai com todos os metadados intactos</string>
+    <string name="import_an_encrypted_samourai_wallet">importe o backup criptografado para restaurar a sua carteira anom com todos os metadados intactos</string>
     <string name="back">VOLTAR</string>
     <string name="finish">fim</string>
     <string name="choose_file">selecione o arquivo</string>
@@ -485,8 +485,8 @@
     <string name="last_updated">Atualizado em</string>
     <string name="get_help">Obter ajuda</string>
     <string name="offline_mode">Modo offline</string>
-    <string name="import_samourai_backup">Importar Samourai backup</string>
-    <string name="samourai_bitcoin_wallet">Samourai Bitcoin Wallet</string>
+    <string name="import_samourai_backup">Importar Anom backup</string>
+    <string name="samourai_bitcoin_wallet">Anom Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Digite a passphrase da sua carteira</string>
     <string name="start_new_wallet">Criar nova carteira</string>
     <string name="get_help_create">Criar carteira: Obter ajuda</string>
@@ -556,8 +556,8 @@
         <item>Legacy (P2PKH)</item>
     </string-array>
 
-    <string name="in_offline_mode">A carteira Samourai está no modo offline.</string>
-    <string name="broadcast_off">Transmitir trasações está desligado em sua Samourai Wallet.</string>
+    <string name="in_offline_mode">A carteira Anom está no modo offline.</string>
+    <string name="broadcast_off">Transmitir trasações está desligado em sua Anom Wallet.</string>
     <string name="tx_standby">Transação em stand-by</string>
     <string name="show_hex">Exibir Hex Code</string>
     <string name="tx_tenna_coming_soon">txTenna no Android em breve</string>
@@ -671,10 +671,10 @@
     <string name="title_activity_network_dashboard">
         Networking
     </string>
-    <string name="powering_samourai_wallet_">A ativação da Samourai Wallet com seu próprio node pessoal oferece o melhor nível de privacidade e independência ao interagir com a rede bitcoin. O Dojo torna a execução de um node completo fácil e simples.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play node de bitcoin completo\n\n -Serviço oculto Tor automaticamente configurado\n\n -Independência dos servidores padrões da Samourai</string>
+    <string name="powering_samourai_wallet_">A ativação da Anom Wallet com seu próprio node pessoal oferece o melhor nível de privacidade e independência ao interagir com a rede bitcoin. O Dojo torna a execução de um node completo fácil e simples.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play node de bitcoin completo\n\n -Serviço oculto Tor automaticamente configurado\n\n -Independência dos servidores padrões da Anom</string>
     <string name="dojo_connect_instruction">Se você já tem um Dojo Full Node ou está \nexecutando o Dojo Software de código aberto e gratuito\não sendo seu próprio hardware, digitalize o QR code\nlocalizado no painel de controle do Dojo Maintenance</string>
-    <string name="dojo_headline">Fortaleça sua carteira Samourai com seu próprio FULL NODE DOJO</string>
+    <string name="dojo_headline">Fortaleça sua carteira Anom com seu próprio FULL NODE DOJO</string>
     <string name="connect_to_existing_dojo">Conecte a um Dojo existente</string>
     <string name="create_to_existing_dojo">Crie uma carteira e parelhe a um Dojo</string>
     <string name="preorder">pedido antecipado</string>
@@ -683,7 +683,7 @@
     <string name="follow">Seguir</string>
     <string name="wallet_locked">Carteira Trancada</string>
     <string name="address">Endereço</string>
-    <string name="is_offline">Samourai está offline</string>
+    <string name="is_offline">Anom está offline</string>
     <string name="history_will_be_updated">O saldo e o histórico de transações não serão atualizados até que uma conexão de dados em funcionamento seja estabelecida</string>
 
     <string name="you_received_s">Você recebeu</string>
@@ -725,8 +725,8 @@
     <string name="review_tx_before_braodcast">Revise a transação antes de transmitir</string>
     <string name="select_participant">Selecione um participante</string>
     <string name="select_cahoots_type">Selecione o tipo cahoots</string>
-    <string name="cannot_disable_tor_dojo">Tor não pode ser parado porque a carteira está conectada a um Samourai Dojo node.</string>
-    <string name="temporary_dojo_disable">Desinstale a Samourai Wallet para desemparelhar do seu Dojo Node. \'DISABLE\' será totalmente ativado em uma atualização posterior.</string>
+    <string name="cannot_disable_tor_dojo">Tor não pode ser parado porque a carteira está conectada a um Anom Dojo node.</string>
+    <string name="temporary_dojo_disable">Desinstale a Anom Wallet para desemparelhar do seu Dojo Node. \'DISABLE\' será totalmente ativado em uma atualização posterior.</string>
 
     <string name="renew">RENOVAR</string>
     <string name="continue_exchanging_qr_codes">Continue trocando QR codes\n até a transação for transmitida!</string>

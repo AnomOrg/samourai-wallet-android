@@ -3,7 +3,7 @@ package one.anom.wallet.segwit;
 import android.content.Context;
 import android.widget.Toast;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
 import one.anom.wallet.hd.HD_WalletFactory;
@@ -13,9 +13,6 @@ import com.samourai.wallet.segwit.SegwitAddress;
 import org.bitcoinj.crypto.MnemonicException;
 
 import java.io.IOException;
-
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.hd.HD_WalletFactory;
 
 public class BIP84Util {
 
@@ -60,13 +57,13 @@ public class BIP84Util {
 
     public SegwitAddress getAddressAt(int chain, int idx) {
         HD_Address addr = getWallet().getAccount(0).getChain(chain).getAddressAt(idx);
-        SegwitAddress segwitAddress = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress segwitAddress = new SegwitAddress(addr.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
         return segwitAddress;
     }
 
     public SegwitAddress getAddressAt(int account, int chain, int idx) {
         HD_Address addr = getWallet().getAccountAt(account).getChain(chain).getAddressAt(idx);
-        SegwitAddress segwitAddress = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress segwitAddress = new SegwitAddress(addr.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
         return segwitAddress;
     }
 

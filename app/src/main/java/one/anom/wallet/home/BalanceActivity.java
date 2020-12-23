@@ -1,8 +1,6 @@
 package one.anom.wallet.home;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
@@ -53,8 +51,8 @@ import com.google.android.material.progressindicator.ProgressIndicator;
 
 import one.anom.wallet.R;
 import one.anom.wallet.ReceiveActivity;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomActivity;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.paynym.PayNymHome;
 import one.anom.wallet.paynym.fragments.PayNymOnBoardBottomSheet;
 import one.anom.wallet.send.soroban.meeting.SorobanMeetingListenActivity;
@@ -76,7 +74,6 @@ import one.anom.wallet.home.adapters.TxAdapter;
 import one.anom.wallet.network.NetworkDashboard;
 import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
-import one.anom.wallet.paynym.ClaimPayNymActivity;
 import one.anom.wallet.permissions.PermissionsUtil;
 import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.bech32.Bech32Util;
@@ -132,9 +129,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.send.SweepUtil;
 
-public class BalanceActivity extends SamouraiActivity {
+public class BalanceActivity extends AnomActivity {
 
     private final static int SCAN_COLD_STORAGE = 2011;
     private final static int SCAN_QR = 2012;
@@ -236,7 +232,7 @@ public class BalanceActivity extends SamouraiActivity {
                             if (Bech32Util.getInstance().isBech32Script(Hex.toHexString(scriptBytes))) {
                                 address = Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(scriptBytes));
                             } else {
-                                address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                                address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                             }
                         } catch (Exception e) {
                         }
@@ -766,8 +762,8 @@ public class BalanceActivity extends SamouraiActivity {
         }
         else if (id == R.id.action_backup) {
 
-            if (SamouraiWallet.getInstance().hasPassphrase(BalanceActivity.this)) {
-                if (HD_WalletFactory.getInstance(BalanceActivity.this).get() != null && SamouraiWallet.getInstance().hasPassphrase(BalanceActivity.this)) {
+            if (AnomWallet.getInstance().hasPassphrase(BalanceActivity.this)) {
+                if (HD_WalletFactory.getInstance(BalanceActivity.this).get() != null && AnomWallet.getInstance().hasPassphrase(BalanceActivity.this)) {
                     doBackup();
                 }
                 else {
@@ -1076,7 +1072,7 @@ public class BalanceActivity extends SamouraiActivity {
                     } else if (FormatsUtil.getInstance().isPSBT(code.trim())) {
                         PSBTUtil.getInstance(BalanceActivity.this).doPSBT(code.trim());
                 } else if (DojoUtil.getInstance(BalanceActivity.this).isValidPairingPayload(code.trim())) {
-                    Toast.makeText(BalanceActivity.this, "Samourai Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BalanceActivity.this, "Anom Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(BalanceActivity.this, SendActivity.class);
                     intent.putExtra("uri", code.trim());
@@ -1183,7 +1179,7 @@ public class BalanceActivity extends SamouraiActivity {
                                 boolean keyDecoded = false;
 
                                 try {
-                                    BIP38PrivateKey bip38 = new BIP38PrivateKey(SamouraiWallet.getInstance().getCurrentNetworkParams(), data);
+                                    BIP38PrivateKey bip38 = new BIP38PrivateKey(AnomWallet.getInstance().getCurrentNetworkParams(), data);
                                     final ECKey ecKey = bip38.decrypt(password);
                                     if (ecKey != null && ecKey.hasPrivKey()) {
 
@@ -1195,7 +1191,7 @@ public class BalanceActivity extends SamouraiActivity {
                                         keyDecoded = true;
 
                                         Toast.makeText(BalanceActivity.this, pvr.getFormat(), Toast.LENGTH_SHORT).show();
-                                        Toast.makeText(BalanceActivity.this, pvr.getKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(BalanceActivity.this, pvr.getKey().toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString(), Toast.LENGTH_SHORT).show();
 
                                     }
                                 } catch (Exception e) {
@@ -1405,7 +1401,7 @@ public class BalanceActivity extends SamouraiActivity {
         if (strHash != null) {
 
             String blockExplorer = "https://m.oxt.me/transaction/";
-            if (SamouraiWallet.getInstance().isTestNet()) {
+            if (AnomWallet.getInstance().isTestNet()) {
                 blockExplorer = "https://blockstream.info/testnet/";
             }
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(blockExplorer + strHash));

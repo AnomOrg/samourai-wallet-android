@@ -16,7 +16,7 @@ import android.widget.Toast;
 
 import one.anom.wallet.R;
 import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
@@ -29,19 +29,11 @@ import one.anom.wallet.payload.PayloadUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import one.anom.wallet.send.PushTx;
 
-import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Iterator;
-
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.send.PushTx;
 
 public class RicochetActivity extends Activity {
 
@@ -223,7 +215,7 @@ public class RicochetActivity extends Activity {
                                             for(int j = 0; j < 4; j++)   {
                                                 PaymentCode pcode = new PaymentCode(BIP47Meta.strSamouraiDonationPCode);
                                                 PaymentAddress paymentAddress = BIP47Util.getInstance(RicochetActivity.this).getSendAddress(pcode, BIP47Meta.getInstance().getOutgoingIdx(BIP47Meta.strSamouraiDonationPCode));
-                                                String strAddress = paymentAddress.getSendECKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                                                String strAddress = paymentAddress.getSendECKey().toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                                                 BIP47Meta.getInstance().getPCode4AddrLookup().put(strAddress, BIP47Meta.strSamouraiDonationPCode);
                                                 BIP47Meta.getInstance().incOutgoingIdx(BIP47Meta.strSamouraiDonationPCode);
                                             }

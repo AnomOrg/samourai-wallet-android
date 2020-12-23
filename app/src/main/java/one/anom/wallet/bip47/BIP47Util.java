@@ -3,7 +3,7 @@ package one.anom.wallet.bip47;
 import android.content.Context;
 import android.widget.Toast;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.bip47.BIP47UtilGeneric;
 
@@ -24,10 +24,6 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.spec.InvalidKeySpecException;
-
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.bip47.rpc.AndroidSecretPointFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
 
 public class BIP47Util extends BIP47UtilGeneric {
 
@@ -65,7 +61,7 @@ public class BIP47Util extends BIP47UtilGeneric {
     }
     
     private NetworkParameters getNetworkParams() {
-        return SamouraiWallet.getInstance().getCurrentNetworkParams();
+        return AnomWallet.getInstance().getCurrentNetworkParams();
     }
 
     public void reset()  {

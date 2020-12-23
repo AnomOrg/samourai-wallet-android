@@ -1,6 +1,5 @@
 package one.anom.wallet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
@@ -32,7 +31,7 @@ import java.util.List;
 
 import org.bitcoinj.core.ECKey;
 
-public class PayNymCalcActivity extends SamouraiActivity {
+public class PayNymCalcActivity extends AnomActivity {
 
     private EditText edPayNym = null;
     private EditText edIndex = null;
@@ -132,8 +131,8 @@ public class PayNymCalcActivity extends SamouraiActivity {
                     receiveECKey = receiveAddress.getReceiveECKey();
                     ECKey sendECKey = sendAddress.getSendECKey();
 
-                    receiveSegwit = new SegwitAddress(receiveECKey, SamouraiWallet.getInstance().getCurrentNetworkParams());
-                    SegwitAddress sendSegwit = new SegwitAddress(sendECKey, SamouraiWallet.getInstance().getCurrentNetworkParams());
+                    receiveSegwit = new SegwitAddress(receiveECKey, AnomWallet.getInstance().getCurrentNetworkParams());
+                    SegwitAddress sendSegwit = new SegwitAddress(sendECKey, AnomWallet.getInstance().getCurrentNetworkParams());
 
                     message += "\n";
                     message += index + ":";
@@ -141,7 +140,7 @@ public class PayNymCalcActivity extends SamouraiActivity {
                     message += "\n";
                     message += PayNymCalcActivity.this.getText(R.string.receive_addresses).toString() + ":";
                     message += "\n";
-                    message += receiveECKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                    message += receiveECKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     message += "\n";
                     message += receiveSegwit.getAddressAsString();
                     message += "\n";
@@ -149,7 +148,7 @@ public class PayNymCalcActivity extends SamouraiActivity {
                     message += "\n";
                     message += PayNymCalcActivity.this.getText(R.string.send_addresses).toString() + ":";
                     message += "\n";
-                    message += sendECKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                    message += sendECKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     message += "\n";
                     message += sendSegwit.getAddressAsString();
                     message += "\n";
@@ -198,7 +197,7 @@ public class PayNymCalcActivity extends SamouraiActivity {
                             })
                             .setNegativeButton(R.string.display_receive_privkey, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    String strPrivKey = receiveECKey.getPrivateKeyAsWiF(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                                    String strPrivKey = receiveECKey.getPrivateKeyAsWiF(AnomWallet.getInstance().getCurrentNetworkParams());
 
                                     ImageView showQR = new ImageView(PayNymCalcActivity.this);
                                     Bitmap bitmap = null;

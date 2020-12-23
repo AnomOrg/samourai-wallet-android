@@ -27,7 +27,7 @@ import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.plugins.RxJavaPlugins;
 import one.anom.wallet.tor.TorManager;
 
-public class SamouraiApplication extends Application {
+public class AnomApplication extends Application {
 
     public static String TOR_CHANNEL_ID = "TOR_CHANNEL";
     public static String FOREGROUND_SERVICE_CHANNEL_ID = "FOREGROUND_SERVICE_CHANNEL_ID";

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,7 +14,7 @@ import android.widget.Toast;
 import com.samourai.soroban.client.meeting.SorobanMeetingService;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import one.anom.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import one.anom.wallet.cahoots.AndroidSorobanCahootsService;
@@ -35,11 +34,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import java8.util.Optional;
-import one.anom.wallet.SamouraiActivity;
 import one.anom.wallet.bip47.paynym.WebUtil;
 import one.anom.wallet.tor.TorManager;
 
-public class SorobanMeetingSendActivity extends SamouraiActivity {
+public class SorobanMeetingSendActivity extends AnomActivity {
 
     private static final String TAG = "SorobanMeetingSend";
     private SorobanMeetingService sorobanMeetingService;

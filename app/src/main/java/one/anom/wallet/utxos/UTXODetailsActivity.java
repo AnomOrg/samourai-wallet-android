@@ -1,6 +1,5 @@
 package one.anom.wallet.utxos;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -26,8 +25,8 @@ import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomActivity;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
@@ -68,25 +67,15 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.bip47.paynym.WebUtil;
-import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.paynym.paynymDetails.PayNymDetailsActivity;
-import one.anom.wallet.send.SendFactory;
-import one.anom.wallet.utxos.models.UTXOCoin;
-import one.anom.wallet.whirlpool.WhirlpoolMain;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
-public class UTXODetailsActivity extends SamouraiActivity {
+public class UTXODetailsActivity extends AnomActivity {
     final DecimalFormat df = new DecimalFormat("#");
     private String hash, addr, hashIdx;
     private TextView addressTextView, amountTextView, statusTextView, notesTextView, hashTextView;
@@ -535,7 +524,7 @@ public class UTXODetailsActivity extends SamouraiActivity {
         ECKey ecKey = SendFactory.getPrivKey(addr, account);
         String msg = null;
 
-        if (FormatsUtil.getInstance().isValidBech32(addr) || Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
+        if (FormatsUtil.getInstance().isValidBech32(addr) || Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress()) {
 
             msg = getString(R.string.utxo_sign_text3);
 
@@ -568,7 +557,7 @@ public class UTXODetailsActivity extends SamouraiActivity {
 
     private void viewPrivateKey() {
         ECKey ecKey = SendFactory.getPrivKey(addr, account);
-        String strPrivKey = ecKey.getPrivateKeyAsWiF(SamouraiWallet.getInstance().getCurrentNetworkParams());
+        String strPrivKey = ecKey.getPrivateKeyAsWiF(AnomWallet.getInstance().getCurrentNetworkParams());
 
         ImageView showQR = new ImageView(this);
         Bitmap bitmap = null;
@@ -601,7 +590,7 @@ public class UTXODetailsActivity extends SamouraiActivity {
 
     private void redeem() {
         ECKey ecKey = SendFactory.getPrivKey(addr, account);
-        SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
 
         if (ecKey != null && segwitAddress != null) {
 
@@ -646,7 +635,7 @@ public class UTXODetailsActivity extends SamouraiActivity {
 
     private void viewInExplorer() {
         String blockExplorer = "https://m.oxt.me/transaction/";
-        if (SamouraiWallet.getInstance().isTestNet()) {
+        if (AnomWallet.getInstance().isTestNet()) {
             blockExplorer = "https://blockstream.info/testnet/";
         }
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(blockExplorer + hash));

@@ -27,8 +27,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -82,13 +80,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Collection;
-
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.send.PushTx;
-import one.anom.wallet.send.RBFUtil;
 
 public class SettingsActivity2 extends PreferenceActivity	{
 
@@ -722,7 +713,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                 });
 
                 final CheckBoxPreference cbPref6 = (CheckBoxPreference) findPreference("autoBackup");
-                if(!SamouraiWallet.getInstance().hasPassphrase(SettingsActivity2.this)) {
+                if(!AnomWallet.getInstance().hasPassphrase(SettingsActivity2.this)) {
                     cbPref6.setChecked(false);
                     cbPref6.setEnabled(false);
                 }
@@ -1395,7 +1386,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
 
     private void doBroadcastHex(final String strHexTx)    {
 
-        Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams(), Hex.decode(strHexTx));
+        Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams(), Hex.decode(strHexTx));
 
         String msg = SettingsActivity2.this.getString(R.string.broadcast) + ":" + tx.getHashAsString() + " ?";
 
@@ -1517,10 +1508,10 @@ public class SettingsActivity2 extends PreferenceActivity	{
 
             jsonObj.put("type", "whirlpool.gui");
             jsonObj.put("version", "3.0.0");
-            jsonObj.put("network", SamouraiWallet.getInstance().isTestNet() ? "testnet" : "mainnet");
+            jsonObj.put("network", AnomWallet.getInstance().isTestNet() ? "testnet" : "mainnet");
 
             String mnemonic = HD_WalletFactory.getInstance(SettingsActivity2.this).get().getMnemonic();
-            if(SamouraiWallet.getInstance().hasPassphrase(SettingsActivity2.this))    {
+            if(AnomWallet.getInstance().hasPassphrase(SettingsActivity2.this))    {
                 String encrypted = AESUtil.encrypt(mnemonic, new CharSequenceX(HD_WalletFactory.getInstance(SettingsActivity2.this).get().getPassphrase()), AESUtil.DefaultPBKDF2Iterations);
                 jsonObj.put("mnemonic", encrypted);
                 jsonObj.put("passphrase", true);

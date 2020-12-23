@@ -1,7 +1,6 @@
 package one.anom.wallet.util;
 
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 public class BlockExplorerUtil {
 
@@ -28,7 +27,7 @@ public class BlockExplorerUtil {
 
     public CharSequence[] getBlockExplorers() {
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(AnomWallet.getInstance().isTestNet())    {
             return tBlockExplorers;
         }
         else    {
@@ -39,7 +38,7 @@ public class BlockExplorerUtil {
 
     public CharSequence[] getBlockExplorerTxUrls() {
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(AnomWallet.getInstance().isTestNet())    {
             return tBlockExplorerTxUrls;
         }
         else    {
@@ -50,7 +49,7 @@ public class BlockExplorerUtil {
 
     public CharSequence[] getBlockExplorerAddressUrls() {
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(AnomWallet.getInstance().isTestNet())    {
             return tBlockExplorerAddressUrls;
         }
         else    {

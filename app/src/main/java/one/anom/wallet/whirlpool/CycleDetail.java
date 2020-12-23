@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.widgets.ItemDividerDecorator;
 import com.samourai.whirlpool.client.mix.listener.MixStep;
@@ -37,9 +37,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java8.util.Optional;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
 
 
 public class CycleDetail extends AppCompatActivity {
@@ -209,7 +206,7 @@ public class CycleDetail extends AppCompatActivity {
     private void openExplorer(String hash) {
 
         String blockExplorer = "https://m.oxt.me/transaction/";
-        if (SamouraiWallet.getInstance().isTestNet()) {
+        if (AnomWallet.getInstance().isTestNet()) {
             blockExplorer = "https://blockstream.info/testnet/";
         }
 

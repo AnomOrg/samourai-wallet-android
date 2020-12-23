@@ -10,7 +10,7 @@ import com.samourai.http.client.IHttpClient;
 import com.samourai.http.client.IHttpClientService;
 import com.samourai.stomp.client.AndroidStompClientService;
 import com.samourai.stomp.client.IStompClientService;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.api.backend.BackendApi;
 import com.samourai.wallet.api.backend.BackendServer;
@@ -99,7 +99,7 @@ public class AndroidWhirlpoolWalletService extends WhirlpoolWalletService {
         String dojoParams = DojoUtil.getInstance(ctx).getDojoParams();
         boolean useDojo = (dojoParams != null);
 
-        boolean testnet = SamouraiWallet.getInstance().isTestNet();
+        boolean testnet = AnomWallet.getInstance().isTestNet();
         boolean onion = useDojo || torManager.isRequired();
 
         Log.v(TAG, "whirlpoolWalletConfig[Tor] = onion="+onion+", useDojo="+useDojo+", torManager.isRequired="+torManager.isRequired());

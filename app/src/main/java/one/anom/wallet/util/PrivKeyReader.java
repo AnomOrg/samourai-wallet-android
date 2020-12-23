@@ -2,7 +2,7 @@ package one.anom.wallet.util;
 
 import android.util.Base64;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.util.CharSequenceX;
 
@@ -12,13 +12,9 @@ import org.bitcoinj.core.DumpedPrivateKey;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.crypto.BIP38PrivateKey;
-import org.bitcoinj.params.MainNetParams;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.math.BigInteger;
-import java.security.MessageDigest;
-
-import one.anom.wallet.SamouraiWallet;
 
 //import android.util.Log;
 
@@ -56,19 +52,19 @@ public class PrivKeyReader {
         }
 
         // 52 characters, always starts with 'c'
-        if(SamouraiWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^[c][1-9A-HJ-NP-Za-km-z]{51}$")) {
+        if(AnomWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^[c][1-9A-HJ-NP-Za-km-z]{51}$")) {
             return WIF_COMPRESSED;
         }
         // 51 characters base58, always starts with a '9'
-        else if(SamouraiWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^9[1-9A-HJ-NP-Za-km-z]{50}$")) {
+        else if(AnomWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^9[1-9A-HJ-NP-Za-km-z]{50}$")) {
             return WIF_UNCOMPRESSED;
         }
         // 52 characters, always starts with 'K' or 'L'
-        else if(!SamouraiWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^[LK][1-9A-HJ-NP-Za-km-z]{51}$")) {
+        else if(!AnomWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^[LK][1-9A-HJ-NP-Za-km-z]{51}$")) {
             return WIF_COMPRESSED;
         }
         // 51 characters base58, always starts with a '5'
-        else if(!SamouraiWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^5[1-9A-HJ-NP-Za-km-z]{50}$")) {
+        else if(!AnomWallet.getInstance().isTestNet() && strPrivKey.toString().matches("^5[1-9A-HJ-NP-Za-km-z]{50}$")) {
             return WIF_UNCOMPRESSED;
         }
         else if(strPrivKey.toString().matches("^[1-9A-HJ-NP-Za-km-z]{44}$") || strPrivKey.toString().matches("^[1-9A-HJ-NP-Za-km-z]{43}$")) {
@@ -122,7 +118,7 @@ public class PrivKeyReader {
         }
 
         if(format.equals(WIF_COMPRESSED) || format.equals(WIF_UNCOMPRESSED)) {
-            DumpedPrivateKey pk = DumpedPrivateKey.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), strPrivKey.toString());
+            DumpedPrivateKey pk = DumpedPrivateKey.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), strPrivKey.toString());
             return pk.getKey();
         }
         else if(format.equals(BASE58)) {
@@ -188,7 +184,7 @@ public class PrivKeyReader {
         }
 
         try {
-            BIP38PrivateKey bip38 = new BIP38PrivateKey(SamouraiWallet.getInstance().getCurrentNetworkParams(), encryptedKey);
+            BIP38PrivateKey bip38 = new BIP38PrivateKey(AnomWallet.getInstance().getCurrentNetworkParams(), encryptedKey);
             final ECKey ecKey = bip38.decrypt(password.toString());
             if(ecKey != null && ecKey.hasPrivKey()) {
                 return ecKey;

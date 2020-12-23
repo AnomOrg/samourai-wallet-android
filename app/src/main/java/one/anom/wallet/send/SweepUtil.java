@@ -10,7 +10,7 @@ import android.widget.Toast;
 import android.util.Log;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.segwit.SegwitAddress;
 import com.samourai.wallet.send.MyTransactionOutPoint;
@@ -18,7 +18,6 @@ import com.samourai.wallet.send.UTXO;
 
 import one.anom.wallet.service.JobRefreshService;
 import one.anom.wallet.util.AddressFactory;
-import one.anom.wallet.util.FormatsUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.PrivKeyReader;
 
@@ -88,11 +87,11 @@ public class SweepUtil  {
                         address = addressP2WPKH;
                     }
                     else    {
-                        addressP2PKH = privKeyReader.getKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        addressP2PKH = privKeyReader.getKey().toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                         Log.d("SweepUtil", "address derived P2PKH:" + addressP2PKH);
-                        addressP2SH_P2WPKH = new SegwitAddress(privKeyReader.getKey(), SamouraiWallet.getInstance().getCurrentNetworkParams()).getAddressAsString();
+                        addressP2SH_P2WPKH = new SegwitAddress(privKeyReader.getKey(), AnomWallet.getInstance().getCurrentNetworkParams()).getAddressAsString();
                         Log.d("SweepUtil", "address derived P2SH_P2WPKH:" + addressP2SH_P2WPKH);
-                        addressP2WPKH = new SegwitAddress(privKeyReader.getKey(), SamouraiWallet.getInstance().getCurrentNetworkParams()).getBech32AsString();
+                        addressP2WPKH = new SegwitAddress(privKeyReader.getKey(), AnomWallet.getInstance().getCurrentNetworkParams()).getBech32AsString();
                         Log.d("SweepUtil", "address derived P2WPKH:" + addressP2WPKH);
 
                         utxoP2PKH = APIFactory.getInstance(context).getUnspentOutputsForSweep(addressP2PKH);

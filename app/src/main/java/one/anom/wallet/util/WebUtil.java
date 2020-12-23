@@ -5,7 +5,7 @@ import android.util.Log;
 
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -40,7 +40,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import one.anom.wallet.SamouraiWallet;
 import one.anom.wallet.tor.TorManager;
 
 //import android.util.Log;
@@ -510,10 +509,10 @@ public class WebUtil {
 
     public static String getAPIUrl(Context context){
         if(TorManager.INSTANCE.isRequired()){
-            return   SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET_TOR : SAMOURAI_API2_TOR;
+            return   AnomWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET_TOR : SAMOURAI_API2_TOR;
 
         }else {
-            return   SamouraiWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET : SAMOURAI_API2;
+            return   AnomWallet.getInstance().isTestNet() ? SAMOURAI_API2_TESTNET : SAMOURAI_API2;
         }
 
     }

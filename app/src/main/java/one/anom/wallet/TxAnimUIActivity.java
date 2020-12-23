@@ -9,14 +9,12 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Looper;
 
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.CheckBox;
@@ -47,7 +45,6 @@ import one.anom.wallet.send.UTXOFactory;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.BatchSendUtil;
-import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.MonetaryUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.util.SendAddressUtil;
@@ -58,7 +55,6 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.spongycastle.util.encoders.DecoderException;
@@ -77,13 +73,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.send.PushTx;
-import one.anom.wallet.send.RBFSpend;
-import one.anom.wallet.send.RBFUtil;
-import one.anom.wallet.send.SendFactory;
 
 import static one.anom.wallet.util.LogUtil.debug;
 
@@ -136,14 +125,14 @@ public class TxAnimUIActivity extends AppCompatActivity {
                             ;
                         }
                     } else {
-                        Address _address = input.getConnectedOutput().getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        Address _address = input.getConnectedOutput().getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
                         if (_address != null) {
                             _addr = _address.toString();
                             _isBIP49 = true;
                         }
                     }
                     if (_addr == null) {
-                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     }
 
                     String path = APIFactory.getInstance(TxAnimUIActivity.this).getUnspentPaths().get(_addr);
@@ -376,7 +365,7 @@ public class TxAnimUIActivity extends AppCompatActivity {
 
                     String _hex = hex;
                     Intent txTennaIntent = new Intent("com.samourai.txtenna.HEX");
-                    if (SamouraiWallet.getInstance().isTestNet()) {
+                    if (AnomWallet.getInstance().isTestNet()) {
                         _hex += "-t";
                     }
                     txTennaIntent.putExtra(Intent.EXTRA_TEXT, _hex);
@@ -425,12 +414,12 @@ public class TxAnimUIActivity extends AppCompatActivity {
                             if (Bech32Util.getInstance().isBech32Script(Hex.toHexString(out.getScriptBytes())) && !SendParams.getInstance().getDestAddress().equals(Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())))) {
                                 rbf.addChangeAddr(Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())));
                                 debug("SendActivity", "added change output:" + Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(out.getScriptBytes())));
-                            } else if (SendParams.getInstance().getChangeType() == 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString())) {
-                                rbf.addChangeAddr(out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                                debug("SendActivity", "added change output:" + out.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                            } else if (SendParams.getInstance().getChangeType() != 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString())) {
-                                rbf.addChangeAddr(out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
-                                debug("SendActivity", "added change output:" + out.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
+                            } else if (SendParams.getInstance().getChangeType() == 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString())) {
+                                rbf.addChangeAddr(out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                                debug("SendActivity", "added change output:" + out.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                            } else if (SendParams.getInstance().getChangeType() != 44 && !SendParams.getInstance().getDestAddress().equals(out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString())) {
+                                rbf.addChangeAddr(out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
+                                debug("SendActivity", "added change output:" + out.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
                             } else {
                                 ;
                             }

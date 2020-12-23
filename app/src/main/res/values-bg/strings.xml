@@ -122,7 +122,7 @@
     <string name="no">Не</string>
     <string name="close">Затвори</string>
 
-    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Samourai portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
+    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Anom portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
 
     <string name="pin_5_8">Създайте PIN код с дължина между 5 и 8 цифри</string>
     <string name="pin_5_8_confirm">Потвърдете PIN кода</string>
@@ -369,7 +369,7 @@
     <string name="opendime_topup">TOP UP</string>
 
     <string name="select_app">Избор на приложение:</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay защита</string>
     <string name="replay_unprotected">Незащитен</string>
@@ -668,10 +668,10 @@
     <string name="title_activity_network_dashboard">
         Мрежа
     </string>
-    <string name="powering_samourai_wallet_"> Използването на Samourai Wallet с ваш собствен node Ви предлага най-високо ниво на потайност и независимост при интеракция с Биткойн мрежата. Dojo прави използването на full node лесно и просто.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Samourai servers</string>
+    <string name="powering_samourai_wallet_"> Използването на Anom Wallet с ваш собствен node Ви предлага най-високо ниво на потайност и независимост при интеракция с Биткойн мрежата. Dojo прави използването на full node лесно и просто.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Anom Wallet servers</string>
     <string name="dojo_connect_instruction">Ако вече имате Dojo Full Node или използвате безплатния open source Dojo Софтуер на ваш собствен хардуер, сканирайте QR кода за сдвояване от Dojo Maintenance control panel</string>
-    <string name="dojo_headline">Използвайте Samourai с ваш собствен DOJO full node</string>
+    <string name="dojo_headline">Използвайте Anom с ваш собствен DOJO full node</string>
     <string name="connect_to_existing_dojo">Свързване към съществуващо Dojo</string>
     <string name="preorder">preorder</string>
     <string name="add_new">Добави нов</string>
@@ -680,7 +680,7 @@
     <string name="wallet_locked">Портфейлът е заключен</string>
     <string name="address">Адрес</string>
 
-    <string name="is_offline">Samourai е офлайн</string>
+    <string name="is_offline">Anom е офлайн</string>
     <string name="history_will_be_updated">Балансът и историята на транзакциите няма да бъдат обновявани докато не се установи вързка с Интернет.</string>
     <string name="you_received_s">Получихте</string>
     <string name="paynym_follow_message">Тази такса включва разхода за създаването на специална транзакция на блокчейна. Това поддържа PayNym децентрализиран</string>
@@ -735,8 +735,8 @@
     <string name="select_participant">Изберете участник</string>
     <string name="select_cahoots_type">Изберете тип cahoots</string>
     
-    <string name="cannot_disable_tor_dojo">Tor не може да бъде спрян понеже портфейлът е свързан със Samourai Dojo нод.</string>
-    <string name="temporary_dojo_disable">Деинсталирайте Samourai Wallet, за да се раздвоите от Вашия Dojo нод. \'DISABLE\' ще бъде напълно активиран в по-нататъшен ъпдейт.</string>
+    <string name="cannot_disable_tor_dojo">Tor не може да бъде спрян понеже портфейлът е свързан със Anom Dojo нод.</string>
+    <string name="temporary_dojo_disable">Деинсталирайте Anom Wallet, за да се раздвоите от Вашия Dojo нод. \'DISABLE\' ще бъде напълно активиран в по-нататъшен ъпдейт.</string>
     <string name="renew">СМЕНИ</string>
     
     <string name="continue_exchanging_qr_codes">Продължавайте да обменяте QR кодове\n докато транзакцията се изпрати!</string>

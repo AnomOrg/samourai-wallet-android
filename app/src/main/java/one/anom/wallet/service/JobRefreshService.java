@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import one.anom.wallet.BuildConfig;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import one.anom.wallet.bip47.BIP47Meta;
@@ -36,14 +36,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
-
-import io.reactivex.Completable;
-import io.reactivex.Observable;
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.ricochet.RicochetMeta;
-import one.anom.wallet.whirlpool.WhirlpoolMeta;
 
 
 public class JobRefreshService extends JobIntentService {
@@ -109,7 +101,7 @@ public class JobRefreshService extends JobIntentService {
                 PaymentCode pcode = BIP47Util.getInstance(this.getApplicationContext()).getPaymentCode();
 //                    Log.i("BalanceFragment", "payment code:" + pcode.toString());
 //                    Log.i("BalanceFragment", "notification address:" + pcode.notificationAddress().getAddressString());
-                APIFactory.getInstance(this.getApplicationContext()).getNotifAddress(pcode.notificationAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).getAddressString());
+                APIFactory.getInstance(this.getApplicationContext()).getNotifAddress(pcode.notificationAddress(AnomWallet.getInstance().getCurrentNetworkParams()).getAddressString());
             } catch (AddressFormatException afe) {
                 afe.printStackTrace();
                 Toast.makeText(this.getApplicationContext(), "HD wallet error", Toast.LENGTH_SHORT).show();

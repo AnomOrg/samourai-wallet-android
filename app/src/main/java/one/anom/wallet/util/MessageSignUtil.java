@@ -10,15 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.params.MainNetParams;
 
 import java.security.SignatureException;
 import java.sql.Date;
-
-import one.anom.wallet.SamouraiWallet;
 
 public class MessageSignUtil {
 
@@ -116,7 +113,7 @@ public class MessageSignUtil {
 
         ECKey ecKey = signedMessageToKey(strMessage, strSignature);
         if(ecKey != null)   {
-            return ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString().equals(address);
+            return ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString().equals(address);
         }
         else    {
             return false;
@@ -143,7 +140,7 @@ public class MessageSignUtil {
             ret += "\n";
             ret += "-----BEGIN BITCOIN SIGNATURE-----\n";
             ret += "Version: Bitcoin-qt (1.0)\n";
-            ret += "Address: " + key.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString() + "\n\n";
+            ret += "Address: " + key.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString() + "\n\n";
             ret += sig;
             ret += "\n";
             ret += "-----END BITCOIN SIGNATURE-----\n";

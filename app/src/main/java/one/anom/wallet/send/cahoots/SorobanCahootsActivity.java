@@ -8,7 +8,7 @@ import android.widget.Toast;
 import com.samourai.soroban.client.cahoots.OnlineCahootsMessage;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import one.anom.wallet.cahoots.AndroidSorobanCahootsService;
 import one.anom.wallet.cahoots.CahootsMode;
@@ -22,9 +22,8 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.SamouraiActivity;
 
-public class SorobanCahootsActivity extends SamouraiActivity {
+public class SorobanCahootsActivity extends AnomActivity {
     private static final String TAG = "SorobanCahootsActivity";
     private static final int TIMEOUT_MS = 60000;
 

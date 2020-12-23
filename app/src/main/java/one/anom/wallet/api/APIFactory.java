@@ -14,7 +14,7 @@ import com.auth0.android.jwt.JWT;
 
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.bip47.BIP47Meta;
 import one.anom.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
@@ -78,10 +78,6 @@ import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.subjects.BehaviorSubject;
-import one.anom.wallet.hd.HD_WalletFactory;
-import one.anom.wallet.send.FeeUtil;
-import one.anom.wallet.send.RBFUtil;
-import one.anom.wallet.send.SuggestedFee;
 
 import static one.anom.wallet.util.LogUtil.debug;
 import static one.anom.wallet.util.LogUtil.info;
@@ -337,10 +333,10 @@ public class APIFactory {
             return true;
         }
 
-        String _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : SAMOURAI_API2;
+        String _url = AnomWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : SAMOURAI_API2;
 
         if(DojoUtil.getInstance(context).getDojoParams() != null || setupDojo)    {
-            _url = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR :  WebUtil.SAMOURAI_API2_TOR;
+            _url = AnomWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR :  WebUtil.SAMOURAI_API2_TOR;
         }
 
         debug("APIFactory", "getToken() url:" + _url);
@@ -950,15 +946,15 @@ public class APIFactory {
                     String address = null;
                     switch(purpose)    {
                         case 49:
-                            SegwitAddress p2shp2wpkh = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                            SegwitAddress p2shp2wpkh = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                             address = p2shp2wpkh.getAddressAsString();
                             break;
                         case 84:
-                            SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                            SegwitAddress segwitAddress = new SegwitAddress(ecKey.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                             address = segwitAddress.getBech32AsString();
                             break;
                         default:
-                            address = ecKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                            address = ecKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                             break;
                     }
 
@@ -1159,7 +1155,7 @@ public class APIFactory {
                         pubkey = script.getPubKey();
                     }
                     ECKey pKey = new ECKey(null, pubkey, true);
-                    info("APIFactory", "address from script:" + pKey.toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString());
+                    info("APIFactory", "address from script:" + pKey.toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString());
 
                     if(((JSONObject)inArray.get(0)).has("outpoint"))    {
                         JSONObject received_from = ((JSONObject) inArray.get(0)).getJSONObject("outpoint");
@@ -1169,7 +1165,7 @@ public class APIFactory {
 
                         byte[] hashBytes = Hex.decode(strHash);
                         Sha256Hash txHash = new Sha256Hash(hashBytes);
-                        TransactionOutPoint outPoint = new TransactionOutPoint(SamouraiWallet.getInstance().getCurrentNetworkParams(), idx, txHash);
+                        TransactionOutPoint outPoint = new TransactionOutPoint(AnomWallet.getInstance().getCurrentNetworkParams(), idx, txHash);
                         byte[] outpoint = outPoint.bitcoinSerialize();
                         info("APIFactory", "outpoint:" + Hex.toHexString(outpoint));
 
@@ -1347,7 +1343,7 @@ public class APIFactory {
                             address = Bech32Util.getInstance().getAddressFromScript(script);
                         }
                         else    {
-                            address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                            address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
 
                         if(outDict.has("xpub"))    {
@@ -1379,7 +1375,7 @@ public class APIFactory {
                         }
 
                         // Construct the output
-                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(SamouraiWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
+                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(AnomWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
 
                         if(utxos.containsKey(script))    {
@@ -1395,7 +1391,7 @@ public class APIFactory {
                         if(Bech32Util.getInstance().isBech32Script(script))    {
                             UTXOFactory.getInstance().addP2WPKH(txHash.toString(), txOutputN, script, utxos.get(script));
                         }
-                        else if(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
+                        else if(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress())    {
                             UTXOFactory.getInstance().addP2SH_P2WPKH(txHash.toString(), txOutputN, script, utxos.get(script));
                         }
                         else    {
@@ -2255,11 +2251,11 @@ public class APIFactory {
                             debug("address parsed:", address);
                         }
                         else    {
-                            address = new Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                            address = new Script(scriptBytes).getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                         }
 
                         // Construct the output
-                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(SamouraiWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
+                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(AnomWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
                         if(utxo == null)    {
                             utxo = new UTXO();
@@ -2583,7 +2579,7 @@ public class APIFactory {
                         }
 
                         // Construct the output
-                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(SamouraiWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
+                        MyTransactionOutPoint outPoint = new MyTransactionOutPoint(AnomWallet.getInstance().getCurrentNetworkParams(), txHash, txOutputN, value, scriptBytes, address);
                         outPoint.setConfirmations(confirmations);
 
                         if(account_type == XPUB_POSTMIX)    {

@@ -2,7 +2,7 @@ package one.anom.wallet.send;
 
 import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.send.MyTransactionOutPoint;
 
@@ -161,7 +161,7 @@ public class FeeUtil extends com.samourai.wallet.util.FeeUtil {
     }
 
     public Triple<Integer, Integer, Integer> getOutpointCount(Vector<MyTransactionOutPoint> outpoints) {
-        NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+        NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
         return super.getOutpointCount(outpoints, params);
     }
 }

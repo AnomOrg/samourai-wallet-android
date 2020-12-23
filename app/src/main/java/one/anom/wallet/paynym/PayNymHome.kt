@@ -21,7 +21,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.common.base.Splitter
-import one.anom.wallet.SamouraiActivity
+import one.anom.wallet.AnomActivity
 import one.anom.wallet.access.AccessFactory
 import one.anom.wallet.bip47.BIP47Meta
 import one.anom.wallet.bip47.BIP47Util
@@ -52,7 +52,7 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.util.*
 
-class PayNymHome : SamouraiActivity() {
+class PayNymHome : AnomActivity() {
 
     private var paynymTabLayout: TabLayout? = null
     private var payNymViewPager: ViewPager? = null

@@ -2,15 +2,13 @@ package one.anom.wallet.util;
 
 import android.content.Context;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.util.FormatsUtilGeneric;
 
 import org.bitcoinj.core.NetworkParameters;
 
 import java.text.DecimalFormat;
-
-import one.anom.wallet.SamouraiWallet;
 
 public class FormatsUtil extends FormatsUtilGeneric {
 
@@ -30,7 +28,7 @@ public class FormatsUtil extends FormatsUtilGeneric {
     }
 
     private NetworkParameters getNetworkParams() {
-        return SamouraiWallet.getInstance().getCurrentNetworkParams();
+        return AnomWallet.getInstance().getCurrentNetworkParams();
     }
 
     public String validateBitcoinAddress(final String address) {

@@ -1,16 +1,11 @@
 package one.anom.wallet.settings
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.transition.Transition
-import androidx.transition.TransitionInflater
-import com.google.android.material.transition.MaterialSharedAxis
 import one.anom.wallet.R
-import one.anom.wallet.SamouraiActivity
 
 
 class MainSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {

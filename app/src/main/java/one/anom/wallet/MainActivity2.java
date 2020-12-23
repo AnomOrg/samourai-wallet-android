@@ -1,6 +1,5 @@
 package one.anom.wallet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -11,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,15 +42,11 @@ import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
-import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import one.anom.wallet.api.APIFactory;
-import one.anom.wallet.home.BalanceActivity;
-import one.anom.wallet.prng.PRNGFixes;
 import one.anom.wallet.tor.TorManager;
 
 public class MainActivity2 extends AppCompatActivity {
@@ -138,7 +132,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         if (PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.TESTNET, false) == true) {
-            SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+            AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
         }
 
 //        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -221,7 +215,7 @@ public class MainActivity2 extends AppCompatActivity {
                 && !PrefsUtil.getInstance(this).getValue(PrefsUtil.OFFLINE,false)
                 && !TorManager.INSTANCE.isConnected()) {
 
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
             TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
                 if (torState == TorManager.TorState.ON) {
                     initAppOnResume();
@@ -458,7 +452,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).removeValue(PrefsUtil.TESTNET);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
                         initDialog();
 
                     }
@@ -468,7 +462,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).setValue(PrefsUtil.TESTNET, true);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
                         initDialog();
 
                     }

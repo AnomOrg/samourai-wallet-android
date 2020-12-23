@@ -1,6 +1,6 @@
 package one.anom.wallet.send;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.segwit.bech32.Bech32Util;
 
 import com.samourai.wallet.send.MyTransactionOutPoint;
@@ -18,13 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import one.anom.wallet.SamouraiWallet;
-import one.anom.wallet.segwit.bech32.Bech32Util;
-import one.anom.wallet.util.BatchSendUtil;
 import one.anom.wallet.util.LogUtil;
 
 import static one.anom.wallet.send.SendActivity.SPEND_BOLTZMANN;
-import static one.anom.wallet.util.LogUtil.debug;
 
 public class SendParams	{
 
@@ -161,8 +157,8 @@ public class SendParams	{
             TransactionOutput output = tx.getOutput(i);
             Script script = output.getScriptPubKey();
             String scriptPubKey = Hex.toHexString(script.getProgram());
-            Address _p2sh = output.getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
-            Address _p2pkh = output.getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams());
+            Address _p2sh = output.getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
+            Address _p2pkh = output.getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams());
             try {
                 if(Bech32Util.getInstance().isBech32Script(scriptPubKey)) {
                     if(Bech32Util.getInstance().getAddressFromScript(scriptPubKey).compareToIgnoreCase(getDestAddress()) == 0) {
