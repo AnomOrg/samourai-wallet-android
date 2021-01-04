@@ -228,7 +228,7 @@ public class BatchSendActivity extends AnomActivity {
                     }
 
                     AlertDialog.Builder dlg = new AlertDialog.Builder(BatchSendActivity.this);
-                    dlg.setIcon(R.drawable.ic_launcher);
+                    dlg.setIcon(R.mipmap.ic_launcher);
                     dlg.setTitle(R.string.app_name);
 
                     dlg.setAdapter(arrayAdapter,
