@@ -22,10 +22,12 @@ import android.widget.Toast;
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.progressindicator.ProgressIndicator;
 
+import io.matthewnelson.topl_service.TorServiceController;
 import one.anom.wallet.access.AccessFactory;
 import one.anom.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import one.anom.wallet.home.BalanceActivity;
+import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.payload.PayloadUtil;
 import one.anom.wallet.prng.PRNGFixes;
 import one.anom.wallet.service.BackgroundManager;
@@ -48,6 +50,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import one.anom.wallet.tor.TorManager;
+
+import static one.anom.wallet.util.WebUtil.DOJO_PARAMS;
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -174,6 +178,10 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void initAppOnCreate() {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true)) {
+            connectToDojo();
+        }
+
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
             Toast.makeText(MainActivity2.this, R.string.in_offline_mode, Toast.LENGTH_SHORT).show();
@@ -473,4 +481,40 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
+    private void doPairing() {
+
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams(DOJO_PARAMS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
+                    loaderTxView.setText(getText(R.string.connected_dojo));
+                    TimeOutUtil.getInstance().updatePin();
+                    PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO, false);
+                }, error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
+                    loaderTxView.setText(getText(R.string.error_dojo));
+
+                });
+        compositeDisposables.add(disposable);
+
+    }
+
+    private void connectToDojo() {
+        loaderTxView.setText(getText(R.string.connecting_dojo));
+        if (TorManager.INSTANCE.isConnected()) {
+            DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
+        } else {
+            TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
+                if (torState ==   TorManager.TorState.WAITING) {
+                } else if (torState == TorManager.TorState.ON) {
+                    PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                    DojoUtil.getInstance(getApplicationContext()).clear();
+                    doPairing();
+                }
+            });
+        }
+    }
 }

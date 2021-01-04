@@ -119,6 +119,7 @@
         android:layout_marginBottom="8dp"
         android:text="Enable Tor  "
         android:textColor="@color/white"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
