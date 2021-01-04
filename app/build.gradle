@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
+// Apply the Google Services plugin (if it's not there already).
+apply plugin: 'com.google.gms.google-services'
+
+// Add the Firebase Crashlytics plugin.
+apply plugin: 'com.google.firebase.crashlytics'
+
+
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -178,6 +186,15 @@ dependencies {
     implementation "io.matthewnelson.topl-android:topl-core-base:$topl_android_version"
     implementation "io.matthewnelson.topl-android:topl-service:$topl_android_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.1'
+
+    // Recommended: Add the Google Analytics SDK.
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+
+    implementation 'com.google.firebase:firebase-config:19.2.0'
+
 }
 repositories {
     mavenCentral()

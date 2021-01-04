@@ -42,6 +42,11 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import one.anom.wallet.tor.TorManager;
 
+import static one.anom.wallet.AnomApplication.DOJO_API_KEY;
+import static one.anom.wallet.AnomApplication.DOJO_TYPE;
+import static one.anom.wallet.AnomApplication.DOJO_URL;
+import static one.anom.wallet.AnomApplication.DOJO_VERSION;
+
 //import android.util.Log;
 
 public class WebUtil {
@@ -516,5 +521,16 @@ public class WebUtil {
         }
 
     }
+
+    public static final String DOJO_PARAMS = "{\n" +
+            "        \"pairing\": {\n" +
+            "            \"type\": \""+ DOJO_TYPE +"\",\n" +
+            "            \"version\": \""+DOJO_VERSION+"\",\n" +
+            "            \"apikey\": \""+DOJO_API_KEY+"\",\n" +
+            "            \"url\": \""+DOJO_URL+"\"\n" +
+            "        }\n" +
+            "    }";
+
+
 
 }
