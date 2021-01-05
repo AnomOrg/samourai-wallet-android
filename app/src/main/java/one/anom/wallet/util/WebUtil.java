@@ -6,6 +6,7 @@ import android.util.Log;
 import one.anom.wallet.BuildConfig;
 import one.anom.wallet.R;
 import one.anom.wallet.AnomWallet;
+import one.anom.wallet.tor.TorManager;
 
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
@@ -40,7 +41,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
-import one.anom.wallet.tor.TorManager;
 
 import static one.anom.wallet.AnomApplication.DOJO_API_KEY;
 import static one.anom.wallet.AnomApplication.DOJO_TYPE;
@@ -59,6 +59,11 @@ public class WebUtil {
     public static final String SAMOURAI_API2_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/v2/";
     public static final String SAMOURAI_API2_TESTNET_TOR_DIST = "http://d2oagweysnavqgcfsfawqwql2rwxend7xxpriq676lzsmtfwbt75qbqd.onion/test/v2/";
 
+
+    public static final String LBC_EXCHANGE_URL = "https://localbitcoins.com/bitcoinaverage/ticker-all-currencies/";
+    public static final String BTCe_EXCHANGE_URL = "https://wex.nz/api/3/ticker/";
+    public static final String BFX_EXCHANGE_URL = "https://api.bitfinex.com/v1/pubticker/btcusd";
+
     public static String SAMOURAI_API2_TOR = SAMOURAI_API2_TOR_DIST;
     public static String SAMOURAI_API2_TESTNET_TOR = SAMOURAI_API2_TESTNET_TOR_DIST;
 
@@ -75,6 +80,17 @@ public class WebUtil {
 
     private static WebUtil instance = null;
     private Context context = null;
+
+
+
+    public static final String DOJO_PARAMS = "{\n" +
+            "        \"pairing\": {\n" +
+            "            \"type\": \""+ DOJO_TYPE +"\",\n" +
+            "            \"version\": \""+DOJO_VERSION+"\",\n" +
+            "            \"apikey\": \""+DOJO_API_KEY+"\",\n" +
+            "            \"url\": \""+DOJO_URL+"\"\n" +
+            "        }\n" +
+            "    }";
 
     private WebUtil(Context context) {
         this.context = context;
@@ -521,16 +537,5 @@ public class WebUtil {
         }
 
     }
-
-    public static final String DOJO_PARAMS = "{\n" +
-            "        \"pairing\": {\n" +
-            "            \"type\": \""+ DOJO_TYPE +"\",\n" +
-            "            \"version\": \""+DOJO_VERSION+"\",\n" +
-            "            \"apikey\": \""+DOJO_API_KEY+"\",\n" +
-            "            \"url\": \""+DOJO_URL+"\"\n" +
-            "        }\n" +
-            "    }";
-
-
 
 }

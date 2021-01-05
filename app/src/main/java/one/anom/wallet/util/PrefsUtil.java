@@ -7,6 +7,11 @@ import android.preference.PreferenceManager;
 
 public class PrefsUtil {
 
+	public static final String CURRENT_FIAT = "currentFiat";
+	public static final String CURRENT_FIAT_SEL = "currentFiatSel";
+	public static final String CURRENT_EXCHANGE = "currentExchange";
+	public static final String CURRENT_EXCHANGE_SEL = "currentExchangeSel";
+	public static final String BLOCK_EXPLORER = "blockExplorer";
 	public static final String GUID = "guid";
 	public static final String GUID_V = "guid_version";
 	public static final String ACCESS_HASH = "accessHash";
