@@ -365,8 +365,10 @@ public class CreateWalletActivity extends FragmentActivity implements
 
                         if (create) {
                             msg = getString(R.string.wallet_created_ok);
+                            PrefsUtil.getInstance(CreateWalletActivity.this).setValue(PrefsUtil.IS_RESTORE, false);
                         } else {
                             msg = getString(R.string.wallet_restored_ok);
+                            PrefsUtil.getInstance(CreateWalletActivity.this).setValue(PrefsUtil.IS_RESTORE, true);
                         }
 
                         try {

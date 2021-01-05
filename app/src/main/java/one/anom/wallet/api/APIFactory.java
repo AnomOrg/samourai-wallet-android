@@ -465,7 +465,7 @@ public class APIFactory {
                 args.append("xpub=");
                 args.append(xpub);
                 args.append("&type=");
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, true))    {
                     args.append("restore");
                 }
                 else    {
@@ -491,7 +491,7 @@ public class APIFactory {
             else    {
                 HashMap<String,String> args = new HashMap<String,String>();
                 args.put("xpub", xpub);
-                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, false) == true)    {
+                if(PrefsUtil.getInstance(context).getValue(PrefsUtil.IS_RESTORE, true))    {
                     args.put("type", "restore");
                 }
                 else    {

@@ -122,7 +122,7 @@ public class LandingActivity extends AppCompatActivity  {
 
             if (b) {
                 startTor();
-                progressBarTor.setVisibility(View.VISIBLE);
+                progressBarTor.setVisibility(View.INVISIBLE);
                 torSwitch.setVisibility(View.INVISIBLE);
             } else {
                 stopTor();
@@ -143,8 +143,8 @@ public class LandingActivity extends AppCompatActivity  {
     private void startTor() {
         TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
             if (torState ==   TorManager.TorState.WAITING) {
-                progressBarTor.setVisibility(View.VISIBLE);
                 torStatus.setVisibility(View.VISIBLE);
+                progressBarTor.setVisibility(View.INVISIBLE);
                 torStatus.setText("Tor service connecting...");
             } else if (torState == TorManager.TorState.ON) {
                 PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
