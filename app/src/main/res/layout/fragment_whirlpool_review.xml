@@ -11,7 +11,7 @@
     android:layout_width="match_parent"
     android:id="@+id/reviewLayout"
     android:layout_height="wrap_content"
-    tools:context="com.samourai.wallet.whirlpool.newPool.fragments.ReviewPoolFragment">
+    tools:context="one.anom.wallet.whirlpool.newPool.fragments.ReviewPoolFragment">
 
     <TextView
         android:id="@+id/textView51"

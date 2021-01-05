@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.util.List;
 
 
+
 public class JobRefreshService extends JobIntentService {
 
     static final int JOB_ID = 56;
@@ -87,7 +88,7 @@ public class JobRefreshService extends JobIntentService {
         } catch (NullPointerException ioe) {
             ioe.printStackTrace();
         } finally {
-            Intent _intent = new Intent("com.samourai.wallet.BalanceFragment.DISPLAY");
+            Intent _intent = new Intent("one.anom.wallet.BalanceFragment.DISPLAY");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
         }
 
@@ -126,7 +127,7 @@ public class JobRefreshService extends JobIntentService {
                 }
             }
 
-            Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+            Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
         }
 
@@ -213,7 +214,7 @@ public class JobRefreshService extends JobIntentService {
 
         }
 
-        Intent _intent = new Intent("com.samourai.wallet.BalanceFragment.DISPLAY");
+        Intent _intent = new Intent("one.anom.wallet.BalanceFragment.DISPLAY");
         LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
     }
 

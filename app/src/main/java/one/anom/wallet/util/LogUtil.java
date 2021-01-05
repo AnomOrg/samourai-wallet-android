@@ -50,14 +50,14 @@ public class LogUtil {
         ((Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME)).setLevel(Level.ERROR);
 
         // enable debug logs for external Samourai libraries...
-        ((Logger) LoggerFactory.getLogger("com.samourai")).setLevel(Level.DEBUG);
-        ((Logger) LoggerFactory.getLogger("com.samourai.wallet")).setLevel(Level.DEBUG);
-        ((Logger) LoggerFactory.getLogger("com.samourai.soroban")).setLevel(Level.DEBUG);
-        ((Logger) LoggerFactory.getLogger("com.samourai.whirlpool")).setLevel(Level.DEBUG);
-        ((Logger) LoggerFactory.getLogger("com.samourai.xmanager")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom.wallet")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom.soroban")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom.whirlpool")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom.xmanager")).setLevel(Level.DEBUG);
 
         // skip noisy logs
-        ((Logger) LoggerFactory.getLogger("com.samourai.wallet.staging")).setLevel(Level.DEBUG);
+        ((Logger) LoggerFactory.getLogger("one.anom.wallet.staging")).setLevel(Level.DEBUG);
 
         Log.d("LogUtil", "Debug logs enabled");
     }

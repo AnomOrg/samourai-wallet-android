@@ -1061,7 +1061,7 @@ public class BatchSendActivity extends AnomActivity {
 
                         if(cbMarkInputsUnspent.isChecked())    {
                             UTXOFactory.getInstance(BatchSendActivity.this).markUTXOAsNonSpendable(hexTx,0);
-                            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                             intent.putExtra("notifTx", false);
                             intent.putExtra("fetch", true);
                             LocalBroadcastManager.getInstance(BatchSendActivity.this).sendBroadcast(intent);
@@ -1077,7 +1077,7 @@ public class BatchSendActivity extends AnomActivity {
 
                         if(cbMarkInputsUnspent.isChecked())    {
                             UTXOFactory.getInstance(BatchSendActivity.this).markUTXOAsNonSpendable(hexTx,0);
-                            Intent intent = new Intent("com.samourai.wallet.BalanceFragment.REFRESH");
+                            Intent intent = new Intent("one.anom.wallet.BalanceFragment.REFRESH");
                             intent.putExtra("notifTx", false);
                             intent.putExtra("fetch", true);
                             LocalBroadcastManager.getInstance(BatchSendActivity.this).sendBroadcast(intent);

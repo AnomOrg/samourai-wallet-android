@@ -131,7 +131,7 @@ public class WebSocketHandler {
 
                 Looper.prepare();
 
-                Intent intent = new Intent("com.samourai.wallet.ReceiveFragment.REFRESH");
+                Intent intent = new Intent("one.anom.wallet.ReceiveFragment.REFRESH");
                 intent.putExtra("received_on", address);
                 LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
 

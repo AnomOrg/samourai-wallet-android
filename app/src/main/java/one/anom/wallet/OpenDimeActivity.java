@@ -76,7 +76,7 @@ public class OpenDimeActivity extends AnomActivity {
         FileSystemFactory.registerFileSystem(new JavaFsFileSystemCreator());
     }
 
-    private static final String ACTION_USB_PERMISSION = "com.samourai.wallet.USB_PERMISSION";
+    private static final String ACTION_USB_PERMISSION = "one.anom.wallet.USB_PERMISSION";
     private static final String TAG = OpenDimeActivity.class.getSimpleName();
 
     private List<UsbFile> files = new ArrayList<UsbFile>();

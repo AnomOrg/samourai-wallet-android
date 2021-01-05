@@ -107,7 +107,7 @@ public class WhirlpoolMain extends AppCompatActivity {
     private ProgressBar progressBar;
     private int balanceIndex = 0;
     private SwipeRefreshLayout swipeRefreshLayout;
-    public static final String DISPLAY_INTENT = "com.samourai.wallet.BalanceFragment.DISPLAY";
+    public static final String DISPLAY_INTENT = "one.anom.wallet.BalanceFragment.DISPLAY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
