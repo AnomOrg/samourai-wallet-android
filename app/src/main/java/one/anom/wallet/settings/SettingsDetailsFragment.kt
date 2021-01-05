@@ -91,12 +91,12 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
                 troubleShootSettings()
             }
             "fiat" -> {
-                activity?.title = "Settings | Troubleshoot"
+                activity?.title = "Settings | Fiat"
                 setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
                 getExchange()
             }
             "explorer" -> {
-                activity?.title = "Settings | Troubleshoot"
+                activity?.title = "Settings | Explorer"
                 setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
                 getBlockExplorer()
             }
