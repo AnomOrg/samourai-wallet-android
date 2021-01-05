@@ -3,10 +3,7 @@ package one.anom.wallet.settings
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Looper
@@ -29,10 +26,18 @@ import com.google.zxing.WriterException
 import com.google.zxing.client.android.Contents
 import com.google.zxing.client.android.encode.QRCodeEncoder
 import com.samourai.wallet.*
-import one.anom.wallet.access.AccessFactory
-import one.anom.wallet.cahoots.psbt.PSBTUtil
 import com.samourai.wallet.crypto.AESUtil
 import com.samourai.wallet.crypto.DecryptionException
+import com.samourai.wallet.util.*
+import com.samourai.whirlpool.client.wallet.AndroidWhirlpoolWalletService
+import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount
+import com.samourai.whirlpool.client.wallet.beans.WhirlpoolUtxo
+import com.yanzhenjie.zbar.Symbol
+import io.matthewnelson.topl_service.TorServiceController
+import kotlinx.coroutines.*
+import one.anom.wallet.*
+import one.anom.wallet.access.AccessFactory
+import one.anom.wallet.cahoots.psbt.PSBTUtil
 import one.anom.wallet.hd.HD_WalletFactory
 import one.anom.wallet.network.dojo.DojoUtil
 import one.anom.wallet.payload.PayloadUtil
@@ -41,18 +46,10 @@ import one.anom.wallet.segwit.BIP49Util
 import one.anom.wallet.segwit.BIP84Util
 import one.anom.wallet.send.PushTx
 import one.anom.wallet.send.RBFUtil
-import com.samourai.wallet.util.*
-import one.anom.wallet.whirlpool.WhirlpoolMeta
-import one.anom.wallet.whirlpool.service.WhirlpoolNotificationService
-import com.samourai.whirlpool.client.wallet.AndroidWhirlpoolWalletService
-import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount
-import com.samourai.whirlpool.client.wallet.beans.WhirlpoolUtxo
-import com.yanzhenjie.zbar.Symbol
-import io.matthewnelson.topl_service.TorServiceController
-import kotlinx.coroutines.*
-import one.anom.wallet.*
 import one.anom.wallet.tor.TorManager
 import one.anom.wallet.util.*
+import one.anom.wallet.whirlpool.WhirlpoolMeta
+import one.anom.wallet.whirlpool.service.WhirlpoolNotificationService
 import org.apache.commons.io.FileUtils
 import org.bitcoinj.core.Transaction
 import org.bitcoinj.crypto.MnemonicException.MnemonicLengthException
@@ -92,6 +89,16 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
                 activity?.title = "Settings | Troubleshoot"
                 setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
                 troubleShootSettings()
+            }
+            "fiat" -> {
+                activity?.title = "Settings | Troubleshoot"
+                setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
+                getExchange()
+            }
+            "explorer" -> {
+                activity?.title = "Settings | Troubleshoot"
+                setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
+                getBlockExplorer()
             }
             "other" -> {
                 activity?.title = "Settings | Other"
@@ -1036,5 +1043,67 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
             scope.cancel(CancellationException())
         }
         super.onDestroy()
+    }
+
+    private fun getBlockExplorer() {
+        val explorers = BlockExplorerUtil.getInstance().blockExplorers
+        val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.BLOCK_EXPLORER, 0)
+        val _sel: Int
+        _sel = if (sel >= explorers.size) {
+            0
+        } else {
+            sel
+        }
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.options_blockexplorer)
+                .setSingleChoiceItems(explorers, _sel
+                ) { dialog, which ->
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.BLOCK_EXPLORER, which)
+                    dialog.dismiss()
+                }.show()
+    }
+
+    private fun getExchange() {
+        val exchanges = ExchangeRateFactory.getInstance(activity).exchangeLabels
+        val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.options_currency)
+                .setSingleChoiceItems(exchanges, sel
+                ) { dialog, which ->
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE, exchanges[which].substring(exchanges[which].length - 3))
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE_SEL, which)
+                    if (which == 2) {
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, "USD")
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, 0)
+                        dialog.dismiss()
+                    } else {
+                        dialog.dismiss()
+                        getFiat()
+                    }
+                }.show()
+    }
+
+    private fun getFiat() {
+        val fxSel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
+        val currencies: Array<String>
+        currencies = if (fxSel == 1) {
+            ExchangeRateFactory.getInstance(activity).currencyLabelsBTCe
+        } else {
+            ExchangeRateFactory.getInstance(activity).currencyLabels
+        }
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.options_currency)
+                .setSingleChoiceItems(currencies, 0
+                ) { dialog, which ->
+                    var selectedCurrency: String? = null
+                    selectedCurrency = if (currencies[which].substring(currencies[which].length - 3) == "RUR") {
+                        "RUB"
+                    } else {
+                        currencies[which].substring(currencies[which].length - 3)
+                    }
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, selectedCurrency)
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, which)
+                    dialog.dismiss()
+                }.show()
     }
 }
