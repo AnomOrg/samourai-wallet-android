@@ -256,11 +256,10 @@ public class LandingActivity extends AppCompatActivity  {
                 doDojoPairing0();
                 return false;
             }
-//            case R.id.restore: {
-//                RestoreWalletFromBackup();
-//                return false;
-//            }
-
+            case R.id.restore: {
+                RestoreWalletFromBackup();
+                return false;
+            }
             default: {
                 return false;
             }
