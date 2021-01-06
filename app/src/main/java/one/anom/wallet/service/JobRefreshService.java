@@ -25,6 +25,8 @@ import one.anom.wallet.segwit.BIP84Util;
 import one.anom.wallet.util.AddressFactory;
 import one.anom.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
+
+import one.anom.wallet.util.ExchangeRateFactory;
 import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
 import one.anom.wallet.whirlpool.WhirlpoolMeta;
@@ -90,6 +92,7 @@ public class JobRefreshService extends JobIntentService {
         } finally {
             Intent _intent = new Intent("one.anom.wallet.BalanceFragment.DISPLAY");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
+            ExchangeRateFactory.getInstance(JobRefreshService.this).exchangeRateThread();
         }
 
         PrefsUtil.getInstance(this.getApplicationContext()).setValue(PrefsUtil.FIRST_RUN, false);
@@ -202,8 +205,9 @@ public class JobRefreshService extends JobIntentService {
                 }
             } catch (JSONException je) {
                 ;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-
         } else {
 
             try {

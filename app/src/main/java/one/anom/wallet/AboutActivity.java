@@ -11,7 +11,7 @@ public class AboutActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        setTitle("Anom, v" + getResources().getString(R.string.version_name));
+        setTitle("Anom Wallet, v" + getResources().getString(R.string.version_name));
     }
 
     @Override

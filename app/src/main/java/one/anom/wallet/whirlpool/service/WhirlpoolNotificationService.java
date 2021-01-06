@@ -46,7 +46,7 @@ public class WhirlpoolNotificationService extends Service {
     public void onCreate() {
         super.onCreate();
         Notification notification = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
-                .setContentTitle("Anom Whirlpool")
+                .setContentTitle("Anom Wallet Whirlpool")
                 .setContentText("Waiting...")
                 .setOngoing(true)
                 .setSound(null)
@@ -156,7 +156,7 @@ public class WhirlpoolNotificationService extends Service {
     void updateNotification() {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, AnomApplication.WHIRLPOOL_CHANNEL)
                 .setGroupAlertBehavior(GROUP_ALERT_SUMMARY)
-                .setContentTitle("Anom Whirlpool")
+                .setContentTitle("Anom Wallet Whirlpool")
                 .setOngoing(true)
                 .setSound(null)
                 .setGroup("service")

@@ -189,9 +189,9 @@ class PayNymHome : AnomActivity() {
             android.R.id.home -> {
                 finish()
             }
-            R.id.action_support -> {
+           /* R.id.action_support -> {
                 doSupport()
-            }
+            }*/
             R.id.action_scan_qr -> {
                 val cameraFragmentBottomSheet = CameraFragmentBottomSheet()
                 cameraFragmentBottomSheet.show(supportFragmentManager, cameraFragmentBottomSheet.tag)

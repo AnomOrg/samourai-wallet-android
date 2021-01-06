@@ -161,7 +161,7 @@ Make every spend a CoinJoin."
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
-                android:text="A transaction between two Samourai Wallet users that
+                android:text="A transaction between two Anom Wallet users that
 is designed to leave no distinguishing fingerprint on the
 blockchain including amount spent."
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -332,7 +332,7 @@ and quickest option."
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="Manually compose this transaction with another
-participant who is using Samourai Wallet. Perfect for
+participant who is using Anom Wallet. Perfect for
 face-to-face interaction."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView12"
@@ -391,7 +391,7 @@ face-to-face interaction."
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="Compose this transaction online with another
-participant who is using Samourai Wallet over Tor."
+participant who is using Anom Wallet over Tor."
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageView122"
                 app:layout_constraintHorizontal_bias="0.0"

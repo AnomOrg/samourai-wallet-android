@@ -2301,9 +2301,9 @@ public class SendActivity extends AnomActivity {
         else if (id == R.id.action_batch) {
             doBatchSpend();
         }
-        else if (id == R.id.action_support) {
+      /*  else if (id == R.id.action_support) {
             doSupport();
-        }
+        }*/
         else {
             ;
         }
