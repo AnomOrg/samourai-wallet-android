@@ -756,7 +756,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                 }
 
             }
-            else if(strBranch.equals("networking"))   {
+           /* else if(strBranch.equals("networking"))   {
                 addPreferencesFromResource(R.xml.settings_networking);
 
                 Preference vpnPref = (Preference) findPreference("VPN");
@@ -777,7 +777,7 @@ public class SettingsActivity2 extends PreferenceActivity	{
                     }
                 });
 
-            }
+            }*/
             else if(strBranch.equals("troubleshoot"))   {
                 addPreferencesFromResource(R.xml.settings_troubleshoot);
 
