@@ -17,7 +17,7 @@ class MainSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreference
         findPreference<Preference>("txs")?.onPreferenceClickListener = this
         findPreference<Preference>("wallet")?.onPreferenceClickListener = this
         findPreference<Preference>("troubleshoot")?.onPreferenceClickListener = this
-        findPreference<Preference>("fiat")?.onPreferenceClickListener = this
+        findPreference<Preference>("prefs")?.onPreferenceClickListener = this
         findPreference<Preference>("explorer")?.onPreferenceClickListener = this
         findPreference<Preference>("other")?.onPreferenceClickListener = this
     }

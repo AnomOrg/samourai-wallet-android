@@ -90,9 +90,9 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
                 setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
                 troubleShootSettings()
             }
-            "fiat" -> {
+            "prefs" -> {
                 activity?.title = "Settings | Fiat"
-                setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
+                setPreferencesFromResource(R.xml.settings_prefs, rootKey)
                 getExchange()
             }
             "explorer" -> {
@@ -1064,23 +1064,28 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
     }
 
     private fun getExchange() {
-        val exchanges = ExchangeRateFactory.getInstance(activity).exchangeLabels
-        val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
-        AlertDialog.Builder(activity)
-                .setTitle(R.string.options_currency)
-                .setSingleChoiceItems(exchanges, sel
-                ) { dialog, which ->
-                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE, exchanges[which].substring(exchanges[which].length - 3))
-                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE_SEL, which)
-                    if (which == 2) {
-                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, "USD")
-                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, 0)
-                        dialog.dismiss()
-                    } else {
-                        dialog.dismiss()
-                        getFiat()
-                    }
-                }.show()
+
+        val fiatPref = findPreference("fiat") as Preference?
+        fiatPref!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val exchanges = ExchangeRateFactory.getInstance(activity).exchangeLabels
+            val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
+            AlertDialog.Builder(activity)
+                    .setTitle(R.string.options_currency)
+                    .setSingleChoiceItems(exchanges, sel
+                    ) { dialog, which ->
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE, exchanges[which].substring(exchanges[which].length - 3))
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE_SEL, which)
+                        if (which == 2) {
+                            PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, "USD")
+                            PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, 0)
+                            dialog.dismiss()
+                        } else {
+                            dialog.dismiss()
+                            getFiat()
+                        }
+                    }.show()
+            true
+        }
     }
 
     private fun getFiat() {
