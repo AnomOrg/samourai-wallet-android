@@ -135,7 +135,7 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="send_payment_code">Send payment code</string>
 
-    <string name="ask_you_sure_exit">Are you sure you want to exit Anom?</string>
+    <string name="ask_you_sure_exit">Are you sure you want to exit Anom Wallet?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="close">Close</string>
@@ -487,7 +487,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC into your wallet and try again.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">I understand that Anom cannot provide assistance in the case of lost or forgotten passphrases. Anom never has any knowledge of my passphrase.</string>
+    <string name="passphrase_disclaimer">I understand that Anom Wallet cannot provide assistance in the case of lost or forgotten passphrases. Anom never has any knowledge of my passphrase.</string>
     <string name="confirm_pin_code">Confirm pin code</string>
     <string name="re_enter_your_pin_code">Re-enter your PIN code</string>
     <string name="re_enter_a_passphrase">Re-enter a passphrase</string>
