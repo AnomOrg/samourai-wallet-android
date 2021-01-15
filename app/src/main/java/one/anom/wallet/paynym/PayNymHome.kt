@@ -239,10 +239,10 @@ class PayNymHome : AnomActivity() {
                 BIP47Util.getInstance(this).notificationAddress.ecKey)
     }
 
-    private fun doSupport() {
+  /*  private fun doSupport() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://support.samourai.io/section/32-paynym"))
         startActivity(intent)
-    }
+    }*/
 
     private fun doUnArchive() {
         val _pcodes = BIP47Meta.getInstance().getSortedByLabels(true)

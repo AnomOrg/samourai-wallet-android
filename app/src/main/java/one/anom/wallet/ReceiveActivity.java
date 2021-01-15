@@ -632,10 +632,10 @@ public class ReceiveActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void doSupport() {
+   /* private void doSupport() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://support.samourai.io/section/7-receiving-bitcoin"));
         startActivity(intent);
-    }
+    }*/
 
     private void displayQRCode() {
 

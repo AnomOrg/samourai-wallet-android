@@ -2342,10 +2342,10 @@ public class SendActivity extends AnomActivity {
         });
     }
 
-    private void doSupport() {
+   /* private void doSupport() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://support.samourai.io/section/8-sending-bitcoin"));
         startActivity(intent);
-    }
+    }*/
 
     private void doUTXO() {
         Intent intent = new Intent(SendActivity.this, UTXOSActivity.class);
