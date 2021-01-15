@@ -45,7 +45,7 @@ public class ExchangeRateFactory {
             "British Pound Sterling - GBP",
             "Chinese Yuan - CNY",
             "Russian Rouble - RUB",
-            " Australian Dollar - AUD"
+            "Australian Dollar - AUD"
     };
 
     private static String[] currencyLabelsBTCe = {
