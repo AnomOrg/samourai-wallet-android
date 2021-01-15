@@ -55,7 +55,6 @@ public class AnomApplication extends Application {
         setUpChannels();
         RxJavaPlugins.setErrorHandler(throwable -> {});
 
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
         final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
@@ -63,9 +62,8 @@ public class AnomApplication extends Application {
         Map<String, Object> remoteConfigDefaults = new HashMap();
         remoteConfigDefaults.put("type", "dojo.api");
         remoteConfigDefaults.put("version", "1.8.0");
-        remoteConfigDefaults.put("apikey", "myApiKey");
+        remoteConfigDefaults.put("apikey", "Yu3Que7ohhohd2ayazaer0aigeelohD2");
         remoteConfigDefaults.put("url", "http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2");
-
 
         firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
         firebaseRemoteConfig.fetch(30)
@@ -82,7 +80,6 @@ public class AnomApplication extends Application {
         DOJO_VERSION = firebaseRemoteConfig.getString("version");
         DOJO_API_KEY = firebaseRemoteConfig.getString("apikey");
         DOJO_URL = firebaseRemoteConfig.getString("url");
-
 
         // Write logcat output to a file
         if (BuildConfig.DEBUG) {
