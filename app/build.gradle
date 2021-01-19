@@ -40,13 +40,14 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable true
         }
         applicationVariants.all { variant ->
             variant.buildConfigField "String", "XOR_1", "\""+getApiKey("XOR_1")+"\""
             variant.buildConfigField "String", "XOR_2", "\""+getApiKey("XOR_2")+"\""
-            /*  variant.outputs.all {
+           /*   variant.outputs.all {
                   outputFileName = "Wallet_Arcane_${defaultConfig.versionName}_prod.apk"
               }*/
             variant.outputs.all {

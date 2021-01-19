@@ -171,6 +171,7 @@ public class MainActivity2 extends AppCompatActivity {
                     progressIndicator.setVisibility(View.VISIBLE);
                 }
             });
+            TorServiceController.startTor();
 
         } else {
             initAppOnCreate();
@@ -506,17 +507,19 @@ public class MainActivity2 extends AppCompatActivity {
 
     private void connectToDojo() {
         loaderTxView.setText(getText(R.string.connecting_dojo));
-        doPairing();
         if (TorManager.INSTANCE.isConnected()) {
             DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
         } else {
             TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
                 if (torState ==   TorManager.TorState.WAITING) {
                 } else if (torState == TorManager.TorState.ON) {
                     PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
                     DojoUtil.getInstance(getApplicationContext()).clear();
+                    doPairing();
                 }
             });
+            TorServiceController.startTor();
         }
     }
 }
