@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
+import one.anom.wallet.network.dojo.DojoUtil;
 import one.anom.wallet.util.AppUtil;
 import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.util.PrefsUtil;
@@ -51,6 +52,10 @@ public class AnomApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //clear dojo params
+        DojoUtil.getInstance(this).removeDojoParams();
+
         setUpTorService();
         setUpChannels();
         RxJavaPlugins.setErrorHandler(throwable -> {});
