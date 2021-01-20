@@ -132,6 +132,9 @@ public class MainActivity2 extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //clear dojo params
+        DojoUtil.getInstance(this).removeDojoParams();
+
         loaderTxView = findViewById(R.id.loader_text);
         progressIndicator = findViewById(R.id.loader);
 
