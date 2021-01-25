@@ -133,7 +133,7 @@ public class MainActivity2 extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //clear dojo params
-        DojoUtil.getInstance(this).removeDojoParams();
+      //  DojoUtil.getInstance(this).removeDojoParams();
 
         loaderTxView = findViewById(R.id.loader_text);
         progressIndicator = findViewById(R.id.loader);
@@ -509,6 +509,7 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void connectToDojo() {
+        DojoUtil.getInstance(this).removeDojoParams();
         loaderTxView.setText(getText(R.string.connecting_dojo));
         if (TorManager.INSTANCE.isConnected()) {
             DojoUtil.getInstance(getApplicationContext()).clear();
