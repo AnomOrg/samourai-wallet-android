@@ -65,6 +65,7 @@ public class BIP47Util extends BIP47UtilGeneric {
     }
 
     public void reset()  {
+        instance = new BIP47Util();
         wallet = null;
     }
 

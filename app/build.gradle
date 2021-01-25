@@ -42,17 +42,16 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            debuggable true
         }
         applicationVariants.all { variant ->
             variant.buildConfigField "String", "XOR_1", "\""+getApiKey("XOR_1")+"\""
             variant.buildConfigField "String", "XOR_2", "\""+getApiKey("XOR_2")+"\""
-           /*   variant.outputs.all {
+              variant.outputs.all {
                   outputFileName = "Wallet_Arcane_${defaultConfig.versionName}_prod.apk"
-              }*/
-            variant.outputs.all {
+              }
+           /* variant.outputs.all {
                 outputFileName = "Wallet_Playstore_${defaultConfig.versionName}_prod.apk"
-            }
+            }*/
         }
     }
     lintOptions {
@@ -109,7 +108,7 @@ def getApiKey(key){
 dependencies {
 
     def lifecycle_version = "2.2.0"
-    def topl_android_version = "1.0.0-beta02"
+    def topl_android_version = "2.0.2"
     def coroutines_version = '1.3.9'
 
     api fileTree(include: ['*.jar'], dir: 'libs')

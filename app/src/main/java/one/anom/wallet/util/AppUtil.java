@@ -39,6 +39,7 @@ import one.anom.wallet.prng.PRNGFixes;
 import one.anom.wallet.ricochet.RicochetMeta;
 import one.anom.wallet.segwit.BIP49Util;
 import one.anom.wallet.segwit.BIP84Util;
+import one.anom.wallet.utxos.UTXOUtil;
 
 import static android.content.Context.ACTIVITY_SERVICE;
 
@@ -160,6 +161,7 @@ public class AppUtil {
         SendAddressUtil.getInstance().reset();
         SentToFromBIP47Util.getInstance().reset();
         BatchSendUtil.getInstance().clear();
+        UTXOUtil.getInstance().reset();
         AccessFactory.getInstance(context).setIsLoggedIn(false);
 
         try {

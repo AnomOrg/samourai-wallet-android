@@ -26,6 +26,10 @@ public class RecoveryWordsActivity extends Activity {
     private GridView recoveryWordsGrid;
     private Button returnToWallet;
     private CheckBox desclaimerCheckbox;
+    private CheckBox disclaimerCheckbox;
+    private TextView disclaimerText;
+    private Boolean accepted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +42,23 @@ public class RecoveryWordsActivity extends Activity {
         recoveryWordsGrid = findViewById(R.id.grid_recovery_words);
         returnToWallet = findViewById(R.id.return_to_wallet);
         desclaimerCheckbox = findViewById(R.id.disclaimer_checkbox);
+
         String recoveryWords = getIntent().getExtras().getString("BIP39_WORD_LIST");
         assert recoveryWords != null;
         String words[] = recoveryWords.trim().split(" ");
         RecoveryWordGridAdapter adapter = new RecoveryWordGridAdapter(this, words);
         recoveryWordsGrid.setAdapter(adapter);
+
+        disclaimerCheckbox.setOnCheckedChangeListener((compoundButton, b) -> {
+            accepted = b;
+            setDisclaimerChange();
+        });
+        disclaimerText.setOnClickListener(v -> {
+            accepted = !accepted;
+            disclaimerCheckbox.setChecked(accepted);
+            setDisclaimerChange();
+        });
+
         desclaimerCheckbox.setOnCheckedChangeListener((compoundButton, b) -> {
             returnToWallet.setTextColor(b ? getResources().getColor(R.color.accent) : Color.GRAY);
             returnToWallet.setAlpha(b ? 1 : 0.6f);
@@ -119,4 +135,12 @@ public class RecoveryWordsActivity extends Activity {
         private TextView number;
         private TextView word;
     }
+
+    private void setDisclaimerChange() {
+        returnToWallet.setTextColor(accepted ? getResources().getColor(R.color.accent) : Color.GRAY);
+        returnToWallet.setAlpha(accepted ? 1 : 0.6f);
+        returnToWallet.setClickable(accepted);
+        returnToWallet.setFocusable(accepted);
+    }
+
 }

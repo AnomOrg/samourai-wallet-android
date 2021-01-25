@@ -1,6 +1,7 @@
 package one.anom.wallet.tor
 
 import android.app.Application
+import android.app.PendingIntent
 import android.content.Context
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
@@ -57,18 +58,23 @@ object TorManager {
 
     private fun generateTorServiceNotificationBuilder(
     ): ServiceNotification.Builder {
+        var contentIntent: PendingIntent? = null
+
+        appContext?.packageManager?.getLaunchIntentForPackage(appContext!!.packageName)?.let { intent ->
+            contentIntent = PendingIntent.getActivity(
+                    appContext,
+                    0,
+                    intent,
+                    0
+            )
+        }
+
         return ServiceNotification.Builder(
                 channelName = "Tor service",
                 channelDescription = "Tor foreground service notification",
                 channelID = AnomApplication.TOR_CHANNEL_ID,
                 notificationID = 12
         )
-                .setActivityToBeOpenedOnTap(
-                        clazz = MainActivity2::class.java,
-                        intentExtrasKey = null,
-                        intentExtras = null,
-                        intentRequestCode = null
-                )
 
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
                 .setImageTorNetworkingEnabled(R.drawable.ic_samourai_tor_enabled)
@@ -78,6 +84,12 @@ object TorManager {
                 .enableTorRestartButton(true)
                 .enableTorStopButton(false)
                 .showNotification(true)
+                .also { builder ->
+                    contentIntent?.let {
+                        builder.setContentIntent(it)
+                    }
+                }
+
     }
 
     /**
@@ -105,7 +117,7 @@ object TorManager {
                 torServiceNotificationBuilder = serviceNotificationBuilder,
                 backgroundManagerPolicy = generateBackgroundManagerPolicy(),
                 buildConfigVersionCode = BuildConfig.VERSION_CODE,
-                torSettings = TorSettings(),
+                defaultTorSettings = TorSettings(),
                 geoipAssetPath = "common/geoip",
                 geoip6AssetPath = "common/geoip6",
 
@@ -216,4 +228,8 @@ object TorManager {
         } catch (ex: JSONException) {
         }
     }
+}
+
+private fun ServiceNotification.Builder.setContentIntent(it: PendingIntent) {
+
 }

@@ -15,6 +15,7 @@ import one.anom.wallet.whirlpool.models.PoolViewModel;
 import java.util.ArrayList;
 
 import static one.anom.wallet.util.FormatsUtil.getBTCDecimalFormat;
+import static one.anom.wallet.util.FormatsUtil.getPoolBTCDecimalFormat;
 
 public class PoolsAdapter extends RecyclerView.Adapter<PoolsAdapter.ViewHolder> {
 
@@ -38,8 +39,7 @@ public class PoolsAdapter extends RecyclerView.Adapter<PoolsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final PoolViewModel poolViewModel = pools.get(position);
-        holder.poolAmount.setText(getBTCDecimalFormat(poolViewModel.getDenomination(),2).concat(" BTC Pool"));
-         holder.poolFees.setText(mContext.getString(R.string.pool_fee).concat(" ").concat(getBTCDecimalFormat(poolViewModel.getFeeValue())).concat(" BTC"));
+        holder.poolAmount.setText(getPoolBTCDecimalFormat(poolViewModel.getDenomination()).concat(" BTC Pool"));  holder.poolFees.setText(mContext.getString(R.string.pool_fee).concat(" ").concat(getBTCDecimalFormat(poolViewModel.getFeeValue())).concat(" BTC"));
         holder.totalFees.setText(mContext.getString(R.string.total_fees).concat("  ").concat(getBTCDecimalFormat(poolViewModel.getTotalFee())).concat(" BTC").concat(" (").concat(String.valueOf(poolViewModel.getTotalEstimatedBytes())).concat( " bytes)"));
         holder.minerFee.setText(mContext.getString(R.string.miner_fee).concat("  ").concat(getBTCDecimalFormat(poolViewModel.getMinerFee() * poolViewModel.getTotalEstimatedBytes())).concat(" BTC"));
         holder.checkBox.setOnCheckedChangeListener(null);

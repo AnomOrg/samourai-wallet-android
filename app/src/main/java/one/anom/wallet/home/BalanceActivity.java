@@ -258,62 +258,57 @@ public class BalanceActivity extends AnomActivity {
                         final int idx = out.getTxOutputN();
                         final long amount = out.getValue().longValue();
 
-                        if (amount < BlockedUTXO.BLOCKED_UTXO_THRESHOLD &&
-                                ((!BlockedUTXO.getInstance().contains(hash, idx) &&
-                                !BlockedUTXO.getInstance().containsNotDusted(hash, idx))
-                                ||
-                                (!BlockedUTXO.getInstance().containsPostMix(hash, idx) &&
-                                !BlockedUTXO.getInstance().containsNotDustedPostMix(hash, idx)))
-                                ){
+                        boolean contains = ((BlockedUTXO.getInstance().contains(hash, idx) || BlockedUTXO.getInstance().containsNotDusted(hash, idx)));
+
+                        boolean containsInPostMix = (BlockedUTXO.getInstance().containsPostMix(hash, idx) || BlockedUTXO.getInstance().containsNotDustedPostMix(hash, idx));
+
+
+                        if (amount < BlockedUTXO.BLOCKED_UTXO_THRESHOLD && (!contains && !containsInPostMix)) {
 
 //                            BalanceActivity.this.runOnUiThread(new Runnable() {
 //                            @Override
                             Handler handler = new Handler();
-                            handler.post(new Runnable() {
-                                public void run() {
+                            handler.post(() -> {
 
-                                    String message = BalanceActivity.this.getString(R.string.dusting_attempt);
-                                    message += "\n\n";
-                                    message += BalanceActivity.this.getString(R.string.dusting_attempt_amount);
-                                    message += " ";
-                                    message += Coin.valueOf(amount).toPlainString();
-                                    message += " BTC\n";
-                                    message += BalanceActivity.this.getString(R.string.dusting_attempt_id);
-                                    message += " ";
-                                    message += hash + "-" + idx;
+                                String message = BalanceActivity.this.getString(R.string.dusting_attempt);
+                                message += "\n\n";
+                                message += BalanceActivity.this.getString(R.string.dusting_attempt_amount);
+                                message += " ";
+                                message += Coin.valueOf(amount).toPlainString();
+                                message += " BTC\n";
+                                message += BalanceActivity.this.getString(R.string.dusting_attempt_id);
+                                message += " ";
+                                message += hash + "-" + idx;
 
-                                    MaterialAlertDialogBuilder dlg = new MaterialAlertDialogBuilder(BalanceActivity.this)
-                                            .setTitle(R.string.dusting_tx)
-                                            .setMessage(message)
-                                            .setCancelable(false)
-                                            .setPositiveButton(R.string.dusting_attempt_mark_unspendable, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                MaterialAlertDialogBuilder dlg = new MaterialAlertDialogBuilder(BalanceActivity.this)
+                                        .setTitle(R.string.dusting_tx)
+                                        .setMessage(message)
+                                        .setCancelable(false)
+                                        .setPositiveButton(R.string.dusting_attempt_mark_unspendable, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
 
-                                                    if(account == WhirlpoolMeta.getInstance(BalanceActivity.this).getWhirlpoolPostmix())    {
-                                                        BlockedUTXO.getInstance().addPostMix(hash, idx, amount);
-                                                    }
-                                                    else    {
-                                                        BlockedUTXO.getInstance().add(hash, idx, amount);
-                                                    }
-                                                    saveState();
+                                                if (account == WhirlpoolMeta.getInstance(BalanceActivity.this).getWhirlpoolPostmix()) {
+                                                    BlockedUTXO.getInstance().addPostMix(hash, idx, amount);
+                                                } else {
+                                                    BlockedUTXO.getInstance().add(hash, idx, amount);
                                                 }
-                                            }).setNegativeButton(R.string.dusting_attempt_ignore, new DialogInterface.OnClickListener() {
-                                                public void onClick(DialogInterface dialog, int whichButton) {
+                                                saveState();
+                                            }
+                                        }).setNegativeButton(R.string.dusting_attempt_ignore, new DialogInterface.OnClickListener() {
+                                            public void onClick(DialogInterface dialog, int whichButton) {
 
-                                                    if(account == WhirlpoolMeta.getInstance(BalanceActivity.this).getWhirlpoolPostmix())    {
-                                                        BlockedUTXO.getInstance().addNotDustedPostMix(hash, idx);
-                                                    }
-                                                    else    {
-                                                        BlockedUTXO.getInstance().addNotDusted(hash, idx);
-                                                    }
-
+                                                if (account == WhirlpoolMeta.getInstance(BalanceActivity.this).getWhirlpoolPostmix()) {
+                                                    BlockedUTXO.getInstance().addNotDustedPostMix(hash, idx);
+                                                } else {
+                                                    BlockedUTXO.getInstance().addNotDusted(hash, idx);
                                                 }
-                                            });
-                                    if (!isFinishing()) {
-                                        dlg.show();
-                                    }
-
+                                                saveState();
+                                            }
+                                        });
+                                if (!isFinishing()) {
+                                    dlg.show();
                                 }
+
                             });
 
                         }

@@ -166,10 +166,6 @@
                 android:resource="@xml/device_filter" />
         </activity>
         <activity
-            android:name="one.anom.wallet.paynym.ClaimPayNymActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/app_name" />
-        <activity
             android:name="one.anom.wallet.ExodusActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity

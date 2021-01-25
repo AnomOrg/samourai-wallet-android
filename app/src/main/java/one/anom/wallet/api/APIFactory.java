@@ -2405,6 +2405,10 @@ public class APIFactory {
                 for(int i = 0; i < txArray.length(); i++)  {
 
                     boolean hasPreMix = false;
+                    boolean hasPostMix = false;
+                    boolean isPostMixTx0 = false;
+                    long tx0value = 0L;
+
 
                     txObj = (JSONObject)txArray.get(i);
                     long height = 0L;
@@ -2443,6 +2447,12 @@ public class APIFactory {
                                             addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).zpubstr()))  {
                                         hasPreMix = true;
                                     }
+                                    if(txObj.getLong("result") < 0L && addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()) ||
+                                            addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr()))  {
+                                        hasPostMix = true;
+                                        tx0value += prevOutObj.getLong("value");
+                                    }
+
                                 }
                                 else  {
                                     _addr = (String)prevOutObj.get("addr");
@@ -2463,6 +2473,12 @@ public class APIFactory {
                                         addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr())))  {
                                     amount = outObj.getLong("value");
                                 }
+                                if(hasPostMix && (addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()).xpubstr()) ||
+                                        addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPremixAccount()))))  {
+                                    amount = -tx0value;
+                                    isPostMixTx0 = true;
+                                }
+
                             }
                             else  {
                                 _addr = (String)outObj.get("addr");
@@ -2476,7 +2492,7 @@ public class APIFactory {
                         if (addr == null) {
                             addr = _addr;
                         }
-                        if (addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()) ||
+                        if (isPostMixTx0 || addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).xpubstr()) ||
                                 addr.equals(BIP84Util.getInstance(context).getWallet().getAccountAt(WhirlpoolMeta.getInstance(context).getWhirlpoolPostmix()).zpubstr())) {
                             if (!postmix_txs.containsKey(addr)) {
                                 postmix_txs.put(addr, new ArrayList<Tx>());

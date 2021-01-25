@@ -3,6 +3,8 @@ package com.samourai.whirlpool.client.wallet;
 import android.content.Context;
 
 import com.samourai.wallet.hd.HD_Wallet;
+
+import one.anom.wallet.util.LogUtil;
 import one.anom.wallet.utxos.models.UTXOCoin;
 import com.samourai.whirlpool.client.exception.NotifiableException;
 import com.samourai.whirlpool.client.utils.ClientUtils;
@@ -70,7 +72,19 @@ public class WhirlpoolUtils {
         WhirlpoolWallet whirlpoolWallet = AndroidWhirlpoolWalletService.getInstance(ctx).getWhirlpoolWalletOrNull();
         if (whirlpoolWallet != null) {
             WhirlpoolUtxo whirlpoolUtxo = whirlpoolWallet.getUtxoSupplier().findUtxo(item.hash, item.idx);
-            if (whirlpoolUtxo != null) {
+            if (whirlpoolUtxo != null && whirlpoolUtxo.getUtxo() != null ) {
+
+                try {
+                    if (WhirlpoolAccount.POSTMIX.equals(whirlpoolUtxo.getAccount()) && whirlpoolUtxo.getUtxo().getPath() != null && whirlpoolUtxo.getUtxo().getPath().contains("M/1/")) {
+                        return tags;
+                    }
+                } catch (Exception e) {
+                    LogUtil.error("getWhirlpoolTags", e);
+                    return tags;
+                }
+            }
+
+            if (whirlpoolUtxo != null && whirlpoolUtxo.getUtxo() !=null && !whirlpoolUtxo.getUtxo().getPath().contains("M/1/")) {
                 // tag only premix & postmix utxos
                 if (WhirlpoolAccount.PREMIX.equals(whirlpoolUtxo.getAccount()) || WhirlpoolAccount.POSTMIX.equals(whirlpoolUtxo.getAccount())) {
                     // show whirlpool tag

@@ -1974,6 +1974,9 @@ public class SendActivity extends AnomActivity {
 
     private void processScan(String data) {
 
+        address = null;
+        strDestinationBTCAddress = null;
+
         if (data.contains("https://bitpay.com")) {
 
             AlertDialog.Builder dlg = new AlertDialog.Builder(this)
@@ -2024,6 +2027,10 @@ public class SendActivity extends AnomActivity {
         if (FormatsUtil.getInstance().isValidPaymentCode(data)) {
             processPCode(data, null);
             return;
+        }
+
+        if(data.startsWith("BITCOIN:")) {
+            data = "bitcoin:" + data.substring(8);
         }
 
         if (FormatsUtil.getInstance().isBitcoinUri(data)) {
