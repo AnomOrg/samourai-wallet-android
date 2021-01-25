@@ -26,7 +26,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 175
-        versionName "3.99.96a"
+        versionName "3.99.96b"
         // Enabling multidex support.
         multiDexEnabled true
         signingConfig signingConfigs.release
@@ -79,16 +79,16 @@ android {
             minSdkVersion 21
             targetSdkVersion 29
             versionCode 175
-            versionName "3.99.96a"
+            versionName "3.99.96b"
             resValue "string", "app_name", "Anom Wallet"
-            resValue "string", "version_name", "3.99.96a"
+            resValue "string", "version_name", "3.99.96b"
         }
         staging {
             applicationId 'one.anom.wallet.staging'
             minSdkVersion 21
             targetSdkVersion 29
             versionCode 175
-            versionName "3.99.96a"
+            versionName "3.99.96b"
             resValue "string", "app_name", "Anom Staging"
             resValue "string", "version_name", "0.99.96a"
         }

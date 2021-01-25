@@ -53,9 +53,6 @@ public class AnomApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //clear dojo params
-        //DojoUtil.getInstance(this).removeDojoParams();
-
         setUpTorService();
         setUpChannels();
         RxJavaPlugins.setErrorHandler(throwable -> {});

@@ -133,8 +133,6 @@ public class MainActivity2 extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        //clear dojo params
-       // connectToDojo();
 
         loaderTxView = findViewById(R.id.loader_text);
         progressIndicator = findViewById(R.id.loader);
@@ -195,11 +193,11 @@ public class MainActivity2 extends AppCompatActivity {
     }
 
     private void initAppOnCreate() {
-        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true) ||(isInstallFromUpdate(this) && PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO_SETUP, true))) {
+        //if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true) ||(isInstallFromUpdate(this) && PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO_SETUP, true))) {
             //  DojoUtil.getInstance(this).removeDojoParams();
             PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO_SETUP, false);
             connectToDojo();
-        }
+     //   }
 
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
