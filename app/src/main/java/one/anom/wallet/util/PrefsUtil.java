@@ -62,6 +62,7 @@ public class PrefsUtil {
 	private static Context context = null;
 	private static PrefsUtil instance = null;
 	public static final String ENABLE_DOJO = "enable_dojo";
+	public static final String ENABLE_DOJO_SETUP = "enable_dojo_setup";
 
 
 	private PrefsUtil() { ; }

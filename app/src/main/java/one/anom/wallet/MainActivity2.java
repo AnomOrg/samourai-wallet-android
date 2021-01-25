@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -133,7 +134,7 @@ public class MainActivity2 extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //clear dojo params
-      //  DojoUtil.getInstance(this).removeDojoParams();
+       // connectToDojo();
 
         loaderTxView = findViewById(R.id.loader_text);
         progressIndicator = findViewById(R.id.loader);
@@ -182,8 +183,21 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
+    public static boolean isInstallFromUpdate(Context context) {
+        try {
+            long firstInstallTime = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).firstInstallTime;
+            long lastUpdateTime = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).lastUpdateTime;
+            return firstInstallTime != lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void initAppOnCreate() {
-        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true)) {
+        if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true) ||(isInstallFromUpdate(this) && PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO_SETUP, true))) {
+            //  DojoUtil.getInstance(this).removeDojoParams();
+            PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO_SETUP, false);
             connectToDojo();
         }
 
