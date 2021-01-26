@@ -165,10 +165,8 @@ public class AndroidWhirlpoolWalletService extends WhirlpoolWalletService {
         if (source.hasObservers())
             source.onNext(ConnectionStates.STARTING);
         return Completable.fromCallable(() -> {
+            source.onNext(ConnectionStates.CONNECTED);
             this.getOrOpenWhirlpoolWallet().start();
-            if (source.hasObservers()) {
-                source.onNext(ConnectionStates.CONNECTED);
-            }
             return true;
         });
     }
