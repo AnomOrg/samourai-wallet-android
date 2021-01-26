@@ -105,7 +105,8 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
             dialog.dismiss();
             cameraFragmentBottomSheet = new CameraFragmentBottomSheet();
             cameraFragmentBottomSheet.show(getActivity().getSupportFragmentManager(), cameraFragmentBottomSheet.getTag());
-            cameraFragmentBottomSheet.setQrCodeScanLisenter(this::connectToDojo);
+            //cameraFragmentBottomSheet.setQrCodeScanLisenter(connectToDojo());
+            connectToDojo();
 
         });
         dialog.findViewById(R.id.dojo_paste_config).setVisibility(View.GONE);
@@ -128,7 +129,17 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
 
     }
 
-    private void connectToDojo(String dojoParams) {
+    public static final String DOJO_PARAMS = "{\n" +
+            "        \"pairing\": {\n" +
+            "            \"type\": \""+ "dojo.api" +"\",\n" +
+            "            \"version\": \""+"1.8.0"+"\",\n" +
+            "            \"apikey\": \""+"Yu3Que7ohhohd2ayazaer0aigeelohD2"+"\",\n" +
+            "            \"url\": \""+"http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2"+"\"\n" +
+            "        }\n" +
+            "    }";
+
+
+    private void connectToDojo() {
         cameraFragmentBottomSheet.dismissAllowingStateLoss();
         btnGroup.setVisibility(View.INVISIBLE);
         progressGroup.setVisibility(View.VISIBLE);
@@ -137,7 +148,7 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
             dojoConnectProgress.setProgress(60);
             progressStates.setText("Tor Connected, Connecting to Dojo Node...");
             DojoUtil.getInstance(getActivity().getApplicationContext()).clear();
-            doPairing(dojoParams);
+            doPairing(DOJO_PARAMS);
         } else {
             progressStates.setText("Waiting for Tor...");
             TorServiceController.startTor();
@@ -149,7 +160,7 @@ public class DojoConfigureBottomSheet extends BottomSheetDialogFragment {
                     dojoConnectProgress.setProgress(60);
                     progressStates.setText("Tor Connected, Connecting to Dojo Node...");
                     DojoUtil.getInstance(getActivity().getApplicationContext()).clear();
-                    doPairing(dojoParams);
+                    doPairing(DOJO_PARAMS);
                 }
 
             });
