@@ -8,7 +8,7 @@ import com.samourai.soroban.client.SorobanService;
 import com.samourai.soroban.client.cahoots.OnlineCahootsService;
 import com.samourai.soroban.client.cahoots.SorobanCahootsService;
 import com.samourai.soroban.client.meeting.SorobanMeetingService;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.soroban.cahoots.ManualCahootsService;
@@ -34,7 +34,7 @@ public class AndroidSorobanCahootsService extends SorobanCahootsService {
         if (instance == null) {
             CahootsWallet cahootsWallet = new AndroidCahootsWallet(ctx);
             BIP47Util bip47Util = BIP47Util.getInstance(ctx);
-            NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+            NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
             BIP47Wallet bip47Wallet = bip47Util.getWallet();
             IHttpClient httpClient = AndroidHttpClient.getInstance(ctx);
             instance = new AndroidSorobanCahootsService(

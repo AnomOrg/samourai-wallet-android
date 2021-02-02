@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import one.anom.wallet.R;
+
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
@@ -323,7 +323,7 @@ public class CreateWalletActivity extends FragmentActivity implements
                 if (create) {
 
                     try {
-                        HD_WalletFactory.getInstance(CreateWalletActivity.this).newWallet(12, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(CreateWalletActivity.this).newWallet(12, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (MnemonicException.MnemonicLengthException mle) {
@@ -337,7 +337,7 @@ public class CreateWalletActivity extends FragmentActivity implements
                 } else {
 
                     try {
-                        HD_WalletFactory.getInstance(CreateWalletActivity.this).restoreWallet(seed, passphrase, SamouraiWallet.NB_ACCOUNTS);
+                        HD_WalletFactory.getInstance(CreateWalletActivity.this).restoreWallet(seed, passphrase, AnomWallet.NB_ACCOUNTS);
                     } catch (IOException ioe) {
                         ioe.printStackTrace();
                     } catch (DecoderException de) {

@@ -30,8 +30,8 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 import static androidx.core.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_CHANNEL;
-import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_NOTIFICATIONS;
+import static one.anom.wallet.AnomApplication.WHIRLPOOL_CHANNEL;
+import static one.anom.wallet.AnomApplication.WHIRLPOOL_NOTIFICATIONS;
 import static com.samourai.wallet.util.FormatsUtil.getBTCDecimalFormat;
 
 public class WhirlpoolNotificationService extends Service {

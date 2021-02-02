@@ -18,7 +18,7 @@ import android.widget.ViewSwitcher;
 
 import com.google.common.base.Splitter;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.fragments.CameraFragmentBottomSheet;
@@ -34,7 +34,7 @@ import java.util.Map;
 
 import static com.samourai.wallet.bip47.BIP47Meta.strSamouraiDonationPCode;
 
-public class AddPaynymActivity extends SamouraiActivity {
+public class AddPaynymActivity extends AnomActivity {
 
     private SearchView mSearchView;
     private ViewSwitcher viewSwitcher;

@@ -35,7 +35,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.segwit.SegwitAddress;
@@ -651,7 +650,7 @@ public class ReceiveActivity extends AppCompatActivity {
             long lamount = (long) (amount.doubleValue() * 1e8);
             if (lamount != 0L) {
                 if (!FormatsUtil.getInstance().isValidBech32(_addr)) {
-                    ivQR.setImageBitmap(generateQRCode(BitcoinURI.convertToBitcoinURI(Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), _addr), Coin.valueOf(lamount), null, null)));
+                    ivQR.setImageBitmap(generateQRCode(BitcoinURI.convertToBitcoinURI(Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), _addr), Coin.valueOf(lamount), null, null)));
                 } else {
                     String strURI = "bitcoin:" + _addr;
                     DecimalFormat df = new DecimalFormat("#");

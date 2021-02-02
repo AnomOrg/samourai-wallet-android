@@ -301,7 +301,7 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
         }
 
         val cbPref6 = findPreference("autoBackup") as CheckBoxPreference?
-        if (!SamouraiWallet.getInstance().hasPassphrase(requireContext())) {
+        if (!AnomWallet.getInstance().hasPassphrase(requireContext())) {
             cbPref6!!.isChecked = false
             cbPref6.isEnabled = false
         } else {
@@ -844,7 +844,7 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
     }
 
     private fun doBroadcastHex(strHexTx: String) {
-        val tx = Transaction(SamouraiWallet.getInstance().currentNetworkParams, Hex.decode(strHexTx))
+        val tx = Transaction(AnomWallet.getInstance().currentNetworkParams, Hex.decode(strHexTx))
         val msg: String = requireContext().getString(R.string.broadcast).toString() + ":" + tx.hashAsString + " ?"
         val dlg = AlertDialog.Builder(requireContext())
                 .setTitle(R.string.app_name)
@@ -925,9 +925,9 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
             }
             jsonObj.put("type", "whirlpool.gui")
             jsonObj.put("version", "3.0.0")
-            jsonObj.put("network", if (SamouraiWallet.getInstance().isTestNet) "testnet" else "mainnet")
+            jsonObj.put("network", if (AnomWallet.getInstance().isTestNet) "testnet" else "mainnet")
             val mnemonic = HD_WalletFactory.getInstance(requireContext()).get().mnemonic
-            if (SamouraiWallet.getInstance().hasPassphrase(requireContext())) {
+            if (AnomWallet.getInstance().hasPassphrase(requireContext())) {
                 val encrypted = AESUtil.encrypt(mnemonic, CharSequenceX(HD_WalletFactory.getInstance(requireContext()).get().passphrase), AESUtil.DefaultPBKDF2Iterations)
                 jsonObj.put("mnemonic", encrypted)
                 jsonObj.put("passphrase", true)

@@ -5,7 +5,7 @@ import android.content.Intent
 import android.util.Log
 import android.widget.Toast
 import one.anom.wallet.R
-import one.anom.wallet.SamouraiWallet
+import one.anom.wallet.AnomWallet
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.hd.HD_WalletFactory
 import com.samourai.wallet.segwit.BIP49Util
@@ -67,13 +67,13 @@ class CPFPTask(private val context: Context, private val hash: String) {
                             } catch (e: Exception) {
                             }
                         } else {
-                            address = script.getToAddress(SamouraiWallet.getInstance().currentNetworkParams).toString()
+                            address = script.getToAddress(AnomWallet.getInstance().currentNetworkParams).toString()
                         }
                         when {
                             FormatsUtil.getInstance().isValidBech32(address) -> {
                                 p2wpkh++
                             }
-                            Address.fromBase58(SamouraiWallet.getInstance().currentNetworkParams, address).isP2SHAddress -> {
+                            Address.fromBase58(AnomWallet.getInstance().currentNetworkParams, address).isP2SHAddress -> {
                                 p2sh_p2wpkh++
                             }
                             else -> {
@@ -136,7 +136,7 @@ class CPFPTask(private val context: Context, private val hash: String) {
                     }
                     val ownReceiveAddr: String = if (FormatsUtil.getInstance().isValidBech32(addr)) {
                         AddressFactory.getInstance(context).biP84Receive.right.bech32AsString
-                    } else if (Address.fromBase58(SamouraiWallet.getInstance().currentNetworkParams, addr).isP2SHAddress) {
+                    } else if (Address.fromBase58(AnomWallet.getInstance().currentNetworkParams, addr).isP2SHAddress) {
                         AddressFactory.getInstance(context).biP49Receive.right.addressAsString
                     } else {
                         AddressFactory.getInstance(context).receive.right.addressString
@@ -162,11 +162,11 @@ class CPFPTask(private val context: Context, private val hash: String) {
                             p2sh_p2wpkh += outpointTypes.middle
                             p2wpkh += outpointTypes.right
                             cpfpFee = FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, 1)
-                            if (totalAmount > cpfpFee.toLong() + remainingFee + SamouraiWallet.bDust.toLong()) {
+                            if (totalAmount > cpfpFee.toLong() + remainingFee + AnomWallet.bDust.toLong()) {
                                 break
                             }
                         }
-                        if (totalAmount < cpfpFee.toLong() + remainingFee + SamouraiWallet.bDust.toLong()) {
+                        if (totalAmount < cpfpFee.toLong() + remainingFee + AnomWallet.bDust.toLong()) {
                             FeeUtil.getInstance().suggestedFee = suggestedFee
                             throw CPFPException(context.getString(R.string.insufficient_funds))
                         }
@@ -184,7 +184,7 @@ class CPFPTask(private val context: Context, private val hash: String) {
                     assert(_totalAmount == totalAmount)
                     val amount = totalAmount - cpfpFee.toLong()
                     Log.d("CPFPTask", "amount after fee:$amount")
-                    if (amount < SamouraiWallet.bDust.toLong()) {
+                    if (amount < AnomWallet.bDust.toLong()) {
                         Log.d("CPFPTask", "dust output")
                         Toast.makeText(context, R.string.cannot_output_dust, Toast.LENGTH_SHORT).show()
                     }
@@ -253,7 +253,7 @@ class CPFPTask(private val context: Context, private val hash: String) {
                     val prevIdx = BIP84Util.getInstance(context).wallet.getAccount(0).receive.addrIdx - 1
                     BIP84Util.getInstance(context).wallet.getAccount(0).receive.addrIdx = prevIdx
                 }
-                Address.fromBase58(SamouraiWallet.getInstance().currentNetworkParams, addr).isP2SHAddress -> {
+                Address.fromBase58(AnomWallet.getInstance().currentNetworkParams, addr).isP2SHAddress -> {
                     val prevIdx = BIP49Util.getInstance(context).wallet.getAccount(0).receive.addrIdx - 1
                     BIP49Util.getInstance(context).wallet.getAccount(0).receive.addrIdx = prevIdx
                 }

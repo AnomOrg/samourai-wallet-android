@@ -24,8 +24,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomActivity;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -80,7 +80,7 @@ import io.reactivex.schedulers.Schedulers;
 
 import static com.samourai.wallet.util.LogUtil.debug;
 
-public class UTXOSActivity extends SamouraiActivity implements ActionMode.Callback {
+public class UTXOSActivity extends AnomActivity implements ActionMode.Callback {
 
 
     private boolean shownWalletLoadingMessage = false;
@@ -452,7 +452,7 @@ public class UTXOSActivity extends SamouraiActivity implements ActionMode.Callba
 //                    Log.d("UTXOActivity", "unmarked");
                         if (FormatsUtil.getInstance().isValidBech32(displayData.address)) {
                             totalP2WPKH += displayData.amount;
-                        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), displayData.address).isP2SHAddress()) {
+                        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), displayData.address).isP2SHAddress()) {
                             totalP2SH_P2WPKH += displayData.amount;
                         } else {
                             totalP2PKH += displayData.amount;

@@ -44,8 +44,8 @@ import com.samourai.http.client.AndroidHttpClient;
 import com.samourai.http.client.IHttpClient;
 import one.anom.wallet.BatchSendActivity;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomActivity;
+import one.anom.wallet.AnomWallet;
 import one.anom.wallet.TxAnimUIActivity;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
@@ -132,7 +132,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class SendActivity extends SamouraiActivity {
+public class SendActivity extends AnomActivity {
 
     private final static int SCAN_QR = 2012;
     private final static int RICOCHET = 2013;
@@ -719,7 +719,7 @@ public class SendActivity extends SamouraiActivity {
     private Completable setUpRicochetFees() {
         TorManager torManager = TorManager.INSTANCE;
         IHttpClient httpClient = new AndroidHttpClient(WebUtil.getInstance(getApplicationContext()), torManager);
-        XManagerClient xManagerClient = new XManagerClient(SamouraiWallet.getInstance().isTestNet(), torManager.isConnected(), httpClient);
+        XManagerClient xManagerClient = new XManagerClient(AnomWallet.getInstance().isTestNet(), torManager.isConnected(), httpClient);
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.USE_RICOCHET, false)) {
             Completable completable = Completable.fromCallable(() -> {
                 String feeAddress = xManagerClient.getAddressOrDefault(XManagerService.RICOCHET);
@@ -1143,7 +1143,7 @@ public class SendActivity extends SamouraiActivity {
             changeType = 84;
         } else if (PrefsUtil.getInstance(SendActivity.this).getValue(PrefsUtil.USE_LIKE_TYPED_CHANGE, true) == false) {
             changeType = 84;
-        } else if (FormatsUtil.getInstance().isValidBech32(address) || Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+        } else if (FormatsUtil.getInstance().isValidBech32(address) || Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
             changeType = FormatsUtil.getInstance().isValidBech32(address) ? 84 : 49;
         } else {
             changeType = 44;
@@ -1167,7 +1167,7 @@ public class SendActivity extends SamouraiActivity {
         if (FormatsUtil.getInstance().isValidBech32(address) || account == WhirlpoolMeta.getInstance(SendActivity.this).getWhirlpoolPostmix()) {
             neededAmount += FeeUtil.getInstance().estimatedFeeSegwit(0, 0, UTXOFactory.getInstance().getCountP2WPKH(), 4).longValue();
 //                    Log.d("SendActivity", "segwit:" + neededAmount);
-        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
             neededAmount += FeeUtil.getInstance().estimatedFeeSegwit(0, UTXOFactory.getInstance().getCountP2SH_P2WPKH(), 0, 4).longValue();
 //                    Log.d("SendActivity", "segwit:" + neededAmount);
         } else {
@@ -1175,7 +1175,7 @@ public class SendActivity extends SamouraiActivity {
 //                    Log.d("SendActivity", "p2pkh:" + neededAmount);
         }
         neededAmount += amount;
-        neededAmount += SamouraiWallet.bDust.longValue();
+        neededAmount += AnomWallet.bDust.longValue();
 
         // get all UTXO
         List<UTXO> utxos = new ArrayList<>();
@@ -1327,11 +1327,11 @@ public class SendActivity extends SamouraiActivity {
                 Log.d("SendActivity", "set 1 P2WPKH 2x");
                 _utxos1 = utxosP2WPKH;
                 selectedP2WPKH = true;
-            } else if (!FormatsUtil.getInstance().isValidBech32(address) && (valueP2SH_P2WPKH > (neededAmount * 2)) && Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+            } else if (!FormatsUtil.getInstance().isValidBech32(address) && (valueP2SH_P2WPKH > (neededAmount * 2)) && Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                 Log.d("SendActivity", "set 1 P2SH_P2WPKH 2x");
                 _utxos1 = utxosP2SH_P2WPKH;
                 selectedP2SH_P2WPKH = true;
-            } else if (!FormatsUtil.getInstance().isValidBech32(address) && (valueP2PKH > (neededAmount * 2)) && !Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+            } else if (!FormatsUtil.getInstance().isValidBech32(address) && (valueP2PKH > (neededAmount * 2)) && !Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
                 Log.d("SendActivity", "set 1 P2PKH 2x");
                 _utxos1 = utxosP2PKH;
                 selectedP2PKH = true;
@@ -1434,7 +1434,7 @@ public class SendActivity extends SamouraiActivity {
             // get smallest 1 UTXO > than spend + fee + dust
             for (UTXO u : _utxos) {
                 Triple<Integer, Integer, Integer> outpointTypes = FeeUtil.getInstance().getOutpointCount(new Vector(u.getOutpoints()));
-                if (u.getValue() >= (amount + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(outpointTypes.getLeft(), outpointTypes.getMiddle(), outpointTypes.getRight(), 2).longValue())) {
+                if (u.getValue() >= (amount + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(outpointTypes.getLeft(), outpointTypes.getMiddle(), outpointTypes.getRight(), 2).longValue())) {
                     selectedUTXO.add(u);
                     totalValueSelected += u.getValue();
                     Log.d("SendActivity", "spend type:" + SPEND_TYPE);
@@ -1469,7 +1469,7 @@ public class SendActivity extends SamouraiActivity {
                     p2pkh += outpointTypes.getLeft();
                     p2sh_p2wpkh += outpointTypes.getMiddle();
                     p2wpkh += outpointTypes.getRight();
-                    if (totalValueSelected >= (amount + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, 2).longValue())) {
+                    if (totalValueSelected >= (amount + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, 2).longValue())) {
                         Log.d("SendActivity", "spend type:" + SPEND_TYPE);
                         Log.d("SendActivity", "multiple outputs");
                         Log.d("SendActivity", "amount:" + amount);
@@ -1504,7 +1504,7 @@ public class SendActivity extends SamouraiActivity {
                     if (Bech32Util.getInstance().isP2WPKHScript(Hex.toHexString(output.getScriptBytes()))) {
                         receivers.put(Bech32Util.getInstance().getAddressFromScript(script), BigInteger.valueOf(output.getValue().longValue()));
                     } else {
-                        receivers.put(script.getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString(), BigInteger.valueOf(output.getValue().longValue()));
+                        receivers.put(script.getToAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString(), BigInteger.valueOf(output.getValue().longValue()));
                     }
                     outputAmount += output.getValue().longValue();
                 } catch (Exception e) {
@@ -1568,7 +1568,7 @@ public class SendActivity extends SamouraiActivity {
             change = totalValueSelected - (amount + fee.longValue());
 //                    Log.d("SendActivity", "change:" + change);
 
-            if (change > 0L && change < SamouraiWallet.bDust.longValue() && SPEND_TYPE == SPEND_SIMPLE) {
+            if (change > 0L && change < AnomWallet.bDust.longValue() && SPEND_TYPE == SPEND_SIMPLE) {
 
                 AlertDialog.Builder dlg = new AlertDialog.Builder(SendActivity.this)
                         .setTitle(R.string.app_name)
@@ -2120,10 +2120,10 @@ public class SendActivity extends SamouraiActivity {
                     PaymentAddress paymentAddress = BIP47Util.getInstance(this).getSendAddress(_pcode, BIP47Meta.getInstance().getOutgoingIdx(pcode));
 
                     if (BIP47Meta.getInstance().getSegwit(pcode)) {
-                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                         strDestinationBTCAddress = segwitAddress.getBech32AsString();
                     } else {
-                        strDestinationBTCAddress = paymentAddress.getSendECKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        strDestinationBTCAddress = paymentAddress.getSendECKey().toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     }
 
                     strPCode = _pcode.toString();
@@ -2213,10 +2213,10 @@ public class SendActivity extends SamouraiActivity {
 
 //        Log.i("SendFragment", "insufficient funds:" + insufficientFunds);
 
-        if (amount >= SamouraiWallet.bDust.longValue() && FormatsUtil.getInstance().isValidBitcoinAddress(getToAddress())) {
+        if (amount >= AnomWallet.bDust.longValue() && FormatsUtil.getInstance().isValidBitcoinAddress(getToAddress())) {
             isValid = true;
         } else
-            isValid = amount >= SamouraiWallet.bDust.longValue() && strDestinationBTCAddress != null && FormatsUtil.getInstance().isValidBitcoinAddress(strDestinationBTCAddress);
+            isValid = amount >= AnomWallet.bDust.longValue() && strDestinationBTCAddress != null && FormatsUtil.getInstance().isValidBitcoinAddress(strDestinationBTCAddress);
 
         if (insufficientFunds) {
             Toast.makeText(this, getString(R.string.insufficient_funds), Toast.LENGTH_SHORT).show();

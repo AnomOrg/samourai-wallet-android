@@ -43,7 +43,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
@@ -97,7 +96,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Vector;
 
-public class BatchSendActivity extends SamouraiActivity {
+public class BatchSendActivity extends AnomActivity {
 
     private final static int SCAN_QR = 2012;
     private final static int FEE_SELECT = 2013;
@@ -647,11 +646,11 @@ public class BatchSendActivity extends SamouraiActivity {
                     PaymentAddress paymentAddress = BIP47Util.getInstance(BatchSendActivity.this).getSendAddress(_pcode, BIP47Meta.getInstance().getOutgoingIdx(pcode));
 
                     if(BIP47Meta.getInstance().getSegwit(pcode))    {
-                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        SegwitAddress segwitAddress = new SegwitAddress(paymentAddress.getSendECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                         strDestinationBTCAddress = segwitAddress.getBech32AsString();
                     }
                     else    {
-                        strDestinationBTCAddress = paymentAddress.getSendECKey().toAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        strDestinationBTCAddress = paymentAddress.getSendECKey().toAddress(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     }
 
                     strPCode = _pcode.toString();
@@ -735,10 +734,10 @@ public class BatchSendActivity extends SamouraiActivity {
 
 //        Log.i("SendFragment", "insufficient funds:" + insufficientFunds);
 
-        if(amount >= SamouraiWallet.bDust.longValue() && FormatsUtil.getInstance().isValidBitcoinAddress(edAddress.getText().toString().trim())) {
+        if(amount >= AnomWallet.bDust.longValue() && FormatsUtil.getInstance().isValidBitcoinAddress(edAddress.getText().toString().trim())) {
             isValid = true;
         }
-        else if(amount >= SamouraiWallet.bDust.longValue() && strDestinationBTCAddress != null && FormatsUtil.getInstance().isValidBitcoinAddress(strDestinationBTCAddress)) {
+        else if(amount >= AnomWallet.bDust.longValue() && strDestinationBTCAddress != null && FormatsUtil.getInstance().isValidBitcoinAddress(strDestinationBTCAddress)) {
             isValid = true;
         }
         else    {
@@ -807,7 +806,7 @@ public class BatchSendActivity extends SamouraiActivity {
             p2pkh += outpointTypes.getLeft();
             p2sh_p2wpkh += outpointTypes.getMiddle();
             p2wpkh += outpointTypes.getRight();
-            if(totalValueSelected >= (amount + SamouraiWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, receivers.size() + 1).longValue()))    {
+            if(totalValueSelected >= (amount + AnomWallet.bDust.longValue() + FeeUtil.getInstance().estimatedFeeSegwit(p2pkh, p2sh_p2wpkh, p2wpkh, receivers.size() + 1).longValue()))    {
                 break;
             }
         }
@@ -871,14 +870,14 @@ public class BatchSendActivity extends SamouraiActivity {
                         }
                     }
                     else    {
-                        Address _address = input.getConnectedOutput().getAddressFromP2SH(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        Address _address = input.getConnectedOutput().getAddressFromP2SH(AnomWallet.getInstance().getCurrentNetworkParams());
                         if(_address != null)    {
                             _addr = _address.toString();
                             _isBIP49 = true;
                         }
                     }
                     if(_addr == null)    {
-                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
+                        _addr = input.getConnectedOutput().getAddressFromP2PKHScript(AnomWallet.getInstance().getCurrentNetworkParams()).toString();
                     }
 
                     String path = APIFactory.getInstance(BatchSendActivity.this).getUnspentPaths().get(_addr);

@@ -1,6 +1,6 @@
 package com.samourai.wallet.utxos;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.util.FormatsUtil;
 
 import org.bitcoinj.core.Address;
@@ -250,7 +250,7 @@ public class UTXOUtil {
         if (FormatsUtil.getInstance().isValidBech32(address)) {
             // is bech32: p2wpkh BIP84
             return AddressTypes.SEGWIT_NATIVE;
-        } else if (Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
+        } else if (Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), address).isP2SHAddress()) {
             // is P2SH wrapped segwit BIP49
             return AddressTypes.SEGWIT_COMPAT;
         } else {

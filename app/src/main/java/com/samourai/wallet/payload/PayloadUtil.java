@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -245,7 +245,7 @@ public class PayloadUtil	{
         try {
             JSONObject wallet = new JSONObject();
 
-            wallet.put("testnet", SamouraiWallet.getInstance().isTestNet() ? true : false);
+            wallet.put("testnet", AnomWallet.getInstance().isTestNet() ? true : false);
 
             if(HD_WalletFactory.getInstance(context).get().getSeedHex() != null) {
                 wallet.put("seed", HD_WalletFactory.getInstance(context).get().getSeedHex());
@@ -397,7 +397,7 @@ public class PayloadUtil	{
 
         // save optional external storage backup
         // encrypted using passphrase; cannot be used for restored wallets that do not use a passphrase
-        if(SamouraiWallet.getInstance().hasPassphrase(context) && isExternalStorageWritable() && PrefsUtil.getInstance(context).getValue(PrefsUtil.AUTO_BACKUP, true) && HD_WalletFactory.getInstance(context).get() != null) {
+        if(AnomWallet.getInstance().hasPassphrase(context) && isExternalStorageWritable() && PrefsUtil.getInstance(context).getValue(PrefsUtil.AUTO_BACKUP, true) && HD_WalletFactory.getInstance(context).get() != null) {
 
             final String passphrase = HD_WalletFactory.getInstance(context).get().getPassphrase();
             String encrypted = null;
@@ -433,7 +433,7 @@ public class PayloadUtil	{
         byte[] seed = org.apache.commons.codec.binary.Hex.decodeHex(((String) jsonobj.get("seed")).toCharArray());
         String strPassphrase = jsonobj.getString("passphrase");
         MnemonicCode mc = computeMnemonicCode(ctx);
-        return new HD_Wallet(purpose, mc, params, seed, strPassphrase, SamouraiWallet.NB_ACCOUNTS);
+        return new HD_Wallet(purpose, mc, params, seed, strPassphrase, AnomWallet.NB_ACCOUNTS);
     }
 
     public synchronized HD_Wallet restoreWalletfromJSON(JSONObject obj) throws DecoderException, MnemonicException.MnemonicLengthException {
@@ -442,7 +442,7 @@ public class PayloadUtil	{
 
         HD_Wallet hdw = null;
 
-        NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+        NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
 
         JSONObject wallet = null;
         JSONObject meta = null;
@@ -472,17 +472,17 @@ public class PayloadUtil	{
             if(wallet != null) {
 
                 if(wallet.has("testnet"))    {
-                    SamouraiWallet.getInstance().setCurrentNetworkParams(wallet.getBoolean("testnet") ? TestNet3Params.get() : MainNetParams.get());
+                    AnomWallet.getInstance().setCurrentNetworkParams(wallet.getBoolean("testnet") ? TestNet3Params.get() : MainNetParams.get());
                     PrefsUtil.getInstance(context).setValue(PrefsUtil.TESTNET, wallet.getBoolean("testnet"));
                 }
                 else    {
-                    SamouraiWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
+                    AnomWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
                     PrefsUtil.getInstance(context).removeValue(PrefsUtil.TESTNET);
                 }
 
                 hdw = newHDWallet(context, 44, wallet, params);
-                hdw.getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getReceive().setAddrIdx(wallet.has("receiveIdx") ? wallet.getInt("receiveIdx") : 0);
-                hdw.getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChange().setAddrIdx(wallet.has("changeIdx") ? wallet.getInt("changeIdx") : 0);
+                hdw.getAccount(AnomWallet.SAMOURAI_ACCOUNT).getReceive().setAddrIdx(wallet.has("receiveIdx") ? wallet.getInt("receiveIdx") : 0);
+                hdw.getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChange().setAddrIdx(wallet.has("changeIdx") ? wallet.getInt("changeIdx") : 0);
 
                 if(wallet.has("accounts")) {
                     JSONArray accounts = wallet.getJSONArray("accounts");

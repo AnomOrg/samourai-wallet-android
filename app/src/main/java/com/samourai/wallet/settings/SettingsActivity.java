@@ -8,10 +8,10 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.transition.MaterialSharedAxis;
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.AnomActivity;
 import com.samourai.wallet.util.AppUtil;
 
-public class SettingsActivity extends SamouraiActivity {
+public class SettingsActivity extends AnomActivity {
 
     enum ActiveFragment {MAIN, SETTING}
 

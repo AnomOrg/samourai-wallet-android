@@ -5,7 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import one.anom.wallet.R;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.util.WebUtil;
@@ -57,12 +57,12 @@ public class PushTx {
             String response = null;
 
             if(!TorManager.INSTANCE.isRequired())    {
-                String _base = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : WebUtil.SAMOURAI_API2;
+                String _base = AnomWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET : WebUtil.SAMOURAI_API2;
                 debug("PushTx", strStrictVouts);
                 response = WebUtil.getInstance(context).postURL(_base + _url + "?at=" + APIFactory.getInstance(context).getAccessToken(), "tx=" + hexString + strStrictVouts);
             }
             else    {
-                String _base = SamouraiWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR : WebUtil.SAMOURAI_API2_TOR;
+                String _base = AnomWallet.getInstance().isTestNet() ? WebUtil.SAMOURAI_API2_TESTNET_TOR : WebUtil.SAMOURAI_API2_TOR;
                 HashMap<String,String> args = new HashMap<String,String>();
                 args.put("tx", hexString);
                 if(strStrictVouts.length() > "&strict_mode_vouts=".length())    {

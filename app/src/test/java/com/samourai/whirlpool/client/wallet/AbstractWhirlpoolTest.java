@@ -3,7 +3,7 @@ package com.samourai.whirlpool.client.wallet;
 import android.content.Context;
 
 import com.samourai.stomp.client.AndroidStompClient;
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.wallet.bip47.BIP47Util;
@@ -64,7 +64,7 @@ public abstract class AbstractWhirlpoolTest {
         hdWalletFactoryGeneric = new HD_WalletFactoryGeneric(mc);
 
         // init Samourai Wallet
-        SamouraiWallet.getInstance().setCurrentNetworkParams(networkParameters);
+        AnomWallet.getInstance().setCurrentNetworkParams(networkParameters);
     }
 
     protected ECKey computeECKey(String utxoKey) {

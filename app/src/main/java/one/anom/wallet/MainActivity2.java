@@ -21,7 +21,6 @@ import android.widget.Toast;
 
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.progressindicator.ProgressIndicator;
-import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
@@ -132,7 +131,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 
         if (PrefsUtil.getInstance(MainActivity2.this).getValue(PrefsUtil.TESTNET, false) == true) {
-            SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+            AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
         }
 
 //        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -215,7 +214,7 @@ public class MainActivity2 extends AppCompatActivity {
                 && !PrefsUtil.getInstance(this).getValue(PrefsUtil.OFFLINE,false)
                 && !TorManager.INSTANCE.isConnected()) {
 
-            ((SamouraiApplication) getApplication()).startService();
+            ((AnomApplication) getApplication()).startService();
             TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
                 if (torState == TorManager.TorState.ON) {
                     initAppOnResume();
@@ -452,7 +451,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).removeValue(PrefsUtil.TESTNET);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(MainNetParams.get());
                         initDialog();
 
                     }
@@ -462,7 +461,7 @@ public class MainActivity2 extends AppCompatActivity {
 
                         dialog.dismiss();
                         PrefsUtil.getInstance(MainActivity2.this).setValue(PrefsUtil.TESTNET, true);
-                        SamouraiWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
+                        AnomWallet.getInstance().setCurrentNetworkParams(TestNet3Params.get());
                         initDialog();
 
                     }

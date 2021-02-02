@@ -2,14 +2,14 @@ package com.samourai.wallet.bip47;
 
 import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import java.math.BigInteger;
 
 public class SendNotifTxFactory {
 
-    public static final BigInteger _bNotifTxValue = SamouraiWallet.bDust;
-    public static final BigInteger _bSWFee = SamouraiWallet.bFee;
+    public static final BigInteger _bNotifTxValue = AnomWallet.bDust;
+    public static final BigInteger _bSWFee = AnomWallet.bFee;
 //    public static final BigInteger _bSWCeilingFee = BigInteger.valueOf(50000L);
 
     static SendNotifTxFactory _instance = null;
@@ -31,7 +31,7 @@ public class SendNotifTxFactory {
     }
 
     public void setAddress(String address) {
-        if(SamouraiWallet.getInstance().isTestNet()){
+        if(AnomWallet.getInstance().isTestNet()){
             TESTNET_SAMOURAI_NOTIF_TX_FEE_ADDRESS = address;
         }else {
             SAMOURAI_NOTIF_TX_FEE_ADDRESS = address;

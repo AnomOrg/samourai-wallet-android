@@ -3,7 +3,7 @@ package com.samourai.wallet.bip47;
 import android.content.Context;
 import android.widget.Toast;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.bip47.rpc.AndroidSecretPointFactory;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;
@@ -58,7 +58,7 @@ public class BIP47Util extends BIP47UtilGeneric {
     }
     
     private NetworkParameters getNetworkParams() {
-        return SamouraiWallet.getInstance().getCurrentNetworkParams();
+        return AnomWallet.getInstance().getCurrentNetworkParams();
     }
 
     public void reset()  {

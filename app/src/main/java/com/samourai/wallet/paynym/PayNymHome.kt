@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.common.base.Splitter
 import one.anom.wallet.R
-import one.anom.wallet.SamouraiActivity
+import one.anom.wallet.AnomActivity
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.bip47.BIP47Meta
 import com.samourai.wallet.bip47.BIP47Util
@@ -48,7 +48,7 @@ import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
 import java.util.*
 
-class PayNymHome : SamouraiActivity() {
+class PayNymHome : AnomActivity() {
 
     private var paynymTabLayout: TabLayout? = null
     private var payNymViewPager: ViewPager? = null

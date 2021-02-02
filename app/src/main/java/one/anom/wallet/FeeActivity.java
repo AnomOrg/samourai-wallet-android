@@ -9,7 +9,6 @@ import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
 
-import one.anom.wallet.R;
 import com.samourai.wallet.send.FeeUtil;
 import com.samourai.wallet.send.SuggestedFee;
 import com.samourai.wallet.util.AppUtil;
@@ -20,7 +19,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-public class FeeActivity extends SamouraiActivity {
+public class FeeActivity extends AnomActivity {
 
     private Button btLowFee = null;
     private Button btAutoFee = null;

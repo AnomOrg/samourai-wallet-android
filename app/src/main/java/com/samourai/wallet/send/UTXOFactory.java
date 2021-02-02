@@ -2,7 +2,7 @@ package com.samourai.wallet.send;
 
 import android.content.Context;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.whirlpool.WhirlpoolMeta;
 
@@ -532,7 +532,7 @@ public class UTXOFactory {
             }
         }
 
-        Transaction tx = new Transaction(SamouraiWallet.getInstance().getCurrentNetworkParams(), Hex.decode(hexTx));
+        Transaction tx = new Transaction(AnomWallet.getInstance().getCurrentNetworkParams(), Hex.decode(hexTx));
         for (TransactionInput input : tx.getInputs()) {
             String hash = input.getOutpoint().getHash().toString();
             int idx = (int) input.getOutpoint().getIndex();

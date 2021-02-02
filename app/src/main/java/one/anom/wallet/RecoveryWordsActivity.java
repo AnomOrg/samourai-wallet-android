@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,20 +13,23 @@ import android.view.WindowManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.TimeOutUtil;
 
+
 public class RecoveryWordsActivity extends Activity {
     private GridView recoveryWordsGrid;
     private Button returnToWallet;
+    private CheckBox desclaimerCheckbox;
     private CheckBox disclaimerCheckbox;
- //   private TextView disclaimerText;
+   // private TextView disclaimerText;
     private Boolean accepted = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,28 +38,34 @@ public class RecoveryWordsActivity extends Activity {
         if (getActionBar() != null) {
             getActionBar().hide();
         }
-
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         recoveryWordsGrid = findViewById(R.id.grid_recovery_words);
         returnToWallet = findViewById(R.id.return_to_wallet);
-        disclaimerCheckbox = findViewById(R.id.disclaimer_checkbox);
-      //  disclaimerText = findViewById(R.id.declaimer_recovery_words_text);
+        desclaimerCheckbox = findViewById(R.id.disclaimer_checkbox);
+
         String recoveryWords = getIntent().getExtras().getString("BIP39_WORD_LIST");
         assert recoveryWords != null;
         String words[] = recoveryWords.trim().split(" ");
         RecoveryWordGridAdapter adapter = new RecoveryWordGridAdapter(this, words);
         recoveryWordsGrid.setAdapter(adapter);
+
         disclaimerCheckbox.setOnCheckedChangeListener((compoundButton, b) -> {
             accepted = b;
             setDisclaimerChange();
         });
-
       /*  disclaimerText.setOnClickListener(v -> {
             accepted = !accepted;
             disclaimerCheckbox.setChecked(accepted);
             setDisclaimerChange();
         });
 */
+        desclaimerCheckbox.setOnCheckedChangeListener((compoundButton, b) -> {
+            returnToWallet.setTextColor(b ? getResources().getColor(R.color.accent) : Color.GRAY);
+            returnToWallet.setAlpha(b ? 1 : 0.6f);
+            returnToWallet.setClickable(b);
+            returnToWallet.setFocusable(b);
+        });
+
         returnToWallet.setOnClickListener(view -> {
             AccessFactory.getInstance(RecoveryWordsActivity.this).setIsLoggedIn(true);
             TimeOutUtil.getInstance().updatePin();
@@ -68,17 +78,10 @@ public class RecoveryWordsActivity extends Activity {
 
         //set grid no of Columns based on display density
         int densityDpi = getResources().getDisplayMetrics().densityDpi;
-        if (densityDpi <= DisplayMetrics.DENSITY_MEDIUM) {
+        if(densityDpi<= DisplayMetrics.DENSITY_MEDIUM){
             recoveryWordsGrid.setNumColumns(2);
         }
 
-    }
-
-    private void setDisclaimerChange() {
-        returnToWallet.setTextColor(accepted ? getResources().getColor(R.color.accent) : Color.GRAY);
-        returnToWallet.setAlpha(accepted ? 1 : 0.6f);
-        returnToWallet.setClickable(accepted);
-        returnToWallet.setFocusable(accepted);
     }
 
     private class RecoveryWordGridAdapter extends BaseAdapter {
@@ -132,4 +135,12 @@ public class RecoveryWordsActivity extends Activity {
         private TextView number;
         private TextView word;
     }
+
+    private void setDisclaimerChange() {
+        returnToWallet.setTextColor(accepted ? getResources().getColor(R.color.accent) : Color.GRAY);
+        returnToWallet.setAlpha(accepted ? 1 : 0.6f);
+        returnToWallet.setClickable(accepted);
+        returnToWallet.setFocusable(accepted);
+    }
+
 }

@@ -21,8 +21,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.samourai.http.client.AndroidHttpClient
 import com.samourai.http.client.IHttpClient
-import one.anom.wallet.SamouraiActivity
-import one.anom.wallet.SamouraiWallet
+import one.anom.wallet.AnomActivity
+import one.anom.wallet.AnomWallet
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.api.Tx
@@ -73,7 +73,7 @@ import java.security.NoSuchProviderException
 import java.security.spec.InvalidKeySpecException
 import java.util.*
 
-class PayNymDetailsActivity : SamouraiActivity() {
+class PayNymDetailsActivity : AnomActivity() {
 
     private var pcode: String? = null
     private var label: String? = null
@@ -436,7 +436,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
         scope.launch(Dispatchers.IO) {
             val torManager = TorManager
             val httpClient: IHttpClient = AndroidHttpClient(com.samourai.wallet.util.WebUtil.getInstance(applicationContext), torManager)
-            val xManagerClient = XManagerClient(SamouraiWallet.getInstance().isTestNet, torManager.isConnected(), httpClient)
+            val xManagerClient = XManagerClient(AnomWallet.getInstance().isTestNet, torManager.isConnected(), httpClient)
             val address = xManagerClient.getAddressOrDefault(XManagerService.BIP47)
             SendNotifTxFactory.getInstance().setAddress(address)
             //
@@ -482,7 +482,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
             // get smallest 1 UTXO > than spend + fee + sw fee + dust
             //
             for (u in _utxos!!) {
-                if (u!!.value >= amount + SamouraiWallet.bDust.toLong() + FeeUtil.getInstance().estimatedFee(1, 4).toLong()) {
+                if (u!!.value >= amount + AnomWallet.bDust.toLong() + FeeUtil.getInstance().estimatedFee(1, 4).toLong()) {
                     selectedUTXO.add(u)
                     totalValueSelected += u.value
                     Log.d("PayNymDetailsActivity", "value selected:" + u.value)
@@ -518,7 +518,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
                     selectedUTXO.add(u)
                     totalValueSelected += u!!.value
                     selected += u.outpoints.size
-                    if (totalValueSelected >= amount + SamouraiWallet.bDust.toLong() + FeeUtil.getInstance().estimatedFee(selected, 4).toLong()) {
+                    if (totalValueSelected >= amount + AnomWallet.bDust.toLong() + FeeUtil.getInstance().estimatedFee(selected, 4).toLong()) {
                         Log.d("PayNymDetailsActivity", "multiple outputs")
                         Log.d("PayNymDetailsActivity", "total value selected:$totalValueSelected")
                         Log.d("PayNymDetailsActivity", "nb inputs:" + u.outpoints.size)
@@ -594,7 +594,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
                 if (script.scriptType == Script.ScriptType.NO_TYPE) {
                     continue
                 }
-                val input = MyTransactionInput(SamouraiWallet.getInstance().currentNetworkParams, null, ByteArray(0), o, o.txHash.toString(), o.txOutputN)
+                val input = MyTransactionInput(AnomWallet.getInstance().currentNetworkParams, null, ByteArray(0), o, o.txHash.toString(), o.txOutputN)
                 inputs.add(input)
             }
             //
@@ -625,7 +625,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
                 address = if (Bech32Util.getInstance().isBech32Script(Hex.toHexString(scriptBytes))) {
                     Bech32Util.getInstance().getAddressFromScript(Hex.toHexString(scriptBytes))
                 } else {
-                    Script(scriptBytes).getToAddress(SamouraiWallet.getInstance().currentNetworkParams).toString()
+                    Script(scriptBytes).getToAddress(AnomWallet.getInstance().currentNetworkParams).toString()
                 }
                 //            String address = inputScript.getToAddress(SamouraiWallet.getInstance().getCurrentNetworkParams()).toString();
                 val ecKey = SendFactory.getPrivKey(address, 0)
@@ -637,7 +637,7 @@ class PayNymDetailsActivity : SamouraiActivity() {
                 // use outpoint for payload masking
                 //
                 val privkey = ecKey.privKeyBytes
-                val pubkey = payment_code.notificationAddress(SamouraiWallet.getInstance().currentNetworkParams).pubKey
+                val pubkey = payment_code.notificationAddress(AnomWallet.getInstance().currentNetworkParams).pubKey
                 val outpoint = outPoint?.bitcoinSerialize()
                 //                Log.i("PayNymDetailsActivity", "outpoint:" + Hex.toHexString(outpoint));
 //                Log.i("PayNymDetailsActivity", "payer shared secret:" + Hex.toHexString(new SecretPoint(privkey, pubkey).ECDHSecretAsBytes()));
@@ -660,8 +660,8 @@ class PayNymDetailsActivity : SamouraiActivity() {
             }
             val receivers = HashMap<String, BigInteger>()
             receivers[Hex.toHexString(op_return)] = BigInteger.ZERO
-            receivers[payment_code.notificationAddress(SamouraiWallet.getInstance().currentNetworkParams).addressString] = SendNotifTxFactory._bNotifTxValue
-            receivers[if (SamouraiWallet.getInstance().isTestNet) SendNotifTxFactory.getInstance().TESTNET_SAMOURAI_NOTIF_TX_FEE_ADDRESS else SendNotifTxFactory.getInstance().SAMOURAI_NOTIF_TX_FEE_ADDRESS] = SendNotifTxFactory._bSWFee
+            receivers[payment_code.notificationAddress(AnomWallet.getInstance().currentNetworkParams).addressString] = SendNotifTxFactory._bNotifTxValue
+            receivers[if (AnomWallet.getInstance().isTestNet) SendNotifTxFactory.getInstance().TESTNET_SAMOURAI_NOTIF_TX_FEE_ADDRESS else SendNotifTxFactory.getInstance().SAMOURAI_NOTIF_TX_FEE_ADDRESS] = SendNotifTxFactory._bSWFee
             val change = totalValueSelected - (amount + fee.toLong())
             if (change > 0L) {
                 val change_address = BIP84Util.getInstance(this@PayNymDetailsActivity).getAddressAt(AddressFactory.CHANGE_CHAIN, BIP84Util.getInstance(this@PayNymDetailsActivity).wallet.getAccount(0).change.addrIdx).bech32AsString

@@ -2,7 +2,7 @@ package com.samourai.wallet.send;
 
 import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.NetworkParameters;
@@ -159,7 +159,7 @@ public class FeeUtil extends com.samourai.wallet.util.FeeUtil {
     }
 
     public Triple<Integer, Integer, Integer> getOutpointCount(Vector<MyTransactionOutPoint> outpoints) {
-        NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+        NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
         return super.getOutpointCount(outpoints, params);
     }
 }

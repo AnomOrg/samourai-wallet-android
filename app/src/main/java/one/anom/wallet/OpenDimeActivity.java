@@ -56,7 +56,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.send.SweepUtil;
@@ -70,7 +69,7 @@ import org.bitcoinj.core.Coin;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class OpenDimeActivity extends SamouraiActivity {
+public class OpenDimeActivity extends AnomActivity {
 
     static {
         FileSystemFactory.registerFileSystem(new JavaFsFileSystemCreator());
@@ -202,7 +201,7 @@ public class OpenDimeActivity extends SamouraiActivity {
 
                 if(strAddress != null)    {
                     String blockExplorer = "https://m.oxt.me/address/";
-                    if (SamouraiWallet.getInstance().isTestNet()) {
+                    if (AnomWallet.getInstance().isTestNet()) {
                         blockExplorer = "https://blockstream.info/testnet/address/";
                     }
 

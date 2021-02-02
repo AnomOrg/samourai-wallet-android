@@ -19,8 +19,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import one.anom.wallet.MainActivity2
-import one.anom.wallet.SamouraiActivity
-import one.anom.wallet.SamouraiWallet
+import one.anom.wallet.AnomActivity
+import one.anom.wallet.AnomWallet
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.api.Tx
 import com.samourai.wallet.bip47.BIP47Meta
@@ -46,7 +46,7 @@ import org.json.JSONObject
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 
-class TxDetailsActivity : SamouraiActivity() {
+class TxDetailsActivity : AnomActivity() {
     private var payNymAvatar: CircleImageView? = null
     private var payNymUsername: TextView? = null
     private var btcUnit: TextView? = null
@@ -360,7 +360,7 @@ class TxDetailsActivity : SamouraiActivity() {
      */
     private fun doExplorerView() {
         var blockExplorer = "https://m.oxt.me/transaction/"
-        if (SamouraiWallet.getInstance().isTestNet) {
+        if (AnomWallet.getInstance().isTestNet) {
             blockExplorer = "https://blockstream.info/testnet/"
         }
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(blockExplorer + tx!!.hash))

@@ -3,7 +3,7 @@ package com.samourai.wallet.network.dojo;
 import android.content.Context;
 import android.util.Log;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.util.WebUtil;
 
@@ -80,7 +80,7 @@ public class DojoUtil {
                    DojoUtil.dojoParams = obj.toString();
                }
            }
-           if(SamouraiWallet.getInstance().isTestNet())    {
+           if(AnomWallet.getInstance().isTestNet())    {
                WebUtil.SAMOURAI_API2_TESTNET_TOR = url;
            }
            else    {
@@ -97,7 +97,7 @@ public class DojoUtil {
     public synchronized void removeDojoParams() {
         DojoUtil.dojoParams = null;
 
-        if(SamouraiWallet.getInstance().isTestNet())    {
+        if(AnomWallet.getInstance().isTestNet())    {
             WebUtil.SAMOURAI_API2_TESTNET_TOR = WebUtil.SAMOURAI_API2_TESTNET_TOR_DIST;
         }
         else    {
@@ -187,7 +187,7 @@ public class DojoUtil {
 
             if (dojoParams != null) {
 
-                if (SamouraiWallet.getInstance().isTestNet()) {
+                if (AnomWallet.getInstance().isTestNet()) {
                     WebUtil.SAMOURAI_API2_TESTNET_TOR = getUrl(dojoParams);
                 } else {
                     WebUtil.SAMOURAI_API2_TOR = getUrl(dojoParams);

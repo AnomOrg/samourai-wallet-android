@@ -21,7 +21,6 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import one.anom.wallet.R;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_WalletFactory;
 import com.samourai.wallet.ricochet.RicochetMeta;
@@ -39,7 +38,7 @@ import org.bitcoinj.core.ECKey;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AddressCalcActivity extends SamouraiActivity {
+public class AddressCalcActivity extends AnomActivity {
 
     private EditText edIndex = null;
     private Spinner spType = null;
@@ -119,7 +118,7 @@ public class AddressCalcActivity extends SamouraiActivity {
 
                     if(spType.getSelectedItemPosition() == 1)    {
                         hd_addr = BIP84Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(0).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
                     else if(spType.getSelectedItemPosition() == 2)    {
                         segwitAddress = null;
@@ -127,23 +126,23 @@ public class AddressCalcActivity extends SamouraiActivity {
                     }
                     else if(spType.getSelectedItemPosition() == 3)    {
                         hd_addr = BIP84Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(RicochetMeta.getInstance(AddressCalcActivity.this).getRicochetAccount()).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
                     else if(spType.getSelectedItemPosition() == 4)    {
                         hd_addr = BIP84Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(WhirlpoolMeta.getInstance(AddressCalcActivity.this).getWhirlpoolPremixAccount()).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
                     else if(spType.getSelectedItemPosition() == 5)    {
                         hd_addr = BIP84Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(WhirlpoolMeta.getInstance(AddressCalcActivity.this).getWhirlpoolPostmix()).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
                     else if(spType.getSelectedItemPosition() == 6)    {
                         hd_addr = BIP84Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(WhirlpoolMeta.getInstance(AddressCalcActivity.this).getWhirlpoolBadBank()).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
                     else    {
                         hd_addr = BIP49Util.getInstance(AddressCalcActivity.this).getWallet().getAccountAt(0).getChain(chain).getAddressAt(index);
-                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                        segwitAddress = new SegwitAddress(hd_addr.getECKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                     }
 
                     final ECKey ecKey;
@@ -186,7 +185,7 @@ public class AddressCalcActivity extends SamouraiActivity {
                                     String addr = strAddress;
                                     String msg = null;
 
-                                    if(FormatsUtil.getInstance().isValidBech32(addr) || Address.fromBase58(SamouraiWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress())    {
+                                    if(FormatsUtil.getInstance().isValidBech32(addr) || Address.fromBase58(AnomWallet.getInstance().getCurrentNetworkParams(), addr).isP2SHAddress())    {
 
                                         msg = AddressCalcActivity.this.getString(R.string.utxo_sign_text3);
 
@@ -222,7 +221,7 @@ public class AddressCalcActivity extends SamouraiActivity {
                             })
                             .setNegativeButton(R.string.options_display_privkey, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    String strPrivKey = ecKey.getPrivateKeyAsWiF(SamouraiWallet.getInstance().getCurrentNetworkParams());
+                                    String strPrivKey = ecKey.getPrivateKeyAsWiF(AnomWallet.getInstance().getCurrentNetworkParams());
 
                                     ImageView showQR = new ImageView(AddressCalcActivity.this);
                                     Bitmap bitmap = null;

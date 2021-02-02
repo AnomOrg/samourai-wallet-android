@@ -2,7 +2,7 @@ package com.samourai.wallet.cahoots;
 
 import android.content.Context;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.segwit.BIP84Util;
@@ -25,7 +25,7 @@ public class AndroidCahootsWallet extends CahootsWallet {
     private AddressFactory addressFactory;
 
     public AndroidCahootsWallet(Context ctx) {
-        super(computeBip84Wallet(ctx), SamouraiWallet.getInstance().getCurrentNetworkParams());
+        super(computeBip84Wallet(ctx), AnomWallet.getInstance().getCurrentNetworkParams());
         this.apiFactory = APIFactory.getInstance(ctx);
         this.addressFactory = AddressFactory.getInstance(ctx);
     }
@@ -68,7 +68,7 @@ public class AndroidCahootsWallet extends CahootsWallet {
     private static BIP84Wallet computeBip84Wallet(Context ctx) {
         try {
             HD_Wallet bip84w = BIP84Util.getInstance(ctx).getWallet();
-            NetworkParameters params = SamouraiWallet.getInstance().getCurrentNetworkParams();
+            NetworkParameters params = AnomWallet.getInstance().getCurrentNetworkParams();
             BIP84Wallet bip84Wallet = new BIP84Wallet(bip84w, params);
             return bip84Wallet;
         } catch(Exception e) {

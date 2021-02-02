@@ -4,7 +4,7 @@ import android.content.Context;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import one.anom.wallet.SamouraiWallet;
+import one.anom.wallet.AnomWallet;
 
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
@@ -82,10 +82,10 @@ public class AddressFactory {
         HD_Wallet hdw = HD_WalletFactory.getInstance(context).get();
 
         if(hdw != null)    {
-            idx = HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
-            addr = HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
-            if(canIncReceiveAddress(SamouraiWallet.SAMOURAI_ACCOUNT))	{
-                HD_WalletFactory.getInstance(context).get().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
+            idx = HD_WalletFactory.getInstance(context).get().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
+            addr = HD_WalletFactory.getInstance(context).get().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
+            if(canIncReceiveAddress(AnomWallet.SAMOURAI_ACCOUNT))	{
+                HD_WalletFactory.getInstance(context).get().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
             }
         }
@@ -104,11 +104,11 @@ public class AddressFactory {
             HD_Wallet hdw = BIP49Util.getInstance(context).getWallet();
 
             if(hdw != null)    {
-                idx = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
-                addr = BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
-                p2shp2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+                idx = BIP49Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
+                addr = BIP49Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
+                p2shp2wpkh = new SegwitAddress(addr.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
                 if(canIncBIP49ReceiveAddress(idx))	{
-                    BIP49Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
+                    BIP49Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
                 }
             }
@@ -128,11 +128,11 @@ public class AddressFactory {
         HD_Wallet hdw = BIP84Util.getInstance(context).getWallet();
 
         if(hdw != null)    {
-            idx = BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
-            addr = BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
-            p2wpkh = new SegwitAddress(addr.getPubKey(), SamouraiWallet.getInstance().getCurrentNetworkParams());
+            idx = BIP84Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddrIdx();
+            addr = BIP84Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).getAddressAt(idx);
+            p2wpkh = new SegwitAddress(addr.getPubKey(), AnomWallet.getInstance().getCurrentNetworkParams());
             if(canIncBIP84ReceiveAddress(idx))	{
-                BIP84Util.getInstance(context).getWallet().getAccount(SamouraiWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
+                BIP84Util.getInstance(context).getWallet().getAccount(AnomWallet.SAMOURAI_ACCOUNT).getChain(0).incAddrIdx();
 //                    PayloadUtil.getInstance(context).saveWalletToJSON(new CharSequenceX(AccessFactory.getInstance(context).getGUID() + AccessFactory.getInstance(context).getPIN()));
             }
         }
