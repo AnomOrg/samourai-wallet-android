@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.whirlpool.CycleDetail;
 import com.samourai.wallet.whirlpool.models.WhirlpoolUtxoViewModel;
 import com.samourai.wallet.widgets.ItemDividerDecorator;

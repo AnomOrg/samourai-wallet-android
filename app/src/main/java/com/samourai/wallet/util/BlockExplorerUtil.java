@@ -1,6 +1,6 @@
 package com.samourai.wallet.util;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 
 public class BlockExplorerUtil {
 

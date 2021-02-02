@@ -1,8 +1,6 @@
 package com.samourai.wallet.home;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 
@@ -51,10 +49,10 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.ProgressIndicator;
-import com.samourai.wallet.R;
-import com.samourai.wallet.ReceiveActivity;
-import com.samourai.wallet.SamouraiActivity;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.ReceiveActivity;
+import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.paynym.fragments.PayNymOnBoardBottomSheet;
 import com.samourai.wallet.send.soroban.meeting.SorobanMeetingListenActivity;
 import com.samourai.wallet.settings.SettingsActivity;
@@ -597,7 +595,7 @@ public class BalanceActivity extends SamouraiActivity {
 
         AppUtil.getInstance(BalanceActivity.this).checkTimeOut();
 //
-//        Intent intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+//        Intent intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
 //        LocalBroadcastManager.getInstance(BalanceActivity.this).sendBroadcast(intent);
 
     }

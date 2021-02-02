@@ -18,7 +18,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.samourai.boltzmann.processor.TxProcessorResult;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.cahoots.CahootsMode;
 
 import java.text.DecimalFormat;

@@ -9,14 +9,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.samourai.wallet.MainActivity2;
+import one.anom.wallet.MainActivity2;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.prng.PRNGFixes;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.ricochet.RicochetMeta;
 import com.samourai.wallet.segwit.BIP49Util;
 import com.samourai.wallet.segwit.BIP84Util;

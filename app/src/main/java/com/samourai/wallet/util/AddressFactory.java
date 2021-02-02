@@ -1,24 +1,18 @@
 package com.samourai.wallet.util;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import org.apache.commons.lang3.tuple.Pair;
-import org.bitcoinj.crypto.MnemonicException;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.access.AccessFactory;
-import com.samourai.wallet.crypto.DecryptionException;
+
+import one.anom.wallet.SamouraiWallet;
+
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.hd.HD_WalletFactory;
-import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.segwit.BIP49Util;
 import com.samourai.wallet.segwit.BIP84Util;
 import com.samourai.wallet.segwit.SegwitAddress;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.HashMap;
 
 public class AddressFactory {

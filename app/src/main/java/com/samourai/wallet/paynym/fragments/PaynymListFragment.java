@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.paynym.WebUtil;
 import com.samourai.wallet.paynym.paynymDetails.PayNymDetailsActivity;

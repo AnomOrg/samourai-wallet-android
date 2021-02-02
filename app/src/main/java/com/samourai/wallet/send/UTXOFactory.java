@@ -2,7 +2,7 @@ package com.samourai.wallet.send;
 
 import android.content.Context;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.whirlpool.WhirlpoolMeta;
 
@@ -10,7 +10,6 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.samourai.wallet">
+    package="one.anom.wallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -47,7 +47,7 @@
        this is because onion urls are not using https/ssl by default.
         -->
     <application
-        android:name=".SamouraiApplication"
+        android:name="one.anom.wallet.SamouraiApplication"
         android:allowBackup="false"
         tools:replace="android:allowBackup"
         android:icon="@drawable/ic_launcher"
@@ -58,34 +58,34 @@
         android:requestLegacyExternalStorage="true"
         >
         <activity
-            android:name=".utxos.UTXODetailsActivity"
+            android:name="com.samourai.wallet.utxos.UTXODetailsActivity"
             android:label=""
-            android:parentActivityName=".utxos.UTXOSActivity"
+            android:parentActivityName="com.samourai.wallet.utxos.UTXOSActivity"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".network.NetworkDashboard"
+            android:name="com.samourai.wallet.network.NetworkDashboard"
             android:label="@string/title_activity_network_dashboard"
-            android:parentActivityName=".home.BalanceActivity"
+            android:parentActivityName="com.samourai.wallet.home.BalanceActivity"
             android:theme="@style/SamouraiAppTheme" />
         <activity
-            android:name=".utxos.UTXOSActivity"
+            android:name="com.samourai.wallet.utxos.UTXOSActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/unspent_outputs"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".paynym.paynymDetails.PayNymDetailsActivity"
+            android:name="com.samourai.wallet.paynym.paynymDetails.PayNymDetailsActivity"
             android:label=""
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".paynym.addPaynym.AddPaynymActivity"
+            android:name="com.samourai.wallet.paynym.addPaynym.AddPaynymActivity"
             android:label="@string/add_new"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".paynym.PayNymHome"
+            android:name="com.samourai.wallet.paynym.PayNymHome"
             android:label="@string/paynyms"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".MainActivity2"
+            android:name="one.anom.wallet.MainActivity2"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:launchMode="singleTask"
@@ -106,52 +106,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.BalanceActivity"
+            android:name="com.samourai.wallet.home.BalanceActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".ReceiveActivity"
+            android:name="one.anom.wallet.ReceiveActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:theme="@style/SamouraiAppTheme"
             android:windowSoftInputMode="stateVisible|adjustPan" />
         <activity
-            android:name=".BatchSendActivity"
+            android:name="one.anom.wallet.BatchSendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".FeeActivity"
+            android:name="one.anom.wallet.FeeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name="com.samourai.wallet.settings.SettingsActivity"
             android:theme="@style/Theme.Samourai.Material"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
 
         <activity
-            android:name=".AboutActivity"
+            android:name="one.anom.wallet.AboutActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape" />
         <activity
-            android:name=".PinEntryActivity"
+            android:name="one.anom.wallet.PinEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label=""
             android:theme="@style/SamouraiAppDarkStatusTheme" />
         <activity
-            android:name=".bip47.BIP47Add"
+            android:name="com.samourai.wallet.bip47.BIP47Add"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".bip47.BIP47ShowQR"
+            android:name="com.samourai.wallet.bip47.BIP47ShowQR"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".ricochet.RicochetActivity"
+            android:name="com.samourai.wallet.ricochet.RicochetActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name" />
         <activity
-            android:name=".OpenDimeActivity"
+            android:name="one.anom.wallet.OpenDimeActivity"
             android:theme="@style/Theme.Samourai.Material"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name">
@@ -167,15 +167,15 @@
         </activity>
 
         <activity
-            android:name=".ExodusActivity"
+            android:name="one.anom.wallet.ExodusActivity"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
-            android:name=".PayNymCalcActivity"
+            android:name="one.anom.wallet.PayNymCalcActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="PayNym Calculator" />
 
         <activity
-            android:name=".AddressCalcActivity"
+            android:name="one.anom.wallet.AddressCalcActivity"
             android:theme="@style/SamouraiAppTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Address Calculator" />
@@ -184,14 +184,14 @@
             android:name="com.dm.zbar.android.scanner.ZBarScannerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="landscape" />
-        <activity android:name=".CreateWalletActivity" />
+        <activity android:name="one.anom.wallet.CreateWalletActivity" />
 
-        <activity android:name=".RestoreSeedWalletActivity" />
+        <activity android:name="one.anom.wallet.RestoreSeedWalletActivity" />
         <activity
-            android:name=".LandingActivity"
+            android:name="one.anom.wallet.LandingActivity"
             android:label=""
             android:theme="@style/SamouraiAppDarkStatusTheme" />
-        <activity android:name=".RecoveryWordsActivity" />
+        <activity android:name="one.anom.wallet.RecoveryWordsActivity" />
         <!--
                 <receiver
                     android:name=".receivers.BootIntentReceiver"
@@ -226,55 +226,55 @@
                 </receiver>
         -->
         <activity
-            android:name=".TxAnimUIActivity"
+            android:name="one.anom.wallet.TxAnimUIActivity"
             android:theme="@style/SamouraiAppTheme" />
         <activity
-            android:name=".send.SendActivity"
+            android:name="com.samourai.wallet.send.SendActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/Theme.Samourai.Material"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".whirlpool.WhirlpoolMain"
+            android:name="com.samourai.wallet.whirlpool.WhirlpoolMain"
             android:label=""
             android:theme="@style/Theme.Samourai.Whirlpool.Material" />
         <activity
-            android:name=".whirlpool.newPool.NewPoolActivity"
+            android:name="com.samourai.wallet.whirlpool.newPool.NewPoolActivity"
             android:label=""
             android:theme="@style/Theme.Samourai.Whirlpool.Material" />
 
         <activity
-            android:name=".whirlpool.CycleDetail"
+            android:name="com.samourai.wallet.whirlpool.CycleDetail"
             android:label=""
             android:theme="@style/SamouraiAppWhirlpoolTheme" />
 
         <activity
-            android:name=".tx.TxDetailsActivity"
+            android:name="com.samourai.wallet.tx.TxDetailsActivity"
             android:label=" "
             android:theme="@style/SamouraiAppTheme" />
 
         <activity
-            android:name=".tx.TxPrivacyDetailsActivity"
+            android:name="com.samourai.wallet.tx.TxPrivacyDetailsActivity"
             android:label=""
             android:theme="@style/SamouraiAppTheme" />
         <activity
-            android:name=".send.cahoots.ManualCahootsActivity"
+            android:name="com.samourai.wallet.send.cahoots.ManualCahootsActivity"
             android:label="Manual Cahoots"
             android:theme="@style/SamouraiAppTheme" />
         <activity
-            android:name=".send.cahoots.SorobanCahootsActivity"
+            android:name="com.samourai.wallet.send.cahoots.SorobanCahootsActivity"
             android:label="Online Cahoots"
             android:theme="@style/SamouraiAppTheme" />
         <activity
-            android:name=".send.soroban.meeting.SorobanMeetingListenActivity"
+            android:name="com.samourai.wallet.send.soroban.meeting.SorobanMeetingListenActivity"
             android:label="Listen for online Cahoots"
             android:theme="@style/Theme.Samourai.Material" />
         <activity
-            android:name=".send.soroban.meeting.SorobanMeetingSendActivity"
+            android:name="com.samourai.wallet.send.soroban.meeting.SorobanMeetingSendActivity"
             android:label="Send online Cahoots"
             android:theme="@style/SamouraiAppTheme" />
 
         <provider
-            android:name=".util.GenericFileProvider"
+            android:name="com.samourai.wallet.util.GenericFileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
@@ -282,10 +282,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-        <receiver android:name=".whirlpool.service.WhirlpoolBroadCastReceiver" />
+        <receiver android:name="com.samourai.wallet.whirlpool.service.WhirlpoolBroadCastReceiver" />
 
         <receiver
-            android:name=".util.ConnectionChangeReceiver"
+            android:name="com.samourai.wallet.util.ConnectionChangeReceiver"
             android:label="NetworkChangeReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
@@ -294,15 +294,15 @@
         </receiver>
 
         <service
-            android:name=".service.WebSocketService"
+            android:name="com.samourai.wallet.service.WebSocketService"
             android:enabled="true" />
 
         <service
-            android:name=".service.JobRefreshService"
+            android:name="com.samourai.wallet.service.JobRefreshService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <service
-            android:name=".whirlpool.service.WhirlpoolNotificationService"
+            android:name="com.samourai.wallet.whirlpool.service.WhirlpoolNotificationService"
             android:enabled="true"
             android:stopWithTask="true"
           />

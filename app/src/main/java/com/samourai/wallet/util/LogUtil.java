@@ -2,7 +2,6 @@ package com.samourai.wallet.util;
 
 import android.util.Log;
 
-import com.samourai.wallet.BuildConfig;
 
 import org.slf4j.LoggerFactory;
 
@@ -10,6 +9,7 @@ import java.util.Objects;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
+import one.anom.wallet.BuildConfig;
 
 public class LogUtil {
     private static final String TAG = "LogUtil";

@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import androidx.transition.AutoTransition
 import androidx.transition.Fade
 import androidx.transition.TransitionManager
-import com.samourai.wallet.R
 import com.samourai.wallet.api.backend.beans.UnspentResponse.UnspentOutput
 import com.samourai.wallet.api.backend.beans.UnspentResponse.UnspentOutput.Xpub
 import com.samourai.wallet.send.SendFactory
@@ -25,6 +24,7 @@ import com.samourai.whirlpool.client.wallet.beans.WhirlpoolAccount
 import com.samourai.whirlpool.client.whirlpool.beans.Pool
 import kotlinx.android.synthetic.main.fragment_whirlpool_review.*
 import kotlinx.coroutines.*
+import one.anom.wallet.R
 import org.bouncycastle.util.encoders.Hex
 import java.util.*
 

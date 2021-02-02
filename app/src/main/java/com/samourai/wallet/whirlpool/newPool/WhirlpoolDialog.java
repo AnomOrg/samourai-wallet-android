@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.send.SendActivity;
 import com.samourai.wallet.whirlpool.WhirlpoolMeta;
 

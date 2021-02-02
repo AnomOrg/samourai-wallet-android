@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.google.android.material.progressindicator.ProgressIndicator;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.whirlpool.service.WhirlpoolNotificationService;
 import com.samourai.whirlpool.client.wallet.AndroidWhirlpoolWalletService;
 

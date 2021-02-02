@@ -23,7 +23,7 @@ import com.samourai.wallet.crypto.DecryptionException;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import com.samourai.wallet.util.FormatsUtil;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.util.WebUtil;
 
 import org.apache.commons.lang3.StringEscapeUtils;

@@ -3,9 +3,9 @@ package com.samourai.wallet.util;
 import android.content.Context;
 import android.util.Log;
 
-import com.samourai.wallet.BuildConfig;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.BuildConfig;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.tor.TorManager;
 
 import org.apache.commons.io.IOUtils;

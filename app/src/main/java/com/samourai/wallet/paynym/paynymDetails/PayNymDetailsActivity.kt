@@ -21,9 +21,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import com.samourai.http.client.AndroidHttpClient
 import com.samourai.http.client.IHttpClient
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiActivity
-import com.samourai.wallet.SamouraiWallet
+import one.anom.wallet.SamouraiActivity
+import one.anom.wallet.SamouraiWallet
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.api.Tx
@@ -58,6 +57,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_paynym_details.*
 import kotlinx.coroutines.*
+import one.anom.wallet.R
 import org.bitcoinj.core.AddressFormatException
 import org.bitcoinj.crypto.MnemonicException.MnemonicLengthException
 import org.bitcoinj.script.Script

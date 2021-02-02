@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

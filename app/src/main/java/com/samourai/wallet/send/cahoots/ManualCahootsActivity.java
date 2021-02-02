@@ -32,8 +32,8 @@ import com.samourai.soroban.cahoots.ManualCahootsMessage;
 import com.samourai.soroban.cahoots.ManualCahootsService;
 import com.samourai.soroban.cahoots.TxBroadcastInteraction;
 import com.samourai.soroban.client.SorobanReply;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
 import com.samourai.wallet.cahoots.AndroidSorobanCahootsService;
 import com.samourai.wallet.cahoots.CahootsMode;
 import com.samourai.wallet.cahoots.CahootsType;
@@ -42,7 +42,6 @@ import com.samourai.wallet.cahoots.psbt.PSBT;
 import com.samourai.wallet.util.AppUtil;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 

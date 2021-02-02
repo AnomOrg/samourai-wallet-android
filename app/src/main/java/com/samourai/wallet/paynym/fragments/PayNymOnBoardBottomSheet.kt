@@ -11,7 +11,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.samourai.wallet.R
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.bip47.BIP47Util
 import com.samourai.wallet.payload.PayloadUtil
@@ -21,6 +20,7 @@ import com.samourai.wallet.util.PrefsUtil
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.bottomsheet_paynym_onboarding.*
 import kotlinx.coroutines.*
+import one.anom.wallet.R
 import org.json.JSONObject
 
 

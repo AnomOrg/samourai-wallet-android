@@ -1,10 +1,9 @@
 package com.samourai.wallet.bip47;
 
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.bip47.rpc.AndroidSecretPointFactory;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;

@@ -4,7 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
@@ -17,8 +17,8 @@ import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.google.common.base.Splitter;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.fragments.CameraFragmentBottomSheet;

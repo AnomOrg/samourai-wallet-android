@@ -7,8 +7,8 @@ import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;

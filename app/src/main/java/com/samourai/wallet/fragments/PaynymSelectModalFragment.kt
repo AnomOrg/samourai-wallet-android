@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
-import com.samourai.wallet.R
+import one.anom.wallet.R
 import com.samourai.wallet.bip47.BIP47Meta
 import com.samourai.wallet.bip47.BIP47Util
 import com.samourai.wallet.bip47.PaynymModel

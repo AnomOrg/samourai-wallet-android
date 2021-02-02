@@ -10,7 +10,7 @@ import com.samourai.http.client.IHttpClient;
 import com.samourai.http.client.IHttpClientService;
 import com.samourai.stomp.client.AndroidStompClientService;
 import com.samourai.stomp.client.IStompClientService;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.api.backend.BackendApi;
 import com.samourai.wallet.api.backend.BackendServer;

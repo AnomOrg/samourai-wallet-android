@@ -18,10 +18,9 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.samourai.wallet.MainActivity2
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiActivity
-import com.samourai.wallet.SamouraiWallet
+import one.anom.wallet.MainActivity2
+import one.anom.wallet.SamouraiActivity
+import one.anom.wallet.SamouraiWallet
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.api.Tx
 import com.samourai.wallet.bip47.BIP47Meta
@@ -40,6 +39,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.*
+import one.anom.wallet.R
 import org.bitcoinj.core.Coin
 import org.json.JSONException
 import org.json.JSONObject

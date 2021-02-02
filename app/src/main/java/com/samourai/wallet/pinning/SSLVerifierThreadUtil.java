@@ -9,7 +9,7 @@ import android.os.Looper;
 
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.ConnectivityStatus;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 public class SSLVerifierThreadUtil {
 

@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.send.BlockedUTXO;

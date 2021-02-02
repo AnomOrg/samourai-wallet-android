@@ -15,8 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 
 public class TransactionProgressView extends FrameLayout {

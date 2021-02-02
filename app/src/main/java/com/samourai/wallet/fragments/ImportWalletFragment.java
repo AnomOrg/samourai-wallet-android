@@ -22,7 +22,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.widgets.MnemonicSeedEditText;
 

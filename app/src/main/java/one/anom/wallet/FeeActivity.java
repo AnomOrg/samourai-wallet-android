@@ -1,24 +1,15 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Toast;
-import android.util.Log;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.send.FeeUtil;
 import com.samourai.wallet.send.SuggestedFee;
 import com.samourai.wallet.util.AppUtil;

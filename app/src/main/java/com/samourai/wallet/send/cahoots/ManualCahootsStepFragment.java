@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.fragments.CameraFragmentBottomSheet;
 
 import androidx.annotation.NonNull;

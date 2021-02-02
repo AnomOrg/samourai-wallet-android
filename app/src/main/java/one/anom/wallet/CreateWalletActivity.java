@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
@@ -39,7 +39,7 @@ import org.json.JSONException;
 
 import java.io.IOException;
 
-import static com.samourai.wallet.R.id.dots;
+import static one.anom.wallet.R.id.dots;
 
 
 public class CreateWalletActivity extends FragmentActivity implements

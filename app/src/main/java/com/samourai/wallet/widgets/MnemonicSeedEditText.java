@@ -21,7 +21,7 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

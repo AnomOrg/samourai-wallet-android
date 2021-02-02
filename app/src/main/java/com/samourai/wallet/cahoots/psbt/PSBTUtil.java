@@ -11,17 +11,13 @@ import android.view.Gravity;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.segwit.BIP84Util;
 import com.samourai.wallet.segwit.SegwitAddress;
-import com.samourai.wallet.send.MyTransactionOutPoint;
-import com.samourai.wallet.send.SendFactory;
-import com.samourai.wallet.send.UTXO;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bitcoinj.core.Coin;
@@ -34,8 +30,6 @@ import org.bitcoinj.crypto.TransactionSignature;
 import org.bitcoinj.script.Script;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.util.HashMap;
 import java.util.List;
 

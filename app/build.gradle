@@ -8,7 +8,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     flavorDimensions "versionCode"
     defaultConfig {
-        applicationId 'com.samourai.wallet'
+        applicationId 'one.anom.wallet'
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 176
@@ -54,7 +54,7 @@ android {
     }
     productFlavors {
         production {
-            applicationId 'com.samourai.wallet'
+            applicationId 'one.anom.wallet'
             minSdkVersion 21
             targetSdkVersion 29
             versionCode 176
@@ -63,7 +63,7 @@ android {
             resValue "string", "version_name", "0.99.96b"
         }
         staging {
-            applicationId 'com.samourai.wallet.staging'
+            applicationId 'one.anom.wallet.staging'
             minSdkVersion 21
             targetSdkVersion 29
             versionCode 176

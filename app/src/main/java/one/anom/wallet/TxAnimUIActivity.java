@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -9,14 +9,12 @@ import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Handler;
-import android.os.Looper;
 
 import androidx.core.content.FileProvider;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.CheckBox;
@@ -29,6 +27,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
+import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.hd.HD_WalletFactory;
@@ -46,7 +45,6 @@ import com.samourai.wallet.send.UTXOFactory;
 import com.samourai.wallet.util.AddressFactory;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.BatchSendUtil;
-import com.samourai.wallet.util.LogUtil;
 import com.samourai.wallet.util.MonetaryUtil;
 import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.util.SendAddressUtil;
@@ -57,7 +55,6 @@ import org.bitcoinj.core.Address;
 import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
-import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.spongycastle.util.encoders.DecoderException;

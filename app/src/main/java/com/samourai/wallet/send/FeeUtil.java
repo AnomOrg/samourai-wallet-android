@@ -2,7 +2,7 @@ package com.samourai.wallet.send;
 
 import android.util.Log;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 
 import org.apache.commons.lang3.tuple.Triple;
 import org.bitcoinj.core.NetworkParameters;

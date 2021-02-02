@@ -7,14 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.samourai.soroban.client.meeting.SorobanMeetingService;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import com.samourai.wallet.cahoots.AndroidSorobanCahootsService;

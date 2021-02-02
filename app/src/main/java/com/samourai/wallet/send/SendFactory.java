@@ -4,8 +4,8 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
@@ -35,7 +35,6 @@ import org.bitcoinj.core.Transaction;
 import org.bitcoinj.core.TransactionInput;
 import org.bitcoinj.core.TransactionOutput;
 import org.bitcoinj.core.TransactionWitness;
-import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.crypto.TransactionSignature;
 import org.bitcoinj.script.Script;
 import org.bitcoinj.script.ScriptBuilder;
@@ -43,7 +42,6 @@ import org.bitcoinj.script.ScriptException;
 import org.bitcoinj.script.ScriptOpCodes;
 import org.bouncycastle.util.encoders.Hex;
 
-import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;

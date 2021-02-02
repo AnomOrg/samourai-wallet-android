@@ -10,7 +10,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import android.util.Log;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 public class PermissionsUtil {
 

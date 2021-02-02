@@ -11,7 +11,7 @@ import android.os.IBinder;
 import androidx.core.app.NotificationCompat;
 import android.util.Log;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.whirlpool.client.wallet.AndroidWhirlpoolWalletService;
 import com.samourai.whirlpool.client.wallet.WhirlpoolWallet;
 import com.samourai.whirlpool.client.wallet.beans.MixingState;
@@ -28,11 +28,10 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import java8.util.Optional;
 
 import static androidx.core.app.NotificationCompat.GROUP_ALERT_SUMMARY;
-import static com.samourai.wallet.SamouraiApplication.WHIRLPOOL_CHANNEL;
-import static com.samourai.wallet.SamouraiApplication.WHIRLPOOL_NOTIFICATIONS;
+import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_CHANNEL;
+import static one.anom.wallet.SamouraiApplication.WHIRLPOOL_NOTIFICATIONS;
 import static com.samourai.wallet.util.FormatsUtil.getBTCDecimalFormat;
 
 public class WhirlpoolNotificationService extends Service {

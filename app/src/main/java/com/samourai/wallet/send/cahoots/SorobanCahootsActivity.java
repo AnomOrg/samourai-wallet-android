@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.samourai.soroban.client.cahoots.OnlineCahootsMessage;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
 import com.samourai.wallet.bip47.rpc.PaymentCode;
 import com.samourai.wallet.cahoots.AndroidSorobanCahootsService;
 import com.samourai.wallet.cahoots.CahootsMode;

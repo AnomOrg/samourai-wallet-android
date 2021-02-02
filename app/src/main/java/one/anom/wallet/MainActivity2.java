@@ -1,6 +1,5 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
@@ -11,7 +10,6 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +21,7 @@ import android.widget.Toast;
 
 import com.auth0.android.jwt.JWT;
 import com.google.android.material.progressindicator.ProgressIndicator;
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
@@ -44,7 +43,6 @@ import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
-import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -54,7 +52,7 @@ import io.reactivex.schedulers.Schedulers;
 public class MainActivity2 extends AppCompatActivity {
 
     private ProgressDialog progress = null;
-    public static final String ACTION_RESTART = "com.samourai.wallet.MainActivity2.RESTART_SERVICE";
+    public static final String ACTION_RESTART = "one.anom.wallet.MainActivity2.RESTART_SERVICE";
     private AlertDialog.Builder dlg;
     private boolean pinEntryActivityLaunched = false;
     private static final String TAG = "MainActivity2";
@@ -90,7 +88,7 @@ public class MainActivity2 extends AppCompatActivity {
 //            intent.putExtra("notifTx", false);
 //            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
 //
-//            Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+//            Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
 //            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
 
         }

@@ -15,7 +15,7 @@ import com.samourai.boltzmann.beans.Txos;
 import com.samourai.boltzmann.linker.TxosLinkerOptionEnum;
 import com.samourai.boltzmann.processor.TxProcessor;
 import com.samourai.boltzmann.processor.TxProcessorResult;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.cahoots.Cahoots;
 import com.samourai.wallet.cahoots.stowaway.Stowaway;
 import com.samourai.wallet.send.PushTx;

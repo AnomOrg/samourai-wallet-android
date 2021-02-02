@@ -9,15 +9,14 @@ import android.os.Looper;
 import android.widget.Toast;
 import android.util.Log;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.segwit.SegwitAddress;
 import com.samourai.wallet.service.JobRefreshService;
 import com.samourai.wallet.util.AddressFactory;
-import com.samourai.wallet.util.FormatsUtil;
 import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.util.PrivKeyReader;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 import org.bitcoinj.core.Coin;
 import org.json.JSONException;

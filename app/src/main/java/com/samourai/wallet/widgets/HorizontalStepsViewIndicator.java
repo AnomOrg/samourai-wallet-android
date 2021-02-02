@@ -14,7 +14,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 
 public class HorizontalStepsViewIndicator extends View {

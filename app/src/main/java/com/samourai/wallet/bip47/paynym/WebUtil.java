@@ -2,7 +2,7 @@ package com.samourai.wallet.bip47.paynym;
 
 import android.content.Context;
 
-import com.samourai.wallet.BuildConfig;
+import one.anom.wallet.BuildConfig;
 import com.samourai.wallet.tor.TorManager;
 
 import java.util.concurrent.TimeUnit;

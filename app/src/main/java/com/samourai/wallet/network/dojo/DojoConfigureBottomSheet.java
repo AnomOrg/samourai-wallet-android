@@ -19,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.fragments.CameraFragmentBottomSheet;
 import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.util.PrefsUtil;

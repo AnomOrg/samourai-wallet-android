@@ -1,6 +1,6 @@
 package com.samourai.wallet.utxos;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.util.FormatsUtil;
 
 import org.bitcoinj.core.Address;

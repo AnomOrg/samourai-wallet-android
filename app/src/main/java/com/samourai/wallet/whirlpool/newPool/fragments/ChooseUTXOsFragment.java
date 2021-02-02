@@ -13,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.send.MyTransactionOutPoint;
 import com.samourai.wallet.send.UTXO;

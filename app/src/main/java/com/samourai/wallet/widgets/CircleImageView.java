@@ -26,7 +26,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewOutlineProvider;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 public class CircleImageView extends androidx.appcompat.widget.AppCompatImageView {
 

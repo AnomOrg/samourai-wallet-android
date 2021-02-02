@@ -11,8 +11,8 @@ import com.neovisionaries.ws.client.WebSocketAdapter;
 import com.neovisionaries.ws.client.WebSocketException;
 import com.neovisionaries.ws.client.WebSocketFactory;
 
-import com.samourai.wallet.MainActivity2;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.MainActivity2;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
@@ -21,7 +21,7 @@ import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.MonetaryUtil;
 import com.samourai.wallet.util.NotificationsFactory;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;

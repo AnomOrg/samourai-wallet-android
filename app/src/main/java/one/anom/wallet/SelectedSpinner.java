@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.content.Context;
 import android.util.AttributeSet;

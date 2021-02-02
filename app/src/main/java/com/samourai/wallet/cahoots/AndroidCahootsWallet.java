@@ -2,10 +2,9 @@ package com.samourai.wallet.cahoots;
 
 import android.content.Context;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.hd.HD_Wallet;
-import com.samourai.wallet.hd.HD_WalletFactory;
 import com.samourai.wallet.segwit.BIP84Util;
 import com.samourai.wallet.segwit.BIP84Wallet;
 import com.samourai.wallet.send.FeeUtil;

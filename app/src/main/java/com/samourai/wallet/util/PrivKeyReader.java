@@ -2,7 +2,7 @@ package com.samourai.wallet.util;
 
 import android.util.Base64;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.bitcoinj.core.Base58;
@@ -10,11 +10,9 @@ import org.bitcoinj.core.DumpedPrivateKey;
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
 import org.bitcoinj.crypto.BIP38PrivateKey;
-import org.bitcoinj.params.MainNetParams;
 import org.bouncycastle.util.encoders.Hex;
 
 import java.math.BigInteger;
-import java.security.MessageDigest;
 
 //import android.util.Log;
 

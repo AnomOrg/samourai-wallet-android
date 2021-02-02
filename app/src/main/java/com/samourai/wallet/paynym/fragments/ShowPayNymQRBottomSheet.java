@@ -20,7 +20,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.util.AppUtil;
 

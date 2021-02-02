@@ -7,8 +7,8 @@ import android.view.MenuItem;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.transition.MaterialSharedAxis;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
 import com.samourai.wallet.util.AppUtil;
 
 public class SettingsActivity extends SamouraiActivity {

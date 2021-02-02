@@ -15,8 +15,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.samourai.soroban.client.meeting.SorobanMeetingService
 import com.samourai.soroban.client.meeting.SorobanRequestMessage
 import com.samourai.soroban.client.meeting.SorobanResponseMessage
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiActivity
+import one.anom.wallet.SamouraiActivity
 import com.samourai.wallet.bip47.BIP47Meta
 import com.samourai.wallet.bip47.paynym.WebUtil
 import com.samourai.wallet.bip47.rpc.PaymentCode
@@ -31,6 +30,7 @@ import io.matthewnelson.topl_service.TorServiceController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import one.anom.wallet.R
 
 
 class SorobanMeetingListenActivity : SamouraiActivity() {

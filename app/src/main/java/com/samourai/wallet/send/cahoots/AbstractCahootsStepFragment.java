@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.cahoots.CahootsType;
 import com.samourai.wallet.cahoots.stonewallx2.STONEWALLx2;
 import com.samourai.soroban.cahoots.ManualCahootsMessage;

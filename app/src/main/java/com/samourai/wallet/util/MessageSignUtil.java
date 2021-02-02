@@ -9,11 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 
 import org.bitcoinj.core.ECKey;
-import org.bitcoinj.params.MainNetParams;
 
 import java.security.SignatureException;
 import java.sql.Date;

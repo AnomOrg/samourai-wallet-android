@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,7 +8,7 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.os.Looper;
-import android.os.Vibrator;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.text.InputType;
 import android.transition.ChangeBounds;
@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;

@@ -9,7 +9,7 @@ import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 

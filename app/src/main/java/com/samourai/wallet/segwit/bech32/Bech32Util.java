@@ -1,11 +1,10 @@
 package com.samourai.wallet.segwit.bech32;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.bouncycastle.util.encoders.Hex;
 
-import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.TestNet3Params;
 import org.bitcoinj.core.Coin;
 import org.bitcoinj.core.TransactionOutput;

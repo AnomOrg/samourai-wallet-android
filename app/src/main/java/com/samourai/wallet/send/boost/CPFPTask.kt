@@ -4,8 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.widget.Toast
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiWallet
+import one.anom.wallet.R
+import one.anom.wallet.SamouraiWallet
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.hd.HD_WalletFactory
 import com.samourai.wallet.segwit.BIP49Util
@@ -262,7 +262,7 @@ class CPFPTask(private val context: Context, private val hash: String) {
                     HD_WalletFactory.getInstance(context).get().getAccount(0).receive.addrIdx = prevIdx
                 }
             }
-        } catch (ex:Exception) {
+        } catch (ex: Exception) {
 
         }
     }

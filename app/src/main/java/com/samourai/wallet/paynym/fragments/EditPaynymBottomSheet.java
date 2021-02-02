@@ -13,7 +13,7 @@ import android.widget.Button;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 public class EditPaynymBottomSheet extends BottomSheetDialogFragment {
 

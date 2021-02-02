@@ -5,12 +5,10 @@ import android.content.Context;
 
 import org.bitcoinj.core.AddressFormatException;
 import org.bitcoinj.core.NetworkParameters;
-import org.bitcoinj.crypto.DeterministicKey;
-import org.bitcoinj.crypto.HDKeyDerivation;
 import org.bitcoinj.crypto.MnemonicCode;
 import org.bitcoinj.crypto.MnemonicException;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.BIP47Wallet;
 import com.samourai.wallet.segwit.BIP49Util;
@@ -23,8 +21,6 @@ import org.apache.commons.codec.binary.Hex;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;

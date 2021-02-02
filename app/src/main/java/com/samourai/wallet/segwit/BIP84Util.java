@@ -3,7 +3,7 @@ package com.samourai.wallet.segwit;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.hd.HD_Wallet;
 import com.samourai.wallet.hd.HD_WalletFactory;

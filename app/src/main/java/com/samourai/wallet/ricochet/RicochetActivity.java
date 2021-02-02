@@ -15,8 +15,8 @@ import android.widget.Toast;
 //import android.util.Log;
 
 import com.samourai.wallet.home.BalanceActivity;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -29,12 +29,10 @@ import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import com.samourai.wallet.send.PushTx;
 
-import org.bitcoinj.crypto.MnemonicException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.Iterator;
 
 public class RicochetActivity extends Activity {

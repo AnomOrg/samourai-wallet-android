@@ -21,8 +21,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import com.google.common.base.Splitter
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiActivity
+import one.anom.wallet.R
+import one.anom.wallet.SamouraiActivity
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.bip47.BIP47Meta
 import com.samourai.wallet.bip47.BIP47Util

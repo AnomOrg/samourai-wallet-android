@@ -3,7 +3,7 @@ package com.samourai.wallet.network.dojo;
 import android.content.Context;
 import android.util.Log;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.util.WebUtil;
 

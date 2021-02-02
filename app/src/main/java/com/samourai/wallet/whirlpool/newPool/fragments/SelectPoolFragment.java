@@ -22,7 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.utxos.models.UTXOCoin;
 import com.samourai.wallet.whirlpool.adapters.PoolsAdapter;
 import com.samourai.wallet.whirlpool.models.PoolCyclePriority;

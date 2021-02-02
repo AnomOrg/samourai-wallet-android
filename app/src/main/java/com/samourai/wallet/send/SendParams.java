@@ -1,6 +1,6 @@
 package com.samourai.wallet.send;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.segwit.bech32.Bech32Util;
 import com.samourai.wallet.util.BatchSendUtil;
 

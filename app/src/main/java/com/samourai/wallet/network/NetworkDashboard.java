@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dm.zbar.android.scanner.ZBarConstants;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 
 import com.samourai.wallet.fragments.CameraFragmentBottomSheet;

@@ -1,6 +1,5 @@
 package com.samourai.wallet.utxos;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -24,9 +23,9 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiActivity;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiActivity;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -68,7 +67,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityOptionsCompat;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

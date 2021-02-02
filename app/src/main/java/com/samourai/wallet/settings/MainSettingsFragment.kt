@@ -1,16 +1,11 @@
 package com.samourai.wallet.settings
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.transition.Transition
-import androidx.transition.TransitionInflater
-import com.google.android.material.transition.MaterialSharedAxis
-import com.samourai.wallet.R
-import com.samourai.wallet.SamouraiActivity
+import one.anom.wallet.R
 
 
 class MainSettingsFragment : PreferenceFragmentCompat(), Preference.OnPreferenceClickListener {

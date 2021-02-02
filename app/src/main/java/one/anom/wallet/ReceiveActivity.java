@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
@@ -35,6 +35,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.client.android.Contents;
 import com.google.zxing.client.android.encode.QRCodeEncoder;
+import one.anom.wallet.R;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.hd.HD_Address;
 import com.samourai.wallet.segwit.SegwitAddress;
@@ -677,7 +678,7 @@ public class ReceiveActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+                Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
                 LocalBroadcastManager.getInstance(ReceiveActivity.this).sendBroadcast(_intent);
             }
         }).start();

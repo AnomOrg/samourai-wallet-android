@@ -16,7 +16,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 public class PassphraseEntryFragment extends Fragment {
 

@@ -11,7 +11,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import com.samourai.boltzmann.processor.TxProcessorResult;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 
 
 public class EntropyBar extends View {

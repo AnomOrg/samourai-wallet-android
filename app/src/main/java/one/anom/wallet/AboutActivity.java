@@ -1,8 +1,9 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.Activity;
 import android.os.Bundle;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.util.AppUtil;
 
 public class AboutActivity extends Activity {

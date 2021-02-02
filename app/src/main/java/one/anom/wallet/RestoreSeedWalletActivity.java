@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.crypto.DecryptionException;
@@ -43,7 +44,7 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.samourai.wallet.R.id.dots;
+import static one.anom.wallet.R.id.dots;
 
 
 public class RestoreSeedWalletActivity extends FragmentActivity implements

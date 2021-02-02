@@ -2,7 +2,7 @@ package com.samourai.wallet.bip47;
 
 import android.util.Log;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 
 import java.math.BigInteger;
 

@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.samourai.wallet.MainActivity2;
+import one.anom.wallet.MainActivity2;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.util.CharSequenceX;

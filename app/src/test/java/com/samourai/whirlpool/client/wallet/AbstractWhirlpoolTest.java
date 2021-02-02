@@ -3,9 +3,8 @@ package com.samourai.whirlpool.client.wallet;
 import android.content.Context;
 
 import com.samourai.stomp.client.AndroidStompClient;
-import com.samourai.wallet.SamouraiWallet;
-import com.samourai.wallet.api.APIFactory;
-import com.samourai.wallet.api.backend.MinerFeeTarget;
+import one.anom.wallet.SamouraiWallet;
+
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.client.Bip84Wallet;

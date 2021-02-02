@@ -2,7 +2,6 @@ package com.samourai.wallet.paynym.api
 
 import android.content.Context
 import android.util.Log
-import com.samourai.wallet.BuildConfig
 import com.samourai.wallet.access.AccessFactory
 import com.samourai.wallet.api.APIFactory
 import com.samourai.wallet.api.AbstractApiService
@@ -18,6 +17,7 @@ import com.samourai.wallet.util.CharSequenceX
 import com.samourai.wallet.util.MessageSignUtil
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
+import one.anom.wallet.BuildConfig
 import org.bitcoinj.crypto.MnemonicException
 import org.json.JSONException
 import org.json.JSONObject

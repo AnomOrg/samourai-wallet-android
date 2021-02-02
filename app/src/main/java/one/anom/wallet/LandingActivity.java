@@ -1,4 +1,4 @@
-package com.samourai.wallet;
+package one.anom.wallet;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -27,6 +27,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import one.anom.wallet.R;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
@@ -56,11 +57,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import io.matthewnelson.topl_service.TorServiceController;
-import io.matthewnelson.topl_service.service.TorService;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class LandingActivity extends AppCompatActivity  {
 

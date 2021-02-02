@@ -2,7 +2,7 @@ package com.samourai.wallet.send;
 
 import android.content.Context;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.util.FormatsUtil;
 import com.samourai.wallet.whirlpool.WhirlpoolMeta;

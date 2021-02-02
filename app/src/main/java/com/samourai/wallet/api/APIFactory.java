@@ -11,9 +11,9 @@ import android.util.Log;
 import android.util.Pair;
 
 import com.auth0.android.jwt.JWT;
-import com.samourai.wallet.BuildConfig;
-import com.samourai.wallet.R;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.BuildConfig;
+import one.anom.wallet.R;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.bip47.BIP47Meta;
 import com.samourai.wallet.bip47.BIP47Util;
 import com.samourai.wallet.bip47.rpc.NotSecp256k1Exception;

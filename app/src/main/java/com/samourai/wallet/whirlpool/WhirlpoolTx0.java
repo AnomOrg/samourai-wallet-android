@@ -1,6 +1,6 @@
 package com.samourai.wallet.whirlpool;
 
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.segwit.bech32.Bech32Util;
 import com.samourai.wallet.send.FeeUtil;
 import com.samourai.wallet.send.MyTransactionOutPoint;

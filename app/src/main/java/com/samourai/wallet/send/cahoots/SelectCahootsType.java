@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.cahoots.CahootsMode;
 import com.samourai.wallet.cahoots.CahootsType;
 import com.samourai.wallet.fragments.PaynymSelectModalFragment;

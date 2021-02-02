@@ -8,8 +8,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.samourai.wallet.BuildConfig;
-import com.samourai.wallet.SamouraiWallet;
+import one.anom.wallet.BuildConfig;
+import one.anom.wallet.SamouraiWallet;
 import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.bip47.BIP47Meta;
@@ -36,9 +36,6 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.List;
-
-import io.reactivex.Completable;
-import io.reactivex.Observable;
 
 
 public class JobRefreshService extends JobIntentService {
@@ -129,7 +126,7 @@ public class JobRefreshService extends JobIntentService {
                 }
             }
 
-            Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
+            Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
         }
 

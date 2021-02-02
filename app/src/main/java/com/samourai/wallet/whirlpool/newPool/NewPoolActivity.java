@@ -30,7 +30,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.samourai.wallet.R;
+import one.anom.wallet.R;
 import com.samourai.wallet.api.backend.beans.UnspentResponse;
 import com.samourai.wallet.send.BlockedUTXO;
 import com.samourai.wallet.send.FeeUtil;
