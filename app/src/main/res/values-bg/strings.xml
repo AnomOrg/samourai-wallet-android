@@ -122,7 +122,7 @@
     <string name="no">Не</string>
     <string name="close">Затвори</string>
 
-    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Samourai portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
+    <string name="sim_warning">Вашето устройство със Самурай портфейл сега има друга СИМ карта, съответстваща с номера, от когото сте получили това съобщение. Vasheto ustroystvo sus Anom portfeil sega ima druga SIM karta, suotvetstvashta s nomera, ot kogoto ste poluchili tova suobshtenie.</string>
 
     <string name="pin_5_8">Създайте PIN код с дължина между 5 и 8 цифри</string>
     <string name="pin_5_8_confirm">Потвърдете PIN кода</string>
@@ -369,7 +369,7 @@
     <string name="opendime_topup">TOP UP</string>
 
     <string name="select_app">Избор на приложение:</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay защита</string>
     <string name="replay_unprotected">Незащитен</string>
@@ -500,7 +500,7 @@
     <string name="invalid_mnemonic">Невалиден BIP39 mnemonic</string>
     <string name="enter_your_code_here">Въведете кода си тук</string>
 
-    <string name="disclaimer_recovery_words">Потвърждавам, че съм записал(а) показаните думи и съм ги съхранил(а) на сигурно място. Разбирам, че всеки, който научи моите тайни думи и тайната ми фраза ще има достъп до портфейла ми и всичките ми средства.</string>
+    <string name="declaimer_recovery_words">Потвърждавам, че съм записал(а) показаните думи и съм ги съхранил(а) на сигурно място. Разбирам, че всеки, който научи моите тайни думи и тайната ми фраза ще има достъп до портфейла ми и всичките ми средства.</string>
   <string name="return_to_wallet">Назад към портфейла</string>
   <string name="caution_message_recovery_words">Не е безопасно да държите тези думи на компютъра си или в облака. Напишете тези думи на лист хартия и ги пазете в тайна и на сигурно.</string>
     <string name="these_words_are">Тези думи служат като резервно копие на всичките Ви частни ключове от портфейла Ви.</string>
@@ -547,6 +547,12 @@
 
     <string name="prune_backup">Премахване на файловете с резервното копие?</string>
 
+    <string-array name="address_types">
+        <item>SegWit compatibility (P2SH)</item>
+        <item>SegWit native (bech32)</item>
+        <item>Legacy (P2PKH)</item>
+    </string-array>
+    
     <string name="in_offline_mode">Самурай портфейл сега е в офлайн режим.</string>
     <string name="tx_standby">Транзакцията е в готовност</string>
     <string name="show_hex">Показване на hex кода</string>
@@ -662,10 +668,10 @@
     <string name="title_activity_network_dashboard">
         Мрежа
     </string>
-    <string name="powering_samourai_wallet_"> Използването на Samourai Wallet с ваш собствен node Ви предлага най-високо ниво на потайност и независимост при интеракция с Биткойн мрежата. Dojo прави използването на full node лесно и просто.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Samourai servers</string>
+    <string name="powering_samourai_wallet_"> Използването на Anom Wallet с ваш собствен node Ви предлага най-високо ниво на потайност и независимост при интеракция с Биткойн мрежата. Dojo прави използването на full node лесно и просто.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Anom Wallet servers</string>
     <string name="dojo_connect_instruction">Ако вече имате Dojo Full Node или използвате безплатния open source Dojo Софтуер на ваш собствен хардуер, сканирайте QR кода за сдвояване от Dojo Maintenance control panel</string>
-    <string name="dojo_headline">Използвайте Samourai с ваш собствен DOJO full node</string>
+    <string name="dojo_headline">Използвайте Anom с ваш собствен DOJO full node</string>
     <string name="connect_to_existing_dojo">Свързване към съществуващо Dojo</string>
     <string name="preorder">preorder</string>
     <string name="add_new">Добави нов</string>
@@ -674,7 +680,7 @@
     <string name="wallet_locked">Портфейлът е заключен</string>
     <string name="address">Адрес</string>
 
-    <string name="is_offline">Samourai е офлайн</string>
+    <string name="is_offline">Anom е офлайн</string>
     <string name="history_will_be_updated">Балансът и историята на транзакциите няма да бъдат обновявани докато не се установи вързка с Интернет.</string>
     <string name="you_received_s">Получихте</string>
     <string name="paynym_follow_message">Тази такса включва разхода за създаването на специална транзакция на блокчейна. Това поддържа PayNym децентрализиран</string>
@@ -729,8 +735,8 @@
     <string name="select_participant">Изберете участник</string>
     <string name="select_cahoots_type">Изберете тип cahoots</string>
     
-    <string name="cannot_disable_tor_dojo">Tor не може да бъде спрян понеже портфейлът е свързан със Samourai Dojo нод.</string>
-    <string name="temporary_dojo_disable">Деинсталирайте Samourai Wallet, за да се раздвоите от Вашия Dojo нод. \'DISABLE\' ще бъде напълно активиран в по-нататъшен ъпдейт.</string>
+    <string name="cannot_disable_tor_dojo">Tor не може да бъде спрян понеже портфейлът е свързан със Anom Dojo нод.</string>
+    <string name="temporary_dojo_disable">Деинсталирайте Anom Wallet, за да се раздвоите от Вашия Dojo нод. \'DISABLE\' ще бъде напълно активиран в по-нататъшен ъпдейт.</string>
     <string name="renew">СМЕНИ</string>
     
     <string name="continue_exchanging_qr_codes">Продължавайте да обменяте QR кодове\n докато транзакцията се изпрати!</string>
@@ -747,36 +753,9 @@
     <string name="unspent_outputs">Неизхарчени Средства</string>
     <string name="unspent_outputs_post_mix">Неизхарчени Средства - Пост-микс</string>
     <string name="paste_cahoots_payload">Постави cahoots payload</string>
-     <string name="clipboard_empty">клипбордът е празен</string>
-    <string name="premix_balance">Пре-микс баланс</string>
-    <string name="post_mix_balance">Пост-миск баланс</string>
-    <string name="spendable">харчимо</string>
-    <string name="reveal_the_redeem_script_for_this_address">Покажи redeem script-а за този адрес</string>
-    <string name="coming_soon">Очаквайте скоро</string>
-    <string name="active">Активно</string>
-    <string name="change_from_postmix">Ресто от пост-микс харч</string>
-    <string name="selection_contains_blocked_utxo">Селекцията Ви съдържа блокирани utxo-та. Моля премахнете ги и опитайте отново.</string>
-    <string name="only_single_utxo_may_selected">Само едно utxo може да бъде избрано за директно харчене от пост-микс.</string>
-    <string name="only_a_single_change_utxo_may">Само едно utxo-ресто може да бъде избрано за директно миксиране от пост-микс.</string>
-    <string name="only_change_utxos_allowed">Само ресто utxo-та са разрешени</string>
-    <string name="utxo_is_marked_as_blocked">utxo-то е маркирано като блокирано</string>
-    <string-array name="address_types">
-        <item>Segwit compatibility (P2SH)</item>
-        <item>Segwit native (bech32)</item>
-        <item>Legacy (P2PKH)</item>
-    </string-array>
 
-    <string name="mixing"><em>%1$s</em> : %2$s</string>
+    
+    
 
-    <string name="doxxic_change_warning">Doxxic Change</string>
-    <string name="block_tx0_change">Ресто UTXO-то от тази tx0 ще бъде маркиранно. Блокирайте го, за да го направите неизхарчимо? Ако го направите, кол-вото няма да се отчита в общия Ви баланс, но може да бъде намерено в листа с неизхарчени.</string>
-    <string name="total_pre_mix_balance">Общо Пре-микс Баланс</string>
-    <string name="total_post_mix_balance">Общо Пост-микс Баланс</string>
-    <string name="post_mix_transactions">Пост-микс транзакции</string>
-    <string name="scode">Whirlpool SCODE</string>
-    <string name="enter_scode">Въведете Вашия Whirlpool SCODE. Ако потвърдите с \'OK\' Whirlpool услугата ще се затвори. Влезте отново в Whirlpool, за да активирате SCODE-а.</string>
-    <string name="this_utxo_is_marked_as_spendable">Това UTXO е маркирано като Харчимо.</string>
-    <string name="this_utxo_is_marked_as_blocked">Това UTXO е маркирано като Блокирано.</string>
-    <string name="postmix_full_spend">Тази транзакция ще изхарчи всичко от пост-микс портфейла Ви, което ще премахне анонимността, постигната чрез Whirlpool миксиране. Сигурни ли сте, че искате да го направите?</string>
 
 </resources>

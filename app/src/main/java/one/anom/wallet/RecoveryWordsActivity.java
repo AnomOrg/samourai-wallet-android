@@ -24,7 +24,7 @@ public class RecoveryWordsActivity extends Activity {
     private GridView recoveryWordsGrid;
     private Button returnToWallet;
     private CheckBox disclaimerCheckbox;
-    private TextView disclaimerText;
+ //   private TextView disclaimerText;
     private Boolean accepted = false;
 
     @Override
@@ -34,11 +34,12 @@ public class RecoveryWordsActivity extends Activity {
         if (getActionBar() != null) {
             getActionBar().hide();
         }
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         recoveryWordsGrid = findViewById(R.id.grid_recovery_words);
         returnToWallet = findViewById(R.id.return_to_wallet);
         disclaimerCheckbox = findViewById(R.id.disclaimer_checkbox);
-        disclaimerText = findViewById(R.id.declaimer_recovery_words_text);
+      //  disclaimerText = findViewById(R.id.declaimer_recovery_words_text);
         String recoveryWords = getIntent().getExtras().getString("BIP39_WORD_LIST");
         assert recoveryWords != null;
         String words[] = recoveryWords.trim().split(" ");
@@ -48,12 +49,13 @@ public class RecoveryWordsActivity extends Activity {
             accepted = b;
             setDisclaimerChange();
         });
-        disclaimerText.setOnClickListener(v -> {
+
+      /*  disclaimerText.setOnClickListener(v -> {
             accepted = !accepted;
             disclaimerCheckbox.setChecked(accepted);
             setDisclaimerChange();
         });
-
+*/
         returnToWallet.setOnClickListener(view -> {
             AccessFactory.getInstance(RecoveryWordsActivity.this).setIsLoggedIn(true);
             TimeOutUtil.getInstance().updatePin();

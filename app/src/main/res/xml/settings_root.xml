@@ -16,7 +16,14 @@
         android:key="txs"
         app:iconSpaceReserved="false"
         app:allowDividerAbove="true"
-        app:allowDividerBelow="true"        />
+        app:allowDividerBelow="true" />
+
+    <Preference
+        android:key="prefs"
+        android:title="@string/options_currency"
+        app:iconSpaceReserved="false"
+        app:allowDividerAbove="true"
+        app:allowDividerBelow="true"  />
 <!--
     <Preference
         android:title="@string/options_cat_stealth"

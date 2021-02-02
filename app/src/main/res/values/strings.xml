@@ -16,7 +16,7 @@
     <string name="action_sync_all">Sync all payment codes</string>
     <string name="action_whirlpool">Whirlpool</string>
 
-    <string name="about_us">About Samourai Wallet</string>
+    <string name="about_us">About Anom Wallet</string>
 
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
@@ -42,10 +42,12 @@
     <string name="options_xpub84_postmix2">Show extended public key for BIP84 Segwit account (Bech32) Whirlpool post-mix.</string>
     <string name="options_xpub84_badbank">Show Whirlpool bad bank ZPUB</string>
     <string name="options_xpub84_badbank2">Show extended public key for BIP84 Segwit account (Bech32) Whirlpool bad bank.</string>
+    <string name="options_currency">Street price</string>
+    <string name="options_currency2">Select exchange and local currency.</string>
     <string name="options_wipe">Secure erase wallet</string>
     <string name="options_wipe2">Securely erase this wallet from the device.</string>
     <string name="options_stealth_display">Stealth launcher</string>
-    <string name="options_stealth_display2">Remove Samourai from the launcher and home screen. You must dial **YOUR_PIN_CODE# from the phone dialer to launch Samourai.</string>
+    <string name="options_stealth_display2">Remove Anom from the launcher and home screen. You must dial **YOUR_PIN_CODE# from the phone dialer to launch Anom.</string>
     <string name="options_remote_commands">Enable remote commands</string>
     <string name="options_remote_commands2">Allow remote commands via SMS.</string>
     <string name="options_blockexplorer">Block explorer</string>
@@ -133,12 +135,12 @@
     <string name="copied_to_clipboard">Copied to clipboard</string>
     <string name="send_payment_code">Send payment code</string>
 
-    <string name="ask_you_sure_exit">Are you sure you want to exit Samourai?</string>
+    <string name="ask_you_sure_exit">Are you sure you want to exit Anom Wallet?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="close">Close</string>
 
-    <string name="sim_warning">Your Samourai Wallet device now has a different SIM card corresponding to incoming number of this text message.</string>
+    <string name="sim_warning">Your Anom Wallet device now has a different SIM card corresponding to incoming number of this text message.</string>
 
     <string name="pin_5_8">Create a PIN code between 5 and 8 characters.</string>
     <string name="pin_5_8_confirm">Confirm PIN code</string>
@@ -182,7 +184,7 @@
     <string name="destination">Address or payment channel</string>
 
     <string name="insufficient_funds">Insufficient funds</string>
-    <string name="tx_length_error">Samourai does not handle transactions over 100KB in size. Please try splitting your transaction.</string>
+    <string name="tx_length_error">Anom does not handle transactions over 100KB in size. Please try splitting your transaction.</string>
     <string name="invalid_amount">Invalid amount</string>
     <string name="invalid_address">Invalid address</string>
     <string name="amount">Amount</string>
@@ -238,7 +240,7 @@
 
     <string name="choose_email_client">Choose an Email client:</string>
 
-    <string name="cannot_launch_app">Samourai Wallet cannot be run on this device</string>
+    <string name="cannot_launch_app">Anom Wallet cannot be run on this device</string>
     <string name="confirm_change_pin">Are you sure you want to change your PIN?</string>
     <string name="success_change_pin">PIN changed</string>
     <string name="alternative_pin_create">Are you sure you want to create an alternative PIN to be used for stealth launch and remote commands?</string>
@@ -280,11 +282,11 @@
 
     <string name="invalid_passphrase">Invalid passphrase</string>
     <string name="passphrase">Passphrase</string>
-    <string name="passphrase_needed_for_backup">Your wallet is not protected by a passphrase. Wallet backups are encrypted using your wallet passphrase. If you would like to use encrypted wallet backups and other Samourai Wallet features create your wallet using Samourai Wallet and transfer your funds.</string>
+    <string name="passphrase_needed_for_backup">Your wallet is not protected by a passphrase. Wallet backups are encrypted using your wallet passphrase. If you would like to use encrypted wallet backups and other Anom Wallet features create your wallet using Anom Wallet and transfer your funds.</string>
     <string name="passphrase_required">A passphrase is required to use this function. Please consider creating a new wallet which will automatically include a passphrase.</string>
 
-    <string name="cannot_reach_api">Samourai APIs cannot be reached. Please verify connection and try again or try later.</string>
-    <string name="api_error">Samourai APIs are returning an error. Please try again or try later.</string>
+    <string name="cannot_reach_api">Anom APIs cannot be reached. Please verify connection and try again or try later.</string>
+    <string name="api_error">Anom APIs are returning an error. Please try again or try later.</string>
     <string name="api_key_error">Invalid API key.</string>
     <string name="api_token_error">Invalid API token.</string>
 
@@ -295,9 +297,9 @@
 
     <string name="change_is_dust">The change from this transaction is a dust amount. Try again and either modify the spend amount or spend the entire balance.</string>
 
-    <string name="tor_routing_on">Samourai is routing via Tor.</string>
-    <string name="tor_routing_off">Samourai is not routing via Tor. Tap to activate.</string>
-    <string name="tor_install">Tap to install Orbot and route Samourai through Tor.</string>
+    <string name="tor_routing_on">Anom is routing via Tor.</string>
+    <string name="tor_routing_off">Anom is not routing via Tor. Tap to activate.</string>
+    <string name="tor_install">Tap to install Orbot and route Anom through Tor.</string>
 
     <string name="premium_addons">Premium Addons</string>
 
@@ -305,7 +307,7 @@
     <string name="ricochet_hopping">Ricocheted to</string>
     <string name="ricochet_spend1">Ricochet spend to</string>
     <string name="ricochet_spend2">for a total amount of</string>
-    <string name="ricochet_spend3">(includes 0.002 BTC fee to Samourai and miners\' fees)?</string>
+    <string name="ricochet_spend3">(includes 0.002 BTC fee to Anom and miners\' fees)?</string>
 
     <string name="action_ricochet">Replay Ricochet</string>
     <string name="action_empty_ricochet">Empty Ricochet queue</string>
@@ -332,7 +334,7 @@
     <string name="trusted_node_ko">Trusted node not recognized. Please check installation.</string>
     <string name="trusted_node_error">Error reaching proposed trusted node.</string>
     <string name="trusted_node_tx_error">Transaction failed on trusted node.</string>
-    <string name="trusted_node_not_core_131">Trusted node is set. Note that Samourai Wallet supports Bitcoin Core 0.13.1 and over.</string>
+    <string name="trusted_node_not_core_131">Trusted node is set. Note that Anom Wallet supports Bitcoin Core 0.13.1 and over.</string>
     <string name="trusted_node_tx_sent">Transaction sent via trusted node.</string>
     <string name="trusted_node_not_responding">Trusted node not responding. Please check installation.</string>
     <string name="trusted_node_breaks_consensus">Trusted node cannot be set on a bitcoin client that breaks consensus.</string>
@@ -396,7 +398,7 @@
     <string name="opendime_topup">TOP UP</string>
 
     <string name="select_app">Select application</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay protection</string>
     <string name="replay_unprotected">Unprotected</string>
@@ -464,7 +466,7 @@
 
     <string name="copy_to_clipboard">Copy to clipboard</string>
 
-    <string name="no_bitpay">Error: This is not a valid bitcoin request. Samourai only supports sending to valid bitcoin addresses.</string>
+    <string name="no_bitpay">Error: This is not a valid bitcoin request. Anom only supports sending to valid bitcoin addresses.</string>
     <string name="learn_more">Learn More</string>
 
     <string name="paynym">PayNym</string>
@@ -485,7 +487,7 @@
     <string name="bip47_notif_tx_insufficient_funds_2">BTC into your wallet and try again.</string>
     <string name="help">Help</string>
 
-    <string name="passphrase_disclaimer">I understand that Samourai cannot provide assistance in the case of lost or forgotten passphrases. Samourai never has any knowledge of my passphrase.</string>
+    <string name="passphrase_disclaimer">I understand that Anom Wallet cannot provide assistance in the case of lost or forgotten passphrases. Anom never has any knowledge of my passphrase.</string>
     <string name="confirm_pin_code">Confirm pin code</string>
     <string name="re_enter_your_pin_code">Re-enter your PIN code</string>
     <string name="re_enter_a_passphrase">Re-enter a passphrase</string>
@@ -494,9 +496,9 @@
     <string name="set_pin_code">Set Pin code</string>
     <string name="accept_disclaimer_error">You need to accept disclaimer</string>
     <string name="import_external_wallet">Import external wallet</string>
-    <string name="import_samourai_wallet">Import samourai backup</string>
+    <string name="import_samourai_wallet">Import anom backup</string>
     <string name="backup_file">Backup file</string>
-    <string name="import_an_encrypted_samourai_wallet">import an encrypted samourai backup to restore a wallet with all meta-data intact</string>
+    <string name="import_an_encrypted_samourai_wallet">import an encrypted anom backup to restore a wallet with all meta-data intact</string>
     <string name="back">BACK</string>
     <string name="finish">finish</string>
     <string name="choose_file">choose file</string>
@@ -509,12 +511,12 @@
     <string name="last_updated">Last updated</string>
     <string name="get_help">Get help</string>
     <string name="offline_mode">Offline mode</string>
-    <string name="import_samourai_backup">Import Samourai backup</string>
-    <string name="samourai_bitcoin_wallet">Samourai Bitcoin Wallet</string>
+    <string name="import_samourai_backup">Import Anom backup</string>
+    <string name="samourai_bitcoin_wallet">Anom Bitcoin Wallet</string>
     <string name="enter_your_wallet_passphrase">Enter your wallet passphrase</string>
     <string name="start_new_wallet">Start new wallet</string>
     <string name="get_help_create">Create wallet: Get help</string>
-    <string name="get_help_restore">Restore wallet: Get help</string>
+    <string name="get_help_restore">Get help</string>
 
     <string name="fee">Miner fee</string>
     <string name="fee_low_priority">Low priority: estimated 24</string>
@@ -527,7 +529,7 @@
     <string name="invalid_mnemonic">Invalid BIP39 mnemonic</string>
     <string name="enter_your_code_here">Enter your code here</string>
 
-    <string name="disclaimer_recovery_words">I confirm that I have written the above words down and have stored them in a safe and secure location. I understand that anyone who has access to both my passphrase and my recovery words will be able to access my wallet and all my funds.</string>
+    <string name="declaimer_recovery_words">I confirm that I have written the above words down and have stored them in a safe and secure location. I understand that anyone who has access to both my passphrase and my recovery words will be able to access my wallet and all my funds.</string>
     <string name="return_to_wallet">Return to wallet</string>
     <string name="caution_message_recovery_words">It is not safe to keep these words backed up on your computer or in the cloud. Write these words down on a piece of paper and keep it secret and secure.</string>
     <string name="these_words_are">These words are a backup of all the secret keys in your wallet.</string>
@@ -574,9 +576,9 @@
 
     <string name="prune_backup">Prune payload and backup files?</string>
 
-    <string name="in_offline_mode">Samourai Wallet is in offline mode.</string>
+    <string name="in_offline_mode">Anom Wallet is in offline mode.</string>
 
-    <string name="broadcast_off">Your Samourai Wallet broadcasting is switched off.</string>
+    <string name="broadcast_off">Your Anom Wallet broadcasting is switched off.</string>
     <string name="tx_standby">Transaction in stand-by</string>
     <string name="show_hex">Display Hex Code</string>
     <string name="tx_tenna_coming_soon">txTenna on Android coming soon</string>
@@ -684,10 +686,10 @@
     <string name="title_activity_network_dashboard">
         Networking
     </string>
-    <string name="powering_samourai_wallet_">Powering Samourai Wallet with your own personal node offers the best level of privacy and independence when interacting with the bitcoin network. Dojo makes running a full node easy and simple.</string>
-    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Samourai servers</string>
+    <string name="powering_samourai_wallet_">Powering Anom Wallet with your own personal node offers the best level of privacy and independence when interacting with the bitcoin network. Dojo makes running a full node easy and simple.</string>
+    <string name="plug_and_play_full_bitcoin_node_automatically">- Plug and Play full bitcoin node\n\n -Automatically configured Tor hidden service\n\n -Independence from default Anom servers</string>
     <string name="dojo_connect_instruction">If you already have a Dojo Full Node or are \nrunning the free and open source Dojo Software\non your own hardware, scan the pairing QR code\nlocated on the Dojo Maintenance control panel</string>
-    <string name="dojo_headline">Power Samourai with your  own personal DOJO full node</string>
+    <string name="dojo_headline">Power Anom Wallet with your  own personal DOJO full node</string>
     <string name="connect_to_existing_dojo">Connect to existing Dojo</string>
     <string name="create_to_existing_dojo">Create wallet and pair to Dojo</string>
     <string name="preorder">preorder</string>
@@ -697,7 +699,7 @@
     <string name="follow">Follow</string>
     <string name="wallet_locked">Wallet Locked</string>
     <string name="address">Address</string>
-    <string name="is_offline">Samourai is offline</string>
+    <string name="is_offline">Anom is offline</string>
     <string name="history_will_be_updated">Balance and transaction history will not be updated until a working data connection is established</string>
 
     <string name="you_received_s">You received</string>
@@ -739,8 +741,8 @@
     <string name="review_tx_before_braodcast">Review the transaction before broadcasting</string>
     <string name="select_participant">Select participant</string>
     <string name="select_cahoots_type">Select cahoots type</string>
-    <string name="cannot_disable_tor_dojo">Tor cannot be stopped since wallet is connected to a Samourai Dojo node.</string>
-    <string name="temporary_dojo_disable">Uninstall Samourai Wallet to unpair from your Dojo node. \'DISABLE\' will be fully activated in a later update.</string>
+    <string name="cannot_disable_tor_dojo">Tor cannot be stopped since wallet is connected to a Anom Dojo node.</string>
+    <string name="temporary_dojo_disable">Uninstall Anom Wallet to unpair from your Dojo node. \'DISABLE\' will be fully activated in a later update.</string>
 
     <string name="renew">RENEW</string>
     <string name="continue_exchanging_qr_codes">Continue exchanging QR codes\n until the transaction is broadcast!</string>
@@ -810,7 +812,7 @@
 
     <string name="sweep_no_amount">No utxos found for this private key.</string>
     <string name="note_privacy_addons_are_not_available_for_selected_utxo_s">NOTE: Privacy addons are not available for selected utxo\'s</string>
-    <string name="note_you_are_making_a_post_mix_spend_if_cahoots_nis_not_selected_samourai_will">NOTE: You are making a post-mix spend. If #Cahoots\nis not selected Samourai will attempt to make a STONEWALL spend.</string>
+    <string name="note_you_are_making_a_post_mix_spend_if_cahoots_nis_not_selected_samourai_will">NOTE: You are making a post-mix spend. If #Cahoots\nis not selected Anom Wallet will attempt to make a STONEWALL spend.</string>
     <string name="off">Off</string>
     <string name="privacy_addons">Privacy Addons</string>
     <string name="ricochet_">Ricochet</string>
@@ -842,5 +844,10 @@
     <string name="unlocks_advanced">Unlocks advanced privacy functionality in your wallet</string>
     <string name="share_and_reuse">Share and reuse without revealing your other
         transactions and balances</string>
+
+
+    <string name="connecting_dojo">Connecting to dojo</string>
+    <string name="connected_dojo">Connected to dojo</string>
+    <string name="error_dojo">Error connecting to Dojo</string>
 
 </resources>

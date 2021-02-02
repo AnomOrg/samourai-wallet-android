@@ -608,10 +608,10 @@ public class ReceiveActivity extends AppCompatActivity {
                 }
                 break;
             }
-            case R.id.action_support: {
+        /*    case R.id.action_support: {
                 doSupport();
                 break;
-            }
+            }*/
 
             case R.id.receive_cahoots: {
                 // open receive activity

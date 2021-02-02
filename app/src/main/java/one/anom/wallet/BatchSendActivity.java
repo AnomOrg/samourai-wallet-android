@@ -230,7 +230,7 @@ public class BatchSendActivity extends SamouraiActivity {
                     }
 
                     AlertDialog.Builder dlg = new AlertDialog.Builder(BatchSendActivity.this);
-                    dlg.setIcon(R.drawable.ic_launcher);
+                    dlg.setIcon(R.mipmap.ic_launcher);
                     dlg.setTitle(R.string.app_name);
 
                     dlg.setAdapter(arrayAdapter,
@@ -386,9 +386,9 @@ public class BatchSendActivity extends SamouraiActivity {
         else if (id == R.id.action_new) {
             doAddNew();
         }
-        else if (id == R.id.action_support) {
+        /*else if (id == R.id.action_support) {
             doSupport();
-        }
+        }*/
         else if (id == R.id.action_refresh) {
 
             data.clear();

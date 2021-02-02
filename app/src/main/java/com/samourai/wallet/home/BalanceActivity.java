@@ -447,7 +447,7 @@ public class BalanceActivity extends SamouraiActivity {
                 updateDisplay(false);
             }, 100L);
 
-            getSupportActionBar().setIcon(R.drawable.ic_samourai_logo);
+            getSupportActionBar().setIcon(R.drawable.ic_samourai_logo_trans2x);
 
         }
         else {
@@ -746,9 +746,9 @@ public class BalanceActivity extends SamouraiActivity {
         if (id == R.id.action_settings) {
             doSettings();
         }
-        else if (id == R.id.action_support) {
+     /*   else if (id == R.id.action_support) {
             doSupport();
-        }
+        }*/
         else if (id == R.id.action_sweep) {
             if (!AppUtil.getInstance(BalanceActivity.this).isOfflineMode()) {
                 doSweep();
