@@ -68,6 +68,8 @@ public class LandingActivity extends AppCompatActivity  {
     private ImageView torStatusCheck;
     private LinearLayout dojoConnectedStatus;
     private CompositeDisposable compositeDisposables = new CompositeDisposable();
+    private TextView dojoStatus;
+    private ImageView dojoStatusCheck;
 
     private boolean waitingForPairing = false;
     private String strPairingParams = null;
@@ -84,6 +86,9 @@ public class LandingActivity extends AppCompatActivity  {
         torStatusCheck = findViewById(R.id.landing_tor_check);
         torStatus = findViewById(R.id.landing_tor_logs);
         dojoConnectedStatus = findViewById(R.id.dojo_connected_status_layout);
+        dojoStatusCheck = findViewById(R.id.landing_dojo_check);
+        dojoStatus = findViewById(R.id.landing_dojo_status);
+
         setSupportActionBar(findViewById(R.id.landing_toolbar));
         textView.setOnClickListener(view -> RestoreWalletFromBackup());
         createAccount.setOnClickListener(view -> {
@@ -113,7 +118,7 @@ public class LandingActivity extends AppCompatActivity  {
 
             if (b) {
                 startTor();
-                progressBarTor.setVisibility(View.VISIBLE);
+                progressBarTor.setVisibility(View.INVISIBLE);
                 torSwitch.setVisibility(View.INVISIBLE);
             } else {
                 stopTor();
@@ -132,10 +137,10 @@ public class LandingActivity extends AppCompatActivity  {
     }
 
     private void startTor() {
-        TorManager.INSTANCE.getTorStateLiveData().observe(this,torState -> {
+        TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
             if (torState ==   TorManager.TorState.WAITING) {
-                progressBarTor.setVisibility(View.VISIBLE);
                 torStatus.setVisibility(View.VISIBLE);
+                progressBarTor.setVisibility(View.INVISIBLE);
                 torStatus.setText("Tor service connecting...");
             } else if (torState == TorManager.TorState.ON) {
                 PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
@@ -144,11 +149,16 @@ public class LandingActivity extends AppCompatActivity  {
                 torStatus.setText("Tor Connected");
                 progressBarTor.setVisibility(View.INVISIBLE);
                 torSwitch.setChecked(true);
+                if (DojoUtil.getInstance(LandingActivity.this).getDojoParams() != null) {
+                    dojoStatus.setVisibility(View.VISIBLE);
+                    dojoStatusCheck.setVisibility(View.VISIBLE);
+                    dojoStatus.setText("Dojo Connected");
+                }
             } else {
                 torStatus.setVisibility(View.INVISIBLE);
                 progressBarTor.setVisibility(View.INVISIBLE);
                 torStatusCheck.setVisibility(View.INVISIBLE);
-                torSwitch.setVisibility(View.VISIBLE);
+                torSwitch.setVisibility(View.INVISIBLE);
                 torSwitch.setChecked(false);
             }
         });
@@ -240,6 +250,10 @@ public class LandingActivity extends AppCompatActivity  {
             }
             case R.id.dojo: {
                 doDojoPairing0();
+                return false;
+            }
+            case R.id.restore: {
+                RestoreWalletFromBackup();
                 return false;
             }
             default: {

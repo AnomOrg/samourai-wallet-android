@@ -23,6 +23,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.annotation.Nullable;
+
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import androidx.transition.ChangeBounds;
 import androidx.transition.TransitionManager;
@@ -49,10 +51,15 @@ import android.widget.Toast;
 import com.dm.zbar.android.scanner.ZBarConstants;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.progressindicator.ProgressIndicator;
+
+import io.reactivex.functions.Consumer;
+import one.anom.wallet.AnomApplication;
 import one.anom.wallet.R;
 import one.anom.wallet.ReceiveActivity;
 import one.anom.wallet.AnomActivity;
 import one.anom.wallet.AnomWallet;
+
+import com.samourai.wallet.bip47.paynym.WebUtil;
 import com.samourai.wallet.paynym.fragments.PayNymOnBoardBottomSheet;
 import com.samourai.wallet.send.soroban.meeting.SorobanMeetingListenActivity;
 import com.samourai.wallet.settings.SettingsActivity;
@@ -88,6 +95,8 @@ import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.tx.TxDetailsActivity;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
+import com.samourai.wallet.util.ConnectivityStatus;
+import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.FormatsUtil;
 import com.samourai.wallet.util.MessageSignUtil;
 import com.samourai.wallet.util.MonetaryUtil;
@@ -120,6 +129,7 @@ import java.util.Collections;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.Observable;
@@ -152,8 +162,13 @@ public class BalanceActivity extends AnomActivity {
     private ImageView menuTorIcon;
     private ProgressBar progressBarMenu;
     private View whirlpoolFab, sendFab, receiveFab, paynymFab;
+    private AppBarLayout mAppBarLayout;
+    private TextView mFiatAmount;
+    private static long loadedBalance = 0L;
 
-    public static final String ACTION_INTENT = "com.samourai.wallet.BalanceFragment.REFRESH";
+
+
+    public static final String ACTION_INTENT = "one.anom.wallet.BalanceFragment.REFRESH";
     protected BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -212,7 +227,7 @@ public class BalanceActivity extends AnomActivity {
         }
     };
 
-    public static final String DISPLAY_INTENT = "com.samourai.wallet.BalanceFragment.DISPLAY";
+    public static final String DISPLAY_INTENT = "one.anom.wallet.BalanceFragment.DISPLAY";
     protected BroadcastReceiver receiverDisplay = new BroadcastReceiver() {
         @Override
         public void onReceive(final Context context, Intent intent) {
@@ -243,6 +258,7 @@ public class BalanceActivity extends AnomActivity {
                         final String hash = out.getHash().toString();
                         final int idx = out.getTxOutputN();
                         final long amount = out.getValue().longValue();
+
                         boolean contains = ((BlockedUTXO.getInstance().contains(hash, idx) || BlockedUTXO.getInstance().containsNotDusted(hash, idx)));
 
                         boolean containsInPostMix = (BlockedUTXO.getInstance().containsPostMix(hash, idx) || BlockedUTXO.getInstance().containsNotDustedPostMix(hash, idx));
@@ -337,6 +353,20 @@ public class BalanceActivity extends AnomActivity {
         sendFab =  findViewById(R.id.send_fab);
         receiveFab =  findViewById(R.id.receive_fab);
         paynymFab =  findViewById(R.id.paynym_fab);
+        mAppBarLayout = findViewById(R.id.app_bar);
+        mFiatAmount = findViewById(R.id.tv_fiat_amount);
+
+        mAppBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+
+            if (verticalOffset == 0) {
+
+                mFiatAmount.setVisibility(View.VISIBLE);
+            } else {
+
+                mFiatAmount.setVisibility(View.INVISIBLE);
+            }
+        });
+
 
         findViewById(R.id.whirlpool_fab).setOnClickListener(view -> {
             Intent intent = new Intent(BalanceActivity.this, WhirlpoolMain.class);
@@ -365,11 +395,11 @@ public class BalanceActivity extends AnomActivity {
                 setBalance(payload.getLong("prev_balance"), false);
             }
             catch(Exception e)    {
-                setBalance(0L, false);
+                setBalance(loadedBalance, false);
             }
         }
         else    {
-            setBalance(0L, false);
+            setBalance(loadedBalance, false);
         }
 
         receiveFab.setOnClickListener(view -> {
@@ -407,9 +437,9 @@ public class BalanceActivity extends AnomActivity {
         if (PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_CLAIMED, false) && !PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_FEATURED_SEGWIT, false)) {
             doFeaturePayNymUpdate();
         } else if (!PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_CLAIMED, false) &&
-                 !PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_REFUSED, false)) {
-             PayNymOnBoardBottomSheet payNymOnBoardBottomSheet = new PayNymOnBoardBottomSheet();
-             payNymOnBoardBottomSheet.show(getSupportFragmentManager(),payNymOnBoardBottomSheet.getTag());
+                !PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_REFUSED, false)) {
+            PayNymOnBoardBottomSheet payNymOnBoardBottomSheet = new PayNymOnBoardBottomSheet();
+            payNymOnBoardBottomSheet.show(getSupportFragmentManager(),payNymOnBoardBottomSheet.getTag());
         }
         Log.i(TAG, "onCreate:PAYNYM_REFUSED ".concat(String.valueOf(PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.PAYNYM_REFUSED, false))));
 
@@ -447,7 +477,7 @@ public class BalanceActivity extends AnomActivity {
                 updateDisplay(false);
             }, 100L);
 
-            getSupportActionBar().setIcon(R.drawable.ic_samourai_logo_trans2x);
+            getSupportActionBar().setIcon(R.drawable.ic_samourai_logo_toolbar);
 
         }
         else {
@@ -554,13 +584,6 @@ public class BalanceActivity extends AnomActivity {
         });
         mCollapsingToolbar.setOnClickListener(view -> balanceViewModel.toggleSat());
 
-        mCollapsingToolbar.setOnLongClickListener(view -> {
-            Intent intent = new Intent(BalanceActivity.this, UTXOSActivity.class);
-            intent.putExtra("_account", account);
-            startActivityForResult(intent,UTXO_REQUESTCODE);
-
-            return false;
-        });
     }
 
     private void setBalance(Long balance, boolean isSat) {
@@ -578,6 +601,9 @@ public class BalanceActivity extends AnomActivity {
             toolbar.setTitle(displayAmount);
             setTitle(displayAmount);
             mCollapsingToolbar.setTitle(displayAmount);
+            mFiatAmount.setText(String.format("%s %s", getFiatDisplayAmount(balance),
+                    getFiatDisplayUnits()));
+
 
         }
 
@@ -595,8 +621,10 @@ public class BalanceActivity extends AnomActivity {
 
         AppUtil.getInstance(BalanceActivity.this).checkTimeOut();
 //
-//        Intent intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
+//        Intent intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
 //        LocalBroadcastManager.getInstance(BalanceActivity.this).sendBroadcast(intent);
+
+        checkInternetConnectionOnInterval();
 
     }
 
@@ -634,7 +662,7 @@ public class BalanceActivity extends AnomActivity {
             ArrayList<String> paymentCodes = new ArrayList<>(BIP47Meta.getInstance().getSortedByLabels(false, true));
             for (String code : paymentCodes) {
                 Picasso.get()
-                        .load(com.samourai.wallet.bip47.paynym.WebUtil.PAYNYM_API + code + "/avatar").fetch(new Callback() {
+                        .load(WebUtil.PAYNYM_API + code + "/avatar").fetch(new Callback() {
                     @Override
                     public void onSuccess() {
                         /*NO OP*/
@@ -746,7 +774,7 @@ public class BalanceActivity extends AnomActivity {
         if (id == R.id.action_settings) {
             doSettings();
         }
-     /*   else if (id == R.id.action_support) {
+      /*  else if (id == R.id.action_support) {
             doSupport();
         }*/
         else if (id == R.id.action_sweep) {
@@ -812,7 +840,7 @@ public class BalanceActivity extends AnomActivity {
 
 
     private void setUpTor() {
-        TorManager.INSTANCE.getTorStateLiveData().observe(this,torState -> {
+        TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
             if (torState == TorManager.TorState.ON) {
                 PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
                 if (this.progressBarMenu != null) {
@@ -1013,10 +1041,10 @@ public class BalanceActivity extends AnomActivity {
         startActivity(intent);
     }
 
-    private void doSupport() {
+ /*   private void doSupport() {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://support.samourai.io/"));
         startActivity(intent);
-    }
+    }*/
 
     private void doUTXO() {
         Intent intent = new Intent(BalanceActivity.this, UTXOSActivity.class);
@@ -1072,7 +1100,7 @@ public class BalanceActivity extends AnomActivity {
                 } else if (FormatsUtil.getInstance().isPSBT(code.trim())) {
                     PSBTUtil.getInstance(BalanceActivity.this).doPSBT(code.trim());
                 } else if (DojoUtil.getInstance(BalanceActivity.this).isValidPairingPayload(code.trim())) {
-                    Toast.makeText(BalanceActivity.this, "Samourai Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BalanceActivity.this, "Anom Dojo full node coming soon.", Toast.LENGTH_SHORT).show();
                 } else {
                     Intent intent = new Intent(BalanceActivity.this, SendActivity.class);
                     intent.putExtra("uri", code.trim());
@@ -1278,7 +1306,7 @@ public class BalanceActivity extends AnomActivity {
                                     Toast.makeText(BalanceActivity.this, R.string.copied_to_clipboard, Toast.LENGTH_SHORT).show();
                                 } else {
                                     Intent email = new Intent(Intent.ACTION_SEND);
-                                    email.putExtra(Intent.EXTRA_SUBJECT, "Samourai Wallet backup");
+                                    email.putExtra(Intent.EXTRA_SUBJECT, "Anom Wallet backup");
                                     email.putExtra(Intent.EXTRA_TEXT, obj.toString());
                                     email.setType("message/rfc822");
                                     startActivity(Intent.createChooser(email, BalanceActivity.this.getText(R.string.choose_email_client)));
@@ -1516,7 +1544,7 @@ public class BalanceActivity extends AnomActivity {
             JSONObject obj = new JSONObject();
             obj.put("code", BIP47Util.getInstance(BalanceActivity.this).getPaymentCode().toString());
 //                    Log.d("BalanceActivity", obj.toString());
-            String res = com.samourai.wallet.bip47.paynym.WebUtil.getInstance(BalanceActivity.this).postURL("application/json", null, com.samourai.wallet.bip47.paynym.WebUtil.PAYNYM_API + "api/v1/token", obj.toString());
+            String res = WebUtil.getInstance(BalanceActivity.this).postURL("application/json", null, WebUtil.PAYNYM_API + "api/v1/token", obj.toString());
 //                    Log.d("BalanceActivity", res);
 
             JSONObject responseObj = new JSONObject(res);
@@ -1532,7 +1560,7 @@ public class BalanceActivity extends AnomActivity {
                 obj.put("signature", sig);
 
 //                        Log.d("BalanceActivity", "nym/add:" + obj.toString());
-                res = com.samourai.wallet.bip47.paynym.WebUtil.getInstance(BalanceActivity.this).postURL("application/json", token, com.samourai.wallet.bip47.paynym.WebUtil.PAYNYM_API + "api/v1/nym/add", obj.toString());
+                res = WebUtil.getInstance(BalanceActivity.this).postURL("application/json", token, WebUtil.PAYNYM_API + "api/v1/nym/add", obj.toString());
 //                        Log.d("BalanceActivity", res);
 
                 responseObj = new JSONObject(res);
@@ -1556,5 +1584,58 @@ public class BalanceActivity extends AnomActivity {
 
     }
 
+    private String getFiatDisplayAmount(long value) {
+
+        String strFiat = PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+        double btc_fx = ExchangeRateFactory.getInstance(BalanceActivity.this).getAvgPrice(strFiat);
+        String strAmount = MonetaryUtil.getInstance().getFiatFormat(strFiat).format(btc_fx * (((double) value) / 1e8));
+
+        return strAmount;
+    }
+
+    private String getFiatDisplayUnits() {
+
+        return PrefsUtil.getInstance(BalanceActivity.this).getValue(PrefsUtil.CURRENT_FIAT, "USD");
+    }
+
+    private void observeInternetConnectivity(boolean isInternetConnected) {
+        if (isInternetConnected) {
+            if (TorManager.INSTANCE.isRequired() && !TorManager.INSTANCE.isConnected()) {
+                ((AnomApplication) getApplication()).startService();
+
+                TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
+                    if (torState ==   TorManager.TorState.WAITING) {
+                    } else if (torState == TorManager.TorState.ON) {
+                        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                        DojoUtil.getInstance(getApplicationContext()).clear();
+                    }
+                });
+
+               /* Disposable disposable = TorManager.INSTANCE
+                        .getTorState()
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(connection_states -> {
+                            if (connection_states == TorProxyManager.ConnectionStatus.CONNECTED) {
+
+                            } else if (connection_states == TorProxyManager.ConnectionStatus.DISCONNECTED) {
+
+                            }
+                        });*/
+                // compositeDisposable.add(disposable);
+            }
+
+        } else {
+            if (TorManager.INSTANCE.isRequired()) {
+                TorServiceController.stopTor();
+            }
+        }
+    }
+
+    private void checkInternetConnectionOnInterval() {
+        compositeDisposable.add(Observable.interval(0, 5, TimeUnit.SECONDS)
+                .flatMap(aLong -> Observable.just(ConnectivityStatus.hasConnectivity(BalanceActivity.this)))
+                .subscribe((Consumer<Boolean>) this::observeInternetConnectivity));
+    }
 
 }

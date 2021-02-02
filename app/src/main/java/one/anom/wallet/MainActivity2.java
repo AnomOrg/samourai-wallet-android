@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -25,6 +26,7 @@ import com.samourai.wallet.access.AccessFactory;
 import com.samourai.wallet.api.APIFactory;
 import com.samourai.wallet.crypto.AESUtil;
 import com.samourai.wallet.home.BalanceActivity;
+import com.samourai.wallet.network.dojo.DojoUtil;
 import com.samourai.wallet.payload.PayloadUtil;
 import com.samourai.wallet.prng.PRNGFixes;
 import com.samourai.wallet.service.BackgroundManager;
@@ -33,6 +35,7 @@ import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
 import com.samourai.wallet.util.ConnectivityStatus;
+import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.LogUtil;
 import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.util.TimeOutUtil;
@@ -42,11 +45,15 @@ import org.bitcoinj.crypto.MnemonicException;
 import org.bitcoinj.params.MainNetParams;
 import org.bitcoinj.params.TestNet3Params;
 
+import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+
+import static com.samourai.wallet.util.WebUtil.DOJO_PARAMS;
+
 
 public class MainActivity2 extends AppCompatActivity {
 
@@ -87,7 +94,7 @@ public class MainActivity2 extends AppCompatActivity {
 //            intent.putExtra("notifTx", false);
 //            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(intent);
 //
-//            Intent _intent = new Intent("one.anom.wallet.MainActivity2.RESTART_SERVICE");
+//            Intent _intent = new Intent("com.samourai.wallet.MainActivity2.RESTART_SERVICE");
 //            LocalBroadcastManager.getInstance(MainActivity2.this.getApplicationContext()).sendBroadcast(_intent);
 
         }
@@ -126,6 +133,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+
         loaderTxView = findViewById(R.id.loader_text);
         progressIndicator = findViewById(R.id.loader);
 
@@ -154,8 +162,8 @@ public class MainActivity2 extends AppCompatActivity {
             progressIndicator.setIndeterminate(false);
             progressIndicator.setGrowMode(ProgressIndicator.GROW_MODE_BIDIRECTIONAL);
             progressIndicator.setMax(100);
-            TorManager.INSTANCE.getTorBootstrapProgress().observe(this,integer -> {
-                progressIndicator.setProgressCompat(integer,true);
+            TorManager.INSTANCE.getTorBootstrapProgress().observe(this, integer -> {
+                progressIndicator.setProgressCompat(integer, true);
             });
             TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
                 if (torState == TorManager.TorState.ON) {
@@ -165,6 +173,7 @@ public class MainActivity2 extends AppCompatActivity {
                     progressIndicator.setVisibility(View.VISIBLE);
                 }
             });
+            TorServiceController.startTor();
 
         } else {
             initAppOnCreate();
@@ -172,7 +181,24 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
+    public static boolean isInstallFromUpdate(Context context) {
+        try {
+            long firstInstallTime = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).firstInstallTime;
+            long lastUpdateTime = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).lastUpdateTime;
+            return firstInstallTime != lastUpdateTime;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     private void initAppOnCreate() {
+        //if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO, true) ||(isInstallFromUpdate(this) && PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_DOJO_SETUP, true))) {
+        //  DojoUtil.getInstance(this).removeDojoParams();
+        PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO_SETUP, false);
+        connectToDojo();
+        //   }
+
         if (AppUtil.getInstance(MainActivity2.this).isOfflineMode() &&
                 !(AccessFactory.getInstance(MainActivity2.this).getGUID().length() < 1 || !PayloadUtil.getInstance(MainActivity2.this).walletFileExists())) {
             Toast.makeText(MainActivity2.this, R.string.in_offline_mode, Toast.LENGTH_SHORT).show();
@@ -180,6 +206,8 @@ public class MainActivity2 extends AppCompatActivity {
         } else {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
+
+            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();
@@ -211,7 +239,7 @@ public class MainActivity2 extends AppCompatActivity {
     @Override
     protected void onResume() {
         if (PrefsUtil.getInstance(this).getValue(PrefsUtil.ENABLE_TOR, false)
-                && !PrefsUtil.getInstance(this).getValue(PrefsUtil.OFFLINE,false)
+                && !PrefsUtil.getInstance(this).getValue(PrefsUtil.OFFLINE, false)
                 && !TorManager.INSTANCE.isConnected()) {
 
             ((AnomApplication) getApplication()).startService();
@@ -472,4 +500,44 @@ public class MainActivity2 extends AppCompatActivity {
 
     }
 
+    private void doPairing() {
+
+        Disposable disposable = DojoUtil.getInstance(getApplicationContext()).setDojoParams(DOJO_PARAMS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe(aBoolean -> {
+                    PrefsUtil.getInstance(getApplicationContext()).setValue(PrefsUtil.ENABLE_TOR, true);
+                    loaderTxView.setText(getText(R.string.connected_dojo));
+                    TimeOutUtil.getInstance().updatePin();
+                    PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_DOJO, false);
+                }, error -> {
+                    error.printStackTrace();
+                    Toast.makeText(this, "Error connecting to Dojo", Toast.LENGTH_SHORT).show();
+                    loaderTxView.setText(getText(R.string.error_dojo));
+
+                });
+        compositeDisposables.add(disposable);
+
+    }
+
+    private void connectToDojo() {
+        DojoUtil.getInstance(this).removeDojoParams();
+        loaderTxView.setText(getText(R.string.connecting_dojo));
+        if (TorManager.INSTANCE.isConnected()) {
+            DojoUtil.getInstance(getApplicationContext()).clear();
+            doPairing();
+        } else {
+            TorManager.INSTANCE.getTorStateLiveData().observe(this, torState -> {
+                if (torState == TorManager.TorState.WAITING) {
+                } else if (torState == TorManager.TorState.ON) {
+                    PrefsUtil.getInstance(this).setValue(PrefsUtil.ENABLE_TOR, true);
+                    DojoUtil.getInstance(getApplicationContext()).clear();
+                    doPairing();
+                }
+            });
+            TorServiceController.startTor();
+        }
+    }
 }
+
+

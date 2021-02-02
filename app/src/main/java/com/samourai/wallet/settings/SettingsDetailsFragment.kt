@@ -92,6 +92,16 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
                 setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
                 troubleShootSettings()
             }
+            "prefs" -> {
+                activity?.title = "Settings | Fiat"
+                setPreferencesFromResource(R.xml.settings_prefs, rootKey)
+                getExchange()
+            }
+            "explorer" -> {
+                activity?.title = "Settings | Explorer"
+                setPreferencesFromResource(R.xml.settings_troubleshoot, rootKey)
+                getBlockExplorer()
+            }
             "other" -> {
                 activity?.title = "Settings | Other"
                 setPreferencesFromResource(R.xml.settings_other, rootKey)
@@ -440,7 +450,7 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
 
     private fun otherSettings() {
         val aboutPref = findPreference("about") as Preference?
-        aboutPref?.summary = "Samourai," + " " + resources.getString(R.string.version_name)
+        aboutPref?.summary = "Anom," + " " + resources.getString(R.string.version_name)
         aboutPref?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             val intent = Intent(activity, AboutActivity::class.java)
             startActivity(intent)
@@ -1035,5 +1045,72 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
             scope.cancel(CancellationException())
         }
         super.onDestroy()
+    }
+
+    private fun getBlockExplorer() {
+        val explorers = BlockExplorerUtil.getInstance().blockExplorers
+        val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.BLOCK_EXPLORER, 0)
+        val _sel: Int
+        _sel = if (sel >= explorers.size) {
+            0
+        } else {
+            sel
+        }
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.options_blockexplorer)
+                .setSingleChoiceItems(explorers, _sel
+                ) { dialog, which ->
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.BLOCK_EXPLORER, which)
+                    dialog.dismiss()
+                }.show()
+    }
+
+    private fun getExchange() {
+
+        val fiatPref = findPreference("fiat") as Preference?
+        fiatPref!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            val exchanges = ExchangeRateFactory.getInstance(activity).exchangeLabels
+            val sel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
+            AlertDialog.Builder(activity)
+                    .setTitle(R.string.options_currency)
+                    .setSingleChoiceItems(exchanges, sel
+                    ) { dialog, which ->
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE, exchanges[which].substring(exchanges[which].length - 3))
+                        PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_EXCHANGE_SEL, which)
+                        if (which == 2) {
+                            PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, "USD")
+                            PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, 0)
+                            dialog.dismiss()
+                        } else {
+                            dialog.dismiss()
+                            getFiat()
+                        }
+                    }.show()
+            true
+        }
+    }
+
+    private fun getFiat() {
+        val fxSel = PrefsUtil.getInstance(activity).getValue(PrefsUtil.CURRENT_EXCHANGE_SEL, 0)
+        val currencies: Array<String>
+        currencies = if (fxSel == 1) {
+            ExchangeRateFactory.getInstance(activity).currencyLabelsBTCe
+        } else {
+            ExchangeRateFactory.getInstance(activity).currencyLabels
+        }
+        AlertDialog.Builder(activity)
+                .setTitle(R.string.options_currency)
+                .setSingleChoiceItems(currencies, 0
+                ) { dialog, which ->
+                    var selectedCurrency: String? = null
+                    selectedCurrency = if (currencies[which].substring(currencies[which].length - 3) == "RUR") {
+                        "RUB"
+                    } else {
+                        currencies[which].substring(currencies[which].length - 3)
+                    }
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT, selectedCurrency)
+                    PrefsUtil.getInstance(activity).setValue(PrefsUtil.CURRENT_FIAT_SEL, which)
+                    dialog.dismiss()
+                }.show()
     }
 }

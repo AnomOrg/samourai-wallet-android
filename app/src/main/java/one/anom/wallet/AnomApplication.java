@@ -9,9 +9,13 @@ import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.multidex.MultiDex;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 import com.samourai.wallet.tor.TorManager;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.LogUtil;
@@ -23,6 +27,8 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.matthewnelson.topl_service.TorServiceController;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -34,15 +40,46 @@ public class AnomApplication extends Application {
     public static String WHIRLPOOL_CHANNEL = "WHIRLPOOL_CHANNEL";
     public static String WHIRLPOOL_NOTIFICATIONS = "WHIRLPOOL_NOTIFICATIONS";
 
+    public static  String DOJO_TYPE;
+    public static  String DOJO_VERSION;
+    public static  String DOJO_API_KEY;
+    public static  String DOJO_URL;
+
+
+
     @Override
     public void onCreate() {
         super.onCreate();
+
         setUpTorService();
         setUpChannels();
         RxJavaPlugins.setErrorHandler(throwable -> {});
 
-
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+        final FirebaseRemoteConfig firebaseRemoteConfig = FirebaseRemoteConfig.getInstance();
+
+        Map<String, Object> remoteConfigDefaults = new HashMap();
+        remoteConfigDefaults.put("type", "dojo.api");
+        remoteConfigDefaults.put("version", "1.8.0");
+        remoteConfigDefaults.put("apikey", "Yu3Que7ohhohd2ayazaer0aigeelohD2");
+        remoteConfigDefaults.put("url", "http://dkbj457hxly5sft7yfyaofzt2xaikcf4qs7hepgrenkyl33pzkdgjjad.onion/v2");
+
+        firebaseRemoteConfig.setDefaults(remoteConfigDefaults);
+        firebaseRemoteConfig.fetch(30)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            firebaseRemoteConfig.activateFetched();
+                        }
+                    }
+                });
+
+        DOJO_TYPE = firebaseRemoteConfig.getString("type");
+        DOJO_VERSION = firebaseRemoteConfig.getString("version");
+        DOJO_API_KEY = firebaseRemoteConfig.getString("apikey");
+        DOJO_URL = firebaseRemoteConfig.getString("url");
 
         // Write logcat output to a file
         if (BuildConfig.DEBUG) {
@@ -135,5 +172,6 @@ public class AnomApplication extends Application {
             startService();
         }
     }
+
 
 }

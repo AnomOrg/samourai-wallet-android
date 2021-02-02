@@ -7,6 +7,11 @@ import android.preference.PreferenceManager;
 
 public class PrefsUtil {
 
+	public static final String CURRENT_FIAT = "currentFiat";
+	public static final String CURRENT_FIAT_SEL = "currentFiatSel";
+	public static final String CURRENT_EXCHANGE = "currentExchange";
+	public static final String CURRENT_EXCHANGE_SEL = "currentExchangeSel";
+	public static final String BLOCK_EXPLORER = "blockExplorer";
 	public static final String GUID = "guid";
 	public static final String GUID_V = "guid_version";
 	public static final String ACCESS_HASH = "accessHash";
@@ -15,7 +20,7 @@ public class PrefsUtil {
 	public static final String ICON_HIDDEN = "iconHidden";
 	public static final String ACCEPT_REMOTE = "acceptRemote";
 	public static final String CURRENT_FEE_TYPE = "currentFeeType";
- 	public static final String WALLET_ORIGIN = "origin";
+	public static final String WALLET_ORIGIN = "origin";
 	public static final String FIRST_RUN = "1stRun";
 	public static final String SIM_IMSI = "IMSI";
 	public static final String CHECK_SIM = "checkSIM";
@@ -56,6 +61,9 @@ public class PrefsUtil {
 
 	private static Context context = null;
 	private static PrefsUtil instance = null;
+	public static final String ENABLE_DOJO = "enable_dojo";
+	public static final String ENABLE_DOJO_SETUP = "enable_dojo_setup";
+
 
 	private PrefsUtil() { ; }
 
@@ -130,5 +138,6 @@ public class PrefsUtil {
 		editor.clear();
 		return editor.commit();
 	}
+
 
 }
