@@ -207,7 +207,7 @@ public class MainActivity2 extends AppCompatActivity {
 //            SSLVerifierThreadUtil.getInstance(MainActivity2.this).validateSSLThread();
 //            APIFactory.getInstance(MainActivity2.this).validateAPIThread();
 
-            ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
+           // ExchangeRateFactory.getInstance(MainActivity2.this).exchangeRateThread();
 
             String action = getIntent().getAction();
             String scheme = getIntent().getScheme();

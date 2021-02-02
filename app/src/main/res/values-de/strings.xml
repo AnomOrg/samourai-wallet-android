@@ -473,7 +473,7 @@
     <string name="set_pin_code">PIN erstellen</string>
     <string name="accept_disclaimer_error">Du musst die Bedingungen akzeptieren</string>
     <string name="import_external_wallet">Externe Wallet importieren</string>
-    <string name="import_samourai_wallet">Samourai Backup importieren</string>
+    <string name="import_samourai_wallet">Anom Wallet Backup importieren</string>
     <string name="backup_file">Backup-Datei</string>
     <string name="import_an_encrypted_samourai_wallet">Ein verschlüsseltes Samourai Backup importieren, um die Wallet mit all ihren Metadaten wiederherzustellen.</string>
     <string name="back">ZURÜCK</string>
