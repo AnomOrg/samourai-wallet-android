@@ -67,31 +67,31 @@ public class DojoUtil {
     }
 
     public synchronized Observable<Boolean> setDojoParams(String dojoParams) {
-       return Observable.fromCallable(() -> {
-           DojoUtil.dojoParams = dojoParams;
-           Log.i(TAG, "setDojoParams: ".concat(dojoParams));
-           String url = getUrl(dojoParams);
-           if(url.charAt(url.length() - 1) != '/') {
-               url = url + "/";
+        return Observable.fromCallable(() -> {
+            DojoUtil.dojoParams = dojoParams;
+            Log.i(TAG, "setDojoParams: ".concat(dojoParams));
+            String url = getUrl(dojoParams);
+            if(url.charAt(url.length() - 1) != '/') {
+                url = url + "/";
 
-               JSONObject obj = new JSONObject(dojoParams);
-               if(obj.has("pairing") && obj.getJSONObject("pairing").has("url")) {
-                   obj.getJSONObject("pairing").put("url", url);
-                   DojoUtil.dojoParams = obj.toString();
-               }
-           }
-           if(AnomWallet.getInstance().isTestNet())    {
-               WebUtil.SAMOURAI_API2_TESTNET_TOR = url;
-           }
-           else    {
-               WebUtil.SAMOURAI_API2_TOR = url;
-           }
+                JSONObject obj = new JSONObject(dojoParams);
+                if(obj.has("pairing") && obj.getJSONObject("pairing").has("url")) {
+                    obj.getJSONObject("pairing").put("url", url);
+                    DojoUtil.dojoParams = obj.toString();
+                }
+            }
+            if(AnomWallet.getInstance().isTestNet())    {
+                WebUtil.SAMOURAI_API2_TESTNET_TOR = url;
+            }
+            else    {
+                WebUtil.SAMOURAI_API2_TOR = url;
+            }
 
-           String apiToken = getApiKey(dojoParams);
-           APIFactory.getInstance(context).setAppToken(apiToken);
-           APIFactory.getInstance(context).getToken(true);
-           return  true;
-       });
+            String apiToken = getApiKey(dojoParams);
+            APIFactory.getInstance(context).setAppToken(apiToken);
+            APIFactory.getInstance(context).getToken(true);
+            return  true;
+        });
     }
 
     public synchronized void removeDojoParams() {
