@@ -375,7 +375,7 @@
     <string name="opendime_topup">AUFLADEN</string>
 
     <string name="select_app">Programm auswählen</string>
-    <string name="samourai_opendime">Samourai: OpenDime</string>
+    <string name="samourai_opendime">Anom: OpenDime</string>
 
     <string name="replay_protection">Replay Schutz</string>
     <string name="replay_unprotected">Ungeschützt</string>

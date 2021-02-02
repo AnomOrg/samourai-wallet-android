@@ -157,7 +157,7 @@ public class UTXOSActivity extends AnomActivity implements ActionMode.Callback {
         if (!APIFactory.getInstance(getApplicationContext())
                 .walletInit) {
             if (!shownWalletLoadingMessage) {
-                Snackbar.make(utxoList.getRootView(), "Please wait... your wallet is still loading ", Snackbar.LENGTH_LONG).show();
+                Snackbar.make(utxoList.getRootView(), "Please wait... your anom wallet is still loading ", Snackbar.LENGTH_LONG).show();
                 shownWalletLoadingMessage = true;
             }
 

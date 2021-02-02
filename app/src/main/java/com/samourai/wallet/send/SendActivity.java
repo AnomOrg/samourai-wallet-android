@@ -809,7 +809,7 @@ public class SendActivity extends AnomActivity {
                         .subscribe(this::setBalance);
                 compositeDisposables.add(disposable);
                 if (!shownWalletLoadingMessage) {
-                    Snackbar.make(tvMaxAmount.getRootView(), "Please wait... your wallet is still loading ", Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(tvMaxAmount.getRootView(), "Please wait... your anom wallet is still loading ", Snackbar.LENGTH_LONG).show();
                     shownWalletLoadingMessage = true;
                 }
 

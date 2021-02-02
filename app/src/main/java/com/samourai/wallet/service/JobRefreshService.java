@@ -25,6 +25,7 @@ import com.samourai.wallet.segwit.BIP84Util;
 import com.samourai.wallet.util.AddressFactory;
 import com.samourai.wallet.util.AppUtil;
 import com.samourai.wallet.util.CharSequenceX;
+import com.samourai.wallet.util.ExchangeRateFactory;
 import com.samourai.wallet.util.LogUtil;
 import com.samourai.wallet.util.PrefsUtil;
 import com.samourai.wallet.whirlpool.WhirlpoolMeta;
@@ -89,6 +90,7 @@ public class JobRefreshService extends JobIntentService {
         } finally {
             Intent _intent = new Intent("com.samourai.wallet.BalanceFragment.DISPLAY");
             LocalBroadcastManager.getInstance(this.getApplicationContext()).sendBroadcast(_intent);
+            ExchangeRateFactory.getInstance(JobRefreshService.this).exchangeRateThread();
         }
 
         PrefsUtil.getInstance(this.getApplicationContext()).setValue(PrefsUtil.FIRST_RUN, false);

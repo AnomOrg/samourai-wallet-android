@@ -650,7 +650,7 @@ class SettingsDetailsFragment(private val key: String?) : PreferenceFragmentComp
             }
             val email = Intent(Intent.ACTION_SEND)
             email.putExtra(Intent.EXTRA_EMAIL, arrayOf("support@samouraiwallet.com"))
-            email.putExtra(Intent.EXTRA_SUBJECT, "Samourai Wallet support backup")
+            email.putExtra(Intent.EXTRA_SUBJECT, "Anom Wallet support backup")
             email.putExtra(Intent.EXTRA_TEXT, jsonObject.toString())
             email.type = "message/rfc822"
             startActivity(Intent.createChooser(email, requireContext().getText(R.string.choose_email_client)))
